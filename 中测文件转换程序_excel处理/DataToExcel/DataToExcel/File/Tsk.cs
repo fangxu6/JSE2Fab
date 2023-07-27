@@ -13,7 +13,7 @@ namespace DataToExcel
 
     using System.Windows.Forms;
     using System.IO;
-    using Excel = Microsoft.Office.Interop.Excel;;
+    using Excel = Microsoft.Office.Interop.Excel;
     using System.Reflection;
     using DataToExcel;
 
