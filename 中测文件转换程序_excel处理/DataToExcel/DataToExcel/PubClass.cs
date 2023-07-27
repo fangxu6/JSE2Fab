@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
-using Excel;
+using Excel = Microsoft.Office.Interop.Excel;
 using System.Reflection;
 using System.Collections;
 
