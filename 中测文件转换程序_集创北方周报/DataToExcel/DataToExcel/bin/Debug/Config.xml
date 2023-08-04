@@ -1,13 +1,14 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <DataToExcel>
   <Fields>
+	<Name id="UnloadTime" checked="true">UnloadTime</Name>
+    <Name id="Device" checked="true">Device</Name>
     <Name id="Wafer ID" checked="true">Wafer ID</Name>
     <Name id="Total" checked="true">Total</Name>
     <Name id="Pass" checked="true">Pass</Name>
     <Name id="Fail" checked="true">Fail</Name>
     <Name id="Yield" checked="true">Yield</Name>
     <Name id="LoadTime" checked="false">LoadTime</Name>
-    <Name id="UnloadTime" checked="false">UnloadTime</Name>
     <Name id="UsedTime" checked="false">UsedTime</Name>
     <Name id="BIN 0" checked="true">BIN 0</Name>
     <Name id="BIN 1" checked="true">BIN 1</Name>
