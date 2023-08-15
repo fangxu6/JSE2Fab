@@ -10,3 +10,6 @@ tes
 /TSK转TXT-赛芯转180/.vs/
 *.cache
 *.test
+*/.vs/
+*/bin/
+*/obj/
