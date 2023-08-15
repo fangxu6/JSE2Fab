@@ -1,0 +1,354 @@
+D:\代码资料\04项目代码\18矽捷电子\项目代码\黄平\Xj_Mes_cp\bin\Debug\Xj_Mes_cp.dll
+D:\代码资料\04项目代码\18矽捷电子\项目代码\黄平\Xj_Mes_cp\bin\Debug\Xj_Mes_cp.pdb
+D:\代码资料\04项目代码\18矽捷电子\项目代码\黄平\Xj_Mes_cp\obj\Debug\Xj_Mes_cp.Lot数量选择.resources
+D:\代码资料\04项目代码\18矽捷电子\项目代码\黄平\Xj_Mes_cp\obj\Debug\Xj_Mes_cp.一致表单上传.resources
+D:\代码资料\04项目代码\18矽捷电子\项目代码\黄平\Xj_Mes_cp\obj\Debug\Xj_Mes_cp.单一参数输入选择框.resources
+D:\代码资料\04项目代码\18矽捷电子\项目代码\黄平\Xj_Mes_cp\obj\Debug\Xj_Mes_cp.工序组选择.resources
+D:\代码资料\04项目代码\18矽捷电子\项目代码\黄平\Xj_Mes_cp\obj\Debug\Xj_Mes_cp.选择信息窗口.resources
+D:\代码资料\04项目代码\18矽捷电子\项目代码\黄平\Xj_Mes_cp\obj\Debug\Xj_Mes_cp.CP晶圆基础信息管理.resources
+D:\代码资料\04项目代码\18矽捷电子\项目代码\黄平\Xj_Mes_cp\obj\Debug\Xj_Mes_cp.CP流程卡上线查询.resources
+D:\代码资料\04项目代码\18矽捷电子\项目代码\黄平\Xj_Mes_cp\obj\Debug\Xj_Mes_cp.CP流程卡上线扫描.resources
+D:\代码资料\04项目代码\18矽捷电子\项目代码\黄平\Xj_Mes_cp\obj\Debug\Xj_Mes_cp.CP测试数据查询原始版本.resources
+D:\代码资料\04项目代码\18矽捷电子\项目代码\黄平\Xj_Mes_cp\obj\Debug\Xj_Mes_cp.CP测试数据查询.resources
+D:\代码资料\04项目代码\18矽捷电子\项目代码\黄平\Xj_Mes_cp\obj\Debug\Xj_Mes_cp.Form_烘烤.resources
+D:\代码资料\04项目代码\18矽捷电子\项目代码\黄平\Xj_Mes_cp\obj\Debug\Xj_Mes_cp.Form_LASER.resources
+D:\代码资料\04项目代码\18矽捷电子\项目代码\黄平\Xj_Mes_cp\obj\Debug\Xj_Mes_cp.Form_CP.resources
+D:\代码资料\04项目代码\18矽捷电子\项目代码\黄平\Xj_Mes_cp\obj\Debug\Xj_Mes_cp.Properties.Resources.resources
+D:\代码资料\04项目代码\18矽捷电子\项目代码\黄平\Xj_Mes_cp\obj\Debug\Xj_Mes_cp.业务排产打印管理新版.resources
+D:\代码资料\04项目代码\18矽捷电子\项目代码\黄平\Xj_Mes_cp\obj\Debug\Xj_Mes_cp.业务排产打印管理.resources
+D:\代码资料\04项目代码\18矽捷电子\项目代码\黄平\Xj_Mes_cp\obj\Debug\Xj_Mes_cp.客户信息.resources
+D:\代码资料\04项目代码\18矽捷电子\项目代码\黄平\Xj_Mes_cp\obj\Debug\Xj_Mes_cp.工站组.resources
+D:\代码资料\04项目代码\18矽捷电子\项目代码\黄平\Xj_Mes_cp\obj\Debug\Xj_Mes_cp.普通出库管理.resources
+D:\代码资料\04项目代码\18矽捷电子\项目代码\黄平\Xj_Mes_cp\obj\Debug\Xj_Mes_cp.仓库发料管理.resources
+D:\代码资料\04项目代码\18矽捷电子\项目代码\黄平\Xj_Mes_cp\obj\Debug\Xj_Mes_cp.收料库存管理.resources
+D:\代码资料\04项目代码\18矽捷电子\项目代码\黄平\Xj_Mes_cp\obj\Debug\Xj_Mes_cp.排产批次选择.resources
+D:\代码资料\04项目代码\18矽捷电子\项目代码\黄平\Xj_Mes_cp\obj\Debug\Xj_Mes_cp.业务排产管理.resources
+D:\代码资料\04项目代码\18矽捷电子\项目代码\黄平\Xj_Mes_cp\obj\Debug\Xj_Mes_cp.仓库收料管理.resources
+D:\代码资料\04项目代码\18矽捷电子\项目代码\黄平\Xj_Mes_cp\obj\Debug\Xj_Mes_cp.csproj.GenerateResource.Cache
+D:\代码资料\04项目代码\18矽捷电子\项目代码\黄平\Xj_Mes_cp\obj\Debug\Xj_Mes_cp.dll
+D:\代码资料\04项目代码\18矽捷电子\项目代码\黄平\Xj_Mes_cp\obj\Debug\Xj_Mes_cp.pdb
+D:\代码资料\04项目代码\18矽捷电子\项目代码\黄平\Xj_Mes_cp\obj\Debug\Xj_Mes_cp.CP_WIP管理.resources
+D:\代码资料\04项目代码\18矽捷电子\项目代码\黄平\Xj_Mes_cp\obj\Debug\Xj_Mes_cp.LOT上线扫描.resources
+D:\代码资料\04项目代码\18矽捷电子\项目代码\黄平\Xj_Mes_cp\obj\Debug\Xj_Mes_cp.LOT下线扫描.resources
+D:\代码资料\04项目代码\18矽捷电子\项目代码\黄平\Xj_Mes_cp\obj\Debug\Xj_Mes_cp.LOT下线扫描_TSK采集.resources
+D:\代码资料\04项目代码\18矽捷电子\项目代码\黄平\Xj_Mes_cp\obj\Debug\Xj_Mes_cp.LOT上线信息管理.resources
+D:\代码资料\04项目代码\18矽捷电子\项目代码\黄平\Xj_Mes_cp\obj\Debug\Xj_Mes_cp.LOT下线信息管理.resources
+D:\代码资料\04项目代码\18矽捷电子\项目代码\黄平\Xj_Mes_cp\obj\Debug\Xj_Mes_cp.TSK片数统计.resources
+D:\代码资料\04项目代码\18矽捷电子\项目代码\黄平\Xj_Mes_cp\obj\Debug\Xj_Mes_cp.Lot过站扫描.resources
+D:\代码资料\04项目代码\18矽捷电子\项目代码\黄平\Xj_Mes_cp\obj\Debug\Xj_Mes_cp.Excel文件加载.resources
+D:\代码资料\04项目代码\18矽捷电子\项目代码\黄平\Xj_Mes_cp\obj\Debug\Xj_Mes_cp.Lot质量OQC过站扫描.resources
+D:\代码资料\04项目代码\18矽捷电子\项目代码\黄平\Xj_Mes_cp\obj\Debug\Xj_Mes_cp.Lot质量IQC过站管理.resources
+D:\代码资料\04项目代码\18矽捷电子\项目代码\黄平\Xj_Mes_cp\obj\Debug\Xj_Mes_cp.Lot质量过站管理.resources
+D:\代码资料\04项目代码\18矽捷电子\项目代码\黄平\Xj_Mes_cp\obj\Debug\Xj_Mes_cp.Lot过站管理.resources
+D:\代码资料\04项目代码\18矽捷电子\项目代码\黄平\Xj_Mes_cp\obj\Debug\Xj_Mes_cp.CP冻结解冻管理.resources
+D:\代码资料\04项目代码\18矽捷电子\项目代码\黄平\Xj_Mes_cp\obj\Debug\Xj_Mes_cp.质量来料检验报告.resources
+D:\代码资料\04项目代码\18矽捷电子\项目代码\黄平\Xj_Mes_cp\obj\Debug\Xj_Mes_cp.报告单_片号检测信息.resources
+D:\代码资料\04项目代码\18矽捷电子\项目代码\黄平\Xj_Mes_cp\obj\Debug\Xj_Mes_cp.输入信息单选择框.resources
+D:\代码资料\04项目代码\18矽捷电子\项目代码\黄平\Xj_Mes_cp\obj\Debug\Xj_Mes_cp.质量出货检验报告.resources
+D:\代码资料\04项目代码\18矽捷电子\项目代码\黄平\Xj_Mes_cp\obj\Debug\Xj_Mes_cp.输入框双参数选择框.resources
+D:\代码资料\04项目代码\18矽捷电子\项目代码\黄平\Xj_Mes_cp\obj\Debug\Xj_Mes_cp.选择打印机.resources
+D:\代码资料\04项目代码\18矽捷电子\项目代码\黄平\Xj_Mes_cp\obj\Debug\Xj_Mes_cp.生产异常处理报告.resources
+D:\代码资料\04项目代码\18矽捷电子\项目代码\黄平\Xj_Mes_cp\obj\Debug\Xj_Mes_cp.生产异常处理管理信息维护.resources
+D:\代码资料\04项目代码\18矽捷电子\项目代码\黄平\Xj_Mes_cp\obj\Debug\Xj_Mes_cp.生产异常处理管理_质量.resources
+D:\代码资料\04项目代码\18矽捷电子\项目代码\黄平\Xj_Mes_cp\obj\Debug\Xj_Mes_cp.生产异常处理管理_工程.resources
+D:\代码资料\04项目代码\18矽捷电子\项目代码\黄平\Xj_Mes_cp\obj\Debug\Xj_Mes_cp.生产异常处理管理_生产.resources
+D:\代码资料\04项目代码\18矽捷电子\项目代码\黄平\Xj_Mes_cp\obj\Debug\Xj_Mes_cp.CP标签出货管理.resources
+D:\代码资料\04项目代码\18矽捷电子\项目代码\黄平\Xj_Mes_cp\obj\Debug\Xj_Mes_cp.Lot数量选择二次选择.resources
+D:\代码资料\04项目代码\18矽捷电子\项目代码\黄平\Xj_Mes_cp\obj\Debug\Xj_Mes_cp.CP结批扫描管理.resources
+D:\代码资料\04项目代码\18矽捷电子\项目代码\黄平\Xj_Mes_cp\obj\Debug\Xj_Mes_cp.数据浏览显示.resources
+D:\代码资料\04项目代码\18矽捷电子\项目代码\黄平\Xj_Mes_cp\obj\Debug\Xj_Mes_cp.CP排产非关键数据变更.resources
+D:\代码资料\04项目代码\18矽捷电子\项目代码\黄平\Xj_Mes_cp\obj\Debug\Xj_Mes_cp.CP_TSK数据分析.resources
+D:\代码资料\04项目代码\18矽捷电子\项目代码\黄平\Xj_Mes_cp\obj\Debug\Xj_Mes_cp.收货信息维护管理.resources
+D:\代码资料\04项目代码\18矽捷电子\项目代码\黄平\Xj_Mes_cp\obj\Debug\Xj_Mes_cp.CP出货清单管理.resources
+D:\代码资料\04项目代码\18矽捷电子\项目代码\黄平\Xj_Mes_cp\obj\Debug\Xj_Mes_cp.Form_打点烘烤.resources
+D:\代码资料\04项目代码\18矽捷电子\项目代码\黄平\Xj_Mes_cp\obj\Debug\Xj_Mes_cp.CP出货登记管理.resources
+D:\代码资料\04项目代码\18矽捷电子\项目代码\黄平\Xj_Mes_cp\obj\Debug\Xj_Mes_cp.CP出货登记管理_显示信息.resources
+D:\代码资料\04项目代码\18矽捷电子\项目代码\黄平\Xj_Mes_cp\obj\Debug\Xj_Mes_cp.CP出货标签打印管理.resources
+D:\代码资料\04项目代码\18矽捷电子\项目代码\黄平\Xj_Mes_cp\obj\Debug\Xj_Mes_cp.CP新出货清单管理.resources
+D:\代码资料\04项目代码\18矽捷电子\项目代码\黄平\Xj_Mes_cp\obj\Debug\Interop.DSOFramer.dll
+D:\代码资料\04项目代码\18矽捷电子\项目代码\黄平\Xj_Mes_cp\obj\Debug\Xj_Mes_cp.csproj.ResolveComReference.cache
+D:\代码资料\04项目代码\18矽捷电子\项目代码\黄平\Xj_Mes_cp\obj\Debug\Xj_Mes_cp.CP1_CP2合并.resources
+D:\代码资料\04项目代码\18矽捷电子\项目代码\黄平\Xj_Mes_cp\obj\Debug\Xj_Mes_cp.Lot数量选择二次选择过站.resources
+D:\代码资料\04项目代码\18矽捷电子\项目代码\黄平\Xj_Mes_cp\obj\Debug\Xj_Mes_cp.新版扫描过站管理.resources
+D:\代码资料\04项目代码\18矽捷电子\项目代码\黄平\Xj_Mes_cp\obj\Debug\Xj_Mes_cp.Lot质量出片检验过站扫描.resources
+D:\代码资料\04项目代码\18矽捷电子\项目代码\黄平\Xj_Mes_cp\obj\Debug\Xj_Mes_cp.工程异常分析图谱.resources
+D:\代码资料\04项目代码\18矽捷电子\项目代码\黄平\Xj_Mes_cp\obj\Debug\Xj_Mes_cp.CP仓库库存查询.resources
+D:\代码资料\04项目代码\18矽捷电子\项目代码\黄平\Xj_Mes_cp\obj\Debug\Xj_Mes_cp.更新数据测试.resources
+D:\代码资料\04项目代码\18矽捷电子\项目代码\黄平\Xj_Mes_cp\obj\Debug\Xj_Mes_cp.业务排产打印管理新版流程卡版本.resources
+D:\代码资料\04项目代码\18矽捷电子\项目代码\黄平\Xj_Mes_cp\obj\Debug\Xj_Mes_cp.CP晶圆基础信息管理审核.resources
+D:\代码资料\04项目代码\18矽捷电子\项目代码\黄平\Xj_Mes_cp\obj\Debug\Xj_Mes_cp.CP设备基础信息管理.resources
+D:\代码资料\04项目代码\18矽捷电子\项目代码\黄平\Xj_Mes_cp\obj\Debug\Xj_Mes_cp.新版设备维护管理.resources
+D:\代码资料\04项目代码\18矽捷电子\项目代码\黄平\Xj_Mes_cp\obj\Debug\Xj_Mes_cp.BIN预警信息添加多结果.resources
+D:\代码资料\04项目代码\18矽捷电子\项目代码\黄平\Xj_Mes_cp\obj\Debug\Xj_Mes_cp.文件集中管理.resources
+D:\代码资料\04项目代码\18矽捷电子\项目代码\黄平\Xj_Mes_cp\obj\Debug\Xj_Mes_cp.csprojResolveAssemblyReference.cache
+D:\代码资料\04项目代码\18矽捷电子\项目代码\黄平\Xj_Mes_cp\obj\Debug\Xj_Mes_cp.CP预警类型.resources
+D:\代码资料\04项目代码\18矽捷电子\项目代码\黄平\Xj_Mes_cp\obj\Debug\Xj_Mes_cp.CP来料收料打印.resources
+D:\工作文件\xj项目\矽捷电子系统代码20221214\Xj_Mes_cp\bin\Debug\Xj_Mes_cp.dll
+D:\工作文件\xj项目\矽捷电子系统代码20221214\Xj_Mes_cp\bin\Debug\Xj_Mes_cp.pdb
+D:\工作文件\xj项目\矽捷电子系统代码20221214\Xj_Mes_cp\bin\Debug\Microsoft.mshtml.dll
+D:\工作文件\xj项目\矽捷电子系统代码20221214\Xj_Mes_cp\obj\Debug\Xj_Mes_cp.csproj.ResolveComReference.cache
+D:\工作文件\xj项目\矽捷电子系统代码20221214\Xj_Mes_cp\obj\Debug\Xj_Mes_cp.选择打印机.resources
+D:\工作文件\xj项目\矽捷电子系统代码20221214\Xj_Mes_cp\obj\Debug\Xj_Mes_cp.Lot数量选择二次选择过站.resources
+D:\工作文件\xj项目\矽捷电子系统代码20221214\Xj_Mes_cp\obj\Debug\Xj_Mes_cp.Lot数量选择二次选择.resources
+D:\工作文件\xj项目\矽捷电子系统代码20221214\Xj_Mes_cp\obj\Debug\Xj_Mes_cp.Lot数量选择.resources
+D:\工作文件\xj项目\矽捷电子系统代码20221214\Xj_Mes_cp\obj\Debug\Xj_Mes_cp.一致表单上传.resources
+D:\工作文件\xj项目\矽捷电子系统代码20221214\Xj_Mes_cp\obj\Debug\Xj_Mes_cp.单一参数输入选择框.resources
+D:\工作文件\xj项目\矽捷电子系统代码20221214\Xj_Mes_cp\obj\Debug\Xj_Mes_cp.工序组选择.resources
+D:\工作文件\xj项目\矽捷电子系统代码20221214\Xj_Mes_cp\obj\Debug\Xj_Mes_cp.输入信息单选择框.resources
+D:\工作文件\xj项目\矽捷电子系统代码20221214\Xj_Mes_cp\obj\Debug\Xj_Mes_cp.选择信息窗口.resources
+D:\工作文件\xj项目\矽捷电子系统代码20221214\Xj_Mes_cp\obj\Debug\Xj_Mes_cp.CP晶圆基础信息管理.resources
+D:\工作文件\xj项目\矽捷电子系统代码20221214\Xj_Mes_cp\obj\Debug\Xj_Mes_cp.CP流程卡上线查询.resources
+D:\工作文件\xj项目\矽捷电子系统代码20221214\Xj_Mes_cp\obj\Debug\Xj_Mes_cp.CP流程卡上线扫描.resources
+D:\工作文件\xj项目\矽捷电子系统代码20221214\Xj_Mes_cp\obj\Debug\Xj_Mes_cp.Form_打点烘烤.resources
+D:\工作文件\xj项目\矽捷电子系统代码20221214\Xj_Mes_cp\obj\Debug\Xj_Mes_cp.CP_TSK数据分析.resources
+D:\工作文件\xj项目\矽捷电子系统代码20221214\Xj_Mes_cp\obj\Debug\Xj_Mes_cp.CP测试数据查询原始版本.resources
+D:\工作文件\xj项目\矽捷电子系统代码20221214\Xj_Mes_cp\obj\Debug\Xj_Mes_cp.CP测试数据查询.resources
+D:\工作文件\xj项目\矽捷电子系统代码20221214\Xj_Mes_cp\obj\Debug\Xj_Mes_cp.Form_烘烤.resources
+D:\工作文件\xj项目\矽捷电子系统代码20221214\Xj_Mes_cp\obj\Debug\Xj_Mes_cp.Form_LASER.resources
+D:\工作文件\xj项目\矽捷电子系统代码20221214\Xj_Mes_cp\obj\Debug\Xj_Mes_cp.Form_CP.resources
+D:\工作文件\xj项目\矽捷电子系统代码20221214\Xj_Mes_cp\obj\Debug\Xj_Mes_cp.Lot质量IQC过站管理.resources
+D:\工作文件\xj项目\矽捷电子系统代码20221214\Xj_Mes_cp\obj\Debug\Xj_Mes_cp.Lot质量出片检验过站扫描.resources
+D:\工作文件\xj项目\矽捷电子系统代码20221214\Xj_Mes_cp\obj\Debug\Xj_Mes_cp.质量出货检验报告.resources
+D:\工作文件\xj项目\矽捷电子系统代码20221214\Xj_Mes_cp\obj\Debug\Xj_Mes_cp.质量来料检验报告.resources
+D:\工作文件\xj项目\矽捷电子系统代码20221214\Xj_Mes_cp\obj\Debug\Xj_Mes_cp.工程异常分析图谱.resources
+D:\工作文件\xj项目\矽捷电子系统代码20221214\Xj_Mes_cp\obj\Debug\Xj_Mes_cp.生产异常处理管理_质量.resources
+D:\工作文件\xj项目\矽捷电子系统代码20221214\Xj_Mes_cp\obj\Debug\Xj_Mes_cp.生产异常处理管理_工程.resources
+D:\工作文件\xj项目\矽捷电子系统代码20221214\Xj_Mes_cp\obj\Debug\Xj_Mes_cp.业务排产打印管理新版流程卡版本.resources
+D:\工作文件\xj项目\矽捷电子系统代码20221214\Xj_Mes_cp\obj\Debug\Xj_Mes_cp.CP出货标签打印管理.resources
+D:\工作文件\xj项目\矽捷电子系统代码20221214\Xj_Mes_cp\obj\Debug\Xj_Mes_cp.BIN预警信息添加多结果.resources
+D:\工作文件\xj项目\矽捷电子系统代码20221214\Xj_Mes_cp\obj\Debug\Xj_Mes_cp.CP1_CP2合并.resources
+D:\工作文件\xj项目\矽捷电子系统代码20221214\Xj_Mes_cp\obj\Debug\Xj_Mes_cp.CP_WIP管理.resources
+D:\工作文件\xj项目\矽捷电子系统代码20221214\Xj_Mes_cp\obj\Debug\Xj_Mes_cp.CP仓库库存查询.resources
+D:\工作文件\xj项目\矽捷电子系统代码20221214\Xj_Mes_cp\obj\Debug\Xj_Mes_cp.CP冻结解冻管理.resources
+D:\工作文件\xj项目\矽捷电子系统代码20221214\Xj_Mes_cp\obj\Debug\Xj_Mes_cp.CP标签出货管理.resources
+D:\工作文件\xj项目\矽捷电子系统代码20221214\Xj_Mes_cp\obj\Debug\Xj_Mes_cp.CP出货清单管理.resources
+D:\工作文件\xj项目\矽捷电子系统代码20221214\Xj_Mes_cp\obj\Debug\Xj_Mes_cp.CP排产非关键数据变更.resources
+D:\工作文件\xj项目\矽捷电子系统代码20221214\Xj_Mes_cp\obj\Debug\Xj_Mes_cp.CP出货登记管理.resources
+D:\工作文件\xj项目\矽捷电子系统代码20221214\Xj_Mes_cp\obj\Debug\Xj_Mes_cp.CP出货登记管理_显示信息.resources
+D:\工作文件\xj项目\矽捷电子系统代码20221214\Xj_Mes_cp\obj\Debug\Xj_Mes_cp.CP新出货清单管理.resources
+D:\工作文件\xj项目\矽捷电子系统代码20221214\Xj_Mes_cp\obj\Debug\Xj_Mes_cp.CP晶圆基础信息管理审核.resources
+D:\工作文件\xj项目\矽捷电子系统代码20221214\Xj_Mes_cp\obj\Debug\Xj_Mes_cp.CP来料收料打印.resources
+D:\工作文件\xj项目\矽捷电子系统代码20221214\Xj_Mes_cp\obj\Debug\Xj_Mes_cp.CP结批扫描管理.resources
+D:\工作文件\xj项目\矽捷电子系统代码20221214\Xj_Mes_cp\obj\Debug\Xj_Mes_cp.CP设备基础信息管理.resources
+D:\工作文件\xj项目\矽捷电子系统代码20221214\Xj_Mes_cp\obj\Debug\Xj_Mes_cp.CP预警类型.resources
+D:\工作文件\xj项目\矽捷电子系统代码20221214\Xj_Mes_cp\obj\Debug\Xj_Mes_cp.Excel文件加载.resources
+D:\工作文件\xj项目\矽捷电子系统代码20221214\Xj_Mes_cp\obj\Debug\Xj_Mes_cp.LOT下线信息管理.resources
+D:\工作文件\xj项目\矽捷电子系统代码20221214\Xj_Mes_cp\obj\Debug\Xj_Mes_cp.LOT上线信息管理.resources
+D:\工作文件\xj项目\矽捷电子系统代码20221214\Xj_Mes_cp\obj\Debug\Xj_Mes_cp.LOT下线扫描.resources
+D:\工作文件\xj项目\矽捷电子系统代码20221214\Xj_Mes_cp\obj\Debug\Xj_Mes_cp.LOT上线扫描.resources
+D:\工作文件\xj项目\矽捷电子系统代码20221214\Xj_Mes_cp\obj\Debug\Xj_Mes_cp.LOT下线扫描_TSK采集.resources
+D:\工作文件\xj项目\矽捷电子系统代码20221214\Xj_Mes_cp\obj\Debug\Xj_Mes_cp.Lot质量OQC过站扫描.resources
+D:\工作文件\xj项目\矽捷电子系统代码20221214\Xj_Mes_cp\obj\Debug\Xj_Mes_cp.Lot质量过站管理.resources
+D:\工作文件\xj项目\矽捷电子系统代码20221214\Xj_Mes_cp\obj\Debug\Xj_Mes_cp.Lot过站扫描.resources
+D:\工作文件\xj项目\矽捷电子系统代码20221214\Xj_Mes_cp\obj\Debug\Xj_Mes_cp.Lot过站管理.resources
+D:\工作文件\xj项目\矽捷电子系统代码20221214\Xj_Mes_cp\obj\Debug\Xj_Mes_cp.Properties.Resources.resources
+D:\工作文件\xj项目\矽捷电子系统代码20221214\Xj_Mes_cp\obj\Debug\Xj_Mes_cp.TSK片数统计.resources
+D:\工作文件\xj项目\矽捷电子系统代码20221214\Xj_Mes_cp\obj\Debug\Xj_Mes_cp.业务排产打印管理新版.resources
+D:\工作文件\xj项目\矽捷电子系统代码20221214\Xj_Mes_cp\obj\Debug\Xj_Mes_cp.业务排产打印管理.resources
+D:\工作文件\xj项目\矽捷电子系统代码20221214\Xj_Mes_cp\obj\Debug\Xj_Mes_cp.客户信息.resources
+D:\工作文件\xj项目\矽捷电子系统代码20221214\Xj_Mes_cp\obj\Debug\Xj_Mes_cp.工站组.resources
+D:\工作文件\xj项目\矽捷电子系统代码20221214\Xj_Mes_cp\obj\Debug\Xj_Mes_cp.报告单_片号检测信息.resources
+D:\工作文件\xj项目\矽捷电子系统代码20221214\Xj_Mes_cp\obj\Debug\Xj_Mes_cp.收货信息维护管理.resources
+D:\工作文件\xj项目\矽捷电子系统代码20221214\Xj_Mes_cp\obj\Debug\Xj_Mes_cp.数据浏览显示.resources
+D:\工作文件\xj项目\矽捷电子系统代码20221214\Xj_Mes_cp\obj\Debug\Xj_Mes_cp.新版扫描过站管理.resources
+D:\工作文件\xj项目\矽捷电子系统代码20221214\Xj_Mes_cp\obj\Debug\Xj_Mes_cp.新版设备维护管理.resources
+D:\工作文件\xj项目\矽捷电子系统代码20221214\Xj_Mes_cp\obj\Debug\Xj_Mes_cp.普通出库管理.resources
+D:\工作文件\xj项目\矽捷电子系统代码20221214\Xj_Mes_cp\obj\Debug\Xj_Mes_cp.仓库发料管理.resources
+D:\工作文件\xj项目\矽捷电子系统代码20221214\Xj_Mes_cp\obj\Debug\Xj_Mes_cp.收料库存管理.resources
+D:\工作文件\xj项目\矽捷电子系统代码20221214\Xj_Mes_cp\obj\Debug\Xj_Mes_cp.排产批次选择.resources
+D:\工作文件\xj项目\矽捷电子系统代码20221214\Xj_Mes_cp\obj\Debug\Xj_Mes_cp.业务排产管理.resources
+D:\工作文件\xj项目\矽捷电子系统代码20221214\Xj_Mes_cp\obj\Debug\Xj_Mes_cp.仓库收料管理.resources
+D:\工作文件\xj项目\矽捷电子系统代码20221214\Xj_Mes_cp\obj\Debug\Xj_Mes_cp.输入框双参数选择框.resources
+D:\工作文件\xj项目\矽捷电子系统代码20221214\Xj_Mes_cp\obj\Debug\Xj_Mes_cp.生产异常处理报告.resources
+D:\工作文件\xj项目\矽捷电子系统代码20221214\Xj_Mes_cp\obj\Debug\Xj_Mes_cp.生产异常处理管理_生产.resources
+D:\工作文件\xj项目\矽捷电子系统代码20221214\Xj_Mes_cp\obj\Debug\Xj_Mes_cp.生产异常处理管理信息维护.resources
+D:\工作文件\xj项目\矽捷电子系统代码20221214\Xj_Mes_cp\obj\Debug\Xj_Mes_cp.文件集中管理.resources
+D:\工作文件\xj项目\矽捷电子系统代码20221214\Xj_Mes_cp\obj\Debug\Xj_Mes_cp.更新数据测试.resources
+D:\工作文件\xj项目\矽捷电子系统代码20221214\Xj_Mes_cp\obj\Debug\Xj_Mes_cp.csproj.GenerateResource.cache
+D:\工作文件\xj项目\矽捷电子系统代码20221214\Xj_Mes_cp\obj\Debug\Xj_Mes_cp.csproj.CoreCompileInputs.cache
+D:\工作文件\xj项目\矽捷电子系统代码20221214\Xj_Mes_cp\obj\Debug\Xj_Mes_cp.csproj.CopyComplete
+D:\工作文件\xj项目\矽捷电子系统代码20221214\Xj_Mes_cp\obj\Debug\Xj_Mes_cp.dll
+D:\工作文件\xj项目\矽捷电子系统代码20221214\Xj_Mes_cp\obj\Debug\Xj_Mes_cp.pdb
+E:\Office Data\XJ Program\工作文件\xj项目\矽捷电子系统代码20221214\Xj_Mes_cp\bin\Debug\Xj_Mes_cp.dll
+E:\Office Data\XJ Program\工作文件\xj项目\矽捷电子系统代码20221214\Xj_Mes_cp\bin\Debug\Xj_Mes_cp.pdb
+E:\Office Data\XJ Program\工作文件\xj项目\矽捷电子系统代码20221214\Xj_Mes_cp\bin\Debug\Microsoft.mshtml.dll
+E:\Office Data\XJ Program\工作文件\xj项目\矽捷电子系统代码20221214\Xj_Mes_cp\obj\Debug\Xj_Mes_cp.csproj.ResolveComReference.cache
+E:\Office Data\XJ Program\工作文件\xj项目\矽捷电子系统代码20221214\Xj_Mes_cp\obj\Debug\Xj_Mes_cp.选择打印机.resources
+E:\Office Data\XJ Program\工作文件\xj项目\矽捷电子系统代码20221214\Xj_Mes_cp\obj\Debug\Xj_Mes_cp.Lot数量选择二次选择过站.resources
+E:\Office Data\XJ Program\工作文件\xj项目\矽捷电子系统代码20221214\Xj_Mes_cp\obj\Debug\Xj_Mes_cp.Lot数量选择二次选择.resources
+E:\Office Data\XJ Program\工作文件\xj项目\矽捷电子系统代码20221214\Xj_Mes_cp\obj\Debug\Xj_Mes_cp.Lot数量选择.resources
+E:\Office Data\XJ Program\工作文件\xj项目\矽捷电子系统代码20221214\Xj_Mes_cp\obj\Debug\Xj_Mes_cp.一致表单上传.resources
+E:\Office Data\XJ Program\工作文件\xj项目\矽捷电子系统代码20221214\Xj_Mes_cp\obj\Debug\Xj_Mes_cp.单一参数输入选择框.resources
+E:\Office Data\XJ Program\工作文件\xj项目\矽捷电子系统代码20221214\Xj_Mes_cp\obj\Debug\Xj_Mes_cp.工序组选择.resources
+E:\Office Data\XJ Program\工作文件\xj项目\矽捷电子系统代码20221214\Xj_Mes_cp\obj\Debug\Xj_Mes_cp.输入信息单选择框.resources
+E:\Office Data\XJ Program\工作文件\xj项目\矽捷电子系统代码20221214\Xj_Mes_cp\obj\Debug\Xj_Mes_cp.选择信息窗口.resources
+E:\Office Data\XJ Program\工作文件\xj项目\矽捷电子系统代码20221214\Xj_Mes_cp\obj\Debug\Xj_Mes_cp.选择信息窗口_新.resources
+E:\Office Data\XJ Program\工作文件\xj项目\矽捷电子系统代码20221214\Xj_Mes_cp\obj\Debug\Xj_Mes_cp.CP晶圆基础信息管理.resources
+E:\Office Data\XJ Program\工作文件\xj项目\矽捷电子系统代码20221214\Xj_Mes_cp\obj\Debug\Xj_Mes_cp.CP流程卡上线查询.resources
+E:\Office Data\XJ Program\工作文件\xj项目\矽捷电子系统代码20221214\Xj_Mes_cp\obj\Debug\Xj_Mes_cp.CP流程卡上线扫描.resources
+E:\Office Data\XJ Program\工作文件\xj项目\矽捷电子系统代码20221214\Xj_Mes_cp\obj\Debug\Xj_Mes_cp.Form_打点烘烤.resources
+E:\Office Data\XJ Program\工作文件\xj项目\矽捷电子系统代码20221214\Xj_Mes_cp\obj\Debug\Xj_Mes_cp.CP_TSK数据分析.resources
+E:\Office Data\XJ Program\工作文件\xj项目\矽捷电子系统代码20221214\Xj_Mes_cp\obj\Debug\Xj_Mes_cp.CP测试数据查询原始版本.resources
+E:\Office Data\XJ Program\工作文件\xj项目\矽捷电子系统代码20221214\Xj_Mes_cp\obj\Debug\Xj_Mes_cp.CP测试数据查询.resources
+E:\Office Data\XJ Program\工作文件\xj项目\矽捷电子系统代码20221214\Xj_Mes_cp\obj\Debug\Xj_Mes_cp.Form_烘烤.resources
+E:\Office Data\XJ Program\工作文件\xj项目\矽捷电子系统代码20221214\Xj_Mes_cp\obj\Debug\Xj_Mes_cp.Form_LASER.resources
+E:\Office Data\XJ Program\工作文件\xj项目\矽捷电子系统代码20221214\Xj_Mes_cp\obj\Debug\Xj_Mes_cp.Form_CP.resources
+E:\Office Data\XJ Program\工作文件\xj项目\矽捷电子系统代码20221214\Xj_Mes_cp\obj\Debug\Xj_Mes_cp.Lot质量IQC过站管理.resources
+E:\Office Data\XJ Program\工作文件\xj项目\矽捷电子系统代码20221214\Xj_Mes_cp\obj\Debug\Xj_Mes_cp.Lot质量出片检验过站扫描.resources
+E:\Office Data\XJ Program\工作文件\xj项目\矽捷电子系统代码20221214\Xj_Mes_cp\obj\Debug\Xj_Mes_cp.质量出货检验报告.resources
+E:\Office Data\XJ Program\工作文件\xj项目\矽捷电子系统代码20221214\Xj_Mes_cp\obj\Debug\Xj_Mes_cp.质量来料检验报告.resources
+E:\Office Data\XJ Program\工作文件\xj项目\矽捷电子系统代码20221214\Xj_Mes_cp\obj\Debug\Xj_Mes_cp.工程异常分析图谱.resources
+E:\Office Data\XJ Program\工作文件\xj项目\矽捷电子系统代码20221214\Xj_Mes_cp\obj\Debug\Xj_Mes_cp.生产异常处理管理_质量.resources
+E:\Office Data\XJ Program\工作文件\xj项目\矽捷电子系统代码20221214\Xj_Mes_cp\obj\Debug\Xj_Mes_cp.生产异常处理管理_工程.resources
+E:\Office Data\XJ Program\工作文件\xj项目\矽捷电子系统代码20221214\Xj_Mes_cp\obj\Debug\Xj_Mes_cp.业务排产打印管理新版流程卡版本.resources
+E:\Office Data\XJ Program\工作文件\xj项目\矽捷电子系统代码20221214\Xj_Mes_cp\obj\Debug\Xj_Mes_cp.CP出货标签打印管理.resources
+E:\Office Data\XJ Program\工作文件\xj项目\矽捷电子系统代码20221214\Xj_Mes_cp\obj\Debug\Xj_Mes_cp.BIN预警信息添加多结果.resources
+E:\Office Data\XJ Program\工作文件\xj项目\矽捷电子系统代码20221214\Xj_Mes_cp\obj\Debug\Xj_Mes_cp.CP1_CP2合并.resources
+E:\Office Data\XJ Program\工作文件\xj项目\矽捷电子系统代码20221214\Xj_Mes_cp\obj\Debug\Xj_Mes_cp.CP_WIP管理.resources
+E:\Office Data\XJ Program\工作文件\xj项目\矽捷电子系统代码20221214\Xj_Mes_cp\obj\Debug\Xj_Mes_cp.CP仓库库存查询.resources
+E:\Office Data\XJ Program\工作文件\xj项目\矽捷电子系统代码20221214\Xj_Mes_cp\obj\Debug\Xj_Mes_cp.CP冻结解冻管理.resources
+E:\Office Data\XJ Program\工作文件\xj项目\矽捷电子系统代码20221214\Xj_Mes_cp\obj\Debug\Xj_Mes_cp.CP标签出货管理.resources
+E:\Office Data\XJ Program\工作文件\xj项目\矽捷电子系统代码20221214\Xj_Mes_cp\obj\Debug\Xj_Mes_cp.CP出货清单管理.resources
+E:\Office Data\XJ Program\工作文件\xj项目\矽捷电子系统代码20221214\Xj_Mes_cp\obj\Debug\Xj_Mes_cp.CP排产非关键数据变更.resources
+E:\Office Data\XJ Program\工作文件\xj项目\矽捷电子系统代码20221214\Xj_Mes_cp\obj\Debug\Xj_Mes_cp.CP出货登记管理.resources
+E:\Office Data\XJ Program\工作文件\xj项目\矽捷电子系统代码20221214\Xj_Mes_cp\obj\Debug\Xj_Mes_cp.CP出货登记管理_显示信息.resources
+E:\Office Data\XJ Program\工作文件\xj项目\矽捷电子系统代码20221214\Xj_Mes_cp\obj\Debug\Xj_Mes_cp.CP新出货清单管理.resources
+E:\Office Data\XJ Program\工作文件\xj项目\矽捷电子系统代码20221214\Xj_Mes_cp\obj\Debug\Xj_Mes_cp.CP晶圆基础信息管理审核.resources
+E:\Office Data\XJ Program\工作文件\xj项目\矽捷电子系统代码20221214\Xj_Mes_cp\obj\Debug\Xj_Mes_cp.CP来料收料打印.resources
+E:\Office Data\XJ Program\工作文件\xj项目\矽捷电子系统代码20221214\Xj_Mes_cp\obj\Debug\Xj_Mes_cp.CP结批扫描管理.resources
+E:\Office Data\XJ Program\工作文件\xj项目\矽捷电子系统代码20221214\Xj_Mes_cp\obj\Debug\Xj_Mes_cp.CP设备基础信息管理.resources
+E:\Office Data\XJ Program\工作文件\xj项目\矽捷电子系统代码20221214\Xj_Mes_cp\obj\Debug\Xj_Mes_cp.CP预警类型.resources
+E:\Office Data\XJ Program\工作文件\xj项目\矽捷电子系统代码20221214\Xj_Mes_cp\obj\Debug\Xj_Mes_cp.Excel文件加载.resources
+E:\Office Data\XJ Program\工作文件\xj项目\矽捷电子系统代码20221214\Xj_Mes_cp\obj\Debug\Xj_Mes_cp.LOT下线信息管理.resources
+E:\Office Data\XJ Program\工作文件\xj项目\矽捷电子系统代码20221214\Xj_Mes_cp\obj\Debug\Xj_Mes_cp.LOT上线信息管理.resources
+E:\Office Data\XJ Program\工作文件\xj项目\矽捷电子系统代码20221214\Xj_Mes_cp\obj\Debug\Xj_Mes_cp.LOT下线扫描.resources
+E:\Office Data\XJ Program\工作文件\xj项目\矽捷电子系统代码20221214\Xj_Mes_cp\obj\Debug\Xj_Mes_cp.LOT上线扫描.resources
+E:\Office Data\XJ Program\工作文件\xj项目\矽捷电子系统代码20221214\Xj_Mes_cp\obj\Debug\Xj_Mes_cp.LOT下线扫描_TSK采集.resources
+E:\Office Data\XJ Program\工作文件\xj项目\矽捷电子系统代码20221214\Xj_Mes_cp\obj\Debug\Xj_Mes_cp.Lot质量OQC过站扫描.resources
+E:\Office Data\XJ Program\工作文件\xj项目\矽捷电子系统代码20221214\Xj_Mes_cp\obj\Debug\Xj_Mes_cp.Lot质量过站管理.resources
+E:\Office Data\XJ Program\工作文件\xj项目\矽捷电子系统代码20221214\Xj_Mes_cp\obj\Debug\Xj_Mes_cp.Lot过站扫描.resources
+E:\Office Data\XJ Program\工作文件\xj项目\矽捷电子系统代码20221214\Xj_Mes_cp\obj\Debug\Xj_Mes_cp.Lot过站管理.resources
+E:\Office Data\XJ Program\工作文件\xj项目\矽捷电子系统代码20221214\Xj_Mes_cp\obj\Debug\Xj_Mes_cp.Properties.Resources.resources
+E:\Office Data\XJ Program\工作文件\xj项目\矽捷电子系统代码20221214\Xj_Mes_cp\obj\Debug\Xj_Mes_cp.TSK片数统计.resources
+E:\Office Data\XJ Program\工作文件\xj项目\矽捷电子系统代码20221214\Xj_Mes_cp\obj\Debug\Xj_Mes_cp.业务排产打印管理新版.resources
+E:\Office Data\XJ Program\工作文件\xj项目\矽捷电子系统代码20221214\Xj_Mes_cp\obj\Debug\Xj_Mes_cp.业务排产打印管理.resources
+E:\Office Data\XJ Program\工作文件\xj项目\矽捷电子系统代码20221214\Xj_Mes_cp\obj\Debug\Xj_Mes_cp.客户信息.resources
+E:\Office Data\XJ Program\工作文件\xj项目\矽捷电子系统代码20221214\Xj_Mes_cp\obj\Debug\Xj_Mes_cp.工站组.resources
+E:\Office Data\XJ Program\工作文件\xj项目\矽捷电子系统代码20221214\Xj_Mes_cp\obj\Debug\Xj_Mes_cp.报告单_片号检测信息.resources
+E:\Office Data\XJ Program\工作文件\xj项目\矽捷电子系统代码20221214\Xj_Mes_cp\obj\Debug\Xj_Mes_cp.收货信息维护管理.resources
+E:\Office Data\XJ Program\工作文件\xj项目\矽捷电子系统代码20221214\Xj_Mes_cp\obj\Debug\Xj_Mes_cp.数据浏览显示.resources
+E:\Office Data\XJ Program\工作文件\xj项目\矽捷电子系统代码20221214\Xj_Mes_cp\obj\Debug\Xj_Mes_cp.新版扫描过站管理.resources
+E:\Office Data\XJ Program\工作文件\xj项目\矽捷电子系统代码20221214\Xj_Mes_cp\obj\Debug\Xj_Mes_cp.新版设备维护管理.resources
+E:\Office Data\XJ Program\工作文件\xj项目\矽捷电子系统代码20221214\Xj_Mes_cp\obj\Debug\Xj_Mes_cp.普通出库管理.resources
+E:\Office Data\XJ Program\工作文件\xj项目\矽捷电子系统代码20221214\Xj_Mes_cp\obj\Debug\Xj_Mes_cp.仓库发料管理.resources
+E:\Office Data\XJ Program\工作文件\xj项目\矽捷电子系统代码20221214\Xj_Mes_cp\obj\Debug\Xj_Mes_cp.收料库存管理.resources
+E:\Office Data\XJ Program\工作文件\xj项目\矽捷电子系统代码20221214\Xj_Mes_cp\obj\Debug\Xj_Mes_cp.排产批次选择.resources
+E:\Office Data\XJ Program\工作文件\xj项目\矽捷电子系统代码20221214\Xj_Mes_cp\obj\Debug\Xj_Mes_cp.业务排产管理.resources
+E:\Office Data\XJ Program\工作文件\xj项目\矽捷电子系统代码20221214\Xj_Mes_cp\obj\Debug\Xj_Mes_cp.仓库收料管理.resources
+E:\Office Data\XJ Program\工作文件\xj项目\矽捷电子系统代码20221214\Xj_Mes_cp\obj\Debug\Xj_Mes_cp.输入框双参数选择框.resources
+E:\Office Data\XJ Program\工作文件\xj项目\矽捷电子系统代码20221214\Xj_Mes_cp\obj\Debug\Xj_Mes_cp.生产异常处理报告.resources
+E:\Office Data\XJ Program\工作文件\xj项目\矽捷电子系统代码20221214\Xj_Mes_cp\obj\Debug\Xj_Mes_cp.生产异常处理管理_生产.resources
+E:\Office Data\XJ Program\工作文件\xj项目\矽捷电子系统代码20221214\Xj_Mes_cp\obj\Debug\Xj_Mes_cp.生产异常处理管理信息维护.resources
+E:\Office Data\XJ Program\工作文件\xj项目\矽捷电子系统代码20221214\Xj_Mes_cp\obj\Debug\Xj_Mes_cp.文件集中管理.resources
+E:\Office Data\XJ Program\工作文件\xj项目\矽捷电子系统代码20221214\Xj_Mes_cp\obj\Debug\Xj_Mes_cp.更新数据测试.resources
+E:\Office Data\XJ Program\工作文件\xj项目\矽捷电子系统代码20221214\Xj_Mes_cp\obj\Debug\Xj_Mes_cp.生产异常处理单片良率信息管理.resources
+E:\Office Data\XJ Program\工作文件\xj项目\矽捷电子系统代码20221214\Xj_Mes_cp\obj\Debug\Xj_Mes_cp.生产异常处理管理信息维护_新.resources
+E:\Office Data\XJ Program\工作文件\xj项目\矽捷电子系统代码20221214\Xj_Mes_cp\obj\Debug\Xj_Mes_cp.csproj.GenerateResource.cache
+E:\Office Data\XJ Program\工作文件\xj项目\矽捷电子系统代码20221214\Xj_Mes_cp\obj\Debug\Xj_Mes_cp.csproj.CoreCompileInputs.cache
+E:\Office Data\XJ Program\工作文件\xj项目\矽捷电子系统代码20221214\Xj_Mes_cp\obj\Debug\Xj_Mes_cp.csproj.CopyComplete
+E:\Office Data\XJ Program\工作文件\xj项目\矽捷电子系统代码20221214\Xj_Mes_cp\obj\Debug\Xj_Mes_cp.dll
+E:\Office Data\XJ Program\工作文件\xj项目\矽捷电子系统代码20221214\Xj_Mes_cp\obj\Debug\Xj_Mes_cp.pdb
+E:\Office Data\XJ Program\工作文件\xj项目\矽捷电子系统代码20221214\Xj_Mes_cp\obj\Debug\Xj_Mes_cp.Form_CP_new.resources
+E:\Office Data\XJ Program\工作文件\xj项目\矽捷电子系统代码20221214\Xj_Mes_cp\obj\Debug\Xj_Mes_cp.csproj.AssemblyReference.cache
+E:\Office Data\XJ Program\工作文件\xj项目\矽捷电子系统代码20221214\Xj_Mes_cp\obj\Debug\Xj_Mes_cp.其他信息打印.resources
+D:\WorkSpaces\JSE2Fab\Xj_Mes_cp\bin\Debug\Xj_Mes_cp.pdb
+D:\WorkSpaces\JSE2Fab\Xj_Mes_cp\obj\Debug\Xj_Mes_cp.csproj.AssemblyReference.cache
+D:\WorkSpaces\JSE2Fab\Xj_Mes_cp\obj\Debug\Xj_Mes_cp.csproj.ResolveComReference.cache
+D:\WorkSpaces\JSE2Fab\Xj_Mes_cp\obj\Debug\Xj_Mes_cp.选择打印机.resources
+D:\WorkSpaces\JSE2Fab\Xj_Mes_cp\obj\Debug\Xj_Mes_cp.Lot数量选择二次选择过站.resources
+D:\WorkSpaces\JSE2Fab\Xj_Mes_cp\obj\Debug\Xj_Mes_cp.Lot数量选择二次选择.resources
+D:\WorkSpaces\JSE2Fab\Xj_Mes_cp\obj\Debug\Xj_Mes_cp.Lot数量选择.resources
+D:\WorkSpaces\JSE2Fab\Xj_Mes_cp\obj\Debug\Xj_Mes_cp.一致表单上传.resources
+D:\WorkSpaces\JSE2Fab\Xj_Mes_cp\obj\Debug\Xj_Mes_cp.单一参数输入选择框.resources
+D:\WorkSpaces\JSE2Fab\Xj_Mes_cp\obj\Debug\Xj_Mes_cp.工序组选择.resources
+D:\WorkSpaces\JSE2Fab\Xj_Mes_cp\obj\Debug\Xj_Mes_cp.输入信息单选择框.resources
+D:\WorkSpaces\JSE2Fab\Xj_Mes_cp\obj\Debug\Xj_Mes_cp.选择信息窗口.resources
+D:\WorkSpaces\JSE2Fab\Xj_Mes_cp\obj\Debug\Xj_Mes_cp.选择信息窗口_新.resources
+D:\WorkSpaces\JSE2Fab\Xj_Mes_cp\obj\Debug\Xj_Mes_cp.CP晶圆基础信息管理.resources
+D:\WorkSpaces\JSE2Fab\Xj_Mes_cp\obj\Debug\Xj_Mes_cp.CP流程卡上线查询.resources
+D:\WorkSpaces\JSE2Fab\Xj_Mes_cp\obj\Debug\Xj_Mes_cp.CP流程卡上线扫描.resources
+D:\WorkSpaces\JSE2Fab\Xj_Mes_cp\obj\Debug\Xj_Mes_cp.Form_打点烘烤.resources
+D:\WorkSpaces\JSE2Fab\Xj_Mes_cp\obj\Debug\Xj_Mes_cp.CP_TSK数据分析.resources
+D:\WorkSpaces\JSE2Fab\Xj_Mes_cp\obj\Debug\Xj_Mes_cp.CP测试数据查询原始版本.resources
+D:\WorkSpaces\JSE2Fab\Xj_Mes_cp\obj\Debug\Xj_Mes_cp.CP测试数据查询.resources
+D:\WorkSpaces\JSE2Fab\Xj_Mes_cp\obj\Debug\Xj_Mes_cp.Form_烘烤.resources
+D:\WorkSpaces\JSE2Fab\Xj_Mes_cp\obj\Debug\Xj_Mes_cp.Form_LASER.resources
+D:\WorkSpaces\JSE2Fab\Xj_Mes_cp\obj\Debug\Xj_Mes_cp.Form_CP.resources
+D:\WorkSpaces\JSE2Fab\Xj_Mes_cp\obj\Debug\Xj_Mes_cp.Lot质量IQC过站管理.resources
+D:\WorkSpaces\JSE2Fab\Xj_Mes_cp\obj\Debug\Xj_Mes_cp.Lot质量出片检验过站扫描.resources
+D:\WorkSpaces\JSE2Fab\Xj_Mes_cp\obj\Debug\Xj_Mes_cp.质量出货检验报告.resources
+D:\WorkSpaces\JSE2Fab\Xj_Mes_cp\obj\Debug\Xj_Mes_cp.质量来料检验报告.resources
+D:\WorkSpaces\JSE2Fab\Xj_Mes_cp\obj\Debug\Xj_Mes_cp.工程异常分析图谱.resources
+D:\WorkSpaces\JSE2Fab\Xj_Mes_cp\obj\Debug\Xj_Mes_cp.生产异常处理管理_质量.resources
+D:\WorkSpaces\JSE2Fab\Xj_Mes_cp\obj\Debug\Xj_Mes_cp.生产异常处理管理_工程.resources
+D:\WorkSpaces\JSE2Fab\Xj_Mes_cp\obj\Debug\Xj_Mes_cp.业务排产打印管理新版流程卡版本.resources
+D:\WorkSpaces\JSE2Fab\Xj_Mes_cp\obj\Debug\Xj_Mes_cp.CP出货标签打印管理.resources
+D:\WorkSpaces\JSE2Fab\Xj_Mes_cp\obj\Debug\Xj_Mes_cp.BIN预警信息添加多结果.resources
+D:\WorkSpaces\JSE2Fab\Xj_Mes_cp\obj\Debug\Xj_Mes_cp.CP1_CP2合并.resources
+D:\WorkSpaces\JSE2Fab\Xj_Mes_cp\obj\Debug\Xj_Mes_cp.CP_WIP管理.resources
+D:\WorkSpaces\JSE2Fab\Xj_Mes_cp\obj\Debug\Xj_Mes_cp.CP仓库库存查询.resources
+D:\WorkSpaces\JSE2Fab\Xj_Mes_cp\obj\Debug\Xj_Mes_cp.CP冻结解冻管理.resources
+D:\WorkSpaces\JSE2Fab\Xj_Mes_cp\obj\Debug\Xj_Mes_cp.CP标签出货管理.resources
+D:\WorkSpaces\JSE2Fab\Xj_Mes_cp\obj\Debug\Xj_Mes_cp.CP出货清单管理.resources
+D:\WorkSpaces\JSE2Fab\Xj_Mes_cp\obj\Debug\Xj_Mes_cp.CP排产非关键数据变更.resources
+D:\WorkSpaces\JSE2Fab\Xj_Mes_cp\obj\Debug\Xj_Mes_cp.CP出货登记管理.resources
+D:\WorkSpaces\JSE2Fab\Xj_Mes_cp\obj\Debug\Xj_Mes_cp.CP出货登记管理_显示信息.resources
+D:\WorkSpaces\JSE2Fab\Xj_Mes_cp\obj\Debug\Xj_Mes_cp.CP新出货清单管理.resources
+D:\WorkSpaces\JSE2Fab\Xj_Mes_cp\obj\Debug\Xj_Mes_cp.CP晶圆基础信息管理审核.resources
+D:\WorkSpaces\JSE2Fab\Xj_Mes_cp\obj\Debug\Xj_Mes_cp.CP来料收料打印.resources
+D:\WorkSpaces\JSE2Fab\Xj_Mes_cp\obj\Debug\Xj_Mes_cp.CP结批扫描管理.resources
+D:\WorkSpaces\JSE2Fab\Xj_Mes_cp\obj\Debug\Xj_Mes_cp.CP设备基础信息管理.resources
+D:\WorkSpaces\JSE2Fab\Xj_Mes_cp\obj\Debug\Xj_Mes_cp.CP预警类型.resources
+D:\WorkSpaces\JSE2Fab\Xj_Mes_cp\obj\Debug\Xj_Mes_cp.Excel文件加载.resources
+D:\WorkSpaces\JSE2Fab\Xj_Mes_cp\obj\Debug\Xj_Mes_cp.LOT下线信息管理.resources
+D:\WorkSpaces\JSE2Fab\Xj_Mes_cp\obj\Debug\Xj_Mes_cp.LOT上线信息管理.resources
+D:\WorkSpaces\JSE2Fab\Xj_Mes_cp\obj\Debug\Xj_Mes_cp.LOT下线扫描.resources
+D:\WorkSpaces\JSE2Fab\Xj_Mes_cp\obj\Debug\Xj_Mes_cp.LOT上线扫描.resources
+D:\WorkSpaces\JSE2Fab\Xj_Mes_cp\obj\Debug\Xj_Mes_cp.LOT下线扫描_TSK采集.resources
+D:\WorkSpaces\JSE2Fab\Xj_Mes_cp\obj\Debug\Xj_Mes_cp.Lot质量OQC过站扫描.resources
+D:\WorkSpaces\JSE2Fab\Xj_Mes_cp\obj\Debug\Xj_Mes_cp.Lot质量过站管理.resources
+D:\WorkSpaces\JSE2Fab\Xj_Mes_cp\obj\Debug\Xj_Mes_cp.Lot过站扫描.resources
+D:\WorkSpaces\JSE2Fab\Xj_Mes_cp\obj\Debug\Xj_Mes_cp.Lot过站管理.resources
+D:\WorkSpaces\JSE2Fab\Xj_Mes_cp\obj\Debug\Xj_Mes_cp.Form_CP_new.resources
+D:\WorkSpaces\JSE2Fab\Xj_Mes_cp\obj\Debug\Xj_Mes_cp.Properties.Resources.resources
+D:\WorkSpaces\JSE2Fab\Xj_Mes_cp\obj\Debug\Xj_Mes_cp.TSK片数统计.resources
+D:\WorkSpaces\JSE2Fab\Xj_Mes_cp\obj\Debug\Xj_Mes_cp.业务排产打印管理新版.resources
+D:\WorkSpaces\JSE2Fab\Xj_Mes_cp\obj\Debug\Xj_Mes_cp.业务排产打印管理.resources
+D:\WorkSpaces\JSE2Fab\Xj_Mes_cp\obj\Debug\Xj_Mes_cp.客户信息.resources
+D:\WorkSpaces\JSE2Fab\Xj_Mes_cp\obj\Debug\Xj_Mes_cp.工站组.resources
+D:\WorkSpaces\JSE2Fab\Xj_Mes_cp\obj\Debug\Xj_Mes_cp.报告单_片号检测信息.resources
+D:\WorkSpaces\JSE2Fab\Xj_Mes_cp\obj\Debug\Xj_Mes_cp.收货信息维护管理.resources
+D:\WorkSpaces\JSE2Fab\Xj_Mes_cp\obj\Debug\Xj_Mes_cp.数据浏览显示.resources
+D:\WorkSpaces\JSE2Fab\Xj_Mes_cp\obj\Debug\Xj_Mes_cp.新版扫描过站管理.resources
+D:\WorkSpaces\JSE2Fab\Xj_Mes_cp\obj\Debug\Xj_Mes_cp.新版设备维护管理.resources
+D:\WorkSpaces\JSE2Fab\Xj_Mes_cp\obj\Debug\Xj_Mes_cp.普通出库管理.resources
+D:\WorkSpaces\JSE2Fab\Xj_Mes_cp\obj\Debug\Xj_Mes_cp.仓库发料管理.resources
+D:\WorkSpaces\JSE2Fab\Xj_Mes_cp\obj\Debug\Xj_Mes_cp.收料库存管理.resources
+D:\WorkSpaces\JSE2Fab\Xj_Mes_cp\obj\Debug\Xj_Mes_cp.排产批次选择.resources
+D:\WorkSpaces\JSE2Fab\Xj_Mes_cp\obj\Debug\Xj_Mes_cp.业务排产管理.resources
+D:\WorkSpaces\JSE2Fab\Xj_Mes_cp\obj\Debug\Xj_Mes_cp.仓库收料管理.resources
+D:\WorkSpaces\JSE2Fab\Xj_Mes_cp\obj\Debug\Xj_Mes_cp.输入框双参数选择框.resources
+D:\WorkSpaces\JSE2Fab\Xj_Mes_cp\obj\Debug\Xj_Mes_cp.生产异常处理报告.resources
+D:\WorkSpaces\JSE2Fab\Xj_Mes_cp\obj\Debug\Xj_Mes_cp.生产异常处理管理_生产.resources
+D:\WorkSpaces\JSE2Fab\Xj_Mes_cp\obj\Debug\Xj_Mes_cp.生产异常处理管理信息维护.resources
+D:\WorkSpaces\JSE2Fab\Xj_Mes_cp\obj\Debug\Xj_Mes_cp.其他信息打印.resources
+D:\WorkSpaces\JSE2Fab\Xj_Mes_cp\obj\Debug\Xj_Mes_cp.文件集中管理.resources
+D:\WorkSpaces\JSE2Fab\Xj_Mes_cp\obj\Debug\Xj_Mes_cp.更新数据测试.resources
+D:\WorkSpaces\JSE2Fab\Xj_Mes_cp\obj\Debug\Xj_Mes_cp.生产异常处理单片良率信息管理.resources
+D:\WorkSpaces\JSE2Fab\Xj_Mes_cp\obj\Debug\Xj_Mes_cp.生产异常处理管理信息维护_新.resources
+D:\WorkSpaces\JSE2Fab\Xj_Mes_cp\obj\Debug\Xj_Mes_cp.csproj.GenerateResource.cache
+D:\WorkSpaces\JSE2Fab\Xj_Mes_cp\obj\Debug\Xj_Mes_cp.csproj.CoreCompileInputs.cache
+D:\WorkSpaces\JSE2Fab\Xj_Mes_cp\obj\Debug\Xj_Mes_cp.csproj.CopyComplete
+D:\WorkSpaces\JSE2Fab\Xj_Mes_cp\obj\Debug\Xj_Mes_cp.pdb
+D:\WorkSpaces\JSE2Fab\Xj_Mes_cp\bin\Debug\Xj_Mes_cp.exe
+D:\WorkSpaces\JSE2Fab\Xj_Mes_cp\obj\Debug\Xj_Mes_cp.exe

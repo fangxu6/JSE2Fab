@@ -1,0 +1,963 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{FDC2A612-3E33-430D-9ACC-CF66E43369CA}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Xj_Mes_cp</RootNamespace>
+    <AssemblyName>Xj_Mes_cp</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject />
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="DevComponents.DotNetBar.Design, Version=10.0.0.3, Culture=neutral, PublicKeyToken=2c9ff1fddc42653c, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Debug\DevComponents.DotNetBar.Design.dll</HintPath>
+    </Reference>
+    <Reference Include="DevComponents.DotNetBar.Keyboard, Version=10.6.0.5, Culture=neutral, PublicKeyToken=c39c3242a43eee2b, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Debug\DevComponents.DotNetBar.Keyboard.dll</HintPath>
+    </Reference>
+    <Reference Include="DevComponents.DotNetBar.Schedule, Version=10.6.0.5, Culture=neutral, PublicKeyToken=c39c3242a43eee2b, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Debug\DevComponents.DotNetBar.Schedule.dll</HintPath>
+    </Reference>
+    <Reference Include="DevComponents.DotNetBar.SuperGrid, Version=10.6.0.5, Culture=neutral, PublicKeyToken=c39c3242a43eee2b, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Debug\DevComponents.DotNetBar.SuperGrid.dll</HintPath>
+    </Reference>
+    <Reference Include="DevComponents.DotNetBar2, Version=10.0.0.3, Culture=neutral, PublicKeyToken=c39c3242a43eee2b, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Debug\DevComponents.DotNetBar2.dll</HintPath>
+    </Reference>
+    <Reference Include="DevComponents.Instrumentation, Version=10.0.0.3, Culture=neutral, PublicKeyToken=bc4a9d761ea44ef0, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Debug\DevComponents.Instrumentation.dll</HintPath>
+    </Reference>
+    <Reference Include="DevComponents.Instrumentation.Design, Version=10.0.0.3, Culture=neutral, PublicKeyToken=30cefae8f341f577, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Debug\DevComponents.Instrumentation.Design.dll</HintPath>
+    </Reference>
+    <Reference Include="DevComponents.SuperGrid.Design, Version=10.6.0.5, Culture=neutral, PublicKeyToken=1fea3f5d8d482bff, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Debug\DevComponents.SuperGrid.Design.dll</HintPath>
+    </Reference>
+    <Reference Include="Ionic.Zip, Version=1.9.1.5, Culture=neutral, PublicKeyToken=edbe51ad942a3f5c, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Debug\Ionic.Zip.dll</HintPath>
+    </Reference>
+    <Reference Include="NPOI, Version=2.1.3.0, Culture=neutral, PublicKeyToken=0df73ec7942b34e1, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Debug\NPOI.dll</HintPath>
+    </Reference>
+    <Reference Include="NPOI.OOXML, Version=2.1.3.0, Culture=neutral, PublicKeyToken=0df73ec7942b34e1, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Debug\NPOI.OOXML.dll</HintPath>
+    </Reference>
+    <Reference Include="NPOI.OpenXml4Net, Version=2.1.3.0, Culture=neutral, PublicKeyToken=0df73ec7942b34e1, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Debug\NPOI.OpenXml4Net.dll</HintPath>
+    </Reference>
+    <Reference Include="NPOI.OpenXmlFormats, Version=2.1.3.0, Culture=neutral, PublicKeyToken=0df73ec7942b34e1, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Debug\NPOI.OpenXmlFormats.dll</HintPath>
+    </Reference>
+    <Reference Include="Pawote.UI.Controls, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Debug\Pawote.UI.Controls.dll</HintPath>
+    </Reference>
+    <Reference Include="pwt_system_comm, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Debug\pwt_system_comm.dll</HintPath>
+    </Reference>
+    <Reference Include="pwt_system_comm_out, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Debug\pwt_system_comm_out.dll</HintPath>
+    </Reference>
+    <Reference Include="pwt_system_print, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Debug\pwt_system_print.dll</HintPath>
+    </Reference>
+    <Reference Include="Pwt_Tsk, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Debug\Pwt_Tsk.dll</HintPath>
+    </Reference>
+    <Reference Include="Seagull.BarTender.Print, Version=11.0.3.1, Culture=neutral, PublicKeyToken=109ff779a1b4cbc7, processorArchitecture=AMD64">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Debug\Seagull.BarTender.Print.dll</HintPath>
+    </Reference>
+    <Reference Include="Spire.License, Version=1.3.8.40, Culture=neutral, PublicKeyToken=b1144360237c8b3f, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Debug\Spire.License.dll</HintPath>
+    </Reference>
+    <Reference Include="Spire.Pdf, Version=6.1.4.2040, Culture=neutral, PublicKeyToken=663f351905198cb3, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Debug\Spire.Pdf.dll</HintPath>
+    </Reference>
+    <Reference Include="Spire.XLS, Version=10.1.4.61040, Culture=neutral, PublicKeyToken=663f351905198cb3, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Debug\Spire.XLS.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Windows.Forms.DataVisualization" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+    <Reference Include="system_basic, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Debug\system_basic.dll</HintPath>
+    </Reference>
+    <Reference Include="system_comm, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Debug\system_comm.dll</HintPath>
+    </Reference>
+    <Reference Include="system_dll_com, Version=1.5.13.831, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Debug\system_dll_com.dll</HintPath>
+    </Reference>
+    <Reference Include="WeifenLuo.WinFormsUI.Docking, Version=2.7.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Debug\WeifenLuo.WinFormsUI.Docking.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="01公用类\base_info.cs" />
+    <Compile Include="01公用类\ChangeHelper.cs" />
+    <Compile Include="01公用类\选择打印机.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="01公用类\选择打印机.designer.cs">
+      <DependentUpon>选择打印机.cs</DependentUpon>
+    </Compile>
+    <Compile Include="02选择窗口\LotSelect.cs" />
+    <Compile Include="01公用类\Comm_Class.cs" />
+    <Compile Include="01公用类\db_deal.cs" />
+    <Compile Include="01公用类\DtbToUi.cs" />
+    <Compile Include="01公用类\SysPrint.cs" />
+    <Compile Include="01公用类\system_basc_info.cs" />
+    <Compile Include="01公用类\Comm_Change_Info.cs" />
+    <Compile Include="01公用类\ImageHelper.cs" />
+    <Compile Include="02选择窗口\Lot数量选择二次选择过站.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="02选择窗口\Lot数量选择二次选择过站.designer.cs">
+      <DependentUpon>Lot数量选择二次选择过站.cs</DependentUpon>
+    </Compile>
+    <Compile Include="02选择窗口\Lot数量选择二次选择.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="02选择窗口\Lot数量选择二次选择.designer.cs">
+      <DependentUpon>Lot数量选择二次选择.cs</DependentUpon>
+    </Compile>
+    <Compile Include="02选择窗口\Lot数量选择.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="02选择窗口\Lot数量选择.designer.cs">
+      <DependentUpon>Lot数量选择.cs</DependentUpon>
+    </Compile>
+    <Compile Include="02选择窗口\一致表单上传.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="02选择窗口\一致表单上传.Designer.cs">
+      <DependentUpon>一致表单上传.cs</DependentUpon>
+    </Compile>
+    <Compile Include="02选择窗口\单一参数输入选择框.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="02选择窗口\单一参数输入选择框.designer.cs">
+      <DependentUpon>单一参数输入选择框.cs</DependentUpon>
+    </Compile>
+    <Compile Include="02选择窗口\工序组选择.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="02选择窗口\工序组选择.designer.cs">
+      <DependentUpon>工序组选择.cs</DependentUpon>
+    </Compile>
+    <Compile Include="02选择窗口\输入信息单选择框.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="02选择窗口\输入信息单选择框.Designer.cs">
+      <DependentUpon>输入信息单选择框.cs</DependentUpon>
+    </Compile>
+    <Compile Include="02选择窗口\选择信息窗口.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="02选择窗口\选择信息窗口.Designer.cs">
+      <DependentUpon>选择信息窗口.cs</DependentUpon>
+    </Compile>
+    <Compile Include="04基础\Form_打点烘烤.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="04基础\Form_打点烘烤.Designer.cs">
+      <DependentUpon>Form_打点烘烤.cs</DependentUpon>
+    </Compile>
+    <Compile Include="05TSK\SiteHelper.cs" />
+    <Compile Include="06质量管理\Lot质量IQC过站管理.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="06质量管理\Lot质量IQC过站管理.Designer.cs">
+      <DependentUpon>Lot质量IQC过站管理.cs</DependentUpon>
+    </Compile>
+    <Compile Include="06质量管理\Lot质量出片检验过站扫描.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="06质量管理\Lot质量出片检验过站扫描.Designer.cs">
+      <DependentUpon>Lot质量出片检验过站扫描.cs</DependentUpon>
+    </Compile>
+    <Compile Include="09生产异常报告\生产异常处理管理_质量.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="09生产异常报告\生产异常处理管理_质量.Designer.cs">
+      <DependentUpon>生产异常处理管理_质量.cs</DependentUpon>
+    </Compile>
+    <Compile Include="09生产异常报告\生产异常处理管理_工程.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="09生产异常报告\生产异常处理管理_工程.Designer.cs">
+      <DependentUpon>生产异常处理管理_工程.cs</DependentUpon>
+    </Compile>
+    <Compile Include="11业务排产打印\CP_PrintHelper.cs" />
+    <Compile Include="04基础\CP晶圆基础信息管理.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="04基础\CP晶圆基础信息管理.designer.cs">
+      <DependentUpon>CP晶圆基础信息管理.cs</DependentUpon>
+    </Compile>
+    <Compile Include="03上线扫描\CP流程卡上线查询.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="03上线扫描\CP流程卡上线查询.Designer.cs">
+      <DependentUpon>CP流程卡上线查询.cs</DependentUpon>
+    </Compile>
+    <Compile Include="03上线扫描\CP流程卡上线扫描.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="03上线扫描\CP流程卡上线扫描.Designer.cs">
+      <DependentUpon>CP流程卡上线扫描.cs</DependentUpon>
+    </Compile>
+    <Compile Include="05TSK采集数据查询\CP测试数据查询原始版本.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="05TSK采集数据查询\CP测试数据查询原始版本.Designer.cs">
+      <DependentUpon>CP测试数据查询原始版本.cs</DependentUpon>
+    </Compile>
+    <Compile Include="05TSK采集数据查询\CP测试数据查询.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="05TSK采集数据查询\CP测试数据查询.Designer.cs">
+      <DependentUpon>CP测试数据查询.cs</DependentUpon>
+    </Compile>
+    <Compile Include="04基础\Form_烘烤.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="04基础\Form_烘烤.Designer.cs">
+      <DependentUpon>Form_烘烤.cs</DependentUpon>
+    </Compile>
+    <Compile Include="04基础\Form_LASER.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="04基础\Form_LASER.Designer.cs">
+      <DependentUpon>Form_LASER.cs</DependentUpon>
+    </Compile>
+    <Compile Include="04基础\Form_CP.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="04基础\Form_CP.Designer.cs">
+      <DependentUpon>Form_CP.cs</DependentUpon>
+    </Compile>
+    <Compile Include="05TSK\CP_TSK数据分析.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="05TSK\CP_TSK数据分析.Designer.cs">
+      <DependentUpon>CP_TSK数据分析.cs</DependentUpon>
+    </Compile>
+    <Compile Include="11业务排产打印\业务排产打印管理新版流程卡版本.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="11业务排产打印\业务排产打印管理新版流程卡版本.Designer.cs">
+      <DependentUpon>业务排产打印管理新版流程卡版本.cs</DependentUpon>
+    </Compile>
+    <Compile Include="04基础\BIN预警信息添加多结果.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="04基础\BIN预警信息添加多结果.Designer.cs">
+      <DependentUpon>BIN预警信息添加多结果.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CP1_CP2合并.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CP1_CP2合并.Designer.cs">
+      <DependentUpon>CP1_CP2合并.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CP_WIP管理.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CP_WIP管理.Designer.cs">
+      <DependentUpon>CP_WIP管理.cs</DependentUpon>
+    </Compile>
+    <Compile Include="13来料收料发料\CP仓库库存查询.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="13来料收料发料\CP仓库库存查询.Designer.cs">
+      <DependentUpon>CP仓库库存查询.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CP冻结解冻管理.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CP冻结解冻管理.Designer.cs">
+      <DependentUpon>CP冻结解冻管理.cs</DependentUpon>
+    </Compile>
+    <Compile Include="10发货登记打印\CP标签出货管理.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="10发货登记打印\CP标签出货管理.Designer.cs">
+      <DependentUpon>CP标签出货管理.cs</DependentUpon>
+    </Compile>
+    <Compile Include="10发货登记打印\CP出货清单管理.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="10发货登记打印\CP出货清单管理.Designer.cs">
+      <DependentUpon>CP出货清单管理.cs</DependentUpon>
+    </Compile>
+    <Compile Include="11业务排产打印\CP排产非关键数据变更.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="11业务排产打印\CP排产非关键数据变更.Designer.cs">
+      <DependentUpon>CP排产非关键数据变更.cs</DependentUpon>
+    </Compile>
+    <Compile Include="12发货登记\CP出货登记管理.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="12发货登记\CP出货登记管理.Designer.cs">
+      <DependentUpon>CP出货登记管理.cs</DependentUpon>
+    </Compile>
+    <Compile Include="12发货登记\CP出货登记管理_显示信息.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="12发货登记\CP出货登记管理_显示信息.Designer.cs">
+      <DependentUpon>CP出货登记管理_显示信息.cs</DependentUpon>
+    </Compile>
+    <Compile Include="12发货登记\CP出货标签打印管理.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="12发货登记\CP出货标签打印管理.Designer.cs">
+      <DependentUpon>CP出货标签打印管理.cs</DependentUpon>
+    </Compile>
+    <Compile Include="12发货登记\CP新出货清单管理.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="12发货登记\CP新出货清单管理.Designer.cs">
+      <DependentUpon>CP新出货清单管理.cs</DependentUpon>
+    </Compile>
+    <Compile Include="04基础\CP晶圆基础信息管理审核.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="04基础\CP晶圆基础信息管理审核.designer.cs">
+      <DependentUpon>CP晶圆基础信息管理审核.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CP来料收料打印.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CP来料收料打印.Designer.cs">
+      <DependentUpon>CP来料收料打印.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CP结批扫描管理.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CP结批扫描管理.Designer.cs">
+      <DependentUpon>CP结批扫描管理.cs</DependentUpon>
+    </Compile>
+    <Compile Include="14设备管理\CP设备基础信息管理.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="14设备管理\CP设备基础信息管理.Designer.cs">
+      <DependentUpon>CP设备基础信息管理.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CP预警类型.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CP预警类型.Designer.cs">
+      <DependentUpon>CP预警类型.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Excel文件加载.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Excel文件加载.Designer.cs">
+      <DependentUpon>Excel文件加载.cs</DependentUpon>
+    </Compile>
+    <Compile Include="07过站管理\LOT下线信息管理.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="07过站管理\LOT下线信息管理.Designer.cs">
+      <DependentUpon>LOT下线信息管理.cs</DependentUpon>
+    </Compile>
+    <Compile Include="07过站管理\LOT上线信息管理.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="07过站管理\LOT上线信息管理.Designer.cs">
+      <DependentUpon>LOT上线信息管理.cs</DependentUpon>
+    </Compile>
+    <Compile Include="07过站管理\LOT下线扫描.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="07过站管理\LOT下线扫描.Designer.cs">
+      <DependentUpon>LOT下线扫描.cs</DependentUpon>
+    </Compile>
+    <Compile Include="07过站管理\LOT上线扫描.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="07过站管理\LOT上线扫描.Designer.cs">
+      <DependentUpon>LOT上线扫描.cs</DependentUpon>
+    </Compile>
+    <Compile Include="07过站管理\LOT下线扫描_TSK采集.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="07过站管理\LOT下线扫描_TSK采集.Designer.cs">
+      <DependentUpon>LOT下线扫描_TSK采集.cs</DependentUpon>
+    </Compile>
+    <Compile Include="06质量管理\Lot质量OQC过站扫描.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="06质量管理\Lot质量OQC过站扫描.Designer.cs">
+      <DependentUpon>Lot质量OQC过站扫描.cs</DependentUpon>
+    </Compile>
+    <Compile Include="06质量管理\Lot质量过站管理.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="06质量管理\Lot质量过站管理.Designer.cs">
+      <DependentUpon>Lot质量过站管理.cs</DependentUpon>
+    </Compile>
+    <Compile Include="07过站管理\Lot过站扫描.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="07过站管理\Lot过站扫描.Designer.cs">
+      <DependentUpon>Lot过站扫描.cs</DependentUpon>
+    </Compile>
+    <Compile Include="07过站管理\Lot过站管理.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="07过站管理\Lot过站管理.Designer.cs">
+      <DependentUpon>Lot过站管理.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Form_CP_new.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form_CP_new.Designer.cs">
+      <DependentUpon>Form_CP_new.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Program.cs.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="pwt_file_manage.cs" />
+    <Compile Include="TSK片数统计.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="TSK片数统计.Designer.cs">
+      <DependentUpon>TSK片数统计.cs</DependentUpon>
+    </Compile>
+    <Compile Include="11业务排产打印\业务排产打印管理新版.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="11业务排产打印\业务排产打印管理新版.Designer.cs">
+      <DependentUpon>业务排产打印管理新版.cs</DependentUpon>
+    </Compile>
+    <Compile Include="11业务排产打印\业务排产打印管理.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="11业务排产打印\业务排产打印管理.Designer.cs">
+      <DependentUpon>业务排产打印管理.cs</DependentUpon>
+    </Compile>
+    <Compile Include="04基础\客户信息.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="04基础\客户信息.designer.cs">
+      <DependentUpon>客户信息.cs</DependentUpon>
+    </Compile>
+    <Compile Include="04基础\工站组.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="04基础\工站组.designer.cs">
+      <DependentUpon>工站组.cs</DependentUpon>
+    </Compile>
+    <Compile Include="08质量检验\报告单_片号检测信息.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="08质量检验\报告单_片号检测信息.Designer.cs">
+      <DependentUpon>报告单_片号检测信息.cs</DependentUpon>
+    </Compile>
+    <Compile Include="09生产异常报告\工程异常分析图谱.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="09生产异常报告\工程异常分析图谱.Designer.cs">
+      <DependentUpon>工程异常分析图谱.cs</DependentUpon>
+    </Compile>
+    <Compile Include="13来料收料发料\收货信息维护管理.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="13来料收料发料\收货信息维护管理.Designer.cs">
+      <DependentUpon>收货信息维护管理.cs</DependentUpon>
+    </Compile>
+    <Compile Include="10发货登记打印\数据浏览显示.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="10发货登记打印\数据浏览显示.Designer.cs">
+      <DependentUpon>数据浏览显示.cs</DependentUpon>
+    </Compile>
+    <Compile Include="07过站管理\新版扫描过站管理.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="07过站管理\新版扫描过站管理.Designer.cs">
+      <DependentUpon>新版扫描过站管理.cs</DependentUpon>
+    </Compile>
+    <Compile Include="14设备管理\新版设备维护管理.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="14设备管理\新版设备维护管理.Designer.cs">
+      <DependentUpon>新版设备维护管理.cs</DependentUpon>
+    </Compile>
+    <Compile Include="13来料收料发料\普通出库管理.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="13来料收料发料\普通出库管理.Designer.cs">
+      <DependentUpon>普通出库管理.cs</DependentUpon>
+    </Compile>
+    <Compile Include="13来料收料发料\仓库发料管理.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="13来料收料发料\仓库发料管理.Designer.cs">
+      <DependentUpon>仓库发料管理.cs</DependentUpon>
+    </Compile>
+    <Compile Include="13来料收料发料\收料库存管理.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="13来料收料发料\收料库存管理.designer.cs">
+      <DependentUpon>收料库存管理.cs</DependentUpon>
+    </Compile>
+    <Compile Include="11业务排产打印\排产批次选择.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="11业务排产打印\排产批次选择.designer.cs">
+      <DependentUpon>排产批次选择.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="11业务排产打印\业务排产管理.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="11业务排产打印\业务排产管理.Designer.cs">
+      <DependentUpon>业务排产管理.cs</DependentUpon>
+    </Compile>
+    <Compile Include="13来料收料发料\仓库收料管理.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="13来料收料发料\仓库收料管理.Designer.cs">
+      <DependentUpon>仓库收料管理.cs</DependentUpon>
+    </Compile>
+    <Compile Include="08质量检验\质量来料检验报告.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="08质量检验\质量来料检验报告.Designer.cs">
+      <DependentUpon>质量来料检验报告.cs</DependentUpon>
+    </Compile>
+    <Compile Include="08质量检验\质量出货检验报告.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="08质量检验\质量出货检验报告.Designer.cs">
+      <DependentUpon>质量出货检验报告.cs</DependentUpon>
+    </Compile>
+    <Compile Include="02选择窗口\输入框双参数选择框.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="02选择窗口\输入框双参数选择框.Designer.cs">
+      <DependentUpon>输入框双参数选择框.cs</DependentUpon>
+    </Compile>
+    <Compile Include="09生产异常报告\生产异常处理报告.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="09生产异常报告\生产异常处理报告.Designer.cs">
+      <DependentUpon>生产异常处理报告.cs</DependentUpon>
+    </Compile>
+    <Compile Include="09生产异常报告\生产异常处理管理_生产.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="09生产异常报告\生产异常处理管理_生产.Designer.cs">
+      <DependentUpon>生产异常处理管理_生产.cs</DependentUpon>
+    </Compile>
+    <Compile Include="09生产异常报告\生产异常处理管理信息维护.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="09生产异常报告\生产异常处理管理信息维护.Designer.cs">
+      <DependentUpon>生产异常处理管理信息维护.cs</DependentUpon>
+    </Compile>
+    <Compile Include="其他信息打印.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="其他信息打印.Designer.cs">
+      <DependentUpon>其他信息打印.cs</DependentUpon>
+    </Compile>
+    <Compile Include="文件集中管理.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="文件集中管理.Designer.cs">
+      <DependentUpon>文件集中管理.cs</DependentUpon>
+    </Compile>
+    <Compile Include="更新数据测试.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="更新数据测试.Designer.cs">
+      <DependentUpon>更新数据测试.cs</DependentUpon>
+    </Compile>
+    <Compile Include="09生产异常报告\生产异常处理单片良率信息管理.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="09生产异常报告\生产异常处理单片良率信息管理.Designer.cs">
+      <DependentUpon>生产异常处理单片良率信息管理.cs</DependentUpon>
+    </Compile>
+    <Compile Include="09生产异常报告\生产异常处理管理信息维护_新.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="09生产异常报告\生产异常处理管理信息维护_新.Designer.cs">
+      <DependentUpon>生产异常处理管理信息维护_新.cs</DependentUpon>
+    </Compile>
+    <Compile Include="02选择窗口\选择信息窗口_新.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="02选择窗口\选择信息窗口_新.Designer.cs">
+      <DependentUpon>选择信息窗口_新.cs</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="01公用类\选择打印机.resx">
+      <DependentUpon>选择打印机.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="02选择窗口\Lot数量选择二次选择过站.resx">
+      <DependentUpon>Lot数量选择二次选择过站.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="02选择窗口\Lot数量选择二次选择.resx">
+      <DependentUpon>Lot数量选择二次选择.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="02选择窗口\Lot数量选择.resx">
+      <DependentUpon>Lot数量选择.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="02选择窗口\一致表单上传.resx">
+      <DependentUpon>一致表单上传.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="02选择窗口\单一参数输入选择框.resx">
+      <DependentUpon>单一参数输入选择框.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="02选择窗口\工序组选择.resx">
+      <DependentUpon>工序组选择.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="02选择窗口\输入信息单选择框.resx">
+      <DependentUpon>输入信息单选择框.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="02选择窗口\选择信息窗口.resx">
+      <DependentUpon>选择信息窗口.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="02选择窗口\选择信息窗口_新.resx">
+      <DependentUpon>选择信息窗口_新.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="04基础\CP晶圆基础信息管理.resx">
+      <DependentUpon>CP晶圆基础信息管理.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="03上线扫描\CP流程卡上线查询.resx">
+      <DependentUpon>CP流程卡上线查询.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="03上线扫描\CP流程卡上线扫描.resx">
+      <DependentUpon>CP流程卡上线扫描.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="04基础\Form_打点烘烤.resx">
+      <DependentUpon>Form_打点烘烤.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="05TSK\CP_TSK数据分析.resx">
+      <DependentUpon>CP_TSK数据分析.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="05TSK采集数据查询\CP测试数据查询原始版本.resx">
+      <DependentUpon>CP测试数据查询原始版本.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="05TSK采集数据查询\CP测试数据查询.resx">
+      <DependentUpon>CP测试数据查询.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="04基础\Form_烘烤.resx">
+      <DependentUpon>Form_烘烤.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="04基础\Form_LASER.resx">
+      <DependentUpon>Form_LASER.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="04基础\Form_CP.resx">
+      <DependentUpon>Form_CP.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="06质量管理\Lot质量IQC过站管理.resx">
+      <DependentUpon>Lot质量IQC过站管理.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="06质量管理\Lot质量出片检验过站扫描.resx">
+      <DependentUpon>Lot质量出片检验过站扫描.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="08质量检验\质量出货检验报告.resx">
+      <DependentUpon>质量出货检验报告.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="08质量检验\质量来料检验报告.resx">
+      <DependentUpon>质量来料检验报告.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="09生产异常报告\工程异常分析图谱.resx">
+      <DependentUpon>工程异常分析图谱.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="09生产异常报告\生产异常处理管理_质量.resx">
+      <DependentUpon>生产异常处理管理_质量.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="09生产异常报告\生产异常处理管理_工程.resx">
+      <DependentUpon>生产异常处理管理_工程.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="11业务排产打印\业务排产打印管理新版流程卡版本.resx">
+      <DependentUpon>业务排产打印管理新版流程卡版本.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="12发货登记\CP出货标签打印管理.resx">
+      <DependentUpon>CP出货标签打印管理.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="04基础\BIN预警信息添加多结果.resx">
+      <DependentUpon>BIN预警信息添加多结果.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CP1_CP2合并.resx">
+      <DependentUpon>CP1_CP2合并.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CP_WIP管理.resx">
+      <DependentUpon>CP_WIP管理.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="13来料收料发料\CP仓库库存查询.resx">
+      <DependentUpon>CP仓库库存查询.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CP冻结解冻管理.resx">
+      <DependentUpon>CP冻结解冻管理.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="10发货登记打印\CP标签出货管理.resx">
+      <DependentUpon>CP标签出货管理.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="10发货登记打印\CP出货清单管理.resx">
+      <DependentUpon>CP出货清单管理.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="11业务排产打印\CP排产非关键数据变更.resx">
+      <DependentUpon>CP排产非关键数据变更.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="12发货登记\CP出货登记管理.resx">
+      <DependentUpon>CP出货登记管理.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="12发货登记\CP出货登记管理_显示信息.resx">
+      <DependentUpon>CP出货登记管理_显示信息.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="12发货登记\CP新出货清单管理.resx">
+      <DependentUpon>CP新出货清单管理.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="04基础\CP晶圆基础信息管理审核.resx">
+      <DependentUpon>CP晶圆基础信息管理审核.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CP来料收料打印.resx">
+      <DependentUpon>CP来料收料打印.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CP结批扫描管理.resx">
+      <DependentUpon>CP结批扫描管理.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="14设备管理\CP设备基础信息管理.resx">
+      <DependentUpon>CP设备基础信息管理.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CP预警类型.resx">
+      <DependentUpon>CP预警类型.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Excel文件加载.resx">
+      <DependentUpon>Excel文件加载.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="07过站管理\LOT下线信息管理.resx">
+      <DependentUpon>LOT下线信息管理.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="07过站管理\LOT上线信息管理.resx">
+      <DependentUpon>LOT上线信息管理.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="07过站管理\LOT下线扫描.resx">
+      <DependentUpon>LOT下线扫描.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="07过站管理\LOT上线扫描.resx">
+      <DependentUpon>LOT上线扫描.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="07过站管理\LOT下线扫描_TSK采集.resx">
+      <DependentUpon>LOT下线扫描_TSK采集.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="06质量管理\Lot质量OQC过站扫描.resx">
+      <DependentUpon>Lot质量OQC过站扫描.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="06质量管理\Lot质量过站管理.resx">
+      <DependentUpon>Lot质量过站管理.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="07过站管理\LOT过站扫描.resx">
+      <DependentUpon>Lot过站扫描.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="07过站管理\Lot过站管理.resx">
+      <DependentUpon>Lot过站管理.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form_CP_new.resx">
+      <DependentUpon>Form_CP_new.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="TSK片数统计.resx">
+      <DependentUpon>TSK片数统计.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="11业务排产打印\业务排产打印管理新版.resx">
+      <DependentUpon>业务排产打印管理新版.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="11业务排产打印\业务排产打印管理.resx">
+      <DependentUpon>业务排产打印管理.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="04基础\客户信息.resx">
+      <DependentUpon>客户信息.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="04基础\工站组.resx">
+      <DependentUpon>工站组.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="08质量检验\报告单_片号检测信息.resx">
+      <DependentUpon>报告单_片号检测信息.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="13来料收料发料\收货信息维护管理.resx">
+      <DependentUpon>收货信息维护管理.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="10发货登记打印\数据浏览显示.resx">
+      <DependentUpon>数据浏览显示.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="07过站管理\新版扫描过站管理.resx">
+      <DependentUpon>新版扫描过站管理.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="14设备管理\新版设备维护管理.resx">
+      <DependentUpon>新版设备维护管理.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="13来料收料发料\普通出库管理.resx">
+      <DependentUpon>普通出库管理.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="13来料收料发料\仓库发料管理.resx">
+      <DependentUpon>仓库发料管理.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="13来料收料发料\收料库存管理.resx">
+      <DependentUpon>收料库存管理.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="11业务排产打印\排产批次选择.resx">
+      <DependentUpon>排产批次选择.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="11业务排产打印\业务排产管理.resx">
+      <DependentUpon>业务排产管理.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="13来料收料发料\仓库收料管理.resx">
+      <DependentUpon>仓库收料管理.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="02选择窗口\输入框双参数选择框.resx">
+      <DependentUpon>输入框双参数选择框.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="09生产异常报告\生产异常处理报告.resx">
+      <DependentUpon>生产异常处理报告.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="09生产异常报告\生产异常处理管理_生产.resx">
+      <DependentUpon>生产异常处理管理_生产.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="09生产异常报告\生产异常处理管理信息维护.resx">
+      <DependentUpon>生产异常处理管理信息维护.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="其他信息打印.resx">
+      <DependentUpon>其他信息打印.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="文件集中管理.resx">
+      <DependentUpon>文件集中管理.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="更新数据测试.resx">
+      <DependentUpon>更新数据测试.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="09生产异常报告\生产异常处理单片良率信息管理.resx">
+      <DependentUpon>生产异常处理单片良率信息管理.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="09生产异常报告\生产异常处理管理信息维护_新.resx">
+      <DependentUpon>生产异常处理管理信息维护_新.cs</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <COMReference Include="DSOFramer">
+      <Guid>{00460180-9E5E-11D5-B7C8-B8269041DD57}</Guid>
+      <VersionMajor>2</VersionMajor>
+      <VersionMinor>2</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>tlbimp</WrapperTool>
+      <Isolated>False</Isolated>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </COMReference>
+    <COMReference Include="Microsoft.Office.Core">
+      <Guid>{2DF8D04C-5BFA-101B-BDE5-00AA0044DE52}</Guid>
+      <VersionMajor>2</VersionMajor>
+      <VersionMinor>8</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>primary</WrapperTool>
+      <Isolated>False</Isolated>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </COMReference>
+    <COMReference Include="Microsoft.Office.Interop.Excel">
+      <Guid>{00020813-0000-0000-C000-000000000046}</Guid>
+      <VersionMajor>1</VersionMajor>
+      <VersionMinor>9</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>primary</WrapperTool>
+      <Isolated>False</Isolated>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </COMReference>
+    <COMReference Include="stdole">
+      <Guid>{00020430-0000-0000-C000-000000000046}</Guid>
+      <VersionMajor>2</VersionMajor>
+      <VersionMinor>0</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>primary</WrapperTool>
+      <Isolated>False</Isolated>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </COMReference>
+    <COMReference Include="VBIDE">
+      <Guid>{0002E157-0000-0000-C000-000000000046}</Guid>
+      <VersionMajor>5</VersionMajor>
+      <VersionMinor>3</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>primary</WrapperTool>
+      <Isolated>False</Isolated>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </COMReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

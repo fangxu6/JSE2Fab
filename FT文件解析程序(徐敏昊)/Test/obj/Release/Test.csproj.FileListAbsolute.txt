@@ -1,0 +1,13 @@
+E:\Office Data\XJ Program\工作文件\xj项目\FT需求改进\14传文件\Test\Test\bin\Release\Test.exe.config
+E:\Office Data\XJ Program\工作文件\xj项目\FT需求改进\14传文件\Test\Test\bin\Release\Test.exe
+E:\Office Data\XJ Program\工作文件\xj项目\FT需求改进\14传文件\Test\Test\bin\Release\Test.pdb
+E:\Office Data\XJ Program\工作文件\xj项目\FT需求改进\14传文件\Test\Test\bin\Release\DotNetZip.dll
+E:\Office Data\XJ Program\工作文件\xj项目\FT需求改进\14传文件\Test\Test\bin\Release\DotNetZip.pdb
+E:\Office Data\XJ Program\工作文件\xj项目\FT需求改进\14传文件\Test\Test\bin\Release\DotNetZip.xml
+E:\Office Data\XJ Program\工作文件\xj项目\FT需求改进\14传文件\Test\Test\obj\Release\Test.Form1.resources
+E:\Office Data\XJ Program\工作文件\xj项目\FT需求改进\14传文件\Test\Test\obj\Release\Test.Properties.Resources.resources
+E:\Office Data\XJ Program\工作文件\xj项目\FT需求改进\14传文件\Test\Test\obj\Release\Test.csproj.GenerateResource.cache
+E:\Office Data\XJ Program\工作文件\xj项目\FT需求改进\14传文件\Test\Test\obj\Release\Test.csproj.CoreCompileInputs.cache
+E:\Office Data\XJ Program\工作文件\xj项目\FT需求改进\14传文件\Test\Test\obj\Release\Test.csproj.CopyComplete
+E:\Office Data\XJ Program\工作文件\xj项目\FT需求改进\14传文件\Test\Test\obj\Release\Test.exe
+E:\Office Data\XJ Program\工作文件\xj项目\FT需求改进\14传文件\Test\Test\obj\Release\Test.pdb
