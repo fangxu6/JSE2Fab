@@ -10,6 +10,8 @@ tes
 /TSK转TXT-赛芯转180/.vs/
 *.cache
 *.test
-*/.vs/
-*/bin/
-*/obj/
+*/.vs
+/*/bin
+/*/*/obj
+/FT文件解析程序(徐敏昊)/Test/bin
+/TSK-修改PASS为untested/TSK-UPDATE/.vs/TSK-UPDATE/FileContentIndex/read.lock
