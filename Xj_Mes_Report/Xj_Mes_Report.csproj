@@ -1,0 +1,243 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{F4D90647-CFAB-42CC-873B-947AAA9E450A}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Xj_Mes_Report</RootNamespace>
+    <AssemblyName>Xj_Mes_Report</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="DevComponents.DotNetBar.Design, Version=10.0.0.3, Culture=neutral, PublicKeyToken=2c9ff1fddc42653c, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Debug\DevComponents.DotNetBar.Design.dll</HintPath>
+    </Reference>
+    <Reference Include="DevComponents.DotNetBar.Keyboard, Version=10.6.0.5, Culture=neutral, PublicKeyToken=c39c3242a43eee2b, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Debug\DevComponents.DotNetBar.Keyboard.dll</HintPath>
+    </Reference>
+    <Reference Include="DevComponents.DotNetBar.Schedule, Version=10.6.0.5, Culture=neutral, PublicKeyToken=c39c3242a43eee2b, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Debug\DevComponents.DotNetBar.Schedule.dll</HintPath>
+    </Reference>
+    <Reference Include="DevComponents.DotNetBar.SuperGrid, Version=10.6.0.5, Culture=neutral, PublicKeyToken=c39c3242a43eee2b, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Debug\DevComponents.DotNetBar.SuperGrid.dll</HintPath>
+    </Reference>
+    <Reference Include="DevComponents.DotNetBar2, Version=10.0.0.3, Culture=neutral, PublicKeyToken=c39c3242a43eee2b, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Debug\DevComponents.DotNetBar2.dll</HintPath>
+    </Reference>
+    <Reference Include="DevComponents.Instrumentation, Version=10.0.0.3, Culture=neutral, PublicKeyToken=bc4a9d761ea44ef0, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Debug\DevComponents.Instrumentation.dll</HintPath>
+    </Reference>
+    <Reference Include="DevComponents.Instrumentation.Design, Version=10.0.0.3, Culture=neutral, PublicKeyToken=30cefae8f341f577, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Debug\DevComponents.Instrumentation.Design.dll</HintPath>
+    </Reference>
+    <Reference Include="DevComponents.SuperGrid.Design, Version=10.6.0.5, Culture=neutral, PublicKeyToken=1fea3f5d8d482bff, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Debug\DevComponents.SuperGrid.Design.dll</HintPath>
+    </Reference>
+    <Reference Include="Ionic.Zip, Version=1.9.1.5, Culture=neutral, PublicKeyToken=edbe51ad942a3f5c, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Debug\Ionic.Zip.dll</HintPath>
+    </Reference>
+    <Reference Include="NPOI, Version=2.1.3.0, Culture=neutral, PublicKeyToken=0df73ec7942b34e1, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Debug\NPOI.dll</HintPath>
+    </Reference>
+    <Reference Include="NPOI.OOXML, Version=2.1.3.0, Culture=neutral, PublicKeyToken=0df73ec7942b34e1, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Debug\NPOI.OOXML.dll</HintPath>
+    </Reference>
+    <Reference Include="NPOI.OpenXml4Net, Version=2.1.3.0, Culture=neutral, PublicKeyToken=0df73ec7942b34e1, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Debug\NPOI.OpenXml4Net.dll</HintPath>
+    </Reference>
+    <Reference Include="NPOI.OpenXmlFormats, Version=2.1.3.0, Culture=neutral, PublicKeyToken=0df73ec7942b34e1, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Debug\NPOI.OpenXmlFormats.dll</HintPath>
+    </Reference>
+    <Reference Include="Pawote.UI.Controls, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Debug\Pawote.UI.Controls.dll</HintPath>
+    </Reference>
+    <Reference Include="pwt_system_comm, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Debug\pwt_system_comm.dll</HintPath>
+    </Reference>
+    <Reference Include="pwt_system_comm_out, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Debug\pwt_system_comm_out.dll</HintPath>
+    </Reference>
+    <Reference Include="pwt_system_print, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Debug\pwt_system_print.dll</HintPath>
+    </Reference>
+    <Reference Include="Seagull.BarTender.Print, Version=11.0.3.1, Culture=neutral, PublicKeyToken=109ff779a1b4cbc7, processorArchitecture=AMD64">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Debug\Seagull.BarTender.Print.dll</HintPath>
+    </Reference>
+    <Reference Include="Spire.License, Version=1.3.8.40, Culture=neutral, PublicKeyToken=b1144360237c8b3f, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Debug\Spire.License.dll</HintPath>
+    </Reference>
+    <Reference Include="Spire.Pdf, Version=6.1.4.2040, Culture=neutral, PublicKeyToken=663f351905198cb3, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Debug\Spire.Pdf.dll</HintPath>
+    </Reference>
+    <Reference Include="Spire.XLS, Version=10.1.4.61040, Culture=neutral, PublicKeyToken=663f351905198cb3, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Debug\Spire.XLS.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Windows.Forms.DataVisualization" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+    <Reference Include="system_basic, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Debug\system_basic.dll</HintPath>
+    </Reference>
+    <Reference Include="system_comm, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Debug\system_comm.dll</HintPath>
+    </Reference>
+    <Reference Include="system_dll_com, Version=1.5.13.831, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Debug\system_dll_com.dll</HintPath>
+    </Reference>
+    <Reference Include="WeifenLuo.WinFormsUI.Docking, Version=2.7.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Debug\WeifenLuo.WinFormsUI.Docking.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="01公共类\base_info.cs" />
+    <Compile Include="Class1.cs" />
+    <Compile Include="Class2.cs" />
+    <Compile Include="CP_质量统计01.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CP_质量统计01.Designer.cs">
+      <DependentUpon>CP_质量统计01.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CP产量报告.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CP产量报告.Designer.cs">
+      <DependentUpon>CP产量报告.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CP产量统计.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CP产量统计.Designer.cs">
+      <DependentUpon>CP产量统计.cs</DependentUpon>
+    </Compile>
+    <Compile Include="01公共类\db_deal.cs" />
+    <Compile Include="01公共类\DtbToUi.cs" />
+    <Compile Include="FT生产WIP出货报表.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FT生产WIP出货报表.Designer.cs">
+      <DependentUpon>FT生产WIP出货报表.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CP生产出货报表.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CP生产出货报表.Designer.cs">
+      <DependentUpon>CP生产出货报表.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="各种报表管理.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="各种报表管理.Designer.cs">
+      <DependentUpon>各种报表管理.cs</DependentUpon>
+    </Compile>
+    <Compile Include="线上预警查询管理.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="线上预警查询管理.Designer.cs">
+      <DependentUpon>线上预警查询管理.cs</DependentUpon>
+    </Compile>
+    <Compile Include="基础资料修改TSK更新.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="基础资料修改TSK更新.Designer.cs">
+      <DependentUpon>基础资料修改TSK更新.cs</DependentUpon>
+    </Compile>
+    <Compile Include="月度报表数据生产.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="月度报表数据生产.Designer.cs">
+      <DependentUpon>月度报表数据生产.cs</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="CP_质量统计01.resx">
+      <DependentUpon>CP_质量统计01.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CP产量报告.resx">
+      <DependentUpon>CP产量报告.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CP产量统计.resx">
+      <DependentUpon>CP产量统计.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FT生产WIP出货报表.resx">
+      <DependentUpon>FT生产WIP出货报表.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CP生产出货报表.resx">
+      <DependentUpon>CP生产出货报表.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="各种报表管理.resx">
+      <DependentUpon>各种报表管理.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="线上预警查询管理.resx">
+      <DependentUpon>线上预警查询管理.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="基础资料修改TSK更新.resx">
+      <DependentUpon>基础资料修改TSK更新.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="月度报表数据生产.resx">
+      <DependentUpon>月度报表数据生产.cs</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
