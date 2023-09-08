@@ -232,574 +232,106 @@ namespace Tsk_update
 
                 /////--------------------TSK修改BIN信息代码----------------------------------------------------
 
+                int circleNum = 0;
                 //一圈
                 if (radioButton1.Checked)
                 {
-                    for (int k = 0; k < row1 * col1 - row1; k++)
-                    {
-                        if ((secondbyte1[k] & 192) == 0)//Skip Die
-                        {
-                            continue;
-                        }
-
-
-                        if (((secondbyte1[k] & 192) == 128))//Mark Die
-                        {
-                            if (k - row1 < 0)//最上面一行跳过
-                            {
-                                continue;
-                            }
-                            //上
-                            if ((secondbyte1[k - row1] & 192) == 64)//Mark Die,且上边为测试DIE
-                            {
-                                if ((firstbyte1[k - row1] & 128) != 128)
-                                {
-                                    firstbyte1[k - row1] = Convert.ToByte((firstbyte1[k - row1] & 1));
-                                    firstbyte1[k - row1] = Convert.ToByte(firstbyte1[k - row1] | 128);//标记为Fail
-
-                                    thirdbyte2[k - row1] = Convert.ToByte((thirdbyte2[k - row1] & 192));
-                                    thirdbyte2[k - row1] = Convert.ToByte((thirdbyte2[k - row1] | 60));  //换category,全部换成60
-                                }
-                            }
-
-                            //左上
-                            if ((secondbyte1[k - row1 - 1] & 192) == 64)//左上方为测试die
-                            {
-                                if ((firstbyte1[k - row1 - 1] & 128) != 128)
-                                {
-
-
-                                    firstbyte1[k - row1 - 1] = Convert.ToByte((firstbyte1[k - row1 - 1] & 1));
-                                    firstbyte1[k - row1 - 1] = Convert.ToByte(firstbyte1[k - row1 - 1] | 128);//标记为Fail
-
-                                    thirdbyte2[k - row1 - 1] = Convert.ToByte((thirdbyte2[k - row1 - 1] & 192));
-                                    thirdbyte2[k - row1 - 1] = Convert.ToByte((thirdbyte2[k - row1 - 1] | 60));  //换category,全部换成60
-                                }
-                            }
-                            //右上
-                            if ((secondbyte1[k - row1 + 1] & 192) == 64)//右上方为测试die
-                            {
-                                if ((firstbyte1[k - row1 + 1] & 128) != 128)
-                                {
-
-
-                                    firstbyte1[k - row1 + 1] = Convert.ToByte((firstbyte1[k - row1 + 1] & 1));
-                                    firstbyte1[k - row1 + 1] = Convert.ToByte(firstbyte1[k - row1 + 1] | 128);//标记为Fail
-
-                                    thirdbyte2[k - row1 + 1] = Convert.ToByte((thirdbyte2[k - row1 + 1] & 192));
-                                    thirdbyte2[k - row1 + 1] = Convert.ToByte((thirdbyte2[k - row1 + 1] | 60));  //换category,全部换成60
-                                }
-                            }
-
-                            //下
-                            if ((secondbyte1[k + row1] & 192) == 64)//下边为测试DIE
-                            {
-                                if ((firstbyte1[k + row1] & 128) != 128)
-                                {
-
-                                    /////下边标记为失效////////////////////////////////////////////////
-                                    firstbyte1[k + row1] = Convert.ToByte((firstbyte1[k + row1] & 1));
-                                    firstbyte1[k + row1] = Convert.ToByte(firstbyte1[k + row1] | 128);//标记为Fail
-
-                                    thirdbyte2[k + row1] = Convert.ToByte((thirdbyte2[k + row1] & 192));
-                                    thirdbyte2[k + row1] = Convert.ToByte((thirdbyte2[k + row1] | 60));  //换category,全部换成60
-                                }
-                            }
-
-                            //左下方
-                            if ((secondbyte1[k + row1 - 1] & 192) == 64)//左下方为测试die
-                            {
-                                if ((firstbyte1[k + row1 - 1] & 128) != 128)
-                                {
-
-
-                                    firstbyte1[k + row1 - 1] = Convert.ToByte((firstbyte1[k + row1 - 1] & 1));
-                                    firstbyte1[k + row1 - 1] = Convert.ToByte(firstbyte1[k + row1 - 1] | 128);//标记为Fail
-
-                                    thirdbyte2[k + row1 - 1] = Convert.ToByte((thirdbyte2[k + row1 - 1] & 192));
-                                    thirdbyte2[k + row1 - 1] = Convert.ToByte((thirdbyte2[k + row1 - 1] | 60));  //换category,全部换成60
-                                }
-                            }
-
-                            //右下方
-                            if ((secondbyte1[k + row1 + 1] & 192) == 64)//右下方为测试die
-                            {
-                                if ((firstbyte1[k + row1 + 1] & 128) != 128)
-                                {
-
-
-                                    firstbyte1[k + row1 + 1] = Convert.ToByte((firstbyte1[k + row1 + 1] & 1));
-                                    firstbyte1[k + row1 + 1] = Convert.ToByte(firstbyte1[k + row1 + 1] | 128);//标记为Fail
-
-                                    thirdbyte2[k + row1 + 1] = Convert.ToByte((thirdbyte2[k + row1 + 1] & 192));
-                                    thirdbyte2[k + row1 + 1] = Convert.ToByte((thirdbyte2[k + row1 + 1] | 60));  //换category,全部换成60
-                                }
-                            }
-                            //右
-                            if ((secondbyte1[k + 1] & 192) == 64)//右边为测试DIE
-                            {
-                                if ((firstbyte1[k + 1] & 128) != 128)
-                                {
-
-                                    /////右边标记为失效////////////////////////////////////////////////
-                                    firstbyte1[k + 1] = Convert.ToByte((firstbyte1[k + 1] & 1));
-                                    firstbyte1[k + 1] = Convert.ToByte(firstbyte1[k + 1] | 128);//标记为Fail
-
-                                    thirdbyte2[k + 1] = Convert.ToByte((thirdbyte2[k + 1] & 192));
-                                    thirdbyte2[k + 1] = Convert.ToByte((thirdbyte2[k + 1] | 60));  //换category,全部换成60
-                                }
-                            }
-                            //左
-                            if ((secondbyte1[k - 1] & 192) == 64)//右边为测试DIE
-                            {
-                                if ((firstbyte1[k - 1] & 128) != 128)
-                                {
-                                    /////左边标记为失效////////////////////////////////////////////////
-                                    firstbyte1[k - 1] = Convert.ToByte((firstbyte1[k + 1] & 1));
-                                    firstbyte1[k - 1] = Convert.ToByte(firstbyte1[k + 1] | 128);//标记为Fail
-
-                                    thirdbyte2[k - 1] = Convert.ToByte((thirdbyte2[k + 1] & 192));
-                                    thirdbyte2[k - 1] = Convert.ToByte((thirdbyte2[k + 1] | 60));  //换category,全部换成60
-                                }
-                            }
-                        }
-
-
-                    }
+                    circleNum = 1;
                 }
 
                 //两圈
                 if (radioButton2.Checked)
                 {
+                    circleNum = 2;
+                }
 
-                    for (int k = 0; k < row1 * col1 - row1; k++)
+                //三圈
+                if (radioButton3.Checked)
+                {
+                    circleNum = 3;
+                }
+
+                
+                for (int k = 0; k < row1 * col1 - row1; k++)
+                {
+                    if ((secondbyte1[k] & 192) == 0&& (secondbyte1[k] & 2) == 2)//Dummy Die
                     {
-                        if ((secondbyte1[k] & 192) == 0)//Skip Die
+                        continue;
+                    }
+                    if (((secondbyte1[k] & 192) != 64))//Mark Die|Skip Die
+                    {
+                        //是否是边缘Mark Die|Skip Die 临时方案 周边一圈至少有4颗Mark Die|Skip Die才是边缘
+                        //其实需要先检测到是边缘
+                        int tempCircle = 1;
+                        int sumTempMarkDie = 0;
+                        for(int ii = tempCircle * (-1); ii <= tempCircle; ii++)
                         {
-                            continue;
-
-                        }
-
-                        if (((secondbyte1[k] & 192) == 128))//Mark Die
-                        {
-                            for (int m = -2; m < 3; m++)
+                            for (int jj = tempCircle * (-1); jj <= tempCircle; jj++)
                             {
-                                for (int n = -2; n < 3; n++)
+                                int currentDie = k + ii * row1 +jj;
+                                if (currentDie < 0 | currentDie >= row1 * col1)
                                 {
-                                    int currentDie = k + m * row1 + n;
-                                    if (currentDie < 0 | currentDie >= row1 * col1)
-                                    {
-                                        continue;
-                                    }
-                                    if ((secondbyte1[currentDie] & 192) == 64)//为测试DIE
-                                    {
-                                        if ((firstbyte1[currentDie] & 128) != 128)//不是fail Die
-                                        {
-                                            firstbyte1[currentDie] = Convert.ToByte((firstbyte1[currentDie] & 1));
-                                            firstbyte1[currentDie] = Convert.ToByte(firstbyte1[currentDie] | 128);//标记为Fail
-
-                                            thirdbyte2[currentDie] = Convert.ToByte((thirdbyte2[currentDie] & 192));
-                                            thirdbyte2[currentDie] = Convert.ToByte((thirdbyte2[currentDie] | 60));  //换category,全部换成60
-                                        }
-                                    }
+                                    continue;
+                                }
+                                if (((secondbyte1[currentDie] & 192) != 64))
+                                {
+                                    sumTempMarkDie++;
                                 }
                             }
                         }
-
-                    }
-                }
-
-
-                if (radioButton3.Checked)
-                {
-
-
-                    int c = 1;
-                    for (int k = 0; k < row1 * col1 - row1; k++)
-                    {
-                        if ((secondbyte1[k] & 192) == 0)//Skip Die
+                        if ((sumTempMarkDie < 4))
                         {
                             continue;
-
                         }
-
-                        if (k - row1 > 0)
+                        
+                        //上下
+                        for (int m = circleNum * (-1); m <= circleNum; m++)
                         {
-                            if (((secondbyte1[k] & 192) == 128) && ((secondbyte1[k - row1] & 192) == 64))//Mark Die,且上边为测试DIE
+                            int currentDie = k + m * row1;
+                            
+
+                            if (currentDie < 0 | currentDie >= row1 * col1)
                             {
-                                firstbyte1[k - row1] = Convert.ToByte((firstbyte1[k - row1] & 1));
-                                firstbyte1[k - row1] = Convert.ToByte(firstbyte1[k - row1] | 128);//标记为Fail
+                                continue;
+                            }
+                            if ((secondbyte1[currentDie] & 192) == 64)//为测试DIE
+                            {
+                                if ((firstbyte1[currentDie] & 128) != 128)//不是fail Die
+                                {
+                                    firstbyte1[currentDie] = Convert.ToByte((firstbyte1[currentDie] & 1));
+                                    firstbyte1[currentDie] = Convert.ToByte(firstbyte1[currentDie] | 128);//标记为Fail
 
-                                thirdbyte2[k - row1] = Convert.ToByte((thirdbyte2[k - row1] & 192));
-                                thirdbyte2[k - row1] = Convert.ToByte((thirdbyte2[k - row1] | 60));  //换category,全部换成60
-
+                                    thirdbyte2[currentDie] = Convert.ToByte((thirdbyte2[currentDie] & 192));
+                                    thirdbyte2[currentDie] = Convert.ToByte((thirdbyte2[currentDie] | 60));  //换category,全部换成60
+                                }
 
                             }
                         }
 
-                        if (k - row1 * 2 > 0)
+                        //左右
+                        for (int m = circleNum * (-1); m <= circleNum; m++)
                         {
-                            if (((secondbyte1[k] & 192) == 128) && ((secondbyte1[k - row1] & 192) == 64) && ((secondbyte1[k - row1 * 2] & 192) == 64))//Mark Die,且上边为测试DIE
+                            int currentDie = k + m;
+                            if (currentDie < 0 | currentDie >= row1 * col1)
                             {
-                                firstbyte1[k - row1] = Convert.ToByte((firstbyte1[k - row1] & 1));
-                                firstbyte1[k - row1] = Convert.ToByte(firstbyte1[k - row1] | 128);//标记为Fail
-                                thirdbyte2[k - row1] = Convert.ToByte((thirdbyte2[k - row1] & 192));
-                                thirdbyte2[k - row1] = Convert.ToByte((thirdbyte2[k - row1] | 60));  //换category,全部换成60
-
-                                firstbyte1[k - row1 * 2] = Convert.ToByte((firstbyte1[k - row1 * 2] & 1));
-                                firstbyte1[k - row1 * 2] = Convert.ToByte(firstbyte1[k - row1 * 2] | 128);//标记为Fail
-                                thirdbyte2[k - row1 * 2] = Convert.ToByte((thirdbyte2[k - row1 * 2] & 192));
-                                thirdbyte2[k - row1 * 2] = Convert.ToByte((thirdbyte2[k - row1 * 2] | 60));  //换category,全部换成60
-
+                                continue;
                             }
-
-                            if (((secondbyte1[k] & 192) == 128) && ((secondbyte1[k - row1] & 192) == 128) && ((secondbyte1[k - row1 * 2] & 192) == 64))//Mark Die,且上边为测试DIE
+                            if ((secondbyte1[currentDie] & 192) == 64)//为测试DIE
                             {
-                                firstbyte1[k - row1 * 2] = Convert.ToByte((firstbyte1[k - row1 * 2] & 1));
-                                firstbyte1[k - row1 * 2] = Convert.ToByte(firstbyte1[k - row1 * 2] | 128);//标记为Fail
-                                thirdbyte2[k - row1 * 2] = Convert.ToByte((thirdbyte2[k - row1 * 2] & 192));
-                                thirdbyte2[k - row1 * 2] = Convert.ToByte((thirdbyte2[k - row1 * 2] | 60));  //换category,全部换成60
+                                if ((firstbyte1[currentDie] & 128) != 128)//不是fail Die
+                                {
+                                    firstbyte1[currentDie] = Convert.ToByte((firstbyte1[currentDie] & 1));
+                                    firstbyte1[currentDie] = Convert.ToByte(firstbyte1[currentDie] | 128);//标记为Fail
 
+                                    thirdbyte2[currentDie] = Convert.ToByte((thirdbyte2[currentDie] & 192));
+                                    thirdbyte2[currentDie] = Convert.ToByte((thirdbyte2[currentDie] | 60));  //换category,全部换成60
+                                }
 
                             }
                         }
-
-
-                        if (k - row1 * 3 > 0)
-                        {
-                            if (((secondbyte1[k] & 192) == 128) && ((secondbyte1[k - row1] & 192) == 64) && ((secondbyte1[k - row1 * 2] & 192) == 64) && ((secondbyte1[k - row1 * 3] & 192) == 64))//Mark Die,且上边为测试DIE
-                            {
-                                firstbyte1[k - row1] = Convert.ToByte((firstbyte1[k - row1] & 1));
-                                firstbyte1[k - row1] = Convert.ToByte(firstbyte1[k - row1] | 128);//标记为Fail
-                                thirdbyte2[k - row1] = Convert.ToByte((thirdbyte2[k - row1] & 192));
-                                thirdbyte2[k - row1] = Convert.ToByte((thirdbyte2[k - row1] | 60));  //换category,全部换成60
-
-                                firstbyte1[k - row1 * 2] = Convert.ToByte((firstbyte1[k - row1 * 2] & 1));
-                                firstbyte1[k - row1 * 2] = Convert.ToByte(firstbyte1[k - row1 * 2] | 128);//标记为Fail
-                                thirdbyte2[k - row1 * 2] = Convert.ToByte((thirdbyte2[k - row1 * 2] & 192));
-                                thirdbyte2[k - row1 * 2] = Convert.ToByte((thirdbyte2[k - row1 * 2] | 60));  //换category,全部换成60
-
-                                firstbyte1[k - row1 * 3] = Convert.ToByte((firstbyte1[k - row1 * 3] & 1));
-                                firstbyte1[k - row1 * 3] = Convert.ToByte(firstbyte1[k - row1 * 3] | 128);//标记为Fail
-                                thirdbyte2[k - row1 * 3] = Convert.ToByte((thirdbyte2[k - row1 * 3] & 192));
-                                thirdbyte2[k - row1 * 3] = Convert.ToByte((thirdbyte2[k - row1 * 3] | 60));  //换category,全部换成60
-
-                            }
-
-                            if (((secondbyte1[k] & 192) == 128) && ((secondbyte1[k - row1] & 192) == 128) && ((secondbyte1[k - row1 * 2] & 192) == 64) && ((secondbyte1[k - row1 * 3] & 192) == 64))//Mark Die,且上边为测试DIE
-                            {
-                                firstbyte1[k - row1 * 2] = Convert.ToByte((firstbyte1[k - row1 * 2] & 1));
-                                firstbyte1[k - row1 * 2] = Convert.ToByte(firstbyte1[k - row1 * 2] | 128);//标记为Fail
-                                thirdbyte2[k - row1 * 2] = Convert.ToByte((thirdbyte2[k - row1 * 2] & 192));
-                                thirdbyte2[k - row1 * 2] = Convert.ToByte((thirdbyte2[k - row1 * 2] | 60));  //换category,全部换成60
-
-                                firstbyte1[k - row1 * 3] = Convert.ToByte((firstbyte1[k - row1 * 3] & 1));
-                                firstbyte1[k - row1 * 3] = Convert.ToByte(firstbyte1[k - row1 * 3] | 128);//标记为Fail
-                                thirdbyte2[k - row1 * 3] = Convert.ToByte((thirdbyte2[k - row1 * 3] & 192));
-                                thirdbyte2[k - row1 * 3] = Convert.ToByte((thirdbyte2[k - row1 * 3] | 60));  //换category,全部换成60
-
-
-                            }
-                        }
-
-
-                        if (((secondbyte1[k] & 192) == 128) && ((secondbyte1[k + row1] & 192) == 64))//Mark Die,且下边为测试DIE
-                        {
-                            /////下边标记为失效////////////////////////////////////////////////
-                            firstbyte1[k + row1] = Convert.ToByte((firstbyte1[k + row1] & 1));
-                            firstbyte1[k + row1] = Convert.ToByte(firstbyte1[k + row1] | 128);//标记为Fail
-
-                            thirdbyte2[k + row1] = Convert.ToByte((thirdbyte2[k + row1] & 192));
-                            thirdbyte2[k + row1] = Convert.ToByte((thirdbyte2[k + row1] | 60));  //换category,全部换成60
-
-                        }
-
-                        if ((k + row1 * 2) < (row1 * col1))
-                        {
-                            if (((secondbyte1[k] & 192) == 128) && ((secondbyte1[k + row1] & 192) == 64) && ((secondbyte1[k + row1 * 2] & 192) == 64))//Mark Die,且下边为测试DIE
-                            {
-
-                                firstbyte1[k + row1] = Convert.ToByte((firstbyte1[k + row1] & 1));
-                                firstbyte1[k + row1] = Convert.ToByte(firstbyte1[k + row1] | 128);//标记为Fail
-                                thirdbyte2[k + row1] = Convert.ToByte((thirdbyte2[k + row1] & 192));
-                                thirdbyte2[k + row1] = Convert.ToByte((thirdbyte2[k + row1] | 60));  //换category,全部换成60
-
-
-                                firstbyte1[k + row1 * 2] = Convert.ToByte((firstbyte1[k + row1 * 2] & 1));
-                                firstbyte1[k + row1 * 2] = Convert.ToByte(firstbyte1[k + row1 * 2] | 128);//标记为Fail
-                                thirdbyte2[k + row1 * 2] = Convert.ToByte((thirdbyte2[k + row1 * 2] & 192));
-                                thirdbyte2[k + row1 * 2] = Convert.ToByte((thirdbyte2[k + row1 * 2] | 60));  //换category,全部换成60
-
-                            }
-
-                        }
-
-                        if ((k + row1 * 3) < (row1 * col1))
-                        {
-                            if (((secondbyte1[k] & 192) == 128) && ((secondbyte1[k + row1] & 192) == 64) && ((secondbyte1[k + row1 * 2] & 192) == 64) && ((secondbyte1[k + row1 * 3] & 192) == 64))//Mark Die,且下边为测试DIE
-                            {
-
-                                firstbyte1[k + row1] = Convert.ToByte((firstbyte1[k + row1] & 1));
-                                firstbyte1[k + row1] = Convert.ToByte(firstbyte1[k + row1] | 128);//标记为Fail
-                                thirdbyte2[k + row1] = Convert.ToByte((thirdbyte2[k + row1] & 192));
-                                thirdbyte2[k + row1] = Convert.ToByte((thirdbyte2[k + row1] | 60));  //换category,全部换成60
-
-
-                                firstbyte1[k + row1 * 2] = Convert.ToByte((firstbyte1[k + row1 * 2] & 1));
-                                firstbyte1[k + row1 * 2] = Convert.ToByte(firstbyte1[k + row1 * 2] | 128);//标记为Fail
-                                thirdbyte2[k + row1 * 2] = Convert.ToByte((thirdbyte2[k + row1 * 2] & 192));
-                                thirdbyte2[k + row1 * 2] = Convert.ToByte((thirdbyte2[k + row1 * 2] | 60));  //换category,全部换成60
-
-                                firstbyte1[k + row1 * 3] = Convert.ToByte((firstbyte1[k + row1 * 3] & 1));
-                                firstbyte1[k + row1 * 3] = Convert.ToByte(firstbyte1[k + row1 * 3] | 128);//标记为Fail
-                                thirdbyte2[k + row1 * 3] = Convert.ToByte((thirdbyte2[k + row1 * 3] & 192));
-                                thirdbyte2[k + row1 * 3] = Convert.ToByte((thirdbyte2[k + row1 * 3] | 60));  //换category,全部换成60
-
-                            }
-
-                        }
-
-
-                        if (((secondbyte1[k] & 192) == 128) && ((secondbyte1[k + 1] & 192) == 64))//Mark Die,且右边为测试DIE
-                        {
-                            /////右边标记为失效////////////////////////////////////////////////
-                            firstbyte1[k + 1] = Convert.ToByte((firstbyte1[k + 1] & 1));
-                            firstbyte1[k + 1] = Convert.ToByte(firstbyte1[k + 1] | 128);//标记为Fail
-
-                            thirdbyte2[k + 1] = Convert.ToByte((thirdbyte2[k + 1] & 192));
-                            thirdbyte2[k + 1] = Convert.ToByte((thirdbyte2[k + 1] | 60));  //换category,全部换成60
-
-                        }
-
-
-                        if (((secondbyte1[k] & 192) == 128) && ((secondbyte1[k + 1] & 192) == 64) && ((secondbyte1[k + 2] & 192) == 64))//Mark Die,且右边为测试DIE
-                        {
-
-                            firstbyte1[k + 1] = Convert.ToByte((firstbyte1[k + 1] & 1));
-                            firstbyte1[k + 1] = Convert.ToByte(firstbyte1[k + 1] | 128);//标记为Fail
-                            thirdbyte2[k + 1] = Convert.ToByte((thirdbyte2[k + 1] & 192));
-                            thirdbyte2[k + 1] = Convert.ToByte((thirdbyte2[k + 1] | 60));  //换category,全部换成60
-
-                            firstbyte1[k + 2] = Convert.ToByte((firstbyte1[k + 2] & 1));
-                            firstbyte1[k + 2] = Convert.ToByte(firstbyte1[k + 2] | 128);//标记为Fail
-                            thirdbyte2[k + 2] = Convert.ToByte((thirdbyte2[k + 2] & 192));
-                            thirdbyte2[k + 2] = Convert.ToByte((thirdbyte2[k + 2] | 60));  //换category,全部换成60
-
-                            // c = c + 1;
-                            //  k = row1 * c;
-
-                        }
-
-                        if (((secondbyte1[k] & 192) == 128) && ((secondbyte1[k + 1] & 192) == 64) && ((secondbyte1[k + 2] & 192) == 64) && ((secondbyte1[k + 3] & 192) == 64))//Mark Die,且右边为测试DIE
-                        {
-
-                            firstbyte1[k + 1] = Convert.ToByte((firstbyte1[k + 1] & 1));
-                            firstbyte1[k + 1] = Convert.ToByte(firstbyte1[k + 1] | 128);//标记为Fail
-                            thirdbyte2[k + 1] = Convert.ToByte((thirdbyte2[k + 1] & 192));
-                            thirdbyte2[k + 1] = Convert.ToByte((thirdbyte2[k + 1] | 60));  //换category,全部换成60
-
-                            firstbyte1[k + 2] = Convert.ToByte((firstbyte1[k + 2] & 1));
-                            firstbyte1[k + 2] = Convert.ToByte(firstbyte1[k + 2] | 128);//标记为Fail
-                            thirdbyte2[k + 2] = Convert.ToByte((thirdbyte2[k + 2] & 192));
-                            thirdbyte2[k + 2] = Convert.ToByte((thirdbyte2[k + 2] | 60));  //换category,全部换成60
-
-                            firstbyte1[k + 3] = Convert.ToByte((firstbyte1[k + 3] & 1));
-                            firstbyte1[k + 3] = Convert.ToByte(firstbyte1[k + 3] | 128);//标记为Fail
-                            thirdbyte2[k + 3] = Convert.ToByte((thirdbyte2[k + 3] & 192));
-                            thirdbyte2[k + 3] = Convert.ToByte((thirdbyte2[k + 3] | 60));  //换category,全部换成60
-
-                            c = c + 1;
-                            k = row1 * c;
-
-                        }
-
-
-
                     }
-
-                    //////////////////////////////////////////图谱右半边//////////////////////////////////////////////////////////////
-
-
-                    int c1 = col1;
-                    for (int k = row1 * col1 - 1; k > row1; k--)
-                    {
-                        if ((secondbyte1[k] & 192) == 0)//Skip Die
-                        {
-                            continue;
-
-                        }
-
-                        if (k - row1 > 0)
-                        {
-                            if (((secondbyte1[k] & 192) == 128) && ((secondbyte1[k - row1] & 192) == 64))//Mark Die,且上边为测试DIE
-                            {
-                                firstbyte1[k - row1] = Convert.ToByte((firstbyte1[k - row1] & 1));
-                                firstbyte1[k - row1] = Convert.ToByte(firstbyte1[k - row1] | 128);//标记为Fail
-
-                                thirdbyte2[k - row1] = Convert.ToByte((thirdbyte2[k - row1] & 192));
-                                thirdbyte2[k - row1] = Convert.ToByte((thirdbyte2[k - row1] | 60));  //换category,全部换成60
-
-
-                            }
-                        }
-
-                        if (k - row1 * 2 > 0)
-                        {
-                            if (((secondbyte1[k] & 192) == 128) && ((secondbyte1[k - row1] & 192) == 64) && ((secondbyte1[k - row1 * 2] & 192) == 64))//Mark Die,且上边为测试DIE
-                            {
-                                firstbyte1[k - row1] = Convert.ToByte((firstbyte1[k - row1] & 1));
-                                firstbyte1[k - row1] = Convert.ToByte(firstbyte1[k - row1] | 128);//标记为Fail
-                                thirdbyte2[k - row1] = Convert.ToByte((thirdbyte2[k - row1] & 192));
-                                thirdbyte2[k - row1] = Convert.ToByte((thirdbyte2[k - row1] | 60));  //换category,全部换成60
-
-                                firstbyte1[k - row1 * 2] = Convert.ToByte((firstbyte1[k - row1 * 2] & 1));
-                                firstbyte1[k - row1 * 2] = Convert.ToByte(firstbyte1[k - row1 * 2] | 128);//标记为Fail
-                                thirdbyte2[k - row1 * 2] = Convert.ToByte((thirdbyte2[k - row1 * 2] & 192));
-                                thirdbyte2[k - row1 * 2] = Convert.ToByte((thirdbyte2[k - row1 * 2] | 60));  //换category,全部换成60
-
-
-                            }
-                        }
-
-                        if (k - row1 * 3 > 0)
-                        {
-                            if (((secondbyte1[k] & 192) == 128) && ((secondbyte1[k - row1] & 192) == 64) && ((secondbyte1[k - row1 * 2] & 192) == 64) && ((secondbyte1[k - row1 * 3] & 192) == 64))//Mark Die,且上边为测试DIE
-                            {
-                                firstbyte1[k - row1] = Convert.ToByte((firstbyte1[k - row1] & 1));
-                                firstbyte1[k - row1] = Convert.ToByte(firstbyte1[k - row1] | 128);//标记为Fail
-                                thirdbyte2[k - row1] = Convert.ToByte((thirdbyte2[k - row1] & 192));
-                                thirdbyte2[k - row1] = Convert.ToByte((thirdbyte2[k - row1] | 60));  //换category,全部换成60
-
-                                firstbyte1[k - row1 * 2] = Convert.ToByte((firstbyte1[k - row1 * 2] & 1));
-                                firstbyte1[k - row1 * 2] = Convert.ToByte(firstbyte1[k - row1 * 2] | 128);//标记为Fail
-                                thirdbyte2[k - row1 * 2] = Convert.ToByte((thirdbyte2[k - row1 * 2] & 192));
-                                thirdbyte2[k - row1 * 2] = Convert.ToByte((thirdbyte2[k - row1 * 2] | 60));  //换category,全部换成60
-
-                                firstbyte1[k - row1 * 3] = Convert.ToByte((firstbyte1[k - row1 * 3] & 1));
-                                firstbyte1[k - row1 * 3] = Convert.ToByte(firstbyte1[k - row1 * 3] | 128);//标记为Fail
-                                thirdbyte2[k - row1 * 3] = Convert.ToByte((thirdbyte2[k - row1 * 3] & 192));
-                                thirdbyte2[k - row1 * 3] = Convert.ToByte((thirdbyte2[k - row1 * 3] | 60));  //换category,全部换成60
-
-
-                            }
-                        }
-
-
-                        if (k + row1 < row1 * col1 - 1)
-                        {
-
-                            if (((secondbyte1[k] & 192) == 128) && ((secondbyte1[k + row1] & 192) == 64))//Mark Die,且下边为测试DIE
-                            {
-                                /////右边标记为失效////////////////////////////////////////////////
-                                firstbyte1[k + row1] = Convert.ToByte((firstbyte1[k + row1] & 1));
-                                firstbyte1[k + row1] = Convert.ToByte(firstbyte1[k + row1] | 128);//标记为Fail
-
-                                thirdbyte2[k + row1] = Convert.ToByte((thirdbyte2[k + row1] & 192));
-                                thirdbyte2[k + row1] = Convert.ToByte((thirdbyte2[k + row1] | 60));  //换category,全部换成60
-
-                            }
-                        }
-
-                        if (k + row1 * 2 < row1 * col1 - 1)
-                        {
-
-                            if (((secondbyte1[k] & 192) == 128) && ((secondbyte1[k + row1] & 192) == 64) && ((secondbyte1[k + row1 * 2] & 192) == 64))//Mark Die,且下边为测试DIE
-                            {
-                                firstbyte1[k + row1] = Convert.ToByte((firstbyte1[k + row1] & 1));
-                                firstbyte1[k + row1] = Convert.ToByte(firstbyte1[k + row1] | 128);//标记为Fail
-                                thirdbyte2[k + row1] = Convert.ToByte((thirdbyte2[k + row1] & 192));
-                                thirdbyte2[k + row1] = Convert.ToByte((thirdbyte2[k + row1] | 60));  //换category,全部换成60
-
-                                firstbyte1[k + row1 * 2] = Convert.ToByte((firstbyte1[k + row1 * 2] & 1));
-                                firstbyte1[k + row1 * 2] = Convert.ToByte(firstbyte1[k + row1 * 2] | 128);//标记为Fail
-                                thirdbyte2[k + row1 * 2] = Convert.ToByte((thirdbyte2[k + row1 * 2] & 192));
-                                thirdbyte2[k + row1 * 2] = Convert.ToByte((thirdbyte2[k + row1 * 2] | 60));  //换category,全部换成60
-
-                            }
-                        }
-
-                        if (k + row1 * 3 < row1 * col1 - 1)
-                        {
-
-                            if (((secondbyte1[k] & 192) == 128) && ((secondbyte1[k + row1] & 192) == 64) && ((secondbyte1[k + row1 * 2] & 192) == 64) && ((secondbyte1[k + row1 * 3] & 192) == 64))//Mark Die,且下边为测试DIE
-                            {
-                                firstbyte1[k + row1] = Convert.ToByte((firstbyte1[k + row1] & 1));
-                                firstbyte1[k + row1] = Convert.ToByte(firstbyte1[k + row1] | 128);//标记为Fail
-                                thirdbyte2[k + row1] = Convert.ToByte((thirdbyte2[k + row1] & 192));
-                                thirdbyte2[k + row1] = Convert.ToByte((thirdbyte2[k + row1] | 60));  //换category,全部换成60
-
-                                firstbyte1[k + row1 * 2] = Convert.ToByte((firstbyte1[k + row1 * 2] & 1));
-                                firstbyte1[k + row1 * 2] = Convert.ToByte(firstbyte1[k + row1 * 2] | 128);//标记为Fail
-                                thirdbyte2[k + row1 * 2] = Convert.ToByte((thirdbyte2[k + row1 * 2] & 192));
-                                thirdbyte2[k + row1 * 2] = Convert.ToByte((thirdbyte2[k + row1 * 2] | 60));  //换category,全部换成60
-
-                                firstbyte1[k + row1 * 3] = Convert.ToByte((firstbyte1[k + row1 * 3] & 1));
-                                firstbyte1[k + row1 * 3] = Convert.ToByte(firstbyte1[k + row1 * 3] | 128);//标记为Fail
-                                thirdbyte2[k + row1 * 3] = Convert.ToByte((thirdbyte2[k + row1 * 3] & 192));
-                                thirdbyte2[k + row1 * 3] = Convert.ToByte((thirdbyte2[k + row1 * 3] | 60));  //换category,全部换成60
-
-                            }
-                        }
-
-
-
-                        if (((secondbyte1[k] & 192) == 128) && ((secondbyte1[k - 1] & 192) == 64))//Mark Die,且左边为测试DIE
-                        {
-                            firstbyte1[k - 1] = Convert.ToByte((firstbyte1[k - 1] & 1));
-                            firstbyte1[k - 1] = Convert.ToByte(firstbyte1[k - 1] | 128);//标记为Fail
-                            thirdbyte2[k - 1] = Convert.ToByte((thirdbyte2[k - 1] & 192));
-                            thirdbyte2[k - 1] = Convert.ToByte((thirdbyte2[k - 1] | 60));  //换category,全部换成60
-
-                        }
-
-
-
-
-                        if (((secondbyte1[k] & 192) == 128) && ((secondbyte1[k - 1] & 192) == 64) && ((secondbyte1[k - 2] & 192) == 64))//Mark Die,且左边为测试DIE
-                        {
-
-                            firstbyte1[k - 1] = Convert.ToByte((firstbyte1[k - 1] & 1));
-                            firstbyte1[k - 1] = Convert.ToByte(firstbyte1[k - 1] | 128);//标记为Fail
-                            thirdbyte2[k - 1] = Convert.ToByte((thirdbyte2[k - 1] & 192));
-                            thirdbyte2[k - 1] = Convert.ToByte((thirdbyte2[k - 1] | 60));  //换category,全部换成60
-
-                            firstbyte1[k - 2] = Convert.ToByte((firstbyte1[k - 2] & 1));
-                            firstbyte1[k - 2] = Convert.ToByte(firstbyte1[k - 2] | 128);//标记为Fail
-                            thirdbyte2[k - 2] = Convert.ToByte((thirdbyte2[k - 2] & 192));
-                            thirdbyte2[k - 2] = Convert.ToByte((thirdbyte2[k - 2] | 60));  //换category,全部换成60
-
-                        }
-
-                        if (((secondbyte1[k] & 192) == 128) && ((secondbyte1[k - 1] & 192) == 64) && ((secondbyte1[k - 2] & 192) == 64) && ((secondbyte1[k - 3] & 192) == 64))//Mark Die,且左边为测试DIE
-                        {
-
-                            firstbyte1[k - 1] = Convert.ToByte((firstbyte1[k - 1] & 1));
-                            firstbyte1[k - 1] = Convert.ToByte(firstbyte1[k - 1] | 128);//标记为Fail
-                            thirdbyte2[k - 1] = Convert.ToByte((thirdbyte2[k - 1] & 192));
-                            thirdbyte2[k - 1] = Convert.ToByte((thirdbyte2[k - 1] | 60));  //换category,全部换成60
-
-                            firstbyte1[k - 2] = Convert.ToByte((firstbyte1[k - 2] & 1));
-                            firstbyte1[k - 2] = Convert.ToByte(firstbyte1[k - 2] | 128);//标记为Fail
-                            thirdbyte2[k - 2] = Convert.ToByte((thirdbyte2[k - 2] & 192));
-                            thirdbyte2[k - 2] = Convert.ToByte((thirdbyte2[k - 2] | 60));  //换category,全部换成60
-
-                            firstbyte1[k - 3] = Convert.ToByte((firstbyte1[k - 3] & 1));
-                            firstbyte1[k - 3] = Convert.ToByte(firstbyte1[k - 3] | 128);//标记为Fail
-                            thirdbyte2[k - 3] = Convert.ToByte((thirdbyte2[k - 3] & 192));
-                            thirdbyte2[k - 3] = Convert.ToByte((thirdbyte2[k - 3] | 60));  //换category,全部换成60
-
-                            c1 = c1 - 1;
-                            k = row1 * c1 - 1;
-
-                        }
-
-                    }
-
-
 
                 }
-
-
 
                 /*
                 if (((secondbyte1[k] & 192) == 128) && ((secondbyte1[k + 1] & 192) == 64))//Mark Die,且右边为测试DIE

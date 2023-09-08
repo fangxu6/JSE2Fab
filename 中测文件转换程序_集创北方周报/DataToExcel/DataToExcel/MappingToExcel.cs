@@ -1086,11 +1086,11 @@ namespace DataToExcel
 
                 String deviceName = ((Tsk)this._currFile).Device;
                 ExpToExcelSoftBin expToExcelSoftBin = ExpToExcelSoftBinFactory.GetExpToExcelSoft(deviceName);
-                if(expToExcelSoftBin != null)
+                if (expToExcelSoftBin != null)
                 {
                     expToExcelSoftBin.expToExcel(worksheet2);
                 }
-                
+
                 //config.xml
                 object[] objArray2 = new object[num3];//头信息文件
                 object[] objArray3 = new object[num3];//每片Wafer信息
