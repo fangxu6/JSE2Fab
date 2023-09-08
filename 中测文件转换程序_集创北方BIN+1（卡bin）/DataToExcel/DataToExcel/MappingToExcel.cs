@@ -12,6 +12,7 @@ using System.Windows.Forms;
 using System.Reflection;
 using System.Collections;
 using System.Net.Mail;
+using DataToExcel.ExpDataToExcelFactory;
 
 //using Jcap.MappingConverter;
 
@@ -1081,6 +1082,13 @@ namespace DataToExcel
 
                 Excel.Range rngnum = (Excel.Range)worksheet2.Cells[6, 2];
                 rngnum.Value2 = count.ToString() + " pcs";
+
+                String deviceName = ((Tsk)this._currFile).Device;
+                ExpToExcelSoftBin expToExcelSoftBin = ExpToExcelSoftBinFactory.GetExpToExcelSoft(deviceName);
+                if (expToExcelSoftBin != null)
+                {
+                    expToExcelSoftBin.expToExcel(worksheet2);
+                }
 
                 if ((((Tsk)this._currFile).Device == "ICND2056-8-4-CP2") || (((Tsk)this._currFile).Device == "ICND2056-8-4-00P"))
                 {
