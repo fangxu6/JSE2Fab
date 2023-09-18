@@ -1337,6 +1337,10 @@ namespace DataToExcel
 
                 worksheet2.get_Range(worksheet2.Cells[8, 1], worksheet2.Cells[8, num3]).Value2 = objArray2;
                 worksheet2.get_Range(worksheet2.Cells[(num2 + 1) + 8, 1], worksheet2.Cells[(num2 + 1) + 8, num3]).Value2 = objArray3;
+                //2053WMA-8-Y16-P2 device-8寸-16工位-CP2
+                //C8N003WDA-12-固定工位-CP1
+                //C8A000WBB-12-固定工位-CP1 固定工位（die） Y单排 非Y双盘
+
                 if ((((Tsk)this._currFile).Device == "2053WMA-8-Y16-P2"))
                 {
                     int flagbin = 0;
