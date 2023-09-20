@@ -23,6 +23,7 @@ namespace DataToExcel
         public const string FileType_SINF = "sinf";
         public const string FileType_CMDTXT = "cmdtxt";
         public const string FileType_DAT = "dat";
+        public const int WarningSipDieNumber = 5;
     }
 
     /*
