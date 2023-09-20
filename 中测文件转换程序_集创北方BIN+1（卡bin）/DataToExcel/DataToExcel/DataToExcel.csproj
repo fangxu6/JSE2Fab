@@ -90,6 +90,8 @@
       <DependentUpon>AllMapMerge.cs</DependentUpon>
     </Compile>
     <Compile Include="ExpDataToExcelFactory\Device_2012WRA-12-16-00.cs" />
+    <Compile Include="ExpDataToExcelFactory\Device_2053WMA.cs" />
+    <Compile Include="ExpDataToExcelFactory\Device_2065WAA.cs" />
     <Compile Include="ExpDataToExcelFactory\Device_C8A000WAB-8-30-P01.cs" />
     <Compile Include="ExpDataToExcelFactory\Device_C8N003WDA-12-20-P01.cs" />
     <Compile Include="ExpDataToExcelFactory\Device_2018WCA-8-32-00P.cs" />
@@ -235,6 +237,9 @@
       <ProductName>Windows Installer 3.1</ProductName>
       <Install>true</Install>
     </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="ExpDataToExcelFactory\Devicecategory\" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

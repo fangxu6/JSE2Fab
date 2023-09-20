@@ -1,4 +1,6 @@
 ﻿using Excel;
+using System;
+using System.IO;
 
 namespace DataToExcel.ExpDataToExcelFactory
 {
@@ -51,6 +53,16 @@ namespace DataToExcel.ExpDataToExcelFactory
             Excel.Range rngbin18 = (Excel.Range)worksheet.Cells[7, 24];
             rngbin18.Value2 = "CP1_Bin18:IOUT_12K_AVE_1";
 
+        }
+
+        public override bool defatultSave()
+        {
+            return false;
+        }
+
+        public override void Save(CmdTxt cmd)
+        {
+            Device_2065WAA.Save(cmd);
         }
     }
 }

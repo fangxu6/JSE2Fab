@@ -1,4 +1,6 @@
 ﻿using Excel;
+using System.IO;
+using System;
 
 namespace DataToExcel.ExpDataToExcelFactory
 {
@@ -69,6 +71,21 @@ namespace DataToExcel.ExpDataToExcelFactory
             Excel.Range rngbin24 = (Excel.Range)worksheet.Cells[7, 30];
             rngbin24.Value2 = "Bin24:IOUT_2P2K_AVE";
 
+        }
+
+        public override int defatultRotate()
+        {
+            return 90;
+        }
+
+        public override bool defatultSave()
+        {
+            return false;
+        }
+
+        public override void Save(CmdTxt cmd)
+        {
+            Device_2053WMA.Save(cmd);
         }
     }
 }

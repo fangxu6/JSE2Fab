@@ -1,4 +1,6 @@
 ﻿using Excel;
+using System;
+using System.IO;
 
 namespace DataToExcel.ExpDataToExcelFactory
 {
@@ -129,6 +131,16 @@ namespace DataToExcel.ExpDataToExcelFactory
             Excel.Range rngbin44 = (Excel.Range)worksheet.Cells[7, 50];
             rngbin44.Value2 = "CP2_Bin44:IDD_LDO_REGU_0P1S";
 
+        }
+
+        public override bool defatultSave()
+        {
+            return false;
+        }
+
+        public override void Save(CmdTxt cmd)
+        {
+            Device_2065WAA.Save(cmd);
         }
     }
 }

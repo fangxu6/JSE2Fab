@@ -151,7 +151,7 @@
             this.button2.Location = new System.Drawing.Point(9, 20);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(97, 29);
-            this.button2.TabIndex = 0;
+            this.button2.TabIndex = 1;
             this.button2.Text = "Load  File";
             this.button2.UseVisualStyleBackColor = true;
             this.button2.Click += new System.EventHandler(this.loadFileToolStripMenuItem_Click);
@@ -161,7 +161,7 @@
             this.button3.Location = new System.Drawing.Point(9, 64);
             this.button3.Name = "button3";
             this.button3.Size = new System.Drawing.Size(97, 29);
-            this.button3.TabIndex = 1;
+            this.button3.TabIndex = 2;
             this.button3.Text = "Clear  File";
             this.button3.UseVisualStyleBackColor = true;
             this.button3.Click += new System.EventHandler(this.clearFileMenuItem_Click);
@@ -247,7 +247,7 @@
             this.button5.Location = new System.Drawing.Point(532, 2);
             this.button5.Name = "button5";
             this.button5.Size = new System.Drawing.Size(60, 24);
-            this.button5.TabIndex = 6;
+            this.button5.TabIndex = 11;
             this.button5.Text = "Browse";
             this.button5.UseVisualStyleBackColor = true;
             this.button5.Click += new System.EventHandler(this.button5_Click);
@@ -267,7 +267,7 @@
             this.textBox1.Location = new System.Drawing.Point(86, 4);
             this.textBox1.Name = "textBox1";
             this.textBox1.Size = new System.Drawing.Size(444, 35);
-            this.textBox1.TabIndex = 4;
+            this.textBox1.TabIndex = 10;
             this.textBox1.Leave += new System.EventHandler(this.textBox1_Leave);
             // 
             // button6
@@ -275,17 +275,17 @@
             this.button6.Location = new System.Drawing.Point(9, 255);
             this.button6.Name = "button6";
             this.button6.Size = new System.Drawing.Size(97, 29);
-            this.button6.TabIndex = 4;
+            this.button6.TabIndex = 5;
             this.button6.Text = "ExportToTma";
             this.button6.UseVisualStyleBackColor = true;
             this.button6.Click += new System.EventHandler(this.button6_Click);
             // 
             // button4
             // 
-            this.button4.Location = new System.Drawing.Point(9, 200);
+            this.button4.Location = new System.Drawing.Point(9, 204);
             this.button4.Name = "button4";
             this.button4.Size = new System.Drawing.Size(97, 29);
-            this.button4.TabIndex = 3;
+            this.button4.TabIndex = 4;
             this.button4.Text = "ExportToTxt";
             this.button4.UseVisualStyleBackColor = true;
             this.button4.Click += new System.EventHandler(this.button4_Click);
@@ -301,7 +301,7 @@
             this.图谱合并ToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(723, 48);
+            this.menuStrip1.Size = new System.Drawing.Size(723, 39);
             this.menuStrip1.TabIndex = 7;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -312,7 +312,7 @@
             this.loadFileToolStripMenuItem,
             this.clearListToolStripMenuItem});
             this.文件ToolStripMenuItem.Name = "文件ToolStripMenuItem";
-            this.文件ToolStripMenuItem.Size = new System.Drawing.Size(102, 44);
+            this.文件ToolStripMenuItem.Size = new System.Drawing.Size(102, 35);
             this.文件ToolStripMenuItem.Text = "File(&F)";
             // 
             // setPathToolStripMenuItem
@@ -346,7 +346,7 @@
             this.expToTxtToolStripMenuItem,
             this.expToTmaToolStripMenuItem});
             this.导出ToolStripMenuItem.Name = "导出ToolStripMenuItem";
-            this.导出ToolStripMenuItem.Size = new System.Drawing.Size(136, 44);
+            this.导出ToolStripMenuItem.Size = new System.Drawing.Size(136, 35);
             this.导出ToolStripMenuItem.Text = "Export(&E)";
             // 
             // expToExcelToolStripMenuItem
@@ -378,7 +378,7 @@
             this.aboutToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.aboutToolStripMenuItem1});
             this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
-            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(123, 44);
+            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(123, 35);
             this.aboutToolStripMenuItem.Text = "Help(&H)";
             // 
             // aboutToolStripMenuItem1
@@ -394,7 +394,7 @@
             this.图谱合并ToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.sINF合并TSKToolStripMenuItem});
             this.图谱合并ToolStripMenuItem.Name = "图谱合并ToolStripMenuItem";
-            this.图谱合并ToolStripMenuItem.Size = new System.Drawing.Size(130, 44);
+            this.图谱合并ToolStripMenuItem.Size = new System.Drawing.Size(130, 35);
             this.图谱合并ToolStripMenuItem.Text = "图谱合并";
             // 
             // sINF合并TSKToolStripMenuItem
@@ -414,9 +414,9 @@
             this.groupBox3.Controls.Add(this.button3);
             this.groupBox3.Controls.Add(this.button1);
             this.groupBox3.Dock = System.Windows.Forms.DockStyle.Right;
-            this.groupBox3.Location = new System.Drawing.Point(607, 48);
+            this.groupBox3.Location = new System.Drawing.Point(607, 39);
             this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(116, 357);
+            this.groupBox3.Size = new System.Drawing.Size(116, 366);
             this.groupBox3.TabIndex = 8;
             this.groupBox3.TabStop = false;
             // 
@@ -437,7 +437,7 @@
             this.button7.Location = new System.Drawing.Point(9, 155);
             this.button7.Name = "button7";
             this.button7.Size = new System.Drawing.Size(97, 39);
-            this.button7.TabIndex = 5;
+            this.button7.TabIndex = 3;
             this.button7.Text = "ExportToXLSX_集创";
             this.button7.UseVisualStyleBackColor = false;
             this.button7.Click += new System.EventHandler(this.button7_Click);

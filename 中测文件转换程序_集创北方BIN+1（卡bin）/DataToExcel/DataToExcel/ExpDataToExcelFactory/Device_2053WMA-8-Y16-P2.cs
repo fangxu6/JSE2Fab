@@ -1,4 +1,6 @@
 ﻿using Excel;
+using System;
+using System.IO;
 
 namespace DataToExcel.ExpDataToExcelFactory
 {
@@ -104,6 +106,21 @@ namespace DataToExcel.ExpDataToExcelFactory
             rngbin35.Value2 = "Bin35:LEAKAGE_AD1";
 
 
+        }
+
+        public override int defatultRotate()
+        {
+            return 90;
+        }
+
+        public override bool defatultSave()
+        {
+            return false;
+        }
+
+        public override void Save(CmdTxt cmd)
+        {
+            Device_2053WMA.Save(cmd);
         }
     }
 }

@@ -26,17 +26,20 @@ namespace DataToExcel
                     cap = "F";
                     break;
                 case DieCategory.MarkDie:
-                    cap = "M";
+                    cap = ".";
                     break;
                 //case DieCategory.NoneDie:
                 //    cap = "N";
                 //    break;
                 case DieCategory.PassDie:
-                    cap = "P";
+                    cap = "1";
                     break;
                 case DieCategory.NoneDie:
                 case DieCategory.SkipDie:
                     cap = ".";
+                    break;
+                case DieCategory.SkipDie2:
+                    cap = "#";
                     break;
                 default:
                     cap = "?";
