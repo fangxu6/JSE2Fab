@@ -104,7 +104,13 @@ namespace DataToExcel.ExpDataToExcelFactory
                     }
                     cmd.WriteString("Test Start Time:" + cmd.LoadTime.ToString("yy/MM/dd HH:mm:ss") + cmd.Enter);
                     cmd.WriteString("Test End Time:" + cmd.EndTime.ToString("yy/MM/dd HH:mm:ss") + cmd.Enter);
-                    cmd.WriteString("Test Program:ICND2053WLA_CP2_16D_ST2564_V06_HT;" + cmd.Enter);
+                    if (cmd.Device.Equals("2053WMA-8-16-CP2")|| cmd.Device.Equals("2053WMA-8-Y16-P2"))
+                    {
+                        cmd.WriteString("Test Program:ICND2053WLA_CP2_16D_ST2564_V06_HT;" + cmd.Enter);
+                    } else
+                    {
+                        cmd.WriteString("Test Program:ICND2053WLA_CP1_16D_ST2564_V06;" + cmd.Enter);
+                    }
                     cmd.WriteString("Tester ID:ST2564-04" + cmd.Enter);
                     cmd.WriteString("Operator ID:" + cmd.Enter);
                     cmd.WriteString("Sort ID:" + cmd.Enter);
