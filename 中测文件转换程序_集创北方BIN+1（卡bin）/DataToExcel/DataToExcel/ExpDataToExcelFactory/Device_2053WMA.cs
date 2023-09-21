@@ -7,6 +7,10 @@ namespace DataToExcel.ExpDataToExcelFactory
 {
     public class Device_2053WMA
     {
+        public static int defatultRotate()
+        {
+            return 0;
+        }
         public static void Save(CmdTxt cmd)
         {
             try

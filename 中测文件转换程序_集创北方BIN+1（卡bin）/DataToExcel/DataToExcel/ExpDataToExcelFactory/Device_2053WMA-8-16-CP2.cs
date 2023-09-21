@@ -108,7 +108,7 @@ namespace DataToExcel.ExpDataToExcelFactory
 
         public override int defatultRotate()
         {
-            return 90;
+            return Device_2053WMA.defatultRotate();
         }
 
         public override bool defatultSave()
