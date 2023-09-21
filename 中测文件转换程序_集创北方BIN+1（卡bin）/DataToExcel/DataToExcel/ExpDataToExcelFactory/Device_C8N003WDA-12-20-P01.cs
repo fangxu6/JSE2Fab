@@ -21,40 +21,40 @@ namespace DataToExcel.ExpDataToExcelFactory
             Excel.Range rngbin8 = (Excel.Range)worksheet.Cells[7, 14];
             rngbin8.Value2 = "Bin8:IIH_FAIL";
 
-            Excel.Range rngbin9 = (Excel.Range)worksheet.Cells[7, 11];
+            Excel.Range rngbin9 = (Excel.Range)worksheet.Cells[7, 15];
             rngbin9.Value2 = "Bin9:IDD_LDO_REGU_FAIL";
 
-            Excel.Range rngbin10 = (Excel.Range)worksheet.Cells[7, 12];
+            Excel.Range rngbin10 = (Excel.Range)worksheet.Cells[7, 16];
             rngbin10.Value2 = "Bin10:FUNC_nor_FAIL";
 
-            Excel.Range rngbin11 = (Excel.Range)worksheet.Cells[7, 13];
+            Excel.Range rngbin11 = (Excel.Range)worksheet.Cells[7, 17];
             rngbin11.Value2 = "Bin11:FUNC_PLL_FAIL";
 
-            Excel.Range rngbin12 = (Excel.Range)worksheet.Cells[7, 13];
+            Excel.Range rngbin12 = (Excel.Range)worksheet.Cells[7, 18];
             rngbin12.Value2 = "Bin12:FUNC_mbist_FAIL";
 
-            Excel.Range rngbin13 = (Excel.Range)worksheet.Cells[7, 14];
+            Excel.Range rngbin13 = (Excel.Range)worksheet.Cells[7, 19];
             rngbin13.Value2 = "Bin13:FUNC_mbist_2V_FAIL";
 
-            Excel.Range rngbin14 = (Excel.Range)worksheet.Cells[7, 12];
+            Excel.Range rngbin14 = (Excel.Range)worksheet.Cells[7, 20];
             rngbin14.Value2 = "Bin14:FUNC_mbist_1P4V_FAIL";
 
-            Excel.Range rngbin15 = (Excel.Range)worksheet.Cells[7, 13];
+            Excel.Range rngbin15 = (Excel.Range)worksheet.Cells[7, 21];
             rngbin15.Value2 = "Bin15:SDO_5V_FAIL";
 
-            Excel.Range rngbin16 = (Excel.Range)worksheet.Cells[7, 14];
+            Excel.Range rngbin16 = (Excel.Range)worksheet.Cells[7, 22];
             rngbin16.Value2 = "Bin16:IOUT_27K_FAIL";
 
-            Excel.Range rngbin17 = (Excel.Range)worksheet.Cells[7, 12];
+            Excel.Range rngbin17 = (Excel.Range)worksheet.Cells[7, 23];
             rngbin17.Value2 = "Bin17:SKEW_27K_FAIL";
 
-            Excel.Range rngbin18 = (Excel.Range)worksheet.Cells[7, 13];
+            Excel.Range rngbin18 = (Excel.Range)worksheet.Cells[7, 24];
             rngbin18.Value2 = "Bin18:IOUT_27K_AVE_FAIL";
 
-            Excel.Range rngbin19 = (Excel.Range)worksheet.Cells[7, 14];
+            Excel.Range rngbin19 = (Excel.Range)worksheet.Cells[7, 25];
             rngbin19.Value2 = "Bin19:VR_DN_FAIL";
 
-            Excel.Range rngbin20 = (Excel.Range)worksheet.Cells[7, 14];
+            Excel.Range rngbin20 = (Excel.Range)worksheet.Cells[7, 26];
             rngbin20.Value2 = "Bin20:LEAKAGE_ad1_FAIL";
         }
     }

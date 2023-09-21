@@ -457,12 +457,12 @@ namespace DataToExcel
                             break;
                         case 1:
                             die.Attribute = DieCategory.PassDie;
-                            die.Bin = t5;    //aegon--2019.3.25
+                            die.Bin = t5 + 1;    //aegon--2019.3.25
                             break;
                         case 2:
                         case 3:
                             die.Attribute = DieCategory.FailDie;
-                            die.Bin = t5;    //zjf 2008.09.27
+                            die.Bin = t5 + 1;    //zjf 2008.09.27
                             break;
                         default:
                             die.Attribute = DieCategory.Unknow;
