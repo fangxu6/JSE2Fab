@@ -301,7 +301,7 @@
             this.图谱合并ToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(723, 39);
+            this.menuStrip1.Size = new System.Drawing.Size(723, 48);
             this.menuStrip1.TabIndex = 7;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -414,9 +414,9 @@
             this.groupBox3.Controls.Add(this.button3);
             this.groupBox3.Controls.Add(this.button1);
             this.groupBox3.Dock = System.Windows.Forms.DockStyle.Right;
-            this.groupBox3.Location = new System.Drawing.Point(607, 39);
+            this.groupBox3.Location = new System.Drawing.Point(607, 48);
             this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(116, 366);
+            this.groupBox3.Size = new System.Drawing.Size(116, 357);
             this.groupBox3.TabIndex = 8;
             this.groupBox3.TabStop = false;
             // 

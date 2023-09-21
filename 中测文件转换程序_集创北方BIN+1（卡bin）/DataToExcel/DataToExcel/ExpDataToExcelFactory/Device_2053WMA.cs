@@ -126,7 +126,7 @@ namespace DataToExcel.ExpDataToExcelFactory
                     cmd.WriteString("Yield:" + Math.Round(Convert.ToDouble((double)(cmd.PassDie / ((double)(cmd.PassDie + cmd.FailDie)))), 6).ToString("0.0000%") + cmd.Enter);
                     cmd.WriteString("StrBin:1,1;2,2;3,3;4,4;5,5;6,6;7,7;8,8;9,9;10,A;11,B;12,C;13,D;14,E;15,F;16,G;17,H;18,I;19,J;20,K;21,L;22,M;23,N;24,O;25,P;26,Q;27,R;28,S;29,T;30,U;31,V;32,W;33,Y;34,Z;35,a;60,X;" + cmd.Enter);
 
-                    int skipDieNum= cmd.DieMatrix.DieAttributeStat( DieCategory.SkipDie2);
+                    int skipDieNum= cmd.DieMatrix.DieAttributeAccurateStat( DieCategory.SkipDie2);
                     if (skipDieNum > ConstDefine.WarningSipDieNumber)
                     {
                         MessageBox.Show(string.Format("片号"+ cmd.SlotNo.ToString("00") + "的skip die '#' 超过{0:d}个，请注意。", ConstDefine.WarningSipDieNumber));

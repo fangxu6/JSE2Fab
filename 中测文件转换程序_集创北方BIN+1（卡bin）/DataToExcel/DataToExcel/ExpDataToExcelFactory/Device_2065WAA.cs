@@ -71,7 +71,7 @@ namespace DataToExcel.ExpDataToExcelFactory
                     cmd.WriteString("Yield:" + Math.Round(Convert.ToDouble((double)(cmd.PassDie / ((double)(cmd.PassDie + cmd.FailDie)))), 4).ToString("0.0000%") + cmd.Enter);
 
 
-                    int skipDieNum = cmd.DieMatrix.DieAttributeStat(DieCategory.SkipDie2);
+                    int skipDieNum = cmd.DieMatrix.DieAttributeAccurateStat(DieCategory.SkipDie2);
                     if (skipDieNum > ConstDefine.WarningSipDieNumber)
                     {
                         MessageBox.Show(string.Format("片号" + cmd.SlotNo.ToString("00") + "的skip die '#' 超过{0:d}个，请注意。", ConstDefine.WarningSipDieNumber));

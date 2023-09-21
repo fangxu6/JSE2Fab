@@ -1069,6 +1069,19 @@ namespace DataToExcel
             return count;
         }
 
+        public int DieAttributeAccurateStat(DieCategory attr)
+        {
+            int count = 0;
+
+            foreach (DieData die in this._items)
+            {
+                if ((die.Attribute.Equals(attr)))
+                    count += 1;
+            }
+
+            return count;
+        }
+
         public enum OffsetDir
         {
             X = 0,  // X ·½ÏòÎ»ÒÆ
