@@ -24,7 +24,7 @@ namespace DataToExcel.ExpDataToExcelFactory
                     }
                     cmd.OpenWriter();
 
-                    cmd.WriteString("Device:" + cmd.Device + cmd.Enter);
+                    cmd.WriteString("Device:" + cmd.Operator + cmd.Enter);
                     cmd.WriteString("Lot NO:" + cmd.LotNo + cmd.Enter);
                     cmd.WriteString("Wafer ID:" + cmd.SlotNo.ToString("00") + cmd.Enter);
                     string WaferSize1 = "";
@@ -35,7 +35,7 @@ namespace DataToExcel.ExpDataToExcelFactory
                     }
                     else if (cmd.WaferSize == 80)
                     {
-                        WaferSize1 = "8 Inch";
+                        WaferSize1 = "8";
 
                     }
 

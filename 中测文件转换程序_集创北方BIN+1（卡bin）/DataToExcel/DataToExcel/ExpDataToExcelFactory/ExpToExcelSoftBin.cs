@@ -28,6 +28,7 @@ namespace DataToExcel.ExpDataToExcelFactory
 
             //zjf 2008.09.03
             //begin
+            cmdtxt.Operator = source.Operator;
             cmdtxt.Device = source.Device;
             cmdtxt.LotNo = source.LotNo;
             cmdtxt.WaferID = source.WaferID;

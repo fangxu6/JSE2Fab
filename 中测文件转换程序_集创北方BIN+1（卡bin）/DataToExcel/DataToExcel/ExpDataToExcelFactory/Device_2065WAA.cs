@@ -19,7 +19,7 @@ namespace DataToExcel.ExpDataToExcelFactory
                     }
                     cmd.OpenWriter();
 
-                    cmd.WriteString("Device: " + cmd.Device + cmd.Enter);
+                    cmd.WriteString("Device: " + cmd.Operator + cmd.Enter);
                     cmd.WriteString("Lot NO:" + cmd.LotNo.Replace("CP2", "").Replace("CP1", "").Replace("CP3", "") + cmd.Enter);
                     cmd.WriteString("Slot No:" + cmd.SlotNo.ToString("00") + cmd.Enter);
                     cmd.WriteString("Wafer ID:" + cmd.WaferID.Replace("CP2", "").Replace("CP1", "").Replace("CP3", "") + cmd.Enter);

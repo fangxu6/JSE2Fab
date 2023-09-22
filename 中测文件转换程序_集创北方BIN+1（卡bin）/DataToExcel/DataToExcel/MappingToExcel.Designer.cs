@@ -312,7 +312,7 @@
             this.loadFileToolStripMenuItem,
             this.clearListToolStripMenuItem});
             this.文件ToolStripMenuItem.Name = "文件ToolStripMenuItem";
-            this.文件ToolStripMenuItem.Size = new System.Drawing.Size(102, 35);
+            this.文件ToolStripMenuItem.Size = new System.Drawing.Size(102, 44);
             this.文件ToolStripMenuItem.Text = "File(&F)";
             // 
             // setPathToolStripMenuItem
@@ -346,7 +346,7 @@
             this.expToTxtToolStripMenuItem,
             this.expToTmaToolStripMenuItem});
             this.导出ToolStripMenuItem.Name = "导出ToolStripMenuItem";
-            this.导出ToolStripMenuItem.Size = new System.Drawing.Size(136, 35);
+            this.导出ToolStripMenuItem.Size = new System.Drawing.Size(136, 44);
             this.导出ToolStripMenuItem.Text = "Export(&E)";
             // 
             // expToExcelToolStripMenuItem
@@ -378,7 +378,7 @@
             this.aboutToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.aboutToolStripMenuItem1});
             this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
-            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(123, 35);
+            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(123, 44);
             this.aboutToolStripMenuItem.Text = "Help(&H)";
             // 
             // aboutToolStripMenuItem1
@@ -394,7 +394,7 @@
             this.图谱合并ToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.sINF合并TSKToolStripMenuItem});
             this.图谱合并ToolStripMenuItem.Name = "图谱合并ToolStripMenuItem";
-            this.图谱合并ToolStripMenuItem.Size = new System.Drawing.Size(130, 35);
+            this.图谱合并ToolStripMenuItem.Size = new System.Drawing.Size(130, 44);
             this.图谱合并ToolStripMenuItem.Text = "图谱合并";
             // 
             // sINF合并TSKToolStripMenuItem

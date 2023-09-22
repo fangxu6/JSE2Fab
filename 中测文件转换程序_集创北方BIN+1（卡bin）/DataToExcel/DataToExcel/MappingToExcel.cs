@@ -98,61 +98,7 @@ namespace DataToExcel
                     new CMDTskToTxt().Convert(this.lsvItems.Items[num2].SubItems[1].Text.Trim(), this.textBox1.Text + @"\TxtOutFile\" + this.LotNo + @"\" + this.lsvItems.Items[num2].Text.Trim() + ".txt");
                     this.progressBar1.Value++;
                 }
-                string path = this.textBox1.Text + @"\TxtOutFile\" + this.LotNo + @"\Total.txt"; //½¨Á¢µÄTotal.txt
-                if (File.Exists(path))
-                {
-                    writer = File.AppendText(path);
-                }
-                else
-                {
-                    writer = File.CreateText(path);
-                }
-                writer.WriteLine("============ Total Wafer Information () ===========");
-                writer.WriteLine("  Device: " + CmdTxt._Device);
-                writer.WriteLine("  Lot NO: " + CmdTxt._LotNo);
-                writer.WriteLine("  Total Die: " + CmdTxt._TotalDie);
-                writer.WriteLine("  Total Pass Die: " + CmdTxt._TotalPassDie);
-                writer.WriteLine("  Total Fail Die: " + CmdTxt._TotalFailDie);
-                writer.WriteLine("  Total Yield: " + CmdTxt._TotalYield);
-                writer.WriteLine("=============================================");
-                int num3 = this.FieldListBox1.CheckedItems.Count;
-                int num4 = 0;
-                for (num2 = 0; num2 <= (num3 - 1); num2++)
-                {
-                    string s = this.FieldListBox1.CheckedItems[num2].ToString().Trim();
-                    if (s.Substring(0, 3) == "BIN")
-                    {
-                        int num5;
-                        string[] strArray;
-                        s = s.Substring(s.LastIndexOf(" ")).Trim();
-                        if (ToCountDie._ToCountDie[int.Parse(s)] != null)
-                        {
-                            num5 = Convert.ToInt32(ToCountDie._ToCountDie[int.Parse(s)]);
-                        }
-                        else
-                        {
-                            num5 = 0;
-                        }
-                        if (s != "1")
-                        {
-                            strArray = new string[5];
-                            strArray[0] = this.FieldListBox1.CheckedItems[num2].ToString().Trim();
-                            strArray[1] = "   ";
-                            strArray[2] = num5.ToString("00000");
-                            strArray[3] = "   ";
-                            double num6 = Convert.ToDouble(num5) / ((double)CmdTxt._TotalDie);
-                            strArray[4] = num6.ToString("0.00%");
-                            writer.WriteLine(string.Concat(strArray));
-                        }
-                        else
-                        {
-                            strArray = new string[] { this.FieldListBox1.CheckedItems[num2].ToString().Trim(), "   ", CmdTxt._TotalPassDie.ToString("00000"), "   ", (Convert.ToDouble(CmdTxt._TotalPassDie) / ((double)CmdTxt._TotalDie)).ToString("0.00%") };
-                            writer.WriteLine(string.Concat(strArray));
-                        }
-                        num4++;
-                    }
-                }
-                writer.Close();
+               
                 if (MessageBox.Show("Export TXT File Success!Would you like to open it?", "confirm", MessageBoxButtons.YesNo) == DialogResult.Yes)
                 {
                     Process.Start(this.textBox1.Text + @"\TxtOutFile\" + this.LotNo + @"\");
