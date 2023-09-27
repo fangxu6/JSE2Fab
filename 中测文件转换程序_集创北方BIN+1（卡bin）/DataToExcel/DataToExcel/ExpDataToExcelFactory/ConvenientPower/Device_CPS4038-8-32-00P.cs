@@ -68,5 +68,15 @@ namespace DataToExcel.ExpDataToExcelFactory
             rngbin24.Value2 = "CP2_Bin24: ";
 
         }
+
+        public override bool defatultSave()
+        {
+            return false;
+        }
+
+        public override void Save(CmdTxt cmd)
+        {
+            Device_YiChong.Save(cmd);
+        }
     }
 }
