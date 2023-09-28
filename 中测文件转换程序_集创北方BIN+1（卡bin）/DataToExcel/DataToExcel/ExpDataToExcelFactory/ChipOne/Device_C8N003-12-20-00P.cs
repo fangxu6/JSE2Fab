@@ -2,7 +2,7 @@
 
 namespace DataToExcel.ExpDataToExcelFactory
 {
-    public class Device_C8N003WDA_12_20_P01 : ExpToExcelSoftBin
+    public class Device_C8N003_12_20_00P : ExpToExcelSoftBin
     {
         public override void expToExcel(Worksheet worksheet)
         {
