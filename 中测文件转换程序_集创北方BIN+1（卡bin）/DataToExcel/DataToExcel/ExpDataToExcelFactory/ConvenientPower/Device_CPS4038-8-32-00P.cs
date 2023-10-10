@@ -76,6 +76,7 @@ namespace DataToExcel.ExpDataToExcelFactory
 
         public override void Save(CmdTxt cmd)
         {
+            cmd.Device = "TMNS01";
             Device_YiChong.Save(cmd);
         }
     }

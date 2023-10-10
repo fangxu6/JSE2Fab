@@ -92,8 +92,8 @@
     <Compile Include="ExpDataToExcelFactory\ChipOne\Device_2012WRA-12-16-00.cs" />
     <Compile Include="ExpDataToExcelFactory\ChipOne\Device_2053WMA.cs" />
     <Compile Include="ExpDataToExcelFactory\ChipOne\Device_2065WAA.cs" />
-    <Compile Include="ExpDataToExcelFactory\ChipOne\Device_C8A000WAB-8-30-P01.cs" />
-    <Compile Include="ExpDataToExcelFactory\ChipOne\Device_C8N003WDA-12-20-P01.cs" />
+    <Compile Include="ExpDataToExcelFactory\ChipOne\Device_C8A000WBB-8-30-0.cs" />
+    <Compile Include="ExpDataToExcelFactory\ChipOne\Device_C8N003-12-20-00P.cs" />
     <Compile Include="ExpDataToExcelFactory\ChipOne\Device_2018WCA-8-32-00P.cs" />
     <Compile Include="ExpDataToExcelFactory\ChipOne\Device_2019WCA-8-16-00P.cs" />
     <Compile Include="ExpDataToExcelFactory\ChipOne\Device_2019WCA-8-8-00P.cs" />
@@ -110,8 +110,6 @@
     <Compile Include="ExpDataToExcelFactory\ChipOne\Device_2053WMA-8-Y16-P2.cs" />
     <Compile Include="ExpDataToExcelFactory\ChipOne\Device_2065WAA-8-16-CP1.cs" />
     <Compile Include="ExpDataToExcelFactory\ChipOne\Device_2065WAA-8-16-CP2.cs" />
-    <Compile Include="ExpDataToExcelFactory\ChipOne\Device_2065WAA-8-8-CP1.cs" />
-    <Compile Include="ExpDataToExcelFactory\ChipOne\Device_2065WAA-8-8-CP2.cs" />
     <Compile Include="ExpDataToExcelFactory\ChipOne\Device_2065WAA-8-Y16-P1.cs" />
     <Compile Include="ExpDataToExcelFactory\ChipOne\Device_2065WAA-8-Y16-P2.cs" />
     <Compile Include="ExpDataToExcelFactory\ChipOne\Device_2065WCB-8-16-CP1.cs" />
@@ -130,6 +128,7 @@
     <Compile Include="ExpDataToExcelFactory\ConvenientPower\Device_YiChong.cs" />
     <Compile Include="ExpDataToExcelFactory\ExpToExcelSoftBin.cs" />
     <Compile Include="ExpDataToExcelFactory\ExpToExcelSoftBinFactory.cs" />
+    <Compile Include="ExpDataToExcelFactory\jssisemi\Device_SPG8929-08-00.cs" />
     <Compile Include="File\ConverterBase.cs" />
     <Compile Include="File\Dat.cs" />
     <Compile Include="File\IConverter.cs" />

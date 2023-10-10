@@ -13,6 +13,7 @@ using System.Reflection;
 using System.Collections;
 using System.Net.Mail;
 using DataToExcel.ExpDataToExcelFactory;
+using System.Data.SqlClient;
 
 //using Jcap.MappingConverter;
 
@@ -29,7 +30,7 @@ namespace DataToExcel
         private string ResultFileName;
         private string TskFile;
         private string Device;
-        private int count;
+        private int waferNum;
 
         // Methods
         public MappingToExcel()
@@ -442,8 +443,8 @@ namespace DataToExcel
 
 
 
-            count = this.lsvItems.Items.Count;
-            for (num2 = 0; num2 <= (count - 2); num2++)
+            waferNum = this.lsvItems.Items.Count;
+            for (num2 = 0; num2 <= (waferNum - 2); num2++)
             {
                 excel.Copy("Sheet1", "aa");
                 excel.Rename("Sheet1 (2)", this.lsvItems.Items[num2 + 1].Text.Trim());
@@ -457,7 +458,7 @@ namespace DataToExcel
 
             int flag11 = 0;
 
-            for (num2 = 0; num2 <= (count - 1); num2++)
+            for (num2 = 0; num2 <= (waferNum - 1); num2++)
             {
                 this._currFile = (IMappingFile)this.lsvItems.Items[num2].Tag;
                 Excel.Worksheet sheet = (Excel.Worksheet)workbook.Sheets[this.lsvItems.Items[num2].Text.Trim()];
@@ -480,7 +481,7 @@ namespace DataToExcel
                 rnginch.Value2 = ((Convert.ToInt32(((Tsk)this._currFile).WaferSize) / 10)).ToString("0.0") + " inch";
 
                 Excel.Range rngnum = (Excel.Range)worksheet2.Cells[6, 2];
-                rngnum.Value2 = count.ToString() + " pcs";
+                rngnum.Value2 = waferNum.ToString() + " pcs";
 
 
                 object[] objArray2 = new object[num3];//头信息文件
@@ -988,8 +989,8 @@ namespace DataToExcel
             OperateExcel excel = new OperateExcel(workbook);
 
 
-            count = this.lsvItems.Items.Count;
-            for (num2 = 0; num2 <= (count - 2); num2++)
+            waferNum = this.lsvItems.Items.Count;
+            for (num2 = 0; num2 <= (waferNum - 2); num2++)
             {
                 excel.Copy("Sheet1", "aa");
                 excel.Rename("Sheet1 (2)", this.lsvItems.Items[num2 + 1].Text.Trim());
@@ -997,14 +998,14 @@ namespace DataToExcel
             }
             excel.Rename("Sheet1", this.lsvItems.Items[0].Text.Trim());
 
-            int num3 = this.FieldListBox1.CheckedItems.Count;
-            object[] objArray = new object[num3];//Total 信息
-            object[] objArray4 = new object[num3];//平均值信息
+            int excelHeaderNumber = this.FieldListBox1.CheckedItems.Count;
+            object[] objArray = new object[excelHeaderNumber];//Total 信息
+            object[] objArray4 = new object[excelHeaderNumber];//平均值信息
 
             int flag11 = 0;
             // TODO 
-
-            for (num2 = 0; num2 <= (count - 1); num2++)
+            StringBuilder lotsblerror = new StringBuilder();
+            for (num2 = 0; num2 <= (waferNum - 1); num2++)
             {
                 this._currFile = (IMappingFile)this.lsvItems.Items[num2].Tag;
                 Excel.Worksheet sheet = (Excel.Worksheet)workbook.Sheets[this.lsvItems.Items[num2].Text.Trim()];
@@ -1027,7 +1028,7 @@ namespace DataToExcel
                 rnginch.Value2 = ((Convert.ToInt32(((Tsk)this._currFile).WaferSize) / 10)).ToString("0.0") + " inch";
 
                 Excel.Range rngnum = (Excel.Range)worksheet2.Cells[6, 2];
-                rngnum.Value2 = count.ToString() + " pcs";
+                rngnum.Value2 = waferNum.ToString() + " pcs";
 
                 String deviceName = ((Tsk)this._currFile).Device;
                 ExpToExcelSoftBin expToExcelSoftBin = ExpToExcelSoftBinFactory.GetExpToExcelSoft(deviceName);
@@ -1036,20 +1037,20 @@ namespace DataToExcel
                     expToExcelSoftBin.expToExcel(worksheet2);
                 }
 
-                object[] objArray2 = new object[num3];//头信息文件
-                object[] objArray3 = new object[num3];//每片Wafer信息
+                object[] arrayHeaderName = new object[excelHeaderNumber];//头信息文件
+                object[] arrayHeaderInfo = new object[excelHeaderNumber];//每片Wafer信息
                 Device = ((Tsk)this._currFile).Device;
 
-                for (int i = 0; i <= (num3 - 1); i++)
+                for (int i = 0; i <= (excelHeaderNumber - 1); i++)
                 {
                     string str;
-                    objArray2[i] = this.FieldListBox1.CheckedItems[i].ToString();
+                    arrayHeaderName[i] = this.FieldListBox1.CheckedItems[i].ToString();
 
                     switch (this.FieldListBox1.CheckedItems[i].ToString())
                     {
                         case "LotNo":
                             {
-                                objArray3[i] = ((Tsk)this._currFile).LotNo;
+                                arrayHeaderInfo[i] = ((Tsk)this._currFile).LotNo;
                                 objArray[i] = "Total:";
                                 objArray4[i] = "Average:";
                                 continue;
@@ -1057,7 +1058,7 @@ namespace DataToExcel
 
                         case "Wafer ID":
                             {
-                                objArray3[i] = ((Tsk)this._currFile).WaferID;
+                                arrayHeaderInfo[i] = ((Tsk)this._currFile).WaferID;
                                 objArray[i] = "Total:";
                                 objArray4[i] = "Average:";
                                 continue;
@@ -1066,7 +1067,7 @@ namespace DataToExcel
 
                         case "Device":
                             {
-                                objArray3[i] = ((Tsk)this._currFile).Device;
+                                arrayHeaderInfo[i] = ((Tsk)this._currFile).Device;
                                 objArray[i] = "";
                                 continue;
                             }
@@ -1075,50 +1076,50 @@ namespace DataToExcel
                         case "Total":
                             {
                                 // objArray3[i] = this._currFile.DieMatrix.DieAttributeStat(DieCategory.TIRefFail | DieCategory.TIRefPass | DieCategory.Unknow | DieCategory.FailDie | DieCategory.PassDie);
-                                objArray3[i] = this._currFile.DieMatrix.DieAttributeStat(DieCategory.TIRefFail | DieCategory.TIRefPass | DieCategory.FailDie | DieCategory.PassDie);
+                                arrayHeaderInfo[i] = this._currFile.DieMatrix.DieAttributeStat(DieCategory.TIRefFail | DieCategory.TIRefPass | DieCategory.FailDie | DieCategory.PassDie);
                                 if (objArray[i] == null)
                                 {
                                     break;
                                 }
-                                if (objArray3[i] != null)
+                                if (arrayHeaderInfo[i] != null)
                                 {
-                                    objArray[i] = ((int)objArray[i]) + ((int)objArray3[i]);
+                                    objArray[i] = ((int)objArray[i]) + ((int)arrayHeaderInfo[i]);
                                 }
                                 continue;
                             }
                         case "Pass":
                             {
-                                objArray3[i] = this._currFile.DieMatrix.DieAttributeStat(DieCategory.TIRefPass | DieCategory.PassDie);
+                                arrayHeaderInfo[i] = this._currFile.DieMatrix.DieAttributeStat(DieCategory.TIRefPass | DieCategory.PassDie);
                                 if (objArray[i] == null)
                                 {
                                     goto Label_0458;
                                 }
-                                if (objArray3[i] != null)
+                                if (arrayHeaderInfo[i] != null)
                                 {
-                                    objArray[i] = ((int)objArray[i]) + ((int)objArray3[i]);
+                                    objArray[i] = ((int)objArray[i]) + ((int)arrayHeaderInfo[i]);
                                 }
                                 continue;
                             }
                         case "Fail":
                             {
-                                objArray3[i] = this._currFile.DieMatrix.DieAttributeStat(DieCategory.TIRefFail | DieCategory.FailDie);
+                                arrayHeaderInfo[i] = this._currFile.DieMatrix.DieAttributeStat(DieCategory.TIRefFail | DieCategory.FailDie);
                                 if (objArray[i] == null)
                                 {
                                     goto Label_04C5;
                                 }
-                                if (objArray3[i] != null)
+                                if (arrayHeaderInfo[i] != null)
                                 {
-                                    objArray[i] = ((int)objArray[i]) + ((int)objArray3[i]);
+                                    objArray[i] = ((int)objArray[i]) + ((int)arrayHeaderInfo[i]);
                                 }
                                 continue;
                             }
                         case "Yield":
-                            if ((objArray3[i - 2] == null) || (objArray3[i - 3] == null))
+                            if ((arrayHeaderInfo[i - 2] == null) || (arrayHeaderInfo[i - 3] == null))
                             {
                                 goto Label_0527;
                             }
-                            objArray3[i] = Math.Round((double)(Convert.ToDouble(objArray3[i - 2]) / ((double)Convert.ToInt32(objArray3[i - 3]))), 4).ToString("0.00%");
-                            if (objArray3[i].ToString() == "100.00%")
+                            arrayHeaderInfo[i] = Math.Round((double)(Convert.ToDouble(arrayHeaderInfo[i - 2]) / ((double)Convert.ToInt32(arrayHeaderInfo[i - 3]))), 4).ToString("0.00%");
+                            if (arrayHeaderInfo[i].ToString() == "100.00%")
                             {
                                 MessageBox.Show("TSK良率100%,请检查图谱是否有问题");
 
@@ -1127,13 +1128,13 @@ namespace DataToExcel
 
                         case "Index X":
                             {
-                                objArray3[i] = ((Tsk)this._currFile).IndexSizeX;
+                                arrayHeaderInfo[i] = ((Tsk)this._currFile).IndexSizeX;
                                 objArray[i] = "";
                                 continue;
                             }
                         case "Index Y":
                             {
-                                objArray3[i] = ((Tsk)this._currFile).IndexSizeY;
+                                arrayHeaderInfo[i] = ((Tsk)this._currFile).IndexSizeY;
                                 objArray[i] = "";
                                 continue;
                             }
@@ -1141,47 +1142,47 @@ namespace DataToExcel
                             {
                                 try
                                 {
-                                    objArray3[i] = ((Convert.ToInt32(((Tsk)this._currFile).WaferSize) / 10)).ToString() + "inch";
+                                    arrayHeaderInfo[i] = ((Convert.ToInt32(((Tsk)this._currFile).WaferSize) / 10)).ToString() + "inch";
                                 }
                                 catch
                                 {
-                                    objArray3[i] = "";
+                                    arrayHeaderInfo[i] = "";
                                 }
                                 objArray[i] = "";
                                 continue;
                             }
                         case "OF Direction":
                             {
-                                objArray3[i] = ((Tsk)this._currFile).FlatDir;
+                                arrayHeaderInfo[i] = ((Tsk)this._currFile).FlatDir;
                                 objArray[i] = "";
                                 continue;
                             }
                         case "LoadTime":
                             {
-                                objArray3[i] = ((Tsk)this._currFile).LoadTime.ToString();
+                                arrayHeaderInfo[i] = ((Tsk)this._currFile).LoadTime.ToString();
                                 objArray[i] = "";
                                 continue;
                             }
                         case "UnloadTime":
                             {
-                                objArray3[i] = ((Tsk)this._currFile).UnloadTime.ToString();
+                                arrayHeaderInfo[i] = ((Tsk)this._currFile).UnloadTime.ToString();
                                 objArray[i] = "";
                                 continue;
                             }
                         case "UsedTime":
                             {
-                                objArray3[i] = ((TimeSpan)(((Tsk)this._currFile).UnloadTime - ((Tsk)this._currFile).LoadTime)).ToString();
+                                arrayHeaderInfo[i] = ((TimeSpan)(((Tsk)this._currFile).UnloadTime - ((Tsk)this._currFile).LoadTime)).ToString();
                                 objArray[i] = "";
                                 continue;
                             }
                         case "BIN 0":
                             {
                                 flag11 = i;
-                                objArray3[i] = ToCountDie._ToCountDie[0];
+                                arrayHeaderInfo[i] = ToCountDie._ToCountDie[0];
                                 ////add-2017.12.4///////////////////////
-                                if (objArray3[i] == null)
+                                if (arrayHeaderInfo[i] == null)
                                 {
-                                    objArray3[i] = 0;
+                                    arrayHeaderInfo[i] = 0;
                                 }
                                 ///////////////////////////////////////
                                 if (objArray[i] == null)
@@ -1191,9 +1192,9 @@ namespace DataToExcel
                                 }
 
 
-                                if (objArray3[i] != null)
+                                if (arrayHeaderInfo[i] != null)
                                 {
-                                    objArray[i] = ((int)objArray[i]) + ((int)objArray3[i]);
+                                    objArray[i] = ((int)objArray[i]) + ((int)arrayHeaderInfo[i]);
                                     //////////////////////////////////增加百分比////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
                                     //  objArray3[i] = objArray3[i].ToString() + " (" + Math.Round((double)(Convert.ToDouble(objArray3[i]) / ((double)this._currFile.DieMatrix.DieAttributeStat(DieCategory.TIRefFail | DieCategory.TIRefPass | DieCategory.FailDie | DieCategory.PassDie))), 4).ToString("0.00%") + ")";
 
@@ -1205,16 +1206,16 @@ namespace DataToExcel
                         default:
                             goto Label_077E;
                     }
-                    objArray[i] = objArray3[i];
+                    objArray[i] = arrayHeaderInfo[i];
                     continue;
                 Label_0458:
-                    objArray[i] = objArray3[i];
+                    objArray[i] = arrayHeaderInfo[i];
                     continue;
                 Label_04C5:
-                    objArray[i] = objArray3[i];
+                    objArray[i] = arrayHeaderInfo[i];
                     continue;
                 Label_0527:
-                    objArray3[i] = "";
+                    arrayHeaderInfo[i] = "";
                 Label_0531:
                     if ((objArray[i - 2] != null) && (objArray[i - 3] != null))
                     {
@@ -1229,7 +1230,7 @@ namespace DataToExcel
                     }
                     continue;
                 Label_076F:
-                    objArray[i] = objArray3[i];
+                    objArray[i] = arrayHeaderInfo[i];
                     //////////////////////////////////增加百分比////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
                     // objArray3[i] = objArray3[i].ToString() + " (" + Math.Round((double)(Convert.ToDouble(objArray3[i]) / ((double)this._currFile.DieMatrix.DieAttributeStat(DieCategory.TIRefFail | DieCategory.TIRefPass | DieCategory.FailDie | DieCategory.PassDie))), 4).ToString("0.00%") + ")";
                     continue;
@@ -1238,18 +1239,18 @@ namespace DataToExcel
                     if (str.Substring(0, str.LastIndexOf(" ")).Trim() == "BIN")
                     {
                         str = str.Substring(str.LastIndexOf(" ")).Trim();
-                        objArray3[i] = ToCountDie._ToCountDie[int.Parse(str)];
+                        arrayHeaderInfo[i] = ToCountDie._ToCountDie[int.Parse(str)];
                         /////////为0则显示为0-2017.12.4/////////////////////////////////
-                        if (objArray3[i] == null)
+                        if (arrayHeaderInfo[i] == null)
                         {
-                            objArray3[i] = 0;
+                            arrayHeaderInfo[i] = 0;
                         }
 
                         if (objArray[i] != null)
                         {
-                            if (objArray3[i] != null)
+                            if (arrayHeaderInfo[i] != null)
                             {
-                                objArray[i] = ((int)objArray[i]) + ((int)objArray3[i]);
+                                objArray[i] = ((int)objArray[i]) + ((int)arrayHeaderInfo[i]);
                             }
                         }
 
@@ -1266,7 +1267,7 @@ namespace DataToExcel
 
 
                         ////////////////////////////////增加百分比///////////////////////////
-                        if (objArray3[i] != null)
+                        if (arrayHeaderInfo[i] != null)
                         {
                             //   objArray3[i] = objArray3[i].ToString() + " (" + Math.Round((double)(Convert.ToDouble(objArray3[i]) / ((double)this._currFile.DieMatrix.DieAttributeStat(DieCategory.TIRefFail | DieCategory.TIRefPass | DieCategory.FailDie | DieCategory.PassDie))), 4).ToString("0.00%") + ")";
 
@@ -1276,13 +1277,13 @@ namespace DataToExcel
                     }
                     else
                     {
-                        objArray3[i] = "??";
+                        arrayHeaderInfo[i] = "??";
                         objArray[i] = "??";
                     }
                 }
 
-                worksheet2.get_Range(worksheet2.Cells[8, 1], worksheet2.Cells[8, num3]).Value2 = objArray2;
-                worksheet2.get_Range(worksheet2.Cells[(num2 + 1) + 8, 1], worksheet2.Cells[(num2 + 1) + 8, num3]).Value2 = objArray3;
+                worksheet2.get_Range(worksheet2.Cells[8, 1], worksheet2.Cells[8, excelHeaderNumber]).Value2 = arrayHeaderName;
+                worksheet2.get_Range(worksheet2.Cells[(num2 + 1) + 8, 1], worksheet2.Cells[(num2 + 1) + 8, excelHeaderNumber]).Value2 = arrayHeaderInfo;
                 //2053WMA-8-Y16-P2 device-8寸-16工位-CP2
                 //C8N003WDA-12-固定工位-CP1
                 //C8A000WBB-12-固定工位-CP1 固定工位（die） Y单排 非Y双盘
@@ -1290,159 +1291,277 @@ namespace DataToExcel
                 if ((((Tsk)this._currFile).Device == "2053WMA-8-Y16-P2"))
                 {
                     int flagbin = 0;
-                    if (Convert.ToInt32(objArray3[30]) > 114) { worksheet2.get_Range(worksheet2.Cells[(num2 + 1) + 8, 31], worksheet2.Cells[(num2 + 1) + 8, 31]).Interior.ColorIndex = 7; flagbin++; }//bin25
-                    if (Convert.ToInt32(objArray3[31]) > 17) { worksheet2.get_Range(worksheet2.Cells[(num2 + 1) + 8, 32], worksheet2.Cells[(num2 + 1) + 8, 32]).Interior.ColorIndex = 7; flagbin++; }//bin26
-                    if (Convert.ToInt32(objArray3[32]) > 85) { worksheet2.get_Range(worksheet2.Cells[(num2 + 1) + 8, 33], worksheet2.Cells[(num2 + 1) + 8, 33]).Interior.ColorIndex = 7; flagbin++; }//bin27
-                    if (Convert.ToInt32(objArray3[33]) > 156) { worksheet2.get_Range(worksheet2.Cells[(num2 + 1) + 8, 34], worksheet2.Cells[(num2 + 1) + 8, 34]).Interior.ColorIndex = 7; flagbin++; }//bin28
-                    if (Convert.ToInt32(objArray3[34]) > 17) { worksheet2.get_Range(worksheet2.Cells[(num2 + 1) + 8, 35], worksheet2.Cells[(num2 + 1) + 8, 35]).Interior.ColorIndex = 7; flagbin++; }//bin29
-                    if (Convert.ToInt32(objArray3[35]) > 17) { worksheet2.get_Range(worksheet2.Cells[(num2 + 1) + 8, 36], worksheet2.Cells[(num2 + 1) + 8, 36]).Interior.ColorIndex = 7; flagbin++; }//bin30
-                    if (Convert.ToInt32(objArray3[36]) > 17) { worksheet2.get_Range(worksheet2.Cells[(num2 + 1) + 8, 37], worksheet2.Cells[(num2 + 1) + 8, 37]).Interior.ColorIndex = 7; flagbin++; }//bin31
-                    if (Convert.ToInt32(objArray3[37]) > 17) { worksheet2.get_Range(worksheet2.Cells[(num2 + 1) + 8, 38], worksheet2.Cells[(num2 + 1) + 8, 38]).Interior.ColorIndex = 7; flagbin++; }//bin32
-                    if (Convert.ToInt32(objArray3[38]) > 17) { worksheet2.get_Range(worksheet2.Cells[(num2 + 1) + 8, 39], worksheet2.Cells[(num2 + 1) + 8, 39]).Interior.ColorIndex = 7; flagbin++; }//bin33
-                    if (Convert.ToInt32(objArray3[39]) > 17) { worksheet2.get_Range(worksheet2.Cells[(num2 + 1) + 8, 40], worksheet2.Cells[(num2 + 1) + 8, 40]).Interior.ColorIndex = 7; flagbin++; }//bin34
-                    if (Convert.ToInt32(objArray3[40]) > 17) { worksheet2.get_Range(worksheet2.Cells[(num2 + 1) + 8, 41], worksheet2.Cells[(num2 + 1) + 8, 41]).Interior.ColorIndex = 7; flagbin++; }//bin35
-                    if (flagbin > 0) { worksheet2.get_Range(worksheet2.Cells[(num2 + 1) + 8, 1], worksheet2.Cells[(num2 + 1) + 8, 1]).Interior.ColorIndex = 7; MessageBox.Show(objArray3[0].ToString() + "--SBL超标,请检查图谱是否有问题"); }
+                    if (Convert.ToInt32(arrayHeaderInfo[30]) > 114) { worksheet2.get_Range(worksheet2.Cells[(num2 + 1) + 8, 31], worksheet2.Cells[(num2 + 1) + 8, 31]).Interior.ColorIndex = 7; flagbin++; }//bin25
+                    if (Convert.ToInt32(arrayHeaderInfo[31]) > 17) { worksheet2.get_Range(worksheet2.Cells[(num2 + 1) + 8, 32], worksheet2.Cells[(num2 + 1) + 8, 32]).Interior.ColorIndex = 7; flagbin++; }//bin26
+                    if (Convert.ToInt32(arrayHeaderInfo[32]) > 85) { worksheet2.get_Range(worksheet2.Cells[(num2 + 1) + 8, 33], worksheet2.Cells[(num2 + 1) + 8, 33]).Interior.ColorIndex = 7; flagbin++; }//bin27
+                    if (Convert.ToInt32(arrayHeaderInfo[33]) > 156) { worksheet2.get_Range(worksheet2.Cells[(num2 + 1) + 8, 34], worksheet2.Cells[(num2 + 1) + 8, 34]).Interior.ColorIndex = 7; flagbin++; }//bin28
+                    if (Convert.ToInt32(arrayHeaderInfo[34]) > 17) { worksheet2.get_Range(worksheet2.Cells[(num2 + 1) + 8, 35], worksheet2.Cells[(num2 + 1) + 8, 35]).Interior.ColorIndex = 7; flagbin++; }//bin29
+                    if (Convert.ToInt32(arrayHeaderInfo[35]) > 17) { worksheet2.get_Range(worksheet2.Cells[(num2 + 1) + 8, 36], worksheet2.Cells[(num2 + 1) + 8, 36]).Interior.ColorIndex = 7; flagbin++; }//bin30
+                    if (Convert.ToInt32(arrayHeaderInfo[36]) > 17) { worksheet2.get_Range(worksheet2.Cells[(num2 + 1) + 8, 37], worksheet2.Cells[(num2 + 1) + 8, 37]).Interior.ColorIndex = 7; flagbin++; }//bin31
+                    if (Convert.ToInt32(arrayHeaderInfo[37]) > 17) { worksheet2.get_Range(worksheet2.Cells[(num2 + 1) + 8, 38], worksheet2.Cells[(num2 + 1) + 8, 38]).Interior.ColorIndex = 7; flagbin++; }//bin32
+                    if (Convert.ToInt32(arrayHeaderInfo[38]) > 17) { worksheet2.get_Range(worksheet2.Cells[(num2 + 1) + 8, 39], worksheet2.Cells[(num2 + 1) + 8, 39]).Interior.ColorIndex = 7; flagbin++; }//bin33
+                    if (Convert.ToInt32(arrayHeaderInfo[39]) > 17) { worksheet2.get_Range(worksheet2.Cells[(num2 + 1) + 8, 40], worksheet2.Cells[(num2 + 1) + 8, 40]).Interior.ColorIndex = 7; flagbin++; }//bin34
+                    if (Convert.ToInt32(arrayHeaderInfo[40]) > 17) { worksheet2.get_Range(worksheet2.Cells[(num2 + 1) + 8, 41], worksheet2.Cells[(num2 + 1) + 8, 41]).Interior.ColorIndex = 7; flagbin++; }//bin35
+                    
+                    if (flagbin > 0) { worksheet2.get_Range(worksheet2.Cells[(num2 + 1) + 8, 1], worksheet2.Cells[(num2 + 1) + 8, 1]).Interior.ColorIndex = 7; MessageBox.Show(arrayHeaderInfo[0].ToString() + "--SBL超标,请检查图谱是否有问题"); }
 
                 }
                 if ((((Tsk)this._currFile).Device == "2053WMA-8-Y16-P1"))
                 {
                     int flagbin = 0;
-                    if (Convert.ToInt32(objArray3[26]) > 10) { worksheet2.get_Range(worksheet2.Cells[(num2 + 1) + 8, 27], worksheet2.Cells[(num2 + 1) + 8, 27]).Interior.ColorIndex = 7; flagbin++; }//bin21
+                    if (Convert.ToInt32(arrayHeaderInfo[26]) > 10) { worksheet2.get_Range(worksheet2.Cells[(num2 + 1) + 8, 27], worksheet2.Cells[(num2 + 1) + 8, 27]).Interior.ColorIndex = 7; flagbin++; }//bin21
 
-                    if (flagbin > 0) { worksheet2.get_Range(worksheet2.Cells[(num2 + 1) + 8, 1], worksheet2.Cells[(num2 + 1) + 8, 1]).Interior.ColorIndex = 7; MessageBox.Show(objArray3[0].ToString() + "--SBL超标,请检查图谱是否有问题"); }
+                    if (flagbin > 0) { worksheet2.get_Range(worksheet2.Cells[(num2 + 1) + 8, 1], worksheet2.Cells[(num2 + 1) + 8, 1]).Interior.ColorIndex = 7; MessageBox.Show(arrayHeaderInfo[0].ToString() + "--SBL超标,请检查图谱是否有问题"); }
 
                 }
 
                 if ((((Tsk)this._currFile).Device == "2053WMA-8-16-CP1"))
                 {
                     int flagbin = 0;
-                    if (Convert.ToInt32(objArray3[26]) > 10) { worksheet2.get_Range(worksheet2.Cells[(num2 + 1) + 8, 27], worksheet2.Cells[(num2 + 1) + 8, 27]).Interior.ColorIndex = 7; flagbin++; }//bin21
+                    if (Convert.ToInt32(arrayHeaderInfo[26]) > 10) { worksheet2.get_Range(worksheet2.Cells[(num2 + 1) + 8, 27], worksheet2.Cells[(num2 + 1) + 8, 27]).Interior.ColorIndex = 7; flagbin++; }//bin21
 
-                    if (flagbin > 0) { worksheet2.get_Range(worksheet2.Cells[(num2 + 1) + 8, 1], worksheet2.Cells[(num2 + 1) + 8, 1]).Interior.ColorIndex = 7; MessageBox.Show(objArray3[0].ToString() + "--SBL超标,请检查图谱是否有问题"); }
+                    if (flagbin > 0) { worksheet2.get_Range(worksheet2.Cells[(num2 + 1) + 8, 1], worksheet2.Cells[(num2 + 1) + 8, 1]).Interior.ColorIndex = 7; MessageBox.Show(arrayHeaderInfo[0].ToString() + "--SBL超标,请检查图谱是否有问题"); }
 
                 }
 
                 if ((((Tsk)this._currFile).Device == "2053WMA-8-16-CP2"))
                 {
                     int flagbin = 0;
-                    if (Convert.ToInt32(objArray3[30]) > 114) { worksheet2.get_Range(worksheet2.Cells[(num2 + 1) + 8, 31], worksheet2.Cells[(num2 + 1) + 8, 31]).Interior.ColorIndex = 7; flagbin++; }//bin25
-                    if (Convert.ToInt32(objArray3[31]) > 114) { worksheet2.get_Range(worksheet2.Cells[(num2 + 1) + 8, 32], worksheet2.Cells[(num2 + 1) + 8, 32]).Interior.ColorIndex = 7; flagbin++; }//bin26
-                    if (Convert.ToInt32(objArray3[32]) > 85) { worksheet2.get_Range(worksheet2.Cells[(num2 + 1) + 8, 33], worksheet2.Cells[(num2 + 1) + 8, 33]).Interior.ColorIndex = 7; flagbin++; }//bin27
-                    if (Convert.ToInt32(objArray3[33]) > 156) { worksheet2.get_Range(worksheet2.Cells[(num2 + 1) + 8, 34], worksheet2.Cells[(num2 + 1) + 8, 34]).Interior.ColorIndex = 7; flagbin++; }//bin28
-                    if (Convert.ToInt32(objArray3[34]) > 17) { worksheet2.get_Range(worksheet2.Cells[(num2 + 1) + 8, 35], worksheet2.Cells[(num2 + 1) + 8, 35]).Interior.ColorIndex = 7; flagbin++; }//bin29
-                    if (Convert.ToInt32(objArray3[35]) > 17) { worksheet2.get_Range(worksheet2.Cells[(num2 + 1) + 8, 36], worksheet2.Cells[(num2 + 1) + 8, 36]).Interior.ColorIndex = 7; flagbin++; }//bin30
-                    if (Convert.ToInt32(objArray3[36]) > 17) { worksheet2.get_Range(worksheet2.Cells[(num2 + 1) + 8, 37], worksheet2.Cells[(num2 + 1) + 8, 37]).Interior.ColorIndex = 7; flagbin++; }//bin31
-                    if (Convert.ToInt32(objArray3[37]) > 17) { worksheet2.get_Range(worksheet2.Cells[(num2 + 1) + 8, 38], worksheet2.Cells[(num2 + 1) + 8, 38]).Interior.ColorIndex = 7; flagbin++; }//bin32
-                    if (Convert.ToInt32(objArray3[38]) > 17) { worksheet2.get_Range(worksheet2.Cells[(num2 + 1) + 8, 39], worksheet2.Cells[(num2 + 1) + 8, 39]).Interior.ColorIndex = 7; flagbin++; }//bin33
-                    if (Convert.ToInt32(objArray3[39]) > 17) { worksheet2.get_Range(worksheet2.Cells[(num2 + 1) + 8, 40], worksheet2.Cells[(num2 + 1) + 8, 40]).Interior.ColorIndex = 7; flagbin++; }//bin34
-                    if (Convert.ToInt32(objArray3[40]) > 17) { worksheet2.get_Range(worksheet2.Cells[(num2 + 1) + 8, 41], worksheet2.Cells[(num2 + 1) + 8, 41]).Interior.ColorIndex = 7; flagbin++; }//bin35
-                    if (flagbin > 0) { worksheet2.get_Range(worksheet2.Cells[(num2 + 1) + 8, 1], worksheet2.Cells[(num2 + 1) + 8, 1]).Interior.ColorIndex = 7; MessageBox.Show(objArray3[0].ToString() + "--SBL超标,请检查图谱是否有问题"); }
+                    if (Convert.ToInt32(arrayHeaderInfo[30]) > 114) { worksheet2.get_Range(worksheet2.Cells[(num2 + 1) + 8, 31], worksheet2.Cells[(num2 + 1) + 8, 31]).Interior.ColorIndex = 7; flagbin++; }//bin25
+                    if (Convert.ToInt32(arrayHeaderInfo[31]) > 114) { worksheet2.get_Range(worksheet2.Cells[(num2 + 1) + 8, 32], worksheet2.Cells[(num2 + 1) + 8, 32]).Interior.ColorIndex = 7; flagbin++; }//bin26
+                    if (Convert.ToInt32(arrayHeaderInfo[32]) > 85) { worksheet2.get_Range(worksheet2.Cells[(num2 + 1) + 8, 33], worksheet2.Cells[(num2 + 1) + 8, 33]).Interior.ColorIndex = 7; flagbin++; }//bin27
+                    if (Convert.ToInt32(arrayHeaderInfo[33]) > 156) { worksheet2.get_Range(worksheet2.Cells[(num2 + 1) + 8, 34], worksheet2.Cells[(num2 + 1) + 8, 34]).Interior.ColorIndex = 7; flagbin++; }//bin28
+                    if (Convert.ToInt32(arrayHeaderInfo[34]) > 17) { worksheet2.get_Range(worksheet2.Cells[(num2 + 1) + 8, 35], worksheet2.Cells[(num2 + 1) + 8, 35]).Interior.ColorIndex = 7; flagbin++; }//bin29
+                    if (Convert.ToInt32(arrayHeaderInfo[35]) > 17) { worksheet2.get_Range(worksheet2.Cells[(num2 + 1) + 8, 36], worksheet2.Cells[(num2 + 1) + 8, 36]).Interior.ColorIndex = 7; flagbin++; }//bin30
+                    if (Convert.ToInt32(arrayHeaderInfo[36]) > 17) { worksheet2.get_Range(worksheet2.Cells[(num2 + 1) + 8, 37], worksheet2.Cells[(num2 + 1) + 8, 37]).Interior.ColorIndex = 7; flagbin++; }//bin31
+                    if (Convert.ToInt32(arrayHeaderInfo[37]) > 17) { worksheet2.get_Range(worksheet2.Cells[(num2 + 1) + 8, 38], worksheet2.Cells[(num2 + 1) + 8, 38]).Interior.ColorIndex = 7; flagbin++; }//bin32
+                    if (Convert.ToInt32(arrayHeaderInfo[38]) > 17) { worksheet2.get_Range(worksheet2.Cells[(num2 + 1) + 8, 39], worksheet2.Cells[(num2 + 1) + 8, 39]).Interior.ColorIndex = 7; flagbin++; }//bin33
+                    if (Convert.ToInt32(arrayHeaderInfo[39]) > 17) { worksheet2.get_Range(worksheet2.Cells[(num2 + 1) + 8, 40], worksheet2.Cells[(num2 + 1) + 8, 40]).Interior.ColorIndex = 7; flagbin++; }//bin34
+                    if (Convert.ToInt32(arrayHeaderInfo[40]) > 17) { worksheet2.get_Range(worksheet2.Cells[(num2 + 1) + 8, 41], worksheet2.Cells[(num2 + 1) + 8, 41]).Interior.ColorIndex = 7; flagbin++; }//bin35
+                    if (flagbin > 0) { worksheet2.get_Range(worksheet2.Cells[(num2 + 1) + 8, 1], worksheet2.Cells[(num2 + 1) + 8, 1]).Interior.ColorIndex = 7; MessageBox.Show(arrayHeaderInfo[0].ToString() + "--SBL超标,请检查图谱是否有问题"); }
 
                 }
 
                 if ((((Tsk)this._currFile).Device == "2065WAA-8-16-CP2"))
                 {
                     int flagbin = 0;
-                    if (Convert.ToInt32(objArray3[28]) > 9) { worksheet2.get_Range(worksheet2.Cells[(num2 + 1) + 8, 29], worksheet2.Cells[(num2 + 1) + 8, 29]).Interior.ColorIndex = 7; flagbin++; }//bin23
-                    if (Convert.ToInt32(objArray3[29]) > 9) { worksheet2.get_Range(worksheet2.Cells[(num2 + 1) + 8, 30], worksheet2.Cells[(num2 + 1) + 8, 30]).Interior.ColorIndex = 7; flagbin++; }//bin24
-                    if (Convert.ToInt32(objArray3[30]) > 9) { worksheet2.get_Range(worksheet2.Cells[(num2 + 1) + 8, 31], worksheet2.Cells[(num2 + 1) + 8, 31]).Interior.ColorIndex = 7; flagbin++; }//bin25
-                    if (Convert.ToInt32(objArray3[31]) > 9) { worksheet2.get_Range(worksheet2.Cells[(num2 + 1) + 8, 32], worksheet2.Cells[(num2 + 1) + 8, 32]).Interior.ColorIndex = 7; flagbin++; }//bin26
-                    if (Convert.ToInt32(objArray3[32]) > 20) { worksheet2.get_Range(worksheet2.Cells[(num2 + 1) + 8, 33], worksheet2.Cells[(num2 + 1) + 8, 33]).Interior.ColorIndex = 7; flagbin++; }//bin27
-                    if (Convert.ToInt32(objArray3[33]) > 9) { worksheet2.get_Range(worksheet2.Cells[(num2 + 1) + 8, 34], worksheet2.Cells[(num2 + 1) + 8, 34]).Interior.ColorIndex = 7; flagbin++; }//bin28
-                    if (Convert.ToInt32(objArray3[34]) > 9) { worksheet2.get_Range(worksheet2.Cells[(num2 + 1) + 8, 35], worksheet2.Cells[(num2 + 1) + 8, 35]).Interior.ColorIndex = 7; flagbin++; }//bin29
-                    if (Convert.ToInt32(objArray3[35]) > 9) { worksheet2.get_Range(worksheet2.Cells[(num2 + 1) + 8, 36], worksheet2.Cells[(num2 + 1) + 8, 36]).Interior.ColorIndex = 7; flagbin++; }//bin30
-                    if (Convert.ToInt32(objArray3[36]) > 9) { worksheet2.get_Range(worksheet2.Cells[(num2 + 1) + 8, 37], worksheet2.Cells[(num2 + 1) + 8, 37]).Interior.ColorIndex = 7; flagbin++; }//bin31
-                    if (Convert.ToInt32(objArray3[37]) > 9) { worksheet2.get_Range(worksheet2.Cells[(num2 + 1) + 8, 38], worksheet2.Cells[(num2 + 1) + 8, 38]).Interior.ColorIndex = 7; flagbin++; }//bin32
-                    if (Convert.ToInt32(objArray3[38]) > 9) { worksheet2.get_Range(worksheet2.Cells[(num2 + 1) + 8, 39], worksheet2.Cells[(num2 + 1) + 8, 39]).Interior.ColorIndex = 7; flagbin++; }//bin33
-                    if (Convert.ToInt32(objArray3[39]) > 9) { worksheet2.get_Range(worksheet2.Cells[(num2 + 1) + 8, 40], worksheet2.Cells[(num2 + 1) + 8, 40]).Interior.ColorIndex = 7; flagbin++; }//bin34
+                    if (Convert.ToDouble(arrayHeaderInfo[2]) / Convert.ToDouble(arrayHeaderInfo[1]) <= 0.985) { worksheet2.get_Range(worksheet2.Cells[(num2 + 1) + 8, 5], worksheet2.Cells[(num2 + 1) + 8, 5]).Interior.ColorIndex = 7; flagbin++; }//片良率
+                    //bin3到bin64
+                    for (int i = 3; i <= 63; i++)
+                    {
+                        if (Convert.ToInt32(arrayHeaderInfo[i + 5]) == 0) { continue; }
+                        if (Convert.ToInt32(arrayHeaderInfo[i + 5]) / Convert.ToDouble(arrayHeaderInfo[1]) > 0.005) { worksheet2.get_Range(worksheet2.Cells[(num2 + 1) + 8, i + 7], worksheet2.Cells[(num2 + 1) + +8, i + 7]).Interior.ColorIndex = 7; flagbin++; }
+                    }
+                    //if (Convert.ToInt32(arrayHeaderInfo[28]) > 77) { worksheet2.get_Range(worksheet2.Cells[(num2 + 1) + 8, 29], worksheet2.Cells[(num2 + 1) + 8, 29]).Interior.ColorIndex = 7; flagbin++; }//bin23
+                    //if (Convert.ToInt32(arrayHeaderInfo[29]) > 77) { worksheet2.get_Range(worksheet2.Cells[(num2 + 1) + 8, 30], worksheet2.Cells[(num2 + 1) + 8, 30]).Interior.ColorIndex = 7; flagbin++; }//bin24
+                    //if (Convert.ToInt32(arrayHeaderInfo[30]) > 77) { worksheet2.get_Range(worksheet2.Cells[(num2 + 1) + 8, 31], worksheet2.Cells[(num2 + 1) + 8, 31]).Interior.ColorIndex = 7; flagbin++; }//bin25
+                    //if (Convert.ToInt32(arrayHeaderInfo[31]) > 77) { worksheet2.get_Range(worksheet2.Cells[(num2 + 1) + 8, 32], worksheet2.Cells[(num2 + 1) + 8, 32]).Interior.ColorIndex = 7; flagbin++; }//bin26
+                    //if (Convert.ToInt32(arrayHeaderInfo[32]) > 77) { worksheet2.get_Range(worksheet2.Cells[(num2 + 1) + 8, 33], worksheet2.Cells[(num2 + 1) + 8, 33]).Interior.ColorIndex = 7; flagbin++; }//bin27
+                    //if (Convert.ToInt32(arrayHeaderInfo[33]) > 77) { worksheet2.get_Range(worksheet2.Cells[(num2 + 1) + 8, 34], worksheet2.Cells[(num2 + 1) + 8, 34]).Interior.ColorIndex = 7; flagbin++; }//bin28
+                    //if (Convert.ToInt32(arrayHeaderInfo[34]) > 77) { worksheet2.get_Range(worksheet2.Cells[(num2 + 1) + 8, 35], worksheet2.Cells[(num2 + 1) + 8, 35]).Interior.ColorIndex = 7; flagbin++; }//bin29
+                    //if (Convert.ToInt32(arrayHeaderInfo[35]) > 77) { worksheet2.get_Range(worksheet2.Cells[(num2 + 1) + 8, 36], worksheet2.Cells[(num2 + 1) + 8, 36]).Interior.ColorIndex = 7; flagbin++; }//bin30
+                    //if (Convert.ToInt32(arrayHeaderInfo[36]) > 77) { worksheet2.get_Range(worksheet2.Cells[(num2 + 1) + 8, 37], worksheet2.Cells[(num2 + 1) + 8, 37]).Interior.ColorIndex = 7; flagbin++; }//bin31
+                    //if (Convert.ToInt32(arrayHeaderInfo[37]) > 77) { worksheet2.get_Range(worksheet2.Cells[(num2 + 1) + 8, 38], worksheet2.Cells[(num2 + 1) + 8, 38]).Interior.ColorIndex = 7; flagbin++; }//bin32
+                    //if (Convert.ToInt32(arrayHeaderInfo[38]) > 77) { worksheet2.get_Range(worksheet2.Cells[(num2 + 1) + 8, 39], worksheet2.Cells[(num2 + 1) + 8, 39]).Interior.ColorIndex = 7; flagbin++; }//bin33
+                    //if (Convert.ToInt32(arrayHeaderInfo[39]) > 77) { worksheet2.get_Range(worksheet2.Cells[(num2 + 1) + 8, 40], worksheet2.Cells[(num2 + 1) + 8, 40]).Interior.ColorIndex = 7; flagbin++; }//bin34
 
-                    if (Convert.ToInt32(objArray3[40]) > 9) { worksheet2.get_Range(worksheet2.Cells[(num2 + 1) + 8, 41], worksheet2.Cells[(num2 + 1) + 8, 41]).Interior.ColorIndex = 7; flagbin++; }//bin35
-                    if (Convert.ToInt32(objArray3[41]) > 9) { worksheet2.get_Range(worksheet2.Cells[(num2 + 1) + 8, 42], worksheet2.Cells[(num2 + 1) + 8, 42]).Interior.ColorIndex = 7; flagbin++; }//bin36
-                    if (Convert.ToInt32(objArray3[42]) > 9) { worksheet2.get_Range(worksheet2.Cells[(num2 + 1) + 8, 43], worksheet2.Cells[(num2 + 1) + 8, 43]).Interior.ColorIndex = 7; flagbin++; }//bin37
-                    if (Convert.ToInt32(objArray3[43]) > 9) { worksheet2.get_Range(worksheet2.Cells[(num2 + 1) + 8, 44], worksheet2.Cells[(num2 + 1) + 8, 44]).Interior.ColorIndex = 7; flagbin++; }//bin38
-                    if (Convert.ToInt32(objArray3[44]) > 9) { worksheet2.get_Range(worksheet2.Cells[(num2 + 1) + 8, 45], worksheet2.Cells[(num2 + 1) + 8, 45]).Interior.ColorIndex = 7; flagbin++; }//bin39
-                    if (Convert.ToInt32(objArray3[45]) > 9) { worksheet2.get_Range(worksheet2.Cells[(num2 + 1) + 8, 46], worksheet2.Cells[(num2 + 1) + 8, 46]).Interior.ColorIndex = 7; flagbin++; }//bin40
-                    if (Convert.ToInt32(objArray3[46]) > 9) { worksheet2.get_Range(worksheet2.Cells[(num2 + 1) + 8, 47], worksheet2.Cells[(num2 + 1) + 8, 47]).Interior.ColorIndex = 7; flagbin++; }//bin41
-                    if (Convert.ToInt32(objArray3[47]) > 9) { worksheet2.get_Range(worksheet2.Cells[(num2 + 1) + 8, 48], worksheet2.Cells[(num2 + 1) + 8, 48]).Interior.ColorIndex = 7; flagbin++; }//bin42
-                    if (Convert.ToInt32(objArray3[48]) > 9) { worksheet2.get_Range(worksheet2.Cells[(num2 + 1) + 8, 49], worksheet2.Cells[(num2 + 1) + 8, 49]).Interior.ColorIndex = 7; flagbin++; }//bin43
-                    if (Convert.ToInt32(objArray3[49]) > 9) { worksheet2.get_Range(worksheet2.Cells[(num2 + 1) + 8, 50], worksheet2.Cells[(num2 + 1) + 8, 50]).Interior.ColorIndex = 7; flagbin++; }//bin44
+                    //if (Convert.ToInt32(arrayHeaderInfo[40]) > 77) { worksheet2.get_Range(worksheet2.Cells[(num2 + 1) + 8, 41], worksheet2.Cells[(num2 + 1) + 8, 41]).Interior.ColorIndex = 7; flagbin++; }//bin35
+                    //if (Convert.ToInt32(arrayHeaderInfo[41]) > 77) { worksheet2.get_Range(worksheet2.Cells[(num2 + 1) + 8, 42], worksheet2.Cells[(num2 + 1) + 8, 42]).Interior.ColorIndex = 7; flagbin++; }//bin36
+                    //if (Convert.ToInt32(arrayHeaderInfo[42]) > 77) { worksheet2.get_Range(worksheet2.Cells[(num2 + 1) + 8, 43], worksheet2.Cells[(num2 + 1) + 8, 43]).Interior.ColorIndex = 7; flagbin++; }//bin37
+                    //if (Convert.ToInt32(arrayHeaderInfo[43]) > 77) { worksheet2.get_Range(worksheet2.Cells[(num2 + 1) + 8, 44], worksheet2.Cells[(num2 + 1) + 8, 44]).Interior.ColorIndex = 7; flagbin++; }//bin38
+                    //if (Convert.ToInt32(arrayHeaderInfo[44]) > 77) { worksheet2.get_Range(worksheet2.Cells[(num2 + 1) + 8, 45], worksheet2.Cells[(num2 + 1) + 8, 45]).Interior.ColorIndex = 7; flagbin++; }//bin39
+                    //if (Convert.ToInt32(arrayHeaderInfo[45]) > 77) { worksheet2.get_Range(worksheet2.Cells[(num2 + 1) + 8, 46], worksheet2.Cells[(num2 + 1) + 8, 46]).Interior.ColorIndex = 7; flagbin++; }//bin40
+                    //if (Convert.ToInt32(arrayHeaderInfo[46]) > 77) { worksheet2.get_Range(worksheet2.Cells[(num2 + 1) + 8, 47], worksheet2.Cells[(num2 + 1) + 8, 47]).Interior.ColorIndex = 7; flagbin++; }//bin41
+                    //if (Convert.ToInt32(arrayHeaderInfo[47]) > 77) { worksheet2.get_Range(worksheet2.Cells[(num2 + 1) + 8, 48], worksheet2.Cells[(num2 + 1) + 8, 48]).Interior.ColorIndex = 7; flagbin++; }//bin42
+                    //if (Convert.ToInt32(arrayHeaderInfo[48]) > 77) { worksheet2.get_Range(worksheet2.Cells[(num2 + 1) + 8, 49], worksheet2.Cells[(num2 + 1) + 8, 49]).Interior.ColorIndex = 7; flagbin++; }//bin43
+                    //if (Convert.ToInt32(arrayHeaderInfo[49]) > 77) { worksheet2.get_Range(worksheet2.Cells[(num2 + 1) + 8, 50], worksheet2.Cells[(num2 + 1) + 8, 50]).Interior.ColorIndex = 7; flagbin++; }//bin44
 
-                    if (flagbin > 0) { worksheet2.get_Range(worksheet2.Cells[(num2 + 1) + 8, 1], worksheet2.Cells[(num2 + 1) + 8, 1]).Interior.ColorIndex = 7; MessageBox.Show(objArray3[0].ToString() + "--SBL超标,请检查图谱是否有问题"); }
+                    if (flagbin > 0) { worksheet2.get_Range(worksheet2.Cells[(num2 + 1) + 8, 1], worksheet2.Cells[(num2 + 1) + 8, 1]).Interior.ColorIndex = 7; MessageBox.Show(arrayHeaderInfo[0].ToString() + "--SBL超标,请检查图谱是否有问题"); }
 
                 }
 
                 if ((((Tsk)this._currFile).Device == "2065WAA-8-16-CP1"))
                 {
                     int flagbin = 0;
-                    if (Convert.ToInt32(objArray3[27]) > 10) { worksheet2.get_Range(worksheet2.Cells[(num2 + 1) + 8, 28], worksheet2.Cells[(num2 + 1) + 8, 28]).Interior.ColorIndex = 7; flagbin++; }//bin22
+                    if (Convert.ToDouble(arrayHeaderInfo[2]) / Convert.ToDouble(arrayHeaderInfo[1]) <= 0.985) { worksheet2.get_Range(worksheet2.Cells[(num2 + 1) + 8, 5], worksheet2.Cells[(num2 + 1) + 8, 5]).Interior.ColorIndex = 7; flagbin++; }//片良率
+                    if (Convert.ToInt32(arrayHeaderInfo[27]) > 10) { worksheet2.get_Range(worksheet2.Cells[(num2 + 1) + 8, 28], worksheet2.Cells[(num2 + 1) + 8, 28]).Interior.ColorIndex = 7; flagbin++; }//bin22
 
-                    if (flagbin > 0) { worksheet2.get_Range(worksheet2.Cells[(num2 + 1) + 8, 1], worksheet2.Cells[(num2 + 1) + 8, 1]).Interior.ColorIndex = 7; MessageBox.Show(objArray3[0].ToString() + "--SBL超标,请检查图谱是否有问题"); }
+                    if (flagbin > 0) { worksheet2.get_Range(worksheet2.Cells[(num2 + 1) + 8, 1], worksheet2.Cells[(num2 + 1) + 8, 1]).Interior.ColorIndex = 7; MessageBox.Show(arrayHeaderInfo[0].ToString() + "--SBL超标,请检查图谱是否有问题"); }
 
                 }
 
                 if ((((Tsk)this._currFile).Device == "2065WAA-8-Y16-P1"))
                 {
                     int flagbin = 0;
-                    if (Convert.ToInt32(objArray3[27]) > 10) { worksheet2.get_Range(worksheet2.Cells[(num2 + 1) + 8, 28], worksheet2.Cells[(num2 + 1) + 8, 28]).Interior.ColorIndex = 7; flagbin++; }//bin22
+                    if (Convert.ToDouble(arrayHeaderInfo[2]) / Convert.ToDouble(arrayHeaderInfo[1]) <= 0.985) { worksheet2.get_Range(worksheet2.Cells[(num2 + 1) + 8, 5], worksheet2.Cells[(num2 + 1) + 8, 5]).Interior.ColorIndex = 7; flagbin++; }//片良率
+                    if (Convert.ToInt32(arrayHeaderInfo[27]) > 10) { worksheet2.get_Range(worksheet2.Cells[(num2 + 1) + 8, 28], worksheet2.Cells[(num2 + 1) + 8, 28]).Interior.ColorIndex = 7; flagbin++; }//bin22
 
-                    if (flagbin > 0) { worksheet2.get_Range(worksheet2.Cells[(num2 + 1) + 8, 1], worksheet2.Cells[(num2 + 1) + 8, 1]).Interior.ColorIndex = 7; MessageBox.Show(objArray3[0].ToString() + "--SBL超标,请检查图谱是否有问题"); }
+                    if (flagbin > 0) { worksheet2.get_Range(worksheet2.Cells[(num2 + 1) + 8, 1], worksheet2.Cells[(num2 + 1) + 8, 1]).Interior.ColorIndex = 7; MessageBox.Show(arrayHeaderInfo[0].ToString() + "--SBL超标,请检查图谱是否有问题"); }
 
                 }
 
                 if ((((Tsk)this._currFile).Device == "2065WAA-8-Y16-P2"))
                 {
                     int flagbin = 0;
-                    if (Convert.ToInt32(objArray3[28]) > 9) { worksheet2.get_Range(worksheet2.Cells[(num2 + 1) + 8, 29], worksheet2.Cells[(num2 + 1) + 8, 29]).Interior.ColorIndex = 7; flagbin++; }//bin23
-                    if (Convert.ToInt32(objArray3[29]) > 9) { worksheet2.get_Range(worksheet2.Cells[(num2 + 1) + 8, 30], worksheet2.Cells[(num2 + 1) + 8, 30]).Interior.ColorIndex = 7; flagbin++; }//bin24
-                    if (Convert.ToInt32(objArray3[30]) > 9) { worksheet2.get_Range(worksheet2.Cells[(num2 + 1) + 8, 31], worksheet2.Cells[(num2 + 1) + 8, 31]).Interior.ColorIndex = 7; flagbin++; }//bin25
-                    if (Convert.ToInt32(objArray3[31]) > 9) { worksheet2.get_Range(worksheet2.Cells[(num2 + 1) + 8, 32], worksheet2.Cells[(num2 + 1) + 8, 32]).Interior.ColorIndex = 7; flagbin++; }//bin26
-                    if (Convert.ToInt32(objArray3[32]) > 20) { worksheet2.get_Range(worksheet2.Cells[(num2 + 1) + 8, 33], worksheet2.Cells[(num2 + 1) + 8, 33]).Interior.ColorIndex = 7; flagbin++; }//bin27
-                    if (Convert.ToInt32(objArray3[33]) > 9) { worksheet2.get_Range(worksheet2.Cells[(num2 + 1) + 8, 34], worksheet2.Cells[(num2 + 1) + 8, 34]).Interior.ColorIndex = 7; flagbin++; }//bin28
-                    if (Convert.ToInt32(objArray3[34]) > 9) { worksheet2.get_Range(worksheet2.Cells[(num2 + 1) + 8, 35], worksheet2.Cells[(num2 + 1) + 8, 35]).Interior.ColorIndex = 7; flagbin++; }//bin29
-                    if (Convert.ToInt32(objArray3[35]) > 9) { worksheet2.get_Range(worksheet2.Cells[(num2 + 1) + 8, 36], worksheet2.Cells[(num2 + 1) + 8, 36]).Interior.ColorIndex = 7; flagbin++; }//bin30
-                    if (Convert.ToInt32(objArray3[36]) > 9) { worksheet2.get_Range(worksheet2.Cells[(num2 + 1) + 8, 37], worksheet2.Cells[(num2 + 1) + 8, 37]).Interior.ColorIndex = 7; flagbin++; }//bin31
-                    if (Convert.ToInt32(objArray3[37]) > 9) { worksheet2.get_Range(worksheet2.Cells[(num2 + 1) + 8, 38], worksheet2.Cells[(num2 + 1) + 8, 38]).Interior.ColorIndex = 7; flagbin++; }//bin32
-                    if (Convert.ToInt32(objArray3[38]) > 9) { worksheet2.get_Range(worksheet2.Cells[(num2 + 1) + 8, 39], worksheet2.Cells[(num2 + 1) + 8, 39]).Interior.ColorIndex = 7; flagbin++; }//bin33
-                    if (Convert.ToInt32(objArray3[39]) > 9) { worksheet2.get_Range(worksheet2.Cells[(num2 + 1) + 8, 40], worksheet2.Cells[(num2 + 1) + 8, 40]).Interior.ColorIndex = 7; flagbin++; }//bin34
+                    if (Convert.ToDouble(arrayHeaderInfo[2]) / Convert.ToDouble(arrayHeaderInfo[1]) <= 0.985) { worksheet2.get_Range(worksheet2.Cells[(num2 + 1) + 8, 5], worksheet2.Cells[(num2 + 1) + 8, 5]).Interior.ColorIndex = 7; flagbin++; }//片良率
+                                                                                                                                                                                                                                                    //bin3到bin64
+                    for (int i = 3; i <= 63; i++)
+                    {
+                        if (Convert.ToInt32(arrayHeaderInfo[i + 5]) == 0) { continue; }
+                        if (Convert.ToInt32(arrayHeaderInfo[i + 5]) / Convert.ToDouble(arrayHeaderInfo[1]) > 0.005) { worksheet2.get_Range(worksheet2.Cells[(num2 + 1) + 8, i + 7], worksheet2.Cells[(num2 + 1) + +8, i + 7]).Interior.ColorIndex = 7; flagbin++; }
+                    }
+                    //if (Convert.ToInt32(arrayHeaderInfo[28]) > 77) { worksheet2.get_Range(worksheet2.Cells[(num2 + 1) + 8, 29], worksheet2.Cells[(num2 + 1) + 8, 29]).Interior.ColorIndex = 7; flagbin++; }//bin23
+                    //if (Convert.ToInt32(arrayHeaderInfo[29]) > 77) { worksheet2.get_Range(worksheet2.Cells[(num2 + 1) + 8, 30], worksheet2.Cells[(num2 + 1) + 8, 30]).Interior.ColorIndex = 7; flagbin++; }//bin24
+                    //if (Convert.ToInt32(arrayHeaderInfo[30]) > 77) { worksheet2.get_Range(worksheet2.Cells[(num2 + 1) + 8, 31], worksheet2.Cells[(num2 + 1) + 8, 31]).Interior.ColorIndex = 7; flagbin++; }//bin25
+                    //if (Convert.ToInt32(arrayHeaderInfo[31]) > 77) { worksheet2.get_Range(worksheet2.Cells[(num2 + 1) + 8, 32], worksheet2.Cells[(num2 + 1) + 8, 32]).Interior.ColorIndex = 7; flagbin++; }//bin26
+                    //if (Convert.ToInt32(arrayHeaderInfo[32]) > 77) { worksheet2.get_Range(worksheet2.Cells[(num2 + 1) + 8, 33], worksheet2.Cells[(num2 + 1) + 8, 33]).Interior.ColorIndex = 7; flagbin++; }//bin27
+                    //if (Convert.ToInt32(arrayHeaderInfo[33]) > 77) { worksheet2.get_Range(worksheet2.Cells[(num2 + 1) + 8, 34], worksheet2.Cells[(num2 + 1) + 8, 34]).Interior.ColorIndex = 7; flagbin++; }//bin28
+                    //if (Convert.ToInt32(arrayHeaderInfo[34]) > 77) { worksheet2.get_Range(worksheet2.Cells[(num2 + 1) + 8, 35], worksheet2.Cells[(num2 + 1) + 8, 35]).Interior.ColorIndex = 7; flagbin++; }//bin29
+                    //if (Convert.ToInt32(arrayHeaderInfo[35]) > 77) { worksheet2.get_Range(worksheet2.Cells[(num2 + 1) + 8, 36], worksheet2.Cells[(num2 + 1) + 8, 36]).Interior.ColorIndex = 7; flagbin++; }//bin30
+                    //if (Convert.ToInt32(arrayHeaderInfo[36]) > 77) { worksheet2.get_Range(worksheet2.Cells[(num2 + 1) + 8, 37], worksheet2.Cells[(num2 + 1) + 8, 37]).Interior.ColorIndex = 7; flagbin++; }//bin31
+                    //if (Convert.ToInt32(arrayHeaderInfo[37]) > 77) { worksheet2.get_Range(worksheet2.Cells[(num2 + 1) + 8, 38], worksheet2.Cells[(num2 + 1) + 8, 38]).Interior.ColorIndex = 7; flagbin++; }//bin32
+                    //if (Convert.ToInt32(arrayHeaderInfo[38]) > 77) { worksheet2.get_Range(worksheet2.Cells[(num2 + 1) + 8, 39], worksheet2.Cells[(num2 + 1) + 8, 39]).Interior.ColorIndex = 7; flagbin++; }//bin33
+                    //if (Convert.ToInt32(arrayHeaderInfo[39]) > 77) { worksheet2.get_Range(worksheet2.Cells[(num2 + 1) + 8, 40], worksheet2.Cells[(num2 + 1) + 8, 40]).Interior.ColorIndex = 7; flagbin++; }//bin34
 
-                    if (Convert.ToInt32(objArray3[40]) > 9) { worksheet2.get_Range(worksheet2.Cells[(num2 + 1) + 8, 41], worksheet2.Cells[(num2 + 1) + 8, 41]).Interior.ColorIndex = 7; flagbin++; }//bin35
-                    if (Convert.ToInt32(objArray3[41]) > 9) { worksheet2.get_Range(worksheet2.Cells[(num2 + 1) + 8, 42], worksheet2.Cells[(num2 + 1) + 8, 42]).Interior.ColorIndex = 7; flagbin++; }//bin36
-                    if (Convert.ToInt32(objArray3[42]) > 9) { worksheet2.get_Range(worksheet2.Cells[(num2 + 1) + 8, 43], worksheet2.Cells[(num2 + 1) + 8, 43]).Interior.ColorIndex = 7; flagbin++; }//bin37
-                    if (Convert.ToInt32(objArray3[43]) > 9) { worksheet2.get_Range(worksheet2.Cells[(num2 + 1) + 8, 44], worksheet2.Cells[(num2 + 1) + 8, 44]).Interior.ColorIndex = 7; flagbin++; }//bin38
-                    if (Convert.ToInt32(objArray3[44]) > 9) { worksheet2.get_Range(worksheet2.Cells[(num2 + 1) + 8, 45], worksheet2.Cells[(num2 + 1) + 8, 45]).Interior.ColorIndex = 7; flagbin++; }//bin39
-                    if (Convert.ToInt32(objArray3[45]) > 9) { worksheet2.get_Range(worksheet2.Cells[(num2 + 1) + 8, 46], worksheet2.Cells[(num2 + 1) + 8, 46]).Interior.ColorIndex = 7; flagbin++; }//bin40
-                    if (Convert.ToInt32(objArray3[46]) > 9) { worksheet2.get_Range(worksheet2.Cells[(num2 + 1) + 8, 47], worksheet2.Cells[(num2 + 1) + 8, 47]).Interior.ColorIndex = 7; flagbin++; }//bin41
-                    if (Convert.ToInt32(objArray3[47]) > 9) { worksheet2.get_Range(worksheet2.Cells[(num2 + 1) + 8, 48], worksheet2.Cells[(num2 + 1) + 8, 48]).Interior.ColorIndex = 7; flagbin++; }//bin42
-                    if (Convert.ToInt32(objArray3[48]) > 9) { worksheet2.get_Range(worksheet2.Cells[(num2 + 1) + 8, 49], worksheet2.Cells[(num2 + 1) + 8, 49]).Interior.ColorIndex = 7; flagbin++; }//bin43
-                    if (Convert.ToInt32(objArray3[49]) > 9) { worksheet2.get_Range(worksheet2.Cells[(num2 + 1) + 8, 50], worksheet2.Cells[(num2 + 1) + 8, 50]).Interior.ColorIndex = 7; flagbin++; }//bin44
+                    //if (Convert.ToInt32(arrayHeaderInfo[40]) > 77) { worksheet2.get_Range(worksheet2.Cells[(num2 + 1) + 8, 41], worksheet2.Cells[(num2 + 1) + 8, 41]).Interior.ColorIndex = 7; flagbin++; }//bin35
+                    //if (Convert.ToInt32(arrayHeaderInfo[41]) > 77) { worksheet2.get_Range(worksheet2.Cells[(num2 + 1) + 8, 42], worksheet2.Cells[(num2 + 1) + 8, 42]).Interior.ColorIndex = 7; flagbin++; }//bin36
+                    //if (Convert.ToInt32(arrayHeaderInfo[42]) > 77) { worksheet2.get_Range(worksheet2.Cells[(num2 + 1) + 8, 43], worksheet2.Cells[(num2 + 1) + 8, 43]).Interior.ColorIndex = 7; flagbin++; }//bin37
+                    //if (Convert.ToInt32(arrayHeaderInfo[43]) > 77) { worksheet2.get_Range(worksheet2.Cells[(num2 + 1) + 8, 44], worksheet2.Cells[(num2 + 1) + 8, 44]).Interior.ColorIndex = 7; flagbin++; }//bin38
+                    //if (Convert.ToInt32(arrayHeaderInfo[44]) > 77) { worksheet2.get_Range(worksheet2.Cells[(num2 + 1) + 8, 45], worksheet2.Cells[(num2 + 1) + 8, 45]).Interior.ColorIndex = 7; flagbin++; }//bin39
+                    //if (Convert.ToInt32(arrayHeaderInfo[45]) > 77) { worksheet2.get_Range(worksheet2.Cells[(num2 + 1) + 8, 46], worksheet2.Cells[(num2 + 1) + 8, 46]).Interior.ColorIndex = 7; flagbin++; }//bin40
+                    //if (Convert.ToInt32(arrayHeaderInfo[46]) > 77) { worksheet2.get_Range(worksheet2.Cells[(num2 + 1) + 8, 47], worksheet2.Cells[(num2 + 1) + 8, 47]).Interior.ColorIndex = 7; flagbin++; }//bin41
+                    //if (Convert.ToInt32(arrayHeaderInfo[47]) > 77) { worksheet2.get_Range(worksheet2.Cells[(num2 + 1) + 8, 48], worksheet2.Cells[(num2 + 1) + 8, 48]).Interior.ColorIndex = 7; flagbin++; }//bin42
+                    //if (Convert.ToInt32(arrayHeaderInfo[48]) > 77) { worksheet2.get_Range(worksheet2.Cells[(num2 + 1) + 8, 49], worksheet2.Cells[(num2 + 1) + 8, 49]).Interior.ColorIndex = 7; flagbin++; }//bin43
+                    //if (Convert.ToInt32(arrayHeaderInfo[49]) > 77) { worksheet2.get_Range(worksheet2.Cells[(num2 + 1) + 8, 50], worksheet2.Cells[(num2 + 1) + 8, 50]).Interior.ColorIndex = 7; flagbin++; }//bin44
 
 
-
-                    if (flagbin > 0) { worksheet2.get_Range(worksheet2.Cells[(num2 + 1) + 8, 1], worksheet2.Cells[(num2 + 1) + 8, 1]).Interior.ColorIndex = 7; MessageBox.Show(objArray3[0].ToString() + "--SBL超标,请检查图谱是否有问题"); }
+                    if (flagbin > 0) { worksheet2.get_Range(worksheet2.Cells[(num2 + 1) + 8, 1], worksheet2.Cells[(num2 + 1) + 8, 1]).Interior.ColorIndex = 7; MessageBox.Show(arrayHeaderInfo[0].ToString() + "--SBL超标,请检查图谱是否有问题"); }
 
                 }
 
                 if ((((Tsk)this._currFile).Device == "2053WFA-8-16-CP2"))
                 {
                     int flagbin = 0;
-                    if (Convert.ToInt32(objArray3[23]) > 15) { worksheet2.get_Range(worksheet2.Cells[(num2 + 1) + 8, 24], worksheet2.Cells[(num2 + 1) + 8, 24]).Interior.ColorIndex = 7; flagbin++; }//bin18
-                    if (Convert.ToInt32(objArray3[24]) > 15) { worksheet2.get_Range(worksheet2.Cells[(num2 + 1) + 8, 25], worksheet2.Cells[(num2 + 1) + 8, 25]).Interior.ColorIndex = 7; flagbin++; }//bin19
-                    if (Convert.ToInt32(objArray3[25]) > 15) { worksheet2.get_Range(worksheet2.Cells[(num2 + 1) + 8, 26], worksheet2.Cells[(num2 + 1) + 8, 26]).Interior.ColorIndex = 7; flagbin++; }//bin20
-                    if (Convert.ToInt32(objArray3[26]) > 15) { worksheet2.get_Range(worksheet2.Cells[(num2 + 1) + 8, 27], worksheet2.Cells[(num2 + 1) + 8, 27]).Interior.ColorIndex = 7; flagbin++; }//bin21
-                    if (Convert.ToInt32(objArray3[27]) > 15) { worksheet2.get_Range(worksheet2.Cells[(num2 + 1) + 8, 28], worksheet2.Cells[(num2 + 1) + 8, 28]).Interior.ColorIndex = 7; flagbin++; }//bin22
-                    if (flagbin > 0) { worksheet2.get_Range(worksheet2.Cells[(num2 + 1) + 8, 1], worksheet2.Cells[(num2 + 1) + 8, 1]).Interior.ColorIndex = 7; MessageBox.Show(objArray3[0].ToString() + "--SBL超标,请检查图谱是否有问题"); }
+                    if (Convert.ToInt32(arrayHeaderInfo[23]) > 15) { worksheet2.get_Range(worksheet2.Cells[(num2 + 1) + 8, 24], worksheet2.Cells[(num2 + 1) + 8, 24]).Interior.ColorIndex = 7; flagbin++; }//bin18
+                    if (Convert.ToInt32(arrayHeaderInfo[24]) > 15) { worksheet2.get_Range(worksheet2.Cells[(num2 + 1) + 8, 25], worksheet2.Cells[(num2 + 1) + 8, 25]).Interior.ColorIndex = 7; flagbin++; }//bin19
+                    if (Convert.ToInt32(arrayHeaderInfo[25]) > 15) { worksheet2.get_Range(worksheet2.Cells[(num2 + 1) + 8, 26], worksheet2.Cells[(num2 + 1) + 8, 26]).Interior.ColorIndex = 7; flagbin++; }//bin20
+                    if (Convert.ToInt32(arrayHeaderInfo[26]) > 15) { worksheet2.get_Range(worksheet2.Cells[(num2 + 1) + 8, 27], worksheet2.Cells[(num2 + 1) + 8, 27]).Interior.ColorIndex = 7; flagbin++; }//bin21
+                    if (Convert.ToInt32(arrayHeaderInfo[27]) > 15) { worksheet2.get_Range(worksheet2.Cells[(num2 + 1) + 8, 28], worksheet2.Cells[(num2 + 1) + 8, 28]).Interior.ColorIndex = 7; flagbin++; }//bin22
+                    if (flagbin > 0) { worksheet2.get_Range(worksheet2.Cells[(num2 + 1) + 8, 1], worksheet2.Cells[(num2 + 1) + 8, 1]).Interior.ColorIndex = 7; MessageBox.Show(arrayHeaderInfo[0].ToString() + "--SBL超标,请检查图谱是否有问题"); }
 
                 }
 
                 if ((((Tsk)this._currFile).Device == "CPS4019-8-32-01P"))
                 {
                     int flagbin = 0;
-                    if (Convert.ToInt32(objArray3[7]) > 7) { worksheet2.get_Range(worksheet2.Cells[(num2 + 1) + 8, 8], worksheet2.Cells[(num2 + 1) + 8, 8]).Interior.ColorIndex = 7; flagbin++; }//bin2
-                    if (Convert.ToInt32(objArray3[17]) > 4) { worksheet2.get_Range(worksheet2.Cells[(num2 + 1) + 8, 18], worksheet2.Cells[(num2 + 1) + 8, 18]).Interior.ColorIndex = 7; flagbin++; }//bin12
-                    if (Convert.ToInt32(objArray3[27]) > 4) { worksheet2.get_Range(worksheet2.Cells[(num2 + 1) + 8, 28], worksheet2.Cells[(num2 + 1) + 8, 28]).Interior.ColorIndex = 7; flagbin++; }//bin22
-                    if (flagbin > 0) { worksheet2.get_Range(worksheet2.Cells[(num2 + 1) + 8, 1], worksheet2.Cells[(num2 + 1) + 8, 1]).Interior.ColorIndex = 7; MessageBox.Show(objArray3[0].ToString() + "--SBL超标,请检查图谱是否有问题"); }
+                    if (Convert.ToInt32(arrayHeaderInfo[7]) > 7) { worksheet2.get_Range(worksheet2.Cells[(num2 + 1) + 8, 8], worksheet2.Cells[(num2 + 1) + 8, 8]).Interior.ColorIndex = 7; flagbin++; }//bin2
+                    if (Convert.ToInt32(arrayHeaderInfo[17]) > 4) { worksheet2.get_Range(worksheet2.Cells[(num2 + 1) + 8, 18], worksheet2.Cells[(num2 + 1) + 8, 18]).Interior.ColorIndex = 7; flagbin++; }//bin12
+                    if (Convert.ToInt32(arrayHeaderInfo[27]) > 4) { worksheet2.get_Range(worksheet2.Cells[(num2 + 1) + 8, 28], worksheet2.Cells[(num2 + 1) + 8, 28]).Interior.ColorIndex = 7; flagbin++; }//bin22
+                    if (flagbin > 0) { worksheet2.get_Range(worksheet2.Cells[(num2 + 1) + 8, 1], worksheet2.Cells[(num2 + 1) + 8, 1]).Interior.ColorIndex = 7; MessageBox.Show(arrayHeaderInfo[0].ToString() + "--SBL超标,请检查图谱是否有问题"); }
 
                 }
+
+                //total die 92418*0.005=462.09
+                if ((((Tsk)this._currFile).Device == "C8N003-12-20-00P"))
+                {
+                    int flagbin = 0;
+                    if (Convert.ToDouble(arrayHeaderInfo[2]) / Convert.ToDouble(arrayHeaderInfo[1]) <= 0.985) { worksheet2.get_Range(worksheet2.Cells[(num2 + 1) + 8, 5], worksheet2.Cells[(num2 + 1) + 8, 5]).Interior.ColorIndex = 7; flagbin++; }//片良率
+                    for (int i = 5; i <= 20; i++)
+                    {
+                        if (Convert.ToInt32(arrayHeaderInfo[i + 6]) / Convert.ToDouble(arrayHeaderInfo[1]) > 0.005) { worksheet2.get_Range(worksheet2.Cells[(num2 + 1) + 8, i + 7], worksheet2.Cells[(num2 + 1) + 8, i+7]).Interior.ColorIndex = 7; flagbin++; }
+                    }
+                    if (flagbin > 0) { worksheet2.get_Range(worksheet2.Cells[(num2 + 1) + 8, 1], worksheet2.Cells[(num2 + 1) + 8, 1]).Interior.ColorIndex = 7; MessageBox.Show(arrayHeaderInfo[0].ToString() + "--SBL超标,请检查图谱是否有问题"); }
+
+                }
+                //total die 28761*0.005=143.8
+                if ((((Tsk)this._currFile).Device == "C8A000WBB-8-30-0"))
+                {
+                    int flagbin = 0;
+                    if (Convert.ToDouble(arrayHeaderInfo[2]) / Convert.ToDouble(arrayHeaderInfo[1]) <= 0.985) { worksheet2.get_Range(worksheet2.Cells[(num2 + 1) + 8, 5], worksheet2.Cells[(num2 + 1) + 8, 5]).Interior.ColorIndex = 7; flagbin++; }//片良率
+                    for (int i = 5; i<=19; i++)
+                    {
+                        if (Convert.ToInt32(arrayHeaderInfo[i + 6]) / Convert.ToDouble(arrayHeaderInfo[1]) > 0.005) { worksheet2.get_Range(worksheet2.Cells[(num2 + 1) + 8, i + 7], worksheet2.Cells[(num2 + 1) + +8, i + 7]).Interior.ColorIndex = 7; flagbin++; }
+                    }
+                    if (flagbin > 0) { worksheet2.get_Range(worksheet2.Cells[(num2 + 1) + 8, 1], worksheet2.Cells[(num2 + 1) + 8, 1]).Interior.ColorIndex = 7; MessageBox.Show(arrayHeaderInfo[0].ToString() + "--SBL超标,请检查图谱是否有问题"); }
+
+                }
+
+                if ((((Tsk)this._currFile).Device == "2065WEB-12-16-00"))
+                {
+                    int flagbin = 0;
+                    if (Convert.ToDouble(arrayHeaderInfo[2]) / Convert.ToDouble(arrayHeaderInfo[1]) <= 0.985) { worksheet2.get_Range(worksheet2.Cells[(num2 + 1) + 8, 5], worksheet2.Cells[(num2 + 1) + 8, 5]).Interior.ColorIndex = 7; flagbin++; }//片良率
+                    //bin3到bin64
+                    for (int i = 3; i <= 63; i++)
+                    {
+                        if (Convert.ToInt32(arrayHeaderInfo[i + 5]) == 0) { continue; }
+                        if (Convert.ToInt32(arrayHeaderInfo[i + 5]) / Convert.ToDouble(arrayHeaderInfo[1]) > 0.005) { worksheet2.get_Range(worksheet2.Cells[(num2 + 1) + 8, i + 7], worksheet2.Cells[(num2 + 1) + +8, i + 7]).Interior.ColorIndex = 7; flagbin++; }
+                    }
+                    if (flagbin > 0) { worksheet2.get_Range(worksheet2.Cells[(num2 + 1) + 8, 1], worksheet2.Cells[(num2 + 1) + 8, 1]).Interior.ColorIndex = 7; MessageBox.Show(arrayHeaderInfo[0].ToString() + "--SBL超标,请检查图谱是否有问题"); }
+
+                }
+
+                if ((((Tsk)this._currFile).Device == "2065WEB-12-16-01"))
+                {
+                    int flagbin = 0;
+                    if (Convert.ToDouble(arrayHeaderInfo[2]) / Convert.ToDouble(arrayHeaderInfo[1]) <= 0.985) { worksheet2.get_Range(worksheet2.Cells[(num2 + 1) + 8, 5], worksheet2.Cells[(num2 + 1) + 8, 5]).Interior.ColorIndex = 7; flagbin++; }//片良率
+                    //bin3到bin64
+                    for (int i = 3; i <= 63; i++)
+                    {
+                        if (Convert.ToInt32(arrayHeaderInfo[i + 5]) == 0) { continue; }
+                        if (Convert.ToInt32(arrayHeaderInfo[i + 5]) / Convert.ToDouble(arrayHeaderInfo[1]) > 0.005) { worksheet2.get_Range(worksheet2.Cells[(num2 + 1) + 8, i + 7], worksheet2.Cells[(num2 + 1) + +8, i + 7]).Interior.ColorIndex = 7; flagbin++; }
+                    }
+                    if (flagbin > 0) { worksheet2.get_Range(worksheet2.Cells[(num2 + 1) + 8, 1], worksheet2.Cells[(num2 + 1) + 8, 1]).Interior.ColorIndex = 7; MessageBox.Show(arrayHeaderInfo[0].ToString() + "--SBL超标,请检查图谱是否有问题"); }
+
+                }
+                //芯德卡控
+                if ((((Tsk)this._currFile).Device == "SPG8929-08-00"))
+                {
+                    int flagbin = 0;
+                    //bin 2 12 22
+                    //BIN5<0.5%,BIN8<1.89%,BIN13<2.29%
+                    int totalDie = (int)arrayHeaderInfo[2];
+                    StringBuilder sblerror = new StringBuilder();
+                    sblerror.Append(arrayHeaderInfo[0].ToString());
+                    if (Convert.ToInt32(arrayHeaderInfo[10]) >= (0.005 * totalDie))
+                    {
+                        worksheet2.get_Range(worksheet2.Cells[(num2 + 1) + 8, 11], worksheet2.Cells[(num2 + 1) + 8, 11]).Interior.ColorIndex = 7; 
+                        flagbin++;
+                        sblerror.Append(" SBL(5) " + (Convert.ToDecimal(arrayHeaderInfo[10]) / totalDie).ToString("0.00%") + ",");
+                    }//bin5
+                    if (Convert.ToInt32(arrayHeaderInfo[13]) >= (0.0189 * totalDie)) { 
+                        worksheet2.get_Range(worksheet2.Cells[(num2 + 1) + 8, 14], worksheet2.Cells[(num2 + 1) + 8, 14]).Interior.ColorIndex = 7; 
+                        flagbin++;
+                        sblerror.Append(" SBL(8) " + (Convert.ToDecimal(arrayHeaderInfo[13]) / totalDie).ToString("0.00%") + ",");
+                    }//bin8
+                    if (Convert.ToInt32(arrayHeaderInfo[18]) >= (0.0229 * totalDie)) { 
+                        worksheet2.get_Range(worksheet2.Cells[(num2 + 1) + 8, 19], worksheet2.Cells[(num2 + 1) + 8, 19]).Interior.ColorIndex = 7; 
+                        flagbin++;
+                        sblerror.Append(" SBL(13) " + (Convert.ToDecimal(arrayHeaderInfo[18]) / totalDie).ToString("0.00%") + ",");
+
+                    }//bin13
+                    if ((Convert.ToDouble(arrayHeaderInfo[2])/ Convert.ToDouble(arrayHeaderInfo[1])) <= 0.9629)
+                    {
+                        flagbin++;
+                        sblerror.Append("片良率 " + arrayHeaderInfo[4] + ",");
+
+                    }//yield
+                    if (flagbin > 0) 
+                    { 
+                        worksheet2.get_Range(worksheet2.Cells[(num2 + 1) + 8, 1], worksheet2.Cells[(num2 + 1) + 8, 1]).Interior.ColorIndex = 7;
+                        //DialogResult result = MessageBox.Show(arrayHeaderInfo[0].ToString() + sblerror+ "--SBL超标,请检查图谱是否有问题");
+                        //if (result == System.Windows.Forms.DialogResult.OK)
+                        //{
+
+                        //    Clipboard.SetText(arrayHeaderInfo[0].ToString() + sblerror);
+                        //    //throw;
+
+                        //}
+                        sblerror.Append("超标。");
+                        lotsblerror.Append(sblerror.ToString());
+                    }
+
+                }
+                
 
 
 
@@ -1457,6 +1576,18 @@ namespace DataToExcel
                 this.progressBar1.Value++;
 
             }
+            if(lotsblerror.Length > 0)
+            {
+                DialogResult result = MessageBox.Show(lotsblerror.ToString());
+                if (result == System.Windows.Forms.DialogResult.OK)
+                {
+
+                    Clipboard.SetText(lotsblerror.ToString());
+                    //throw;
+
+                }
+            }
+           
 
             ////////////////////////////////////////add total and average////////////////////////////////
             Excel.Worksheet worksheet3 = (Excel.Worksheet)workbook.Sheets["统计信息"];
@@ -1464,7 +1595,7 @@ namespace DataToExcel
             objArray4[2] = (int)objArray[2] / num2;
             objArray4[3] = (int)objArray[3] / num2;
             objArray4[4] = objArray[4];
-            for (int m = flag11; m < num3; m++)
+            for (int m = flag11; m < excelHeaderNumber; m++)
             {
                 if (objArray[m] != null)
                 {
@@ -1472,15 +1603,15 @@ namespace DataToExcel
                 }
 
             }
-            for (int m = flag11; m < num3; m++)
+            for (int m = flag11; m < excelHeaderNumber; m++)
             {
                 objArray4[m] = objArray4[m].ToString() + " (" + Math.Round((double)(Convert.ToDouble(objArray4[m]) / ((double)Convert.ToDouble(objArray4[1]))), 4).ToString("0.00%") + ")"; ;
                 objArray[m] = objArray[m].ToString() + " (" + Math.Round((double)(Convert.ToDouble(objArray[m]) / ((double)Convert.ToDouble(objArray[1]))), 4).ToString("0.00%") + ")"; ;
             }
 
 
-            worksheet3.get_Range(worksheet3.Cells[(num2 + 2) + 8, 1], worksheet3.Cells[(num2 + 2) + 8, num3]).Value2 = objArray4;
-            worksheet3.get_Range(worksheet3.Cells[(num2 + 3) + 8, 1], worksheet3.Cells[(num2 + 3) + 8, num3]).Value2 = objArray;
+            worksheet3.get_Range(worksheet3.Cells[(num2 + 2) + 8, 1], worksheet3.Cells[(num2 + 2) + 8, excelHeaderNumber]).Value2 = objArray4;
+            worksheet3.get_Range(worksheet3.Cells[(num2 + 3) + 8, 1], worksheet3.Cells[(num2 + 3) + 8, excelHeaderNumber]).Value2 = objArray;
             ////////////////////////////////////////////////////////////////////////////////////////////
 
             this.ResultFileName = this.textBox1.Text + @"\ExcelOutFile\" + this.LotNo + @"\" + this.LotNo + ".xlsx";
@@ -1545,8 +1676,8 @@ namespace DataToExcel
             MapSheet.Rows.RowHeight = 22.5;
             object[,] aryTP = (object[,])(MapSheet.get_Range("A1:SR512", Missing.Value).Value2);
 
-            count = this.lsvItems.Items.Count;
-            for (num2 = 0; num2 <= (count - 1); num2++)
+            waferNum = this.lsvItems.Items.Count;
+            for (num2 = 0; num2 <= (waferNum - 1); num2++)
             {
                 string str = this.lsvItems.Items[num2].SubItems[1].Text; //文件的路径
                 ///////-------------------------------TSK读取-------------------------//////

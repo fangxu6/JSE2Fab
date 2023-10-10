@@ -69,7 +69,8 @@ namespace DataToExcel.ExpDataToExcelFactory
                     {
                         orientation = "L";
                     }
-                    binQuanYield = String.Format("{0,-19}{1,-12}{2,-12}{3,-20}{4,-1}{5,1}{6,-8}{7,-20}", endTime, "", "", "Bd_File", orientation, slotId, "JSE","");
+                    String Bd_File = cmd.Device + "_JSE_"+ slotId + "_1";
+                    binQuanYield = String.Format("{0,-19}{1,-12}{2,-12}{3,-20}{4,-1}{5,1}{6,-8}{7,-20}", endTime, "", "", Bd_File, orientation, slotId, "JSE","");
                     cmd.WriteString(binQuanYield);
                     cmd.WriteString(cmd.Enter);
 
