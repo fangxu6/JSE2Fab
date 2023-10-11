@@ -18,7 +18,6 @@ namespace DataToExcel.ExpDataToExcelFactory
             Excel.Range rngbin4 = (Excel.Range)worksheet.Cells[7, 10];
             rngbin4.Value2 = "Bin4:ICC";
 
-
             Excel.Range rngbin5 = (Excel.Range)worksheet.Cells[7, 11];
             rngbin5.Value2 = "Bin5:os_down_test";
 
@@ -135,33 +134,6 @@ namespace DataToExcel.ExpDataToExcelFactory
             Excel.Range rngbin42 = (Excel.Range)worksheet.Cells[7, 48];
             rngbin42.Value2 = "Bin42:eFlash_Verify_MRG_1_Read";
 
-            /* Excel.Range rngbin43 = (Excel.Range)worksheet.Cells[7, 49];
-             rngbin43.Value2 = "Bin43:eFlash_Good_Die_Record";
-
-             Excel.Range rngbin44 = (Excel.Range)worksheet.Cells[7, 50];
-             rngbin44.Value2 = "Bin44:eFlash_Bake_Write_Verify";
-
-             Excel.Range rngbin45 = (Excel.Range)worksheet.Cells[7, 51];
-             rngbin45.Value2 = "Bin45:eFlash_CHIP_Init";
-
-             Excel.Range rngbin46 = (Excel.Range)worksheet.Cells[7, 52];
-             rngbin46.Value2 = "Bin46:eFlash_Check_Intf_Mode";
-
-             Excel.Range rngbin47 = (Excel.Range)worksheet.Cells[7, 53];
-             rngbin47.Value2 = "Bin47:eFlash_Verify_MRG1_Read_before";
-
-             Excel.Range rngbin48 = (Excel.Range)worksheet.Cells[7, 54];
-             rngbin48.Value2 = "Bin48:eFlash_Erase_Ref_Cell ";
-
-             Excel.Range rngbin49 = (Excel.Range)worksheet.Cells[7, 55];
-             rngbin49.Value2 = "Bin49:eFlash_Verify_MRG1_Read ";
-
-             Excel.Range rngbin50 = (Excel.Range)worksheet.Cells[7, 56];
-             rngbin50.Value2 = "Bin50:eFlash_Mass_Erase ";
-
-             Excel.Range rngbin51 = (Excel.Range)worksheet.Cells[7, 57];
-             rngbin51.Value2 = "Bin51:eFlash_Verify_MRG1_Read_2nd ";*/
-
             Excel.Range rngbin52 = (Excel.Range)worksheet.Cells[7, 58];
             rngbin52.Value2 = "Bin52: eFlash_Bake_Write_Verify_ff";
 
@@ -188,6 +160,17 @@ namespace DataToExcel.ExpDataToExcelFactory
 
             Excel.Range rngbin62 = (Excel.Range)worksheet.Cells[7, 68];
             rngbin62.Value2 = "Bin62: eFlash_Good_Die_Record";
+        }
+
+        public override bool defatultSave()
+        {
+            return false;
+        }
+
+        public override void Save(CmdTxt cmd)
+        {
+            cmd.Device = "TMNS01";//TODO 
+            Device_JieLian.Save(cmd);
         }
     }
 }
