@@ -632,7 +632,6 @@ namespace DataToExcel
             buffer[0] = (byte)(buffer[0] & 0x1);
             this.Reverse(ref buffer);
             int f6 = BitConverter.ToInt16(buffer, 0);
-           
 
             /*
              * Second word
@@ -659,7 +658,7 @@ namespace DataToExcel
             this.Reverse(ref buffer);
             int s7 = BitConverter.ToInt16(buffer, 0);
 
-          
+
 
             /*
              * Third word

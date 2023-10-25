@@ -26,6 +26,9 @@ namespace DataToExcel
         private string LotNo;
         private string ResultFileName;
 
+        private ArrayList lastCPPassDie = new ArrayList();
+        private Hashtable waferIDPassdie = new Hashtable();
+
         // Methods
         public MappingToExcel()
         {
@@ -608,6 +611,17 @@ namespace DataToExcel
                             objArray3[i] = Math.Round((double)(Convert.ToDouble(objArray3[i - 2]) / ((double)Convert.ToInt32(objArray3[i - 3]))), 4).ToString("0.00%");
                             goto Label_0531;
 
+                        case "Step Yield":
+                            if (this.lastCPPassDie.Count==0)
+                            {
+                                objArray3[i]= objArray3[i-1];
+                            } else
+                            {
+                                objArray3[i] = Math.Round((double)(Convert.ToDouble(objArray3[i - 3]) / (Convert.ToDouble(this.lastCPPassDie[num2]))), 4).ToString("0.00%");
+                            }
+                            
+                            goto Label_0532;
+
                         case "Index X":
                             {
                                 objArray3[i] = ((Tsk)this._currFile).IndexSizeX;
@@ -688,10 +702,33 @@ namespace DataToExcel
                     if ((objArray[i - 2] != null) && (objArray[i - 3] != null))
                     {
                         objArray[i] = Math.Round(Convert.ToDouble((double)(Convert.ToDouble(objArray[i - 2]) / ((double)((int)objArray[i - 3])))), 4).ToString("0.00%");
+
                     }
                     else
                     {
                         objArray[i] = "";
+                    }
+                    continue;
+                Label_0532:
+                    if (this.lastCPPassDie.Count == 0)
+                    {
+                        objArray[i] = objArray[i - 1];
+                    }
+                    else
+                    {
+                        if ((objArray[i - 3] != null))
+                        {
+                            int sum = 0;
+                            for(int k = 0; k < lastCPPassDie.Count; k++)
+                            {
+                                sum += (int)lastCPPassDie[k];
+                            }
+                            objArray[i] = Math.Round((double)(Convert.ToDouble(objArray[i - 3]) / (Convert.ToDouble(sum))), 4).ToString("0.00%");
+                        }
+                        else
+                        {
+                            objArray[i] = "";
+                        }
                     }
                     continue;
                 Label_076F:
@@ -794,18 +831,75 @@ namespace DataToExcel
                  
                     tsk.Read();
 
-                 
                    
                     this.LotNo = tsk.LotNo.Trim();
+                    
                     ListViewItem item = new ListViewItem(tsk.WaferID);
                     item.Tag = tsk;
                     this.lsvItems.Items.Add(item);
                     item.SubItems.Add(str);
+                }
+                
+            }
+            if (!LoadTsk2())
+            {
+                this.LoadTsk2();
+            }
+            
+        }
 
-                    
+        private bool LoadTsk2()
+        {
+            if (this.LotNo.Contains("CP2"))
+            {
+                MessageBox.Show("请批量选择选择对应CP1的tsk文件");
+                OpenFileDialog dialog2 = new OpenFileDialog();
+                dialog2.RestoreDirectory = false;
+                dialog2.Multiselect = true;
+                if (dialog2.ShowDialog() == DialogResult.OK)
+                {
+                    foreach (string str in dialog2.FileNames)
+                    {
+                        Tsk tsk = new Tsk(str);
 
+                        tsk.Read();
+                        if (!tsk.LotNo.Contains("CP1"))
+                        {
+                            MessageBox.Show("请选择对应CP1的tsk文件，否则过站良率无法获得。");
+                            return false;
+                        }
+
+                        this.lastCPPassDie.Add(tsk.PassDie);
+                        this.waferIDPassdie.Add(tsk.WaferID.Replace("CP1","CP2"), tsk.PassDie);
+                    }
                 }
             }
+            else if (this.LotNo.Contains("CP3"))
+            {
+                MessageBox.Show("请批量选择选择对应CP2的tsk文件");
+                OpenFileDialog dialog2 = new OpenFileDialog();
+                dialog2.RestoreDirectory = false;
+                dialog2.Multiselect = true;
+                if (dialog2.ShowDialog() == DialogResult.OK)
+                {
+                    foreach (string str in dialog2.FileNames)
+                    {
+                        Tsk tsk = new Tsk(str);
+
+                        tsk.Read();
+                        if (!tsk.LotNo.Contains("CP2"))
+                        {
+                            MessageBox.Show("请选择对应CP2的tsk文件，否则过站良率无法获得。");
+                            return false;
+                        }
+
+                        this.lastCPPassDie.Add(tsk.PassDie);
+                        this.waferIDPassdie.Add(tsk.WaferID.Replace("CP2", "CP3"), tsk.PassDie);
+                    }
+                }
+            }
+
+            return true;
         }
 
         private void lsvItems_MouseClick(object sender, MouseEventArgs e)
