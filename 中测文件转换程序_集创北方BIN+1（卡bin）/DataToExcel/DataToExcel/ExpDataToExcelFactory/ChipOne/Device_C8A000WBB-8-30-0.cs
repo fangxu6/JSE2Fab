@@ -56,5 +56,10 @@ namespace DataToExcel.ExpDataToExcelFactory
             rngbin19.Value2 = "Bin19:LEAKAGE_ad1_FAIL";
 
         }
+
+        public override bool defatultBinPlusOne()
+        {
+            return false;
+        }
     }
 }

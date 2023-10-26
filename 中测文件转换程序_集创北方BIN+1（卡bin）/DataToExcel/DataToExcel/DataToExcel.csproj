@@ -118,13 +118,15 @@
     <Compile Include="ExpDataToExcelFactory\ChipOne\Device_2065WCB-8-8-CP2.cs" />
     <Compile Include="ExpDataToExcelFactory\ChipOne\Device_2065WEB-12-16-00.cs" />
     <Compile Include="ExpDataToExcelFactory\ChipOne\Device_2065WEB-12-16-01.cs" />
+    <Compile Include="ExpDataToExcelFactory\SmartLink\Device_JieLian.cs" />
     <Compile Include="ExpDataToExcelFactory\ConvenientPower\Device_CPS4019-8-32-01P.cs" />
     <Compile Include="ExpDataToExcelFactory\ConvenientPower\Device_CPS4038-8-32-00P.cs" />
     <Compile Include="ExpDataToExcelFactory\ChipOne\Device_HS5154-8-8-00P.cs" />
     <Compile Include="ExpDataToExcelFactory\ChipOne\Device_ICNC66-12-8-01P.cs" />
     <Compile Include="ExpDataToExcelFactory\ChipOne\Device_ICND2056-8-4-00P.cs" />
     <Compile Include="ExpDataToExcelFactory\ChipOne\Device_ICND2056-8-4-CP2.cs" />
-    <Compile Include="ExpDataToExcelFactory\ChipOne\Device_THEMIS-8-8-00P.cs" />
+    <Compile Include="ExpDataToExcelFactory\SmartLink\Device_THEMIS-8-8-02P.cs" />
+    <Compile Include="ExpDataToExcelFactory\SmartLink\Device_THEMIS-8-8-00P.cs" />
     <Compile Include="ExpDataToExcelFactory\ConvenientPower\Device_YiChong.cs" />
     <Compile Include="ExpDataToExcelFactory\ExpToExcelSoftBin.cs" />
     <Compile Include="ExpDataToExcelFactory\ExpToExcelSoftBinFactory.cs" />

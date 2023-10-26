@@ -608,6 +608,307 @@ namespace DataToExcel
             }
         }
 
+        public void ReadWithoutBinPlus()
+        {
+            try
+            {
+                // 打开读取流
+                this.OpenReader();
+
+                this.Operator = this.ReadToString(20);
+                this.Device = this.ReadToString(16);
+                this.WaferSize = this.ReadToInt16();
+                this.MachineNo = this.ReadToInt16();
+                this.IndexSizeX = this.ReadToInt32();
+                this.IndexSizeY = this.ReadToInt32();
+                this.FlatDir = this.ReadToInt16();
+                this.MachineType = this.ReadToByte();
+                this.MapVersion = this.ReadToByte();
+
+                int rows = this.ReadToInt16();// 记录行数
+                int cols = this.ReadToInt16();// 记录列数
+
+                this.MapDataForm = this.ReadToInt32();
+                this.WaferID = this.ReadToString(21).TrimEnd('\0');
+
+                //  this.WaferID = WaferID.Trim("\0".ToCharArray());  
+
+                this.ProbingNo = this.ReadToByte();
+                this.LotNo = this.ReadToString(18);
+                this.CassetteNo = this.ReadToInt16();
+                this.SlotNo = this.ReadToInt16();
+
+                // X coordinates increase direction
+                this._properties["XCoordinates"] = this.ReadToByte();
+                // Y coordinates increase direction
+                this._properties["YCoordinates"] = this.ReadToByte();
+                // Reference dir setting procedures
+                this._properties["RefeDir"] = this.ReadToByte();
+                // (Reserved)
+                this._properties["Reserved0"] = this.ReadToByte();
+                // Target die position X
+                this._properties["TargetX"] = this.ReadToInt32();
+                // Target die position Y
+                this._properties["TargetY"] = this.ReadToInt32();
+
+                /*
+                 * **********************************
+                 */
+                this.Refpx = this.ReadToInt16();
+                this.Refpy = this.ReadToInt16();
+
+                //// Refrence die coordinator X
+                //this._reader.BaseStream.Position += 2;
+                //// Refrence die coordinator Y
+                //this._reader.BaseStream.Position += 2;
+                /*
+                 * **********************************
+                 */
+
+                // Probing start position
+                this._properties["ProbingSP"] = this.ReadToByte();
+                // Probing direction
+                this._properties["ProbingDir"] = this.ReadToByte();
+                // (Reserved)
+                this._properties["Reserved1"] = this.ReadToInt16();
+                // Distance X to wafer center die origin
+                this._properties["DistanceX"] = this.ReadToInt32();
+                // Distance Y to wafer center die origin
+                this._properties["DistanceY"] = this.ReadToInt32();
+                // Coordinator X of wafer center die
+                this._properties["CoordinatorX"] = this.ReadToInt32();
+                // Coordinator Y of wafer center die
+                this._properties["CoordinatorY"] = this.ReadToInt32();
+                // First dir coordinator X
+                this._properties["FirstDirX"] = this.ReadToInt32();
+                // First dir coordinator Y
+                this._properties["FirstDirY"] = this.ReadToInt32();
+
+                this.StartTime = this.ReadToDate();
+                this.EndTime = this.ReadToDate();
+                this.LoadTime = this.ReadToDate();
+                this.UnloadTime = this.ReadToDate();
+
+                // Machine No.
+                this._properties["MachineNo1"] = this.ReadToInt32();
+                // Machine No.
+                this._properties["MachineNo2"] = this.ReadToInt32();
+                // Special characters
+                this._properties["SpecialChar"] = this.ReadToInt32();
+                // Testing end information
+                this._properties["TestingEnd"] = this.ReadToByte();
+                // (Reserved)
+                this._properties["Reserved2"] = this.ReadToByte();
+
+                this.TotalDie = this.ReadToInt16();
+                this.PassDie = this.ReadToInt16();
+                this.FailDie = this.ReadToInt16();
+
+                // 记录 die 测试数据起始指针
+                int dieSP = this.ReadToInt32();
+
+                // Number of line category data
+                this._properties["LineCategoryNo"] = this.ReadToInt32();
+                // Line category address
+                this._properties["LineCategoryAddr"] = this.ReadToInt32();
+                // Map file configuration
+                this._properties["Configuration"] = this.ReadToInt16();
+                // Max. multi site
+                this._properties["MaxMultiSite"] = this.ReadToInt16();
+                // Max. categories
+                this._properties["MaxCategories"] = this.ReadToInt16();
+                // Do not use,reserved
+                this._properties["Reserved3"] = this.ReadToInt16();
+
+                // 设置流的起始指针为 die 测试数据起始指针
+                this._reader.BaseStream.Position = dieSP;
+
+                int total = rows * cols;
+                ArrayList arry = new ArrayList();
+
+                if (this.MapVersion == 2 || this.MapVersion == 0)
+                {
+
+                    for (int i = 0; i < total; i++)
+                    {
+                        arry.Add(this.ReadDie());
+                    }
+
+
+                    this._dieMatrix = new DieMatrix(arry, rows, cols);
+                }
+
+                else if (this.MapVersion == 4)
+                {
+                    int[,] die1 = new int[total, 5];
+                    int[,] die2 = new int[total, 2];
+
+                    for (int i = 0; i < total; i++)
+                    {
+                        byte[] buffer = this._reader.ReadBytes(2);
+                        int f7 = buffer[0];
+                        int f8 = buffer[1];
+
+                        // needle mark inspection result(added jan/23'96)(not handled)
+                        int f5 = (buffer[0] >> 1) & 0x1;
+                        // re-probing result
+                        int f4 = (buffer[0] >> 2) & 0x3;
+                        // fail mark inspection
+                        int f3 = (buffer[0] >> 4) & 0x1;
+                        // marking
+                        int f2 = (buffer[0] >> 5) & 0x1;
+                        // die test result
+                        int f1 = (buffer[0] >> 6) & 0x3;
+
+                        // die coordinator values * (0 to 511)
+                        buffer[0] = (byte)(buffer[0] & 0x1);
+                        this.Reverse(ref buffer);
+                        int f6 = BitConverter.ToInt16(buffer, 0);
+
+
+                        /*
+                         * Second word
+                         */
+                        buffer = this._reader.ReadBytes(2);
+                        int s8 = buffer[0];
+                        int s9 = buffer[1];
+
+                        // Dummy data(excerpt warfer)
+                        int s6 = (buffer[0] >> 1) & 0x1;
+                        // code bit of coordinator value x
+                        int s5 = (buffer[0] >> 2) & 0x1;
+                        // code bit of coordinator value y
+                        int s4 = (buffer[0] >> 3) & 0x1;
+                        // sampling die
+                        int s3 = (buffer[0] >> 4) & 0x1;
+                        // needle marking inspection execution die selection
+                        int s2 = (buffer[0] >> 5) & 0x1;
+                        // die property
+                        int s1 = (buffer[0] >> 6) & 0x3;
+
+                        // die coordinator value Y
+                        buffer[0] = (byte)(buffer[0] & 0x1);
+                        this.Reverse(ref buffer);
+                        int s7 = BitConverter.ToInt16(buffer, 0);
+
+
+
+                        /*
+                         * Third word
+                         */
+                        buffer = this._reader.ReadBytes(2);
+                        int t8 = buffer[0];
+                        int t9 = buffer[1];
+
+                        // test execution site no.(0 to 63)
+                        int t3 = buffer[0] & 0x3f;
+                        // reject chip flag
+                        int t2 = (buffer[0] >> 6) & 0x1;
+                        // measurement finish flag at "No-Over-Travel" probing
+                        int t1 = (buffer[0] >> 7) & 0x1;
+
+                        // According to user special,8-bit area may be used.
+                        int t6 = buffer[1];
+                        // category data (0 to 63)
+                        int t5 = buffer[1] & 0xff;
+                        int t7 = buffer[0];
+
+                        // block area judgement function
+                        int t4 = (buffer[0] >> 6) & 0x3;
+
+                        die1[i, 0] = s1;
+                        die1[i, 1] = f1;
+                        die1[i, 2] = (s4 == 0 ? f6 : f6 * (-1));//X
+                        die1[i, 3] = (s5 == 0 ? s7 : s7 * (-1));//Y
+                        die1[i, 4] = t5;
+
+                    }
+
+                    byte[] bufferhead = this._reader.ReadBytes(172);//过滤头文件
+
+                    for (int i = 0; i < total; i++)
+                    {
+                        byte[] buffer = this._reader.ReadBytes(2);
+                        int f1 = buffer[0];
+                        int f2 = buffer[1];
+
+                        die2[i, 0] = f2;//SiteNum
+
+                        buffer = this._reader.ReadBytes(2);
+                        int s1 = buffer[0];
+                        int s2 = buffer[1];
+
+                        // buffer[0] = (byte)(buffer[0] & 0x3);
+                        //  this.Reverse(ref buffer);
+                        //  int s6 = BitConverter.ToInt16(buffer, 0);
+                        die2[i, 1] = s2;// Bin over 256
+                        die1[i, 4] = s2;
+
+                        DieData die = new DieData();
+
+                        switch (die1[i, 0])
+                        {
+                            case 0:
+                                die.Attribute = DieCategory.SkipDie;
+                                break;
+                            case 1:
+                                switch (die1[i, 1])
+                                {
+                                    case 0:
+                                        die.Attribute = DieCategory.NoneDie;
+                                        break;
+                                    case 1:
+                                        //die.Attribute = DieCategory.PassDie;
+                                        die.Attribute = DieCategory.PassDie;
+                                        die.Bin = die1[i, 4]; // without plus one
+                                        break;
+                                    case 2:
+                                    case 3:
+                                        die.Attribute = DieCategory.FailDie;
+                                        die.Bin = die1[i, 4]; // without plus one
+                                        break;
+                                    default:
+                                        die.Attribute = DieCategory.Unknow;
+                                        break;
+                                }
+                                break;
+                            case 2:
+                                die.Attribute = DieCategory.MarkDie;
+                                break;
+                            default:
+                                die.Attribute = DieCategory.Unknow;
+                                break;
+                        }
+
+                        die.X = die1[i, 2];
+                        die.Y = die1[i, 3];
+
+                        arry.Add(die);
+
+                    }
+
+                    this._dieMatrix = new DieMatrix(arry, rows, cols);
+
+
+                }
+
+
+                //for (int j = 0; j < total; j++)
+                //{
+                //    byte[] buffer1 = this._reader.ReadBytes(4);
+                //}
+
+            }
+            catch (Exception ee)
+            {
+                throw ee;
+            }
+            finally
+            {
+                // 关闭读取流
+                this.CloseReader();
+            }
+        }
         private DieData ReadDie()
         {
             /*

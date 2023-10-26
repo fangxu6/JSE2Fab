@@ -57,5 +57,10 @@ namespace DataToExcel.ExpDataToExcelFactory
             Excel.Range rngbin20 = (Excel.Range)worksheet.Cells[7, 26 + 1];
             rngbin20.Value2 = "Bin20:LEAKAGE_ad1_FAIL";
         }
+
+        public override bool defatultBinPlusOne()
+        {
+            return false;
+        }
     }
 }

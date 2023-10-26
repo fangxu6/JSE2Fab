@@ -4,11 +4,11 @@ using System;
 
 namespace DataToExcel.ExpDataToExcelFactory
 {
-    public class Device_THEMIS_8_8_00P : ExpToExcelSoftBin
+    public class Device_THEMIS_8_8_02P : ExpToExcelSoftBin
     {
         public override void expToExcel(Worksheet worksheet)
         {
-
+            
         }
 
         public override bool defatultSave()
@@ -49,7 +49,7 @@ namespace DataToExcel.ExpDataToExcelFactory
                 errflag++;
             }
             // 上限
-            if (Convert.ToDouble(arrayHeaderInfo[2]) / Convert.ToDouble(arrayHeaderInfo[1]) >0.999)
+            if (Convert.ToDouble(arrayHeaderInfo[2]) / Convert.ToDouble(arrayHeaderInfo[1]) > 0.999)
             {
                 worksheet2.get_Range(worksheet2.Cells[(num2 + 1) + 8, 5], worksheet2.Cells[(num2 + 1) + 8, 5]).Interior.ColorIndex = 7;
                 errflag++;
@@ -64,7 +64,5 @@ namespace DataToExcel.ExpDataToExcelFactory
 
             return;
         }
-
     }
-        
 }

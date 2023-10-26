@@ -17,8 +17,7 @@ namespace DataToExcel
         public override void Convert(string tskfile, string txtfile)
         {
             // 读取来源文件
-            Dat source = new Dat(tskfile);  //zjf 2008.09.03
-            //IMappingFile source = new Dat(tskfile);
+            Dat source = new Dat(tskfile);  
             source.Read();
 
             ExpToExcelSoftBin expToExcelSoftBin = ExpToExcelSoftBinFactory.GetExpToExcelSoft(source.Device);

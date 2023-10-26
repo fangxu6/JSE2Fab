@@ -15,7 +15,7 @@ namespace DataToExcel.ExpDataToExcelFactory
         public static string _TotalYield = "";
         public abstract void expToExcel(Excel.Worksheet worksheet);
 
-        public  void SaveToTxt(Dat source,string txtfile)
+        public void SaveToTxt(Dat source, string txtfile)
         {
             // 创建新文件
             CmdTxt cmdtxt = new CmdTxt(txtfile);
@@ -57,7 +57,7 @@ namespace DataToExcel.ExpDataToExcelFactory
             }
 
             // 旋转角度
-            if(defatultRotate()>0)
+            if (defatultRotate() > 0)
             {
                 cmdtxt.DeasilRotate(defatultRotate());
                 cmdtxt.FlatDir += defatultRotate();
@@ -67,7 +67,8 @@ namespace DataToExcel.ExpDataToExcelFactory
             if (defatultSave())
             {
                 cmdtxt.Save();
-            } else
+            }
+            else
             {
                 Save(cmdtxt);
             }
@@ -89,6 +90,27 @@ namespace DataToExcel.ExpDataToExcelFactory
             return true;
         }
 
+        public virtual bool defatultBinPlusOne()
+        {
+            return true;
+        }
 
+        public virtual void showErrorMessage(object[] arrayHeaderInfo, Excel.Worksheet worksheet2, int num2)
+        {
+            return;
+        }
+
+        public int FlagNum(object[] arrayHeaderInfo, int binNo, double yield, Excel.Worksheet worksheet2, int num2)
+        {
+            int binCount = Convert.ToInt32(arrayHeaderInfo[binNo + 5]);
+            double totalCount = Convert.ToDouble(arrayHeaderInfo[1]);
+            if (binCount / totalCount > yield)
+            {
+                worksheet2.get_Range(worksheet2.Cells[(num2 + 1) + 8, binNo + 6], worksheet2.Cells[(num2 + 1) + 8, binNo + 6]).Interior.ColorIndex = 7;
+                return 1;
+            }
+            return 0;
+
+        }
     }
 }

@@ -756,6 +756,29 @@ namespace DataToExcel
             return items;
         }
 
+        public DieMatrix CloneWithMinusOne()
+        {
+            DieMatrix items = new DieMatrix();
+
+            items._xmax = this._xmax;
+            items._ymax = this._ymax;
+
+            foreach (DieData die in this._items)
+            {
+                if (die.Attribute.Equals(DieCategory.PassDie))
+                {
+                    die.Bin -= 1;
+                }
+                if (die.Attribute.Equals(DieCategory.FailDie))
+                {
+                    die.Bin -= 1;
+                }
+                items._items.Add(die.Clone());
+            }
+
+            return items;
+        }
+
         public override string ToString()
         {
             string text = "";
