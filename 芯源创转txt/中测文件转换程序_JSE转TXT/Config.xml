@@ -1,0 +1,52 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<DataToExcel>
+  <Fields>
+    <Name id="LotNo" checked="true">LotNo</Name>
+    <Name id="WaferID" checked="true">WaferID</Name>
+    <Name id="Total" checked="true">Total</Name>
+    <Name id="Pass" checked="true">Pass</Name>
+    <Name id="Fail" checked="true">Fail</Name>
+    <Name id="Yield" checked="true">Yield</Name>
+    <Name id="Index X" checked="true">Index X</Name>
+    <Name id="Index Y" checked="true">Index Y</Name>
+    <Name id="Wafer Size" checked="true">Wafer Size</Name>
+    <Name id="OF Direction" checked="true">OF Direction</Name>
+    <Name id="LoadTime" checked="false">LoadTime</Name>
+    <Name id="UnloadTime" checked="false">UnloadTime</Name>
+    <Name id="UsedTime" checked="false">UsedTime</Name>
+    <Name id="BIN 0" checked="true">BIN 0</Name>
+    <Name id="BIN 1" checked="true">BIN 1</Name>
+    <Name id="BIN 2" checked="true">BIN 2</Name>
+    <Name id="BIN 3" checked="true">BIN 3</Name>
+    <Name id="BIN 4" checked="true">BIN 4</Name>
+    <Name id="BIN 5" checked="true">BIN 5</Name>
+    <Name id="BIN 6" checked="true">BIN 6</Name>
+    <Name id="BIN 7" checked="true">BIN 7</Name>
+    <Name id="BIN 8" checked="true">BIN 8</Name>
+    <Name id="BIN 9" checked="true">BIN 9</Name>
+    <Name id="BIN 10" checked="true">BIN 10</Name>
+    <Name id="BIN 11" checked="true">BIN 11</Name>
+    <Name id="BIN 12" checked="true">BIN 12</Name>
+    <Name id="BIN 13" checked="true">BIN 13</Name>
+    <Name id="BIN 14" checked="true">BIN 14</Name>
+    <Name id="BIN 15" checked="true">BIN 15</Name>
+    <Name id="BIN 16" checked="true">BIN 16</Name>
+    <Name id="BIN 17" checked="true">BIN 17</Name>
+    <Name id="BIN 18" checked="true">BIN 18</Name>
+    <Name id="BIN 19" checked="true">BIN 19</Name>
+    <Name id="BIN 20" checked="true">BIN 20</Name>
+    <Name id="BIN 21" checked="true">BIN 21</Name>
+    <Name id="BIN 22" checked="true">BIN 22</Name>
+    <Name id="BIN 23" checked="true">BIN 23</Name>
+    <Name id="BIN 24" checked="true">BIN 24</Name>
+    <Name id="BIN 25" checked="true">BIN 25</Name>
+    <Name id="BIN 26" checked="true">BIN 26</Name>
+    <Name id="BIN 27" checked="true">BIN 27</Name>
+    <Name id="BIN 28" checked="true">BIN 28</Name>
+    <Name id="BIN 29" checked="true">BIN 29</Name>
+    <Name id="BIN 30" checked="true">BIN 30</Name>
+  </Fields>
+  <Fields>
+    <Path id="targetpath">C:\Documents and Settings\ictest\桌面</Path>
+  </Fields>
+</DataToExcel>
