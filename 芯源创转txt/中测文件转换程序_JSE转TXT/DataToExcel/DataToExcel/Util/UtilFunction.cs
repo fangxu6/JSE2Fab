@@ -26,7 +26,7 @@ namespace DataToExcel
                     cap = "F";
                     break;
                 case DieCategory.MarkDie:
-                    cap = ".";
+                    cap = "#";
                     break;
                 //case DieCategory.NoneDie:
                 //    cap = "N";

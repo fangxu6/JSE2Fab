@@ -329,7 +329,7 @@ namespace DataToExcel
                 this.MapDataForm = this.ReadToInt32();
                 this.WaferID = this.ReadToString(21).TrimEnd('\0');
 
-              //  this.WaferID = WaferID.Trim("\0".ToCharArray());  
+                //  this.WaferID = WaferID.Trim("\0".ToCharArray());  
 
                 this.ProbingNo = this.ReadToByte();
                 this.LotNo = this.ReadToString(18);
@@ -432,13 +432,13 @@ namespace DataToExcel
                         arry.Add(this.ReadDie());
                     }
 
-
+ 
                     this._dieMatrix = new DieMatrix(arry, rows, cols);
                 }
 
                 else if (this.MapVersion == 4)
                 {
-                    int[,] die1 =new int[total,5];
+                    int[,] die1 = new int[total, 5];
                     int[,] die2 = new int[total, 2];
 
                     for (int i = 0; i < total; i++)
@@ -516,78 +516,80 @@ namespace DataToExcel
 
                         die1[i, 0] = s1;
                         die1[i, 1] = f1;
-                        die1[i, 2] = (s4 == 0 ? f6 : f6 * (-1)) ;//X
+                        die1[i, 2] = (s4 == 0 ? f6 : f6 * (-1));//X
                         die1[i, 3] = (s5 == 0 ? s7 : s7 * (-1));//Y
                         die1[i, 4] = t5;
-                    
+
                     }
 
-                  byte[] bufferhead = this._reader.ReadBytes(172);//过滤头文件
+                    //8bytes line category 只有在选择的时候才会保存，否则是没有的 所以没有过滤之说
+                    //extend head info 172
+                    byte[] bufferhead = this._reader.ReadBytes(172);//过滤头文件
 
-                  for (int i = 0; i < total; i++)
-                  {
-                      byte[] buffer = this._reader.ReadBytes(2);
-                      int f1 = buffer[0];
-                      int f2 = buffer[1];
+                    for (int i = 0; i < total; i++)
+                    {
+                        byte[] buffer = this._reader.ReadBytes(2);
+                        int f1 = buffer[0];
+                        int f2 = buffer[1];
 
-                      die2[i, 0] = f2;//SiteNum
+                        die2[i, 0] = f2;//SiteNum
 
-                      buffer = this._reader.ReadBytes(2);
-                      int s1 = buffer[0];
-                      int s2 = buffer[1];
+                        buffer = this._reader.ReadBytes(2);
+                        int s1 = buffer[0];
+                        int s2 = buffer[1];
 
-                     // buffer[0] = (byte)(buffer[0] & 0x3);
-                    //  this.Reverse(ref buffer);
-                    //  int s6 = BitConverter.ToInt16(buffer, 0);
-                      die2[i, 1] = s2;// Bin over 256
-                      die1[i, 4] = s2;
+                        // buffer[0] = (byte)(buffer[0] & 0x3);
+                        //  this.Reverse(ref buffer);
+                        //  int s6 = BitConverter.ToInt16(buffer, 0);
+                        die2[i, 1] = s2;// Bin over 256
+                        die1[i, 4] = s2;
 
-                      DieData die = new DieData();
+                        DieData die = new DieData();
 
-                      switch (die1[i,0])
-                      {
-                          case 0:
-                             die.Attribute = DieCategory.SkipDie;
-                             break;
-                          case 1:
-                              switch (die1[i,1])
-                              {
-                                  case 0:
-                                      die.Attribute = DieCategory.NoneDie;
-                                      break;
-                                  case 1:
-                                      //die.Attribute = DieCategory.PassDie;
-                                      die.Attribute = DieCategory.PassDie;
-                                      die.Bin = die1[i,4];//-------2013.7.18
-                                      break;
-                                  case 2:
-                                  case 3:
-                                      die.Attribute = DieCategory.FailDie;
-                                      die.Bin = die1[i,4];    //zjf 2008.08.28
-                                      break;
-                                  default:
-                                      die.Attribute = DieCategory.Unknow;
-                                      break;
-                              }
-                              break;
-                          case 2:
-                              die.Attribute = DieCategory.MarkDie;
-                              break;
-                          default:
-                              die.Attribute = DieCategory.Unknow;
-                              break;
-                      }
+                        switch (die1[i, 0])
+                        {
+                            case 0:
+                                die.Attribute = DieCategory.SkipDie;
+                                break;
+                            case 1:
+                                switch (die1[i, 1])
+                                {
+                                    case 0:
+                                        die.Attribute = DieCategory.NoneDie;
+                                        break;
+                                    case 1:
+                                        //die.Attribute = DieCategory.PassDie;
+                                        die.Attribute = DieCategory.PassDie;
+                                        die.Bin = die1[i, 4];//-------2013.7.18
+                                        break;
+                                    case 2:
+                                    case 3:
+                                        die.Attribute = DieCategory.FailDie;
+                                        die.Bin = die1[i, 4];    //zjf 2008.08.28
+                                        break;
+                                    default:
+                                        die.Attribute = DieCategory.Unknow;
+                                        break;
+                                }
+                                break;
+                            case 2:
+                                die.Attribute = DieCategory.MarkDie;
+                                break;
+                            default:
+                                die.Attribute = DieCategory.Unknow;
+                                break;
+                        }
 
-                      die.X = die1[i,2];
-                      die.Y = die1[i, 3];
+                        die.X = die1[i, 2];
+                        die.Y = die1[i, 3];
 
-                      arry.Add(die);
+                        arry.Add(die);
 
-                  }
+                    }
 
-                  this._dieMatrix = new DieMatrix(arry, rows, cols);
+                    this._dieMatrix = new DieMatrix(arry, rows, cols);
 
-                
+
                 }
 
 
@@ -632,7 +634,7 @@ namespace DataToExcel
             buffer[0] = (byte)(buffer[0] & 0x1);
             this.Reverse(ref buffer);
             int f6 = BitConverter.ToInt16(buffer, 0);
-           
+
 
             /*
              * Second word
@@ -659,7 +661,7 @@ namespace DataToExcel
             this.Reverse(ref buffer);
             int s7 = BitConverter.ToInt16(buffer, 0);
 
-          
+
 
             /*
              * Third word
@@ -680,7 +682,7 @@ namespace DataToExcel
             // category data (0 to 63)
             int t5 = buffer[1] & 0xff;
             int t7 = buffer[0];
-            
+
             // block area judgement function
             int t4 = (buffer[0] >> 6) & 0x3;
 
@@ -689,8 +691,8 @@ namespace DataToExcel
             switch (s1)
             {
                 case 0:
-                   // die.Attribute = DieCategory.SkipDie;
-                   // break;
+                    // die.Attribute = DieCategory.SkipDie;
+                    // break;
                     if (s6 == 1)
                     {
                         die.Attribute = DieCategory.SkipDie;

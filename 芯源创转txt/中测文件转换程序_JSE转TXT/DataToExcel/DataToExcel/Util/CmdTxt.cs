@@ -33,7 +33,7 @@ namespace DataToExcel
 
         protected override void InitialProperties()
         {
-           
+
             base._keys.Add("PassDie");
             base._keys.Add("FailDie");
             base._keys.Add("RowCount");
@@ -86,7 +86,7 @@ namespace DataToExcel
                     this.WriteString("Lot NO:" + this.LotNo + base.Enter);
                     this.WriteString("Slot No:" + this.SlotNo + base.Enter);
                     this.WriteString("Wafer ID:" + this.WaferID + base.Enter);
-                    string WaferSize1="";
+                    string WaferSize1 = "";
 
                     if (this.WaferSize == 60)
                     {
@@ -153,12 +153,9 @@ namespace DataToExcel
 
                     }
 
-                  // for (int y = ymin; y < ymax+2; y++)
-                   // for (int y = 0; y < base.DieMatrix.YMax; y++)
                     for (int y = 0; y < base.DieMatrix.YMax; y++)
-                   {
+                    {
 
-                      // for (int x = xmin; x < xmax+1; x++)
                         for (int x = 0; x < base.DieMatrix.XMax; x++)
                         {
 
@@ -167,8 +164,7 @@ namespace DataToExcel
 
                                 case DieCategory.PassDie:
                                     {
-                                       // int xxx = this.DieMatrix[x, y].Bin;
-                                        this.WriteString(string.Format("{0,1:G}",1));
+                                        this.WriteString(string.Format("{0,1:G}", 1));
                                         break;
                                     }
                                 case DieCategory.MarkDie:
@@ -195,91 +191,7 @@ namespace DataToExcel
 
                     }
 
-                    /*
 
-                    this.WriteString("     ");
-                    for (int i = 0; i < base.DieMatrix.XMax; i++)
-                    {
-                        int num5 = i + 1;
-                        this.WriteString(num5.ToString("00") + " ");
-                    }
-                    this.WriteString(base.Enter + "     ");
-                    for (int j = 0; j < base.DieMatrix.XMax; j++)
-                    {
-                        this.WriteString("++-");
-                    }
-                    ToCountDie die = new ToCountDie();
-                    for (int k = 0; k < base.DieMatrix.YMax; k++)
-                    {
-                        this.WriteString(base.Enter + ((k + 1)).ToString("000") + "| ");
-                        for (int m = 0; m < base.DieMatrix.XMax; m++)
-                        {
-                            if (base.DieMatrix[m, k].Attribute == DieCategory.FailDie)
-                            {
-                                die.CountDie(base.DieMatrix[m, k].Bin);
-                            }
-                            this.WriteString(UtilFunction.DieCategoryCaption(base.DieMatrix[m, k].Attribute) + " ");
-                        }
-                    }
-                    _singleTotalDie = base.DieMatrix.DieAttributeStat(DieCategory.TIRefFail | DieCategory.TIRefPass | DieCategory.Unknow | DieCategory.FailDie | DieCategory.PassDie);
-                    this.WriteString(base.Enter + base.Enter);
-                    this.WriteString("============ Wafer Information () ===========" + base.Enter);
-                    this.WriteString("  Device: " + this.Device + base.Enter);
-                    this.WriteString("  Lot NO: " + this.LotNo + base.Enter);
-                    this.WriteString("  Slot NO: " + this.SlotNo + base.Enter);
-                    this.WriteString("  Wafer ID: " + this.WaferID + base.Enter);
-                    this.WriteString("  Operater: " + base.Enter);
-                    this.WriteString("  Wafer Size: " + ((this.WaferSize / 10)).ToString() + "inch" + base.Enter);
-                    this.WriteString("  Flat Dir: " + this.FlatDir + base.Enter);
-                    this.WriteString("  Wafer Test Start Time: " + this.StartTime + base.Enter);
-                    this.WriteString("  Wafer Test Finish Time: " + this.EndTime + base.Enter);
-                    this.WriteString("  Wafer Load Time: " + this.LoadTime + base.Enter);
-                    this.WriteString("  Wafer Unload Time: " + this.UnloadTime + base.Enter);
-                    this.WriteString("  Total Test Die: " + _singleTotalDie + base.Enter);
-                    this.WriteString("  Pass Die: " + this.PassDie + base.Enter);
-                    this.WriteString("  Fail Die: " + this.FailDie + base.Enter);
-                    this.WriteString("  Yield: " + Math.Round(Convert.ToDouble((double)(Convert.ToDouble(this.PassDie) / ((double)_singleTotalDie))), 4).ToString("0.00%") + base.Enter);
-                    this.WriteString("  Rows: " + this.RowCount + base.Enter);
-                    this.WriteString("  Cols: " + this.ColCount + base.Enter);
-                    string path = base.FullName.Substring(0, base.FullName.LastIndexOf(@"\")) + @"\Total.txt";
-                    if (File.Exists(path))
-                    {   
-                        writer = File.AppendText(path);
-                    }
-                    else
-                    {
-                        writer = File.CreateText(path);
-                    }
-                    _Device = this.Device;
-                    _LotNo = this.LotNo;
-                    _TotalDie += _singleTotalDie;
-                    _TotalPassDie += this.PassDie;
-                    _TotalFailDie += this.FailDie;
-                    _TotalYield = Math.Round(Convert.ToDouble((double)(Convert.ToDouble(_TotalPassDie) / ((double)_TotalDie))), 4).ToString("0.00%");
-                    writer.WriteLine("============ Wafer Information () ===========");
-                    writer.WriteLine("  Device: " + this.Device);
-                    writer.WriteLine("  Lot NO: " + this.LotNo);
-                    writer.WriteLine("  Slot NO: " + this.SlotNo);
-                    writer.WriteLine("  Wafer ID: " + this.WaferID);
-                    writer.WriteLine("  Operater: ");
-                    writer.WriteLine("  Wafer Size: " + ((this.WaferSize / 10)).ToString() + "inch");
-                    writer.WriteLine("  Flat Dir: " + this.FlatDir);
-                    writer.WriteLine("  Wafer Test Start Time: " + this.StartTime);
-                    writer.WriteLine("  Wafer Test Finish Time: " + this.EndTime);
-                    writer.WriteLine("  Wafer Load Time: " + this.LoadTime);
-                    writer.WriteLine("  Wafer Unload Time: " + this.UnloadTime);
-                    writer.WriteLine("  Total Test Die: " + _singleTotalDie);
-                    writer.WriteLine("  Pass Die: " + this.PassDie);
-                    writer.WriteLine("  Fail Die: " + this.FailDie);
-                    writer.WriteLine("  Yield: " + Math.Round(Convert.ToDouble((double)(Convert.ToDouble(this.PassDie) / ((double)_singleTotalDie))), 4).ToString("0.00%"));
-                    writer.WriteLine("  Rows: " + this.RowCount);
-                    writer.WriteLine("  Cols: " + this.ColCount);
-                    writer.WriteLine("=============================================");
-                    writer.WriteLine(base.Enter);
-                    
-                    writer.Close();
-                     */
-                     
 
 
                 }
