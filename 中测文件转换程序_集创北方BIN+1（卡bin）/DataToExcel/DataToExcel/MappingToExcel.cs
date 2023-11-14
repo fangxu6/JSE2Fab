@@ -1300,6 +1300,7 @@ namespace DataToExcel
                 //C8N003WDA-12-固定工位-CP1
                 //C8A000WBB-12-固定工位-CP1 固定工位（die） Y单排 非Y双盘
 
+                //卡控bin流程
                 if (expToExcelSoftBin != null)
                 {
                     //卡控 bin yield
@@ -1466,18 +1467,6 @@ namespace DataToExcel
 
                 }
 
-                //total die 92418*0.005=462.09
-                if ((((Tsk)this._currFile).Device == "C8N003-12-20-00P"))
-                {
-                    int flagbin = 0;
-                    if (Convert.ToDouble(arrayHeaderInfo[2]) / Convert.ToDouble(arrayHeaderInfo[1]) <= 0.985) { worksheet2.get_Range(worksheet2.Cells[(num2 + 1) + 8, 5], worksheet2.Cells[(num2 + 1) + 8, 5]).Interior.ColorIndex = 7; flagbin++; }//片良率
-                    for (int i = 5; i <= 20; i++)
-                    {
-                        if (Convert.ToInt32(arrayHeaderInfo[i + 6]) / Convert.ToDouble(arrayHeaderInfo[1]) > 0.005) { worksheet2.get_Range(worksheet2.Cells[(num2 + 1) + 8, i + 7], worksheet2.Cells[(num2 + 1) + 8, i + 7]).Interior.ColorIndex = 7; flagbin++; }
-                    }
-                    if (flagbin > 0) { worksheet2.get_Range(worksheet2.Cells[(num2 + 1) + 8, 1], worksheet2.Cells[(num2 + 1) + 8, 1]).Interior.ColorIndex = 7; MessageBox.Show(arrayHeaderInfo[0].ToString() + "--SBL超标,请检查图谱是否有问题"); }
-
-                }
                 //total die 28761*0.005=143.8
                 if ((((Tsk)this._currFile).Device == "C8A000WBB-8-30-0"))
                 {
