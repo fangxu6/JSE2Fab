@@ -10,6 +10,7 @@ using System.Diagnostics;
 using System.Windows.Forms;
 using System.Reflection;
 using System.Collections;
+using System.Linq;
 
 namespace TSK_MERGE_SINF
 {
@@ -112,8 +113,6 @@ namespace TSK_MERGE_SINF
 
         private void button3_Click(object sender, EventArgs e)
         {
-
-
             if (this.textBox2.Text == "")
             {
                 MessageBox.Show("请选择txt图谱");
@@ -385,95 +384,97 @@ namespace TSK_MERGE_SINF
                 DegtxtData.Add(".");
             }
 
-
-            if (TSKFlat1 == 0)////TXT转180
+            if (!String.IsNullOrEmpty(this.txtFlat))
             {
+                int txtFlat1 = Convert.ToInt32(this.txtFlat);
+                int flatDifference = Math.Abs(TSKFlat1 - txtFlat1);
 
-                int x = -1, y = -1, xr = -1, yr = -1;
-
-                for (int i = 0; i < count; i++)
+                if (flatDifference == 180)////TXT转180
                 {
-                    try
+                    int x = -1, y = -1, xr = -1, yr = -1;
+
+                    for (int i = 0; i < count; i++)
+                    {
+                        try
+                        {
+                            // 计算 x,y 坐标
+                            // x = i % this._xmax;
+                            x = i % txtColct;
+                            // y = i / this._xmax;
+                            y = i / txtColct;
+
+                            xr = (txtColct) - 1 - x;
+                            yr = (txtRowct) - 1 - y;
+
+                            DegtxtData[yr * txtColct + xr] = txtData[i];
+                        }
+                        catch (Exception ee)
+                        {
+                            string msg = ee.Message;
+                        }
+                    }
+                }
+
+                else if (flatDifference == 90)////TXT转270
+                {
+
+                    int x = -1, y = -1, xr = -1, yr = -1;
+
+                    for (int i = 0; i < count; i++)
                     {
                         // 计算 x,y 坐标
-                        // x = i % this._xmax;
                         x = i % txtColct;
-                        // y = i / this._xmax;
                         y = i / txtColct;
 
-                        xr = (txtColct) - 1 - x;
-                        yr = (txtRowct) - 1 - y;
+                        xr = y;
+                        yr = (txtColct - 1) - x;
 
-                        DegtxtData[yr * txtColct + xr] = txtData[i];
+                        DegtxtData[yr * txtRowct + xr] = txtData[i];
                     }
-                    catch (Exception ee)
+
+                    // 交换行数与列数
+                    x = txtColct;
+                    txtColct = txtRowct;
+                    txtRowct = x;
+
+                }
+
+                else if (flatDifference == 270)////TXT转90
+                {
+
+                    int x = -1, y = -1, xr = -1, yr = -1;
+                    for (int i = 0; i < count; i++)
                     {
-                        string msg = ee.Message;
+                        // 计算 x,y 坐标
+                        x = i % txtColct;
+                        y = i / txtColct;
+
+                        xr = (txtRowct - 1) - y;
+                        yr = x;
+
+                        DegtxtData[yr * txtRowct + xr] = txtData[i];
                     }
+
+                    // 交换行数与列数
+                    x = txtColct;
+                    txtColct = txtRowct;
+                    txtRowct = x;
+
                 }
 
-
-
-
-            }
-
-            else if (TSKFlat1 == 90)////TXT转270
-            {
-
-                int x = -1, y = -1, xr = -1, yr = -1;
-
-                for (int i = 0; i < count; i++)
-                {
-                    // 计算 x,y 坐标
-                    x = i % txtColct;
-                    y = i / txtColct;
-
-                    xr = y;
-                    yr = (txtColct - 1) - x;
-
-                    DegtxtData[yr * txtRowct + xr] = txtData[i];
-                }
-
-                // 交换行数与列数
-                x = txtColct;
-                txtColct = txtRowct;
-                txtRowct = x;
-
-            }
-
-            else if (TSKFlat1 == 270)////TXT转90
-            {
-
-                int x = -1, y = -1, xr = -1, yr = -1;
-                for (int i = 0; i < count; i++)
-                {
-                    // 计算 x,y 坐标
-                    x = i % txtColct;
-                    y = i / txtColct;
-
-                    xr = (txtRowct - 1) - y;
-                    yr = x;
-
-                    DegtxtData[yr * txtRowct + xr] = txtData[i];
-                }
-
-                // 交换行数与列数
-                x = txtColct;
-                txtColct = txtRowct;
-                txtRowct = x;
-
-            }
-
-            else if (TSKFlat1 == 180)////TXT不转角度
-            {
-
-                for (int i = 0; i < count; i++)
+                else if (flatDifference == 0)////TXT不转角度
                 {
 
-                    DegtxtData[i] = txtData[i];
-                }
+                    for (int i = 0; i < count; i++)
+                    {
 
+                        DegtxtData[i] = txtData[i];
+                    }
+
+                }
             }
+
+            
 
             object[,] TxtMap = new object[this.txtRowct, this.txtColct];
 
@@ -647,22 +648,22 @@ namespace TSK_MERGE_SINF
             {
                 for (int j = 0; j < row1_1; j++)
                 {
-                    if (TxtNewMap[i, j].ToString() == "1")
+                    if (TxtNewMap[i, j].ToString() == "P")
                     {
                         tskPass++;
                     }
 
-                    if (TxtNewMap[i, j].ToString() == "X")
+                    if (TxtNewMap[i, j].ToString() == "F")
                     {
                         tskFail++;
                     }
 
-                    if (TxtNewMap[i, j].ToString() == "R")
+                    if (TxtNewMap[i, j].ToString() == "M")
                     {
                         txtMark++;
                     }
 
-                    if (TxtNewMap[i, j].ToString() == "R" && TSKMap[i, j].ToString() != ".")
+                    if (TxtNewMap[i, j].ToString() == "M" && TSKMap[i, j].ToString() != ".")
                     {
                         if (MessageBox.Show("对位点不正确!", "确认", MessageBoxButtons.YesNo) == DialogResult.Yes)
                         {
@@ -718,7 +719,7 @@ namespace TSK_MERGE_SINF
                     else
                     {
 
-                        if (txtNewData[k].ToString() == "1")//sinf =pass 不改
+                        if (txtNewData[k].ToString() == "P")//sinf =pass 不改
                         {
                             //  firstbyte1_1[k] = firstbyte1_1[k];
                             //  firstbyte2_1[k] = firstbyte2_1[k];
@@ -731,7 +732,7 @@ namespace TSK_MERGE_SINF
 
                         }
 
-                        if (txtNewData[k].ToString() == "X")//sinf fail,需要改为fail属性，BIN也需要改
+                        if (txtNewData[k].ToString() == "F")//sinf fail,需要改为fail属性，BIN也需要改
                         {
                             firstbyte1_1[k] = Convert.ToByte(firstbyte1_1[k] & 1);
                             firstbyte1_1[k] = Convert.ToByte(firstbyte1_1[k] | 128);//标记成fail
@@ -740,7 +741,7 @@ namespace TSK_MERGE_SINF
                             secondbyte2_1[k] = secondbyte2_1[k];
                             thirdbyte1_1[k] = thirdbyte1_1[k];
                             thirdbyte2_1[k] = Convert.ToByte(thirdbyte2_1[k] & 192);
-                            thirdbyte2_1[k] = Convert.ToByte(thirdbyte2_1[k] | 57);//换成想要的BIN58
+                            thirdbyte2_1[k] = Convert.ToByte(thirdbyte2_1[k] | 57);//换成想要的BIN57
 
                         }
 
@@ -766,7 +767,7 @@ namespace TSK_MERGE_SINF
                     else
                     {
 
-                        if (txtNewData[k].ToString() == "1")//sinf =pass 不改
+                        if (txtNewData[k].ToString() == "P")//sinf =pass 不改
                         {
                             firstbyte1_1[k] = Convert.ToByte(firstbyte1_1[k] & 1);
                             firstbyte1_1[k] = Convert.ToByte(firstbyte1_1[k] | 0);//标记成untested
@@ -777,7 +778,7 @@ namespace TSK_MERGE_SINF
                             arry_1[4 * k + 3] = arry_1[4 * k + 3];
                         }
 
-                        if (txtNewData[k].ToString() == "X")//sinf fail,需要改为fail属性，BIN也需要改
+                        if (txtNewData[k].ToString() == "F")//sinf fail,需要改为fail属性，BIN也需要改
                         {
                             firstbyte1_1[k] = Convert.ToByte(firstbyte1_1[k] & 1);
                             firstbyte1_1[k] = Convert.ToByte(firstbyte1_1[k] | 128);//标记成fail
@@ -1029,7 +1030,7 @@ namespace TSK_MERGE_SINF
                 {
                     string[] strs = line.Split(new char[] { ':' });
 
-                    switch (strs[0])
+                    switch (strs[0].Trim())
                     {
                         case "Device":
                             this.txtDevice = strs[1].Trim();
@@ -1038,7 +1039,7 @@ namespace TSK_MERGE_SINF
                             this.txtLot = strs[1].Trim();
                             break;
                         case "Slot NO":
-                            this.txtSlot = Int32.Parse(strs[1].Trim()); ;
+                            this.txtSlot = Convert.ToInt32(strs[1].Trim()); ;
                             break;
                         case "Wafer ID":
                             this.txtWaferID = strs[1].Trim();
@@ -1047,16 +1048,16 @@ namespace TSK_MERGE_SINF
                             this.txtFlat = strs[1].Trim();
                             break;
                         case "Wafer Row Number":
-                            this.txtRowct = Int32.Parse(strs[1].Trim());
+                            this.txtRowct = Convert.ToInt32(strs[1].Trim());
                             break;
                         case "Wafer Column Number":
-                            this.txtColct = Int32.Parse(strs[1].Trim());
+                            this.txtColct = Convert.ToInt32(strs[1].Trim());
                             break;
                         case "Pass Die":
-                            this.txtPass = Int32.Parse(strs[1].Trim());
+                            this.txtPass = Convert.ToInt32(strs[1].Trim());
                             break;
                         case "Fail Die":
-                            this.txtFail = Int32.Parse(strs[1].Trim());
+                            this.txtFail = Convert.ToInt32(strs[1].Trim());
                             break;
 
                     }
@@ -1074,9 +1075,29 @@ namespace TSK_MERGE_SINF
 
         private void ParseDies(string s)
         {
-            //string[] dies = s.Split(new char[] { ' ' });
+            string[] dies = s.Split(new char[] { ' ' });
+            int resultLen = 0;
+            bool result = int.TryParse(dies[dies.Length - 1], out resultLen);
+            if (result)
+            {
+                this.txtColct = resultLen;
+            }
 
-            //foreach (string d in s)
+            string mapLine;
+            if (s.Contains("|"))
+            {
+                this.txtRowct++;
+                mapLine = string.Join("",dies);
+                mapLine=mapLine.Split('|')[1];
+                //txtData.Add(mapLine);
+                for (int i = 0; i < mapLine.Length; i++)
+                {
+                    txtData.Add(mapLine[i]);
+                }
+
+            }
+
+            //foreach (string d in dies)
             //{
             //    if (d != "")
             //    {
@@ -1085,10 +1106,7 @@ namespace TSK_MERGE_SINF
 
             //}
 
-            for (int i = 0; i < s.Length; i++)
-            {
-                txtData.Add(s[i]);
-            }
+
 
         }
 

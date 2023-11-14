@@ -100,7 +100,8 @@ namespace DataToExcel.ExpDataToExcelFactory
             return;
         }
 
-        public int FlagNum(object[] arrayHeaderInfo, int binNo, double yield, Excel.Worksheet worksheet2, int num2)
+        //根据yield卡控bin良率
+        public int overYield(object[] arrayHeaderInfo, int binNo, double yield, Excel.Worksheet worksheet2, int num2)
         {
             int binCount = Convert.ToInt32(arrayHeaderInfo[binNo + 5]);
             double totalCount = Convert.ToDouble(arrayHeaderInfo[1]);
@@ -111,6 +112,11 @@ namespace DataToExcel.ExpDataToExcelFactory
             }
             return 0;
 
+        }
+        //根据bin number卡控bin良率
+        public int overNumber(object[] arrayHeaderInfo, int binNo, int defineNumber, Excel.Worksheet worksheet2, int num2)
+        {
+            return 0;
         }
     }
 }

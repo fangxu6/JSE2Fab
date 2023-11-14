@@ -31,16 +31,16 @@ namespace DataToExcel.ExpDataToExcelFactory
         {
             int errflag = 0;
             //卡bin
-            errflag += FlagNum(arrayHeaderInfo, 2, 0.0225, worksheet2, num2);
-            errflag += FlagNum(arrayHeaderInfo, 5, 0.0133, worksheet2, num2);
-            errflag += FlagNum(arrayHeaderInfo, 62, 0.01, worksheet2, num2);
-            errflag += FlagNum(arrayHeaderInfo, 10, 0.0082, worksheet2, num2);
-            errflag += FlagNum(arrayHeaderInfo, 3, 0.0070, worksheet2, num2);
-            errflag += FlagNum(arrayHeaderInfo, 33, 0.0065, worksheet2, num2);
-            errflag += FlagNum(arrayHeaderInfo, 4, 0.0075, worksheet2, num2);
-            errflag += FlagNum(arrayHeaderInfo, 55, 0.0065, worksheet2, num2);
-            errflag += FlagNum(arrayHeaderInfo, 11, 0.0026, worksheet2, num2);
-            errflag += FlagNum(arrayHeaderInfo, 57, 0.0033, worksheet2, num2);
+            errflag += overYield(arrayHeaderInfo, 2, 0.0225, worksheet2, num2);
+            errflag += overYield(arrayHeaderInfo, 5, 0.0133, worksheet2, num2);
+            errflag += overYield(arrayHeaderInfo, 62, 0.01, worksheet2, num2);
+            errflag += overYield(arrayHeaderInfo, 10, 0.0082, worksheet2, num2);
+            errflag += overYield(arrayHeaderInfo, 3, 0.0070, worksheet2, num2);
+            errflag += overYield(arrayHeaderInfo, 33, 0.0065, worksheet2, num2);
+            errflag += overYield(arrayHeaderInfo, 4, 0.0075, worksheet2, num2);
+            errflag += overYield(arrayHeaderInfo, 55, 0.0065, worksheet2, num2);
+            errflag += overYield(arrayHeaderInfo, 11, 0.0026, worksheet2, num2);
+            errflag += overYield(arrayHeaderInfo, 57, 0.0033, worksheet2, num2);
 
             //片良率 下限
             if (Convert.ToDouble(arrayHeaderInfo[2]) / Convert.ToDouble(arrayHeaderInfo[1]) < 0.95)

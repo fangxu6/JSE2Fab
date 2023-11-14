@@ -47,6 +47,7 @@
   <ItemGroup>
     <Compile Include="File\ImappingFile.cs" />
     <Compile Include="File\MappingBase.cs" />
+    <Compile Include="File\NewTsk.cs" />
     <Compile Include="File\Tsk.cs" />
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>

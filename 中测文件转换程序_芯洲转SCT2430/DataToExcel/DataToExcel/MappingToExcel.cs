@@ -692,18 +692,22 @@ namespace DataToExcel
                 Console.WriteLine(resultCompareArray[num2]);
             }
 
-            for (int i = 0; i < resultCompareArray.Length; i++)
+            if (resultCompareArray.Length > 1)
             {
-                for (int j = 1; j < resultCompareArray[i].Length; j++)
+                for (int i = 0; i < resultCompareArray.Length; i++)
                 {
-                    if (resultCompareArray[i] == resultCompareArray[j])
+                    for (int j = 1; j < resultCompareArray[i].Length; j++)
                     {
-                        MessageBox.Show("第" + i+ "片和第" + j + "片检测结果一样，请注意！");
+                        if (resultCompareArray[i] == resultCompareArray[j])
+                        {
+                            MessageBox.Show("第" + i + "片和第" + j + "片检测结果一样，请注意！");
+                        }
+                        j++;
                     }
-                    j++;
+                    i++;
                 }
-                i++;
             }
+            
 
             //excel.Application.DisplayAlerts = false;
 

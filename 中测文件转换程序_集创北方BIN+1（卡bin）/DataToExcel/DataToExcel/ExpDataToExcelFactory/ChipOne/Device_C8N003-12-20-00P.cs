@@ -71,7 +71,7 @@ namespace DataToExcel.ExpDataToExcelFactory
             //卡bin
             for (int i = 5; i <= 20; i++)
             {
-                errflag += FlagNum(arrayHeaderInfo, i, 0.005, worksheet2, num2);
+                errflag += overYield(arrayHeaderInfo, i, 0.005, worksheet2, num2);
             }
 
             //片良率
