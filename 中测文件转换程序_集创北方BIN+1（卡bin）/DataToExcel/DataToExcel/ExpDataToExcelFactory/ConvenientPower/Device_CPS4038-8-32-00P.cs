@@ -79,5 +79,10 @@ namespace DataToExcel.ExpDataToExcelFactory
             cmd.Device = "TMNS01";
             Device_YiChong.Save(cmd);
         }
+        // CPS4038A1  CP1良率变更为 单片97.8%  整批97.8%  OS<0.6%
+        //CP2良率变更为 单片97.4%  整批97.4% OS<0.1% bin几还要确认下
+
+        //CP3:良率变更为 单片97%   整批97%   OS<0.1%
+
     }
 }

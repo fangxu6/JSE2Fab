@@ -98,6 +98,7 @@ namespace DataToExcel.ExpDataToExcelFactory
         {
             int errflag = 0;
             //卡bin
+            //CP1:单片97% OS 0.15%  CP2:单片98% OS 0.1%  CP3:单片98% OS 0.1%
             errflag += overQuantity(arrayHeaderInfo, 2, 7, worksheet2, num2);
             errflag += overQuantity(arrayHeaderInfo, 12, 4, worksheet2, num2);
             errflag += overQuantity(arrayHeaderInfo, 22, 4, worksheet2, num2);
