@@ -1,4 +1,6 @@
 ﻿using Excel;
+using System;
+using System.Windows.Forms;
 
 namespace DataToExcel.ExpDataToExcelFactory
 {
@@ -56,6 +58,31 @@ namespace DataToExcel.ExpDataToExcelFactory
             rngbin19.Value2 = "Bin19:LEAKAGE_ad1_FAIL";
 
         }
+
+        public override void showErrorMessage(object[] arrayHeaderInfo, Excel.Worksheet worksheet2, int num2)
+        {
+            int errflag = 0;
+            //片良率
+            if (Convert.ToDouble(arrayHeaderInfo[2]) / Convert.ToDouble(arrayHeaderInfo[1]) <= 0.985)
+            {
+                worksheet2.get_Range(worksheet2.Cells[(num2 + 1) + 8, 5], worksheet2.Cells[(num2 + 1) + 8, 5]).Interior.ColorIndex = 7;
+                errflag++;
+            }
+
+            //卡bin
+            for (int i = 5; i <= 19; i++)
+            {
+                errflag += overYield(arrayHeaderInfo, i, 0.005, worksheet2, num2);
+            }
+
+
+            if (errflag > 0)
+            {
+                worksheet2.get_Range(worksheet2.Cells[(num2 + 1) + 8, 1], worksheet2.Cells[(num2 + 1) + 8, 1]).Interior.ColorIndex = 7;
+                MessageBox.Show(arrayHeaderInfo[0].ToString() + "--SBL超标,请检查图谱是否有问题");
+            }
+        }
+
 
         public override bool defatultBinPlusOne()
         {

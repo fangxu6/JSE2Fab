@@ -1,6 +1,7 @@
 ﻿using Excel;
 using System;
 using System.IO;
+using System.Windows.Forms;
 
 namespace DataToExcel.ExpDataToExcelFactory
 {
@@ -132,6 +133,48 @@ namespace DataToExcel.ExpDataToExcelFactory
             rngbin44.Value2 = "CP2_Bin44:IDD_LDO_REGU_0P1S";
 
         }
+
+
+        public override void showErrorMessage(object[] arrayHeaderInfo, Excel.Worksheet worksheet2, int num2)
+        {
+            int errflag = 0;
+            //卡bin
+            if (Convert.ToDouble(arrayHeaderInfo[2]) / Convert.ToDouble(arrayHeaderInfo[1]) <= 0.985)
+            {
+                worksheet2.get_Range(worksheet2.Cells[(num2 + 1) + 8, 5], worksheet2.Cells[(num2 + 1) + 8, 5]).Interior.ColorIndex = 7;
+                errflag++;
+            }
+            errflag += overQuantity(arrayHeaderInfo, 23, 9, worksheet2, num2);
+            errflag += overQuantity(arrayHeaderInfo, 24, 9, worksheet2, num2);
+            errflag += overQuantity(arrayHeaderInfo, 25, 9, worksheet2, num2);
+            errflag += overQuantity(arrayHeaderInfo, 26, 9, worksheet2, num2);
+            errflag += overQuantity(arrayHeaderInfo, 27, 20, worksheet2, num2);
+            errflag += overQuantity(arrayHeaderInfo, 28, 9, worksheet2, num2);
+            errflag += overQuantity(arrayHeaderInfo, 29, 9, worksheet2, num2);
+            errflag += overQuantity(arrayHeaderInfo, 30, 9, worksheet2, num2);
+            errflag += overQuantity(arrayHeaderInfo, 31, 9, worksheet2, num2);
+            errflag += overQuantity(arrayHeaderInfo, 32, 9, worksheet2, num2);
+            errflag += overQuantity(arrayHeaderInfo, 33, 9, worksheet2, num2);
+            errflag += overQuantity(arrayHeaderInfo, 34, 9, worksheet2, num2);
+            errflag += overQuantity(arrayHeaderInfo, 35, 9, worksheet2, num2);
+            errflag += overQuantity(arrayHeaderInfo, 36, 9, worksheet2, num2);
+            errflag += overQuantity(arrayHeaderInfo, 37, 9, worksheet2, num2);
+            errflag += overQuantity(arrayHeaderInfo, 38, 9, worksheet2, num2);
+            errflag += overQuantity(arrayHeaderInfo, 39, 9, worksheet2, num2);
+            errflag += overQuantity(arrayHeaderInfo, 40, 9, worksheet2, num2);
+            errflag += overQuantity(arrayHeaderInfo, 41, 9, worksheet2, num2);
+            errflag += overQuantity(arrayHeaderInfo, 42, 9, worksheet2, num2);
+            errflag += overQuantity(arrayHeaderInfo, 43, 9, worksheet2, num2);
+            errflag += overQuantity(arrayHeaderInfo, 44, 9, worksheet2, num2);
+
+            if (errflag > 0)
+            {
+                worksheet2.get_Range(worksheet2.Cells[(num2 + 1) + 8, 1], worksheet2.Cells[(num2 + 1) + 8, 1]).Interior.ColorIndex = 7;
+                MessageBox.Show(arrayHeaderInfo[0].ToString() + "--SBL超标,请检查图谱是否有问题");
+            }
+        }
+
+
 
         public override bool defatultSave()
         {

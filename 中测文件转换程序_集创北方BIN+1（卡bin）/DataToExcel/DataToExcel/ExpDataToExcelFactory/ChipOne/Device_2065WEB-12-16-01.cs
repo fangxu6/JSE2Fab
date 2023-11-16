@@ -1,4 +1,6 @@
 ﻿using Excel;
+using System.Windows.Forms;
+using System;
 
 namespace DataToExcel.ExpDataToExcelFactory
 {
@@ -69,6 +71,30 @@ namespace DataToExcel.ExpDataToExcelFactory
 
             Excel.Range rngbin23 = (Excel.Range)worksheet.Cells[7, 29];
             rngbin23.Value2 = "CP2_Bin23:FUNC_mbist_1P4V";
+        }
+
+
+        public override void showErrorMessage(object[] arrayHeaderInfo, Excel.Worksheet worksheet2, int num2)
+        {
+            int errflag = 0;
+            //片良率
+            if (Convert.ToDouble(arrayHeaderInfo[2]) / Convert.ToDouble(arrayHeaderInfo[1]) <= 0.985)
+            {
+                worksheet2.get_Range(worksheet2.Cells[(num2 + 1) + 8, 5], worksheet2.Cells[(num2 + 1) + 8, 5]).Interior.ColorIndex = 7;
+                errflag++;
+            }
+
+            //卡bin
+            for (int i = 3; i <= 63; i++)
+            {
+                errflag += overYield(arrayHeaderInfo, i, 0.005, worksheet2, num2);
+            }
+
+            if (errflag > 0)
+            {
+                worksheet2.get_Range(worksheet2.Cells[(num2 + 1) + 8, 1], worksheet2.Cells[(num2 + 1) + 8, 1]).Interior.ColorIndex = 7;
+                MessageBox.Show(arrayHeaderInfo[0].ToString() + "--SBL超标,请检查图谱是否有问题");
+            }
         }
     }
 }

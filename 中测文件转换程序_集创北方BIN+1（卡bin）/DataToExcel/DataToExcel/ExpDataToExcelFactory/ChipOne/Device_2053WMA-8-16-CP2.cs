@@ -1,6 +1,7 @@
 ﻿using Excel;
 using System;
 using System.IO;
+using System.Windows.Forms;
 
 namespace DataToExcel.ExpDataToExcelFactory
 {
@@ -104,6 +105,29 @@ namespace DataToExcel.ExpDataToExcelFactory
 
             Excel.Range rngbin35 = (Excel.Range)worksheet.Cells[7, 41];
             rngbin35.Value2 = "Bin35:LEAKAGE_AD1";
+        }
+
+        public override void showErrorMessage(object[] arrayHeaderInfo, Excel.Worksheet worksheet2, int num2)
+        {
+            int errflag = 0;
+            //卡bin
+            errflag += overQuantity(arrayHeaderInfo, 25, 114, worksheet2, num2);
+            errflag += overQuantity(arrayHeaderInfo, 26, 114, worksheet2, num2);
+            errflag += overQuantity(arrayHeaderInfo, 27, 85, worksheet2, num2);
+            errflag += overQuantity(arrayHeaderInfo, 28, 156, worksheet2, num2);
+            errflag += overQuantity(arrayHeaderInfo, 29, 17, worksheet2, num2);
+            errflag += overQuantity(arrayHeaderInfo, 30, 17, worksheet2, num2);
+            errflag += overQuantity(arrayHeaderInfo, 31, 17, worksheet2, num2);
+            errflag += overQuantity(arrayHeaderInfo, 32, 17, worksheet2, num2);
+            errflag += overQuantity(arrayHeaderInfo, 33, 17, worksheet2, num2);
+            errflag += overQuantity(arrayHeaderInfo, 34, 17, worksheet2, num2);
+            errflag += overQuantity(arrayHeaderInfo, 35, 17, worksheet2, num2);
+
+            if (errflag > 0)
+            {
+                worksheet2.get_Range(worksheet2.Cells[(num2 + 1) + 8, 1], worksheet2.Cells[(num2 + 1) + 8, 1]).Interior.ColorIndex = 7;
+                MessageBox.Show(arrayHeaderInfo[0].ToString() + "--SBL超标,请检查图谱是否有问题");
+            }
         }
 
         public override int defatultRotate()

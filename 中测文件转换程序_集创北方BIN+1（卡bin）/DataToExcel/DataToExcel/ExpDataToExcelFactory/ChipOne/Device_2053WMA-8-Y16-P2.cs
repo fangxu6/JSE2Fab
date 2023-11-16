@@ -113,29 +113,17 @@ namespace DataToExcel.ExpDataToExcelFactory
         {
             int errflag = 0;
             //卡bin
-          
-                errflag += overNumber(arrayHeaderInfo, 30, 114, worksheet2, num2);
-
-            //if (Convert.ToInt32(arrayHeaderInfo[30]) > 114) { worksheet2.get_Range(worksheet2.Cells[(num2 + 1) + 8, 31], worksheet2.Cells[(num2 + 1) + 8, 31]).Interior.ColorIndex = 7; flagbin++; }//bin25
-            //if (Convert.ToInt32(arrayHeaderInfo[31]) > 17) { worksheet2.get_Range(worksheet2.Cells[(num2 + 1) + 8, 32], worksheet2.Cells[(num2 + 1) + 8, 32]).Interior.ColorIndex = 7; flagbin++; }//bin26
-            //if (Convert.ToInt32(arrayHeaderInfo[32]) > 85) { worksheet2.get_Range(worksheet2.Cells[(num2 + 1) + 8, 33], worksheet2.Cells[(num2 + 1) + 8, 33]).Interior.ColorIndex = 7; flagbin++; }//bin27
-            //if (Convert.ToInt32(arrayHeaderInfo[33]) > 156) { worksheet2.get_Range(worksheet2.Cells[(num2 + 1) + 8, 34], worksheet2.Cells[(num2 + 1) + 8, 34]).Interior.ColorIndex = 7; flagbin++; }//bin28
-            //if (Convert.ToInt32(arrayHeaderInfo[34]) > 17) { worksheet2.get_Range(worksheet2.Cells[(num2 + 1) + 8, 35], worksheet2.Cells[(num2 + 1) + 8, 35]).Interior.ColorIndex = 7; flagbin++; }//bin29
-            //if (Convert.ToInt32(arrayHeaderInfo[35]) > 17) { worksheet2.get_Range(worksheet2.Cells[(num2 + 1) + 8, 36], worksheet2.Cells[(num2 + 1) + 8, 36]).Interior.ColorIndex = 7; flagbin++; }//bin30
-            //if (Convert.ToInt32(arrayHeaderInfo[36]) > 17) { worksheet2.get_Range(worksheet2.Cells[(num2 + 1) + 8, 37], worksheet2.Cells[(num2 + 1) + 8, 37]).Interior.ColorIndex = 7; flagbin++; }//bin31
-            //if (Convert.ToInt32(arrayHeaderInfo[37]) > 17) { worksheet2.get_Range(worksheet2.Cells[(num2 + 1) + 8, 38], worksheet2.Cells[(num2 + 1) + 8, 38]).Interior.ColorIndex = 7; flagbin++; }//bin32
-            //if (Convert.ToInt32(arrayHeaderInfo[38]) > 17) { worksheet2.get_Range(worksheet2.Cells[(num2 + 1) + 8, 39], worksheet2.Cells[(num2 + 1) + 8, 39]).Interior.ColorIndex = 7; flagbin++; }//bin33
-            //if (Convert.ToInt32(arrayHeaderInfo[39]) > 17) { worksheet2.get_Range(worksheet2.Cells[(num2 + 1) + 8, 40], worksheet2.Cells[(num2 + 1) + 8, 40]).Interior.ColorIndex = 7; flagbin++; }//bin34
-            //if (Convert.ToInt32(arrayHeaderInfo[40]) > 17) { worksheet2.get_Range(worksheet2.Cells[(num2 + 1) + 8, 41], worksheet2.Cells[(num2 + 1) + 8, 41]).Interior.ColorIndex = 7; flagbin++; }//bin35
-
-
-
-            //片良率
-            if (Convert.ToDouble(arrayHeaderInfo[2]) / Convert.ToDouble(arrayHeaderInfo[1]) <= 0.985)
-            {
-                worksheet2.get_Range(worksheet2.Cells[(num2 + 1) + 8, 5], worksheet2.Cells[(num2 + 1) + 8, 5]).Interior.ColorIndex = 7;
-                errflag++;
-            }
+            errflag += overQuantity(arrayHeaderInfo, 25, 114, worksheet2, num2);
+            errflag += overQuantity(arrayHeaderInfo, 26, 17, worksheet2, num2);
+            errflag += overQuantity(arrayHeaderInfo, 27, 85, worksheet2, num2);
+            errflag += overQuantity(arrayHeaderInfo, 28, 156, worksheet2, num2);
+            errflag += overQuantity(arrayHeaderInfo, 29, 17, worksheet2, num2);
+            errflag += overQuantity(arrayHeaderInfo, 30, 17, worksheet2, num2);
+            errflag += overQuantity(arrayHeaderInfo, 31, 17, worksheet2, num2);
+            errflag += overQuantity(arrayHeaderInfo, 32, 17, worksheet2, num2);
+            errflag += overQuantity(arrayHeaderInfo, 33, 17, worksheet2, num2);
+            errflag += overQuantity(arrayHeaderInfo, 34, 17, worksheet2, num2);
+            errflag += overQuantity(arrayHeaderInfo, 35, 17, worksheet2, num2);
 
             if (errflag > 0)
             {

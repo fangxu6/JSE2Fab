@@ -1,4 +1,6 @@
 ﻿using Excel;
+using System;
+using System.Windows.Forms;
 
 namespace DataToExcel.ExpDataToExcelFactory
 {
@@ -51,5 +53,34 @@ namespace DataToExcel.ExpDataToExcelFactory
             Excel.Range rngbin18 = (Excel.Range)worksheet.Cells[7, 24];
             rngbin18.Value2 = "CP1_Bin18:IOUT_12K_AVE_1";
         }
+
+        public override void showErrorMessage(object[] arrayHeaderInfo, Excel.Worksheet worksheet2, int num2)
+        {
+            int errflag = 0;
+            //片良率
+            if (Convert.ToDouble(arrayHeaderInfo[2]) / Convert.ToDouble(arrayHeaderInfo[1]) <= 0.985)
+            {
+                worksheet2.get_Range(worksheet2.Cells[(num2 + 1) + 8, 5], worksheet2.Cells[(num2 + 1) + 8, 5]).Interior.ColorIndex = 7;
+                errflag++;
+            }
+
+            //卡bin3到bin64？
+            for (int i = 3; i <= 63; i++)
+            {
+                errflag += overYield(arrayHeaderInfo, i, 0.005, worksheet2, num2);
+            }
+
+            if (errflag > 0)
+            {
+                worksheet2.get_Range(worksheet2.Cells[(num2 + 1) + 8, 1], worksheet2.Cells[(num2 + 1) + 8, 1]).Interior.ColorIndex = 7;
+                MessageBox.Show(arrayHeaderInfo[0].ToString() + "--SBL超标,请检查图谱是否有问题");
+            }
+        }
     }
+
 }
+
+
+
+
+

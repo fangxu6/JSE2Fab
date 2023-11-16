@@ -1,6 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
+
 
 namespace DataToExcel.ExpDataToExcelFactory
 {
@@ -114,8 +113,15 @@ namespace DataToExcel.ExpDataToExcelFactory
 
         }
         //根据bin number卡控bin良率
-        public int overNumber(object[] arrayHeaderInfo, int binNo, int defineNumber, Excel.Worksheet worksheet2, int num2)
+
+        public int overQuantity(object[] arrayHeaderInfo, int binNo, int quantityThreshold, Excel.Worksheet worksheet2, int num2)
         {
+            int binCount = Convert.ToInt32(arrayHeaderInfo[binNo + 5]);
+            if (binCount > quantityThreshold)
+            {
+                worksheet2.get_Range(worksheet2.Cells[(num2 + 1) + 8, binNo + 6], worksheet2.Cells[(num2 + 1) + 8, binNo + 6]).Interior.ColorIndex = 7;
+                return 1;
+            }
             return 0;
         }
     }
