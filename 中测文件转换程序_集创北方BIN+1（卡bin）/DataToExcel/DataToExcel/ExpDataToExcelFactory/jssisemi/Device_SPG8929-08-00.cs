@@ -9,5 +9,10 @@ namespace DataToExcel.ExpDataToExcelFactory
 
         }
 
+        public override bool defatultBinPlusOne()
+        {
+            return false;
+        }
+
     }
 }

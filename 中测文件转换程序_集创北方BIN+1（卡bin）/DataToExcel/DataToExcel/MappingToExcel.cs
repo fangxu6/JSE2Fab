@@ -1051,7 +1051,9 @@ namespace DataToExcel
 
                 object[] arrayHeaderName = new object[excelHeaderNumber];//头信息文件
                 object[] arrayHeaderInfo = new object[excelHeaderNumber];//每片Wafer信息
+                object[] binCountAndYield = new object[excelHeaderNumber];//每片Wafer信息
                 Device = ((Tsk)this._currFile).Device;
+                int total = 0;
 
                 for (int i = 0; i <= (excelHeaderNumber - 1); i++)
                 {
@@ -1088,7 +1090,8 @@ namespace DataToExcel
                         case "Total":
                             {
                                 // objArray3[i] = this._currFile.DieMatrix.DieAttributeStat(DieCategory.TIRefFail | DieCategory.TIRefPass | DieCategory.Unknow | DieCategory.FailDie | DieCategory.PassDie);
-                                arrayHeaderInfo[i] = this._currFile.DieMatrix.DieAttributeStat(DieCategory.TIRefFail | DieCategory.TIRefPass | DieCategory.FailDie | DieCategory.PassDie);
+                                total = this._currFile.DieMatrix.DieAttributeStat(DieCategory.TIRefFail | DieCategory.TIRefPass | DieCategory.FailDie | DieCategory.PassDie);
+                                arrayHeaderInfo[i] = total;
                                 if (objArray[i] == null)
                                 {
                                     break;
@@ -1265,7 +1268,6 @@ namespace DataToExcel
                                 objArray[i] = ((int)objArray[i]) + ((int)arrayHeaderInfo[i]);
                             }
                         }
-
                         else
                         {
                             objArray[i] = ToCountDie._ToCountDie[int.Parse(str)];
@@ -1278,13 +1280,6 @@ namespace DataToExcel
                         }
 
 
-                        ////////////////////////////////增加百分比///////////////////////////
-                        if (arrayHeaderInfo[i] != null)
-                        {
-                            //   objArray3[i] = objArray3[i].ToString() + " (" + Math.Round((double)(Convert.ToDouble(objArray3[i]) / ((double)this._currFile.DieMatrix.DieAttributeStat(DieCategory.TIRefFail | DieCategory.TIRefPass | DieCategory.FailDie | DieCategory.PassDie))), 4).ToString("0.00%") + ")";
-
-                        }
-                        //////////////////////////////////////////////////////////////////////
 
                     }
                     else
@@ -1295,7 +1290,19 @@ namespace DataToExcel
                 }
 
                 worksheet2.get_Range(worksheet2.Cells[8, 1], worksheet2.Cells[8, excelHeaderNumber]).Value2 = arrayHeaderName;
-                worksheet2.get_Range(worksheet2.Cells[(num2 + 1) + 8, 1], worksheet2.Cells[(num2 + 1) + 8, excelHeaderNumber]).Value2 = arrayHeaderInfo;
+                for (int i = 0; i < arrayHeaderInfo.Length; i++)
+                {
+                    if (i >= flag11)
+                    {
+                        string binResult = arrayHeaderInfo[i].ToString() + " (" + Math.Round((double)(Convert.ToDouble(arrayHeaderInfo[i]) / total), 4).ToString("0.00%") + ")";
+                        worksheet2.get_Range(worksheet2.Cells[(num2 + 1) + 8, 1 + i], worksheet2.Cells[(num2 + 1) + 8, 1 + i]).Value2 = binResult;
+                    }
+                    else
+                    {
+                        worksheet2.get_Range(worksheet2.Cells[(num2 + 1) + 8, 1 + i], worksheet2.Cells[(num2 + 1) + 8, 1 + i]).Value2 = arrayHeaderInfo[i];
+                    }
+                }
+
                 //2053WMA-8-Y16-P2 device-8寸-16工位-CP2
                 //C8N003WDA-12-固定工位-CP1
                 //C8A000WBB-12-固定工位-CP1 固定工位（die） Y单排 非Y双盘
