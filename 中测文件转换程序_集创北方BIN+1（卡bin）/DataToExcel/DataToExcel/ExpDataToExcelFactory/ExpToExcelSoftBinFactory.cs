@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Windows.Forms;
 
 namespace DataToExcel.ExpDataToExcelFactory
 {
@@ -11,7 +12,8 @@ namespace DataToExcel.ExpDataToExcelFactory
             Type o = Type.GetType(clazzNmae);
             if (o == null)
             {
-                return null;
+                MessageBox.Show("该型号未定义，请联系IT并告知批次号。");
+                throw new Exception("该型号不支持");
             }
             object obj = Activator.CreateInstance(o, true);//根据类型创建实例
             return (ExpToExcelSoftBin)obj;
