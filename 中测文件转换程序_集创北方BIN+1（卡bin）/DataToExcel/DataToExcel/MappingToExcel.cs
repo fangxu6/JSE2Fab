@@ -1315,58 +1315,6 @@ namespace DataToExcel
 
                 }
 
-                
-                //芯德卡控 bin 不加1
-                if ((((Tsk)this._currFile).Device == "SPG8929-08-00"))
-                {
-                    int flagbin = 0;
-                    //bin 2 12 22
-                    //BIN5<0.5%,BIN8<1.89%,BIN13<2.29%
-                    int totalDie = (int)arrayHeaderInfo[2];
-                    StringBuilder sblerror = new StringBuilder();
-                    sblerror.Append(arrayHeaderInfo[0].ToString());
-                    if (Convert.ToInt32(arrayHeaderInfo[10]) >= (0.005 * totalDie))
-                    {
-                        worksheet2.get_Range(worksheet2.Cells[(num2 + 1) + 8, 11], worksheet2.Cells[(num2 + 1) + 8, 11]).Interior.ColorIndex = 7;
-                        flagbin++;
-                        sblerror.Append(" SBL(5) " + (Convert.ToDecimal(arrayHeaderInfo[10]) / totalDie).ToString("0.00%") + ",");
-                    }//bin5
-                    if (Convert.ToInt32(arrayHeaderInfo[13]) >= (0.0189 * totalDie))
-                    {
-                        worksheet2.get_Range(worksheet2.Cells[(num2 + 1) + 8, 14], worksheet2.Cells[(num2 + 1) + 8, 14]).Interior.ColorIndex = 7;
-                        flagbin++;
-                        sblerror.Append(" SBL(8) " + (Convert.ToDecimal(arrayHeaderInfo[13]) / totalDie).ToString("0.00%") + ",");
-                    }//bin8
-                    if (Convert.ToInt32(arrayHeaderInfo[18]) >= (0.0229 * totalDie))
-                    {
-                        worksheet2.get_Range(worksheet2.Cells[(num2 + 1) + 8, 19], worksheet2.Cells[(num2 + 1) + 8, 19]).Interior.ColorIndex = 7;
-                        flagbin++;
-                        sblerror.Append(" SBL(13) " + (Convert.ToDecimal(arrayHeaderInfo[18]) / totalDie).ToString("0.00%") + ",");
-
-                    }//bin13
-                    if ((Convert.ToDouble(arrayHeaderInfo[2]) / Convert.ToDouble(arrayHeaderInfo[1])) <= 0.9629)
-                    {
-                        flagbin++;
-                        sblerror.Append("片良率 " + arrayHeaderInfo[4] + ",");
-
-                    }//yield
-                    if (flagbin > 0)
-                    {
-                        worksheet2.get_Range(worksheet2.Cells[(num2 + 1) + 8, 1], worksheet2.Cells[(num2 + 1) + 8, 1]).Interior.ColorIndex = 7;
-                        //DialogResult result = MessageBox.Show(arrayHeaderInfo[0].ToString() + sblerror+ "--SBL超标,请检查图谱是否有问题");
-                        //if (result == System.Windows.Forms.DialogResult.OK)
-                        //{
-
-                        //    Clipboard.SetText(arrayHeaderInfo[0].ToString() + sblerror);
-                        //    //throw;
-
-                        //}
-                        sblerror.Append("超标。");
-                        lotsblerror.Append(sblerror.ToString());
-                    }
-
-                }
-
 
                 worksheet2 = null;
                 this.progressBar1.Value++;
