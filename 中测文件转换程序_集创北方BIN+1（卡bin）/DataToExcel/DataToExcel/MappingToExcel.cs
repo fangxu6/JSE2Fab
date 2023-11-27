@@ -80,7 +80,6 @@ namespace DataToExcel
             else
             {
                 int num2;
-                StreamWriter writer;
                 if (!Directory.Exists(this.textBox1.Text + @"\TxtOutFile\" + this.LotNo))
                 {
                     Directory.CreateDirectory(this.textBox1.Text + @"\TxtOutFile\" + this.LotNo);

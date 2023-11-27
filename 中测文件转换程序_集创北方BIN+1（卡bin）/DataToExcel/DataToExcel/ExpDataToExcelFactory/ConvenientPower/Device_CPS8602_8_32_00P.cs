@@ -131,25 +131,39 @@ namespace DataToExcel.ExpDataToExcelFactory
 
                 int xMin = Int32.MaxValue;
                 int yMin = Int32.MaxValue;
+                int xMax = Int32.MinValue;
+                int yMax = Int32.MinValue;
                 for (int y = 0; y < cmd.DieMatrix.YMax; y++)//83
                 {
                     for (int x = 0; x < cmd.DieMatrix.XMax; x++)//57
                     {
-                        if (xMin > cmd.DieMatrix[x, y].X)
+
+                        if (cmd.DieMatrix[x, y].Attribute.Equals(DieCategory.FailDie))
                         {
-                            xMin = cmd.DieMatrix[x, y].X;
-                        }
-                        if (yMin > cmd.DieMatrix[x, y].Y)
-                        {
-                            yMin = cmd.DieMatrix[x, y].Y;
+                            if (xMin > x)
+                            {
+                                xMin = x;
+                            }
+                            if (yMin > y)
+                            {
+                                yMin = y;
+                            }
+                            if (xMax < x)
+                            {
+                                xMax = x;
+                            }
+                            if (yMax < y)
+                            {
+                                yMax = y;
+                            }
                         }
                     }
                 }
 
-                for (int y = 0; y < cmd.DieMatrix.YMax; y++)
+                for (int y = yMin; y <= yMax; y++)
                 {
                     cmd.WriteString(cmd.Enter);
-                    for (int x = 0; x < cmd.DieMatrix.XMax; x++)
+                    for (int x = xMin; x <= xMax; x++)
                     {
                         switch (cmd.DieMatrix[x, y].Attribute)
                         {
