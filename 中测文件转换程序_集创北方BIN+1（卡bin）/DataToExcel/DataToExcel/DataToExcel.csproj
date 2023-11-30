@@ -132,6 +132,9 @@
     <Compile Include="ExpDataToExcelFactory\ExpToExcelSoftBin.cs" />
     <Compile Include="ExpDataToExcelFactory\ExpToExcelSoftBinFactory.cs" />
     <Compile Include="ExpDataToExcelFactory\jssisemi\Device_SPG8929-08-00.cs" />
+    <Compile Include="ExpDataToExcelFactory\teradevices\Device_TD987-8-32-CP2.cs" />
+    <Compile Include="ExpDataToExcelFactory\teradevices\Device_TD987-8-32-CP1.cs" />
+    <Compile Include="ExpDataToExcelFactory\teradevices\Device_YiCunXin.cs" />
     <Compile Include="File\ConverterBase.cs" />
     <Compile Include="File\Dat.cs" />
     <Compile Include="File\IConverter.cs" />
