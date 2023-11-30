@@ -1,4 +1,6 @@
 ﻿using Excel;
+using System.Windows.Forms;
+using System;
 
 namespace DataToExcel.ExpDataToExcelFactory
 {
@@ -79,10 +81,46 @@ namespace DataToExcel.ExpDataToExcelFactory
             cmd.Device = "TMNS01";
             Device_YiChong.Save(cmd);
         }
-        // CPS4038A1  CP1良率变更为 单片97.8%  整批97.8%  OS<0.6%
-        //CP2良率变更为 单片97.4%  整批97.4% OS<0.1% bin几还要确认下
 
-        //CP3:良率变更为 单片97%   整批97%   OS<0.1%
+        public override void showErrorMessage(object[] arrayHeaderInfo, Excel.Worksheet worksheet2, int num2)
+        {
+            int errflag = 0;
+            //卡bin
+            // CPS4038A1  CP1良率变更为 单片97.8%  整批97.8%  OS<0.6%
+            //CP2良率变更为 单片97.4%  整批97.4% OS<0.1% 
+            //CP3:良率变更为 单片97%   整批97%   OS<0.1%
+            //片良率
+
+            if (arrayHeaderInfo[0].ToString().Contains("CP1") && Convert.ToDouble(arrayHeaderInfo[2]) / Convert.ToDouble(arrayHeaderInfo[1]) <= 0.978)
+            {
+                worksheet2.get_Range(worksheet2.Cells[(num2 + 1) + 8, 3], worksheet2.Cells[(num2 + 1) + 8, 3]).Interior.ColorIndex = 7;
+                errflag++;
+            }
+            errflag += overYield(arrayHeaderInfo, 2, 0.006, worksheet2, num2);
+
+
+            if (arrayHeaderInfo[0].ToString().Contains("CP2") && Convert.ToDouble(arrayHeaderInfo[2]) / Convert.ToDouble(arrayHeaderInfo[1]) <= 0.974)
+            {
+                worksheet2.get_Range(worksheet2.Cells[(num2 + 1) + 8, 11], worksheet2.Cells[(num2 + 1) + 8, 11]).Interior.ColorIndex = 7;
+                errflag++;
+            }
+            errflag += overYield(arrayHeaderInfo, 10, 0.001, worksheet2, num2);
+
+
+            if (arrayHeaderInfo[0].ToString().Contains("CP3") && Convert.ToDouble(arrayHeaderInfo[2]) / Convert.ToDouble(arrayHeaderInfo[1]) <= 0.970)
+            {
+                worksheet2.get_Range(worksheet2.Cells[(num2 + 1) + 8, 19], worksheet2.Cells[(num2 + 1) + 8, 19]).Interior.ColorIndex = 7;
+                errflag++;
+            }
+            errflag += overYield(arrayHeaderInfo, 18, 0.001, worksheet2, num2);
+
+
+            if (errflag > 0)
+            {
+                worksheet2.get_Range(worksheet2.Cells[(num2 + 1) + 8, 1], worksheet2.Cells[(num2 + 1) + 8, 1]).Interior.ColorIndex = 7;
+                MessageBox.Show(arrayHeaderInfo[0].ToString() + "--SBL超标,请检查图谱是否有问题");
+            }
+        }
 
     }
 }
