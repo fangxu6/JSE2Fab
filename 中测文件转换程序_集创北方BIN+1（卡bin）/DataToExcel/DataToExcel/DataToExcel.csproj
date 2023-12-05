@@ -92,6 +92,7 @@
     <Compile Include="ExpDataToExcelFactory\ChipOne\Device_2012WRA-12-16-00.cs" />
     <Compile Include="ExpDataToExcelFactory\ChipOne\Device_2053WMA.cs" />
     <Compile Include="ExpDataToExcelFactory\ChipOne\Device_2065WAA.cs" />
+    <Compile Include="ExpDataToExcelFactory\ChipOne\Device_C8A000WBC-8-16-0.cs" />
     <Compile Include="ExpDataToExcelFactory\ChipOne\Device_C8A000WBB-8-30-0.cs" />
     <Compile Include="ExpDataToExcelFactory\ChipOne\Device_C8N003-12-20-00P.cs" />
     <Compile Include="ExpDataToExcelFactory\ChipOne\Device_2018WCA-8-32-00P.cs" />

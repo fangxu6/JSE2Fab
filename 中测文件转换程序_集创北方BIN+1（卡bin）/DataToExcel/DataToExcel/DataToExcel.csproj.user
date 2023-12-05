@@ -1,9 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="4.0">
   <PropertyGroup>
-    <PublishUrlHistory>http://localhost/WindowsApplication1/</PublishUrlHistory>
-    <InstallUrlHistory>
-    </InstallUrlHistory>
+    <PublishUrlHistory>D:\data\WindowsApplication1\|publish\|D:\data\|WindowsApplication1\|http://localhost/WindowsApplication1/</PublishUrlHistory>
+    <InstallUrlHistory>https://e.gitee.com/seagatek/repos/seagatek/JSE2Fab/tree/main/%25E4%25B8%25AD%25E6%25B5%258B%25E6%2596%2587%25E4%25BB%25B6%25E8%25BD%25AC%25E6%258D%25A2%25E7%25A8%258B%25E5%25BA%258F_%25E9%259B%2586%25E5%2588%259B%25E5%258C%2597%25E6%2596%25B9BIN+1%25EF%25BC%2588%25E5%258D%25A1bin%25EF%25BC%2589/|https://github.com/fangxu6/JSE2Fab/tree/main/%25E4%25B8%25AD%25E6%25B5%258B%25E6%2596%2587%25E4%25BB%25B6%25E8%25BD%25AC%25E6%258D%25A2%25E7%25A8%258B%25E5%25BA%258F_%25E9%259B%2586%25E5%2588%259B%25E5%258C%2597%25E6%2596%25B9BIN%252B1%25EF%25BC%2588%25E5%258D%25A1bin%25EF%25BC%2589/|http://localhost/WindowsApplication1/</InstallUrlHistory>
     <SupportUrlHistory>
     </SupportUrlHistory>
     <UpdateUrlHistory>
