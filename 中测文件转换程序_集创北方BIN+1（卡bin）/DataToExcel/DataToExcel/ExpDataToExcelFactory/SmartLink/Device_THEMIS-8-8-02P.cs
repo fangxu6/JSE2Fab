@@ -22,25 +22,22 @@ namespace DataToExcel.ExpDataToExcelFactory
             Device_JieLian.Save(cmd);
         }
 
-        public override bool defatultBinPlusOne()
-        {
-            return false;
-        }
+       
 
         public override void showErrorMessage(object[] arrayHeaderInfo, Excel.Worksheet worksheet2, int num2)
         {
             int errflag = 0;
             //卡bin
             errflag += overYield(arrayHeaderInfo, 2, 0.0225, worksheet2, num2);
-            errflag += overYield(arrayHeaderInfo, 5, 0.0133, worksheet2, num2);
-            errflag += overYield(arrayHeaderInfo, 62, 0.01, worksheet2, num2);
-            errflag += overYield(arrayHeaderInfo, 10, 0.0082, worksheet2, num2);
             errflag += overYield(arrayHeaderInfo, 3, 0.0070, worksheet2, num2);
-            errflag += overYield(arrayHeaderInfo, 33, 0.0065, worksheet2, num2);
             errflag += overYield(arrayHeaderInfo, 4, 0.0075, worksheet2, num2);
-            errflag += overYield(arrayHeaderInfo, 55, 0.0065, worksheet2, num2);
+            errflag += overYield(arrayHeaderInfo, 5, 0.0133, worksheet2, num2);
+            errflag += overYield(arrayHeaderInfo, 10, 0.0082, worksheet2, num2);
             errflag += overYield(arrayHeaderInfo, 11, 0.0026, worksheet2, num2);
+            errflag += overYield(arrayHeaderInfo, 33, 0.0065, worksheet2, num2);
+            errflag += overYield(arrayHeaderInfo, 55, 0.0065, worksheet2, num2);
             errflag += overYield(arrayHeaderInfo, 57, 0.0033, worksheet2, num2);
+            errflag += overYield(arrayHeaderInfo, 62, 0.01, worksheet2, num2);
 
             //片良率 下限
             if (Convert.ToDouble(arrayHeaderInfo[2]) / Convert.ToDouble(arrayHeaderInfo[1]) < 0.95)
