@@ -18,7 +18,7 @@ namespace DataToExcel.ExpDataToExcelFactory
 
         public override void Save(CmdTxt cmd)
         {
-            cmd.Device = "TMNS01";//TODO 
+            cmd.Device = "TMRN90";
             Device_JieLian.Save(cmd);
         }
 

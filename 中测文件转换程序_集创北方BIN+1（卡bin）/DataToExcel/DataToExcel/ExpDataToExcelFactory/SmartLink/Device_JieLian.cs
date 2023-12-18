@@ -27,7 +27,7 @@ namespace DataToExcel.ExpDataToExcelFactory
                     int slotId = 0;
                     if (lotNo.Contains("CP"))
                     {
-                        slotId = Int32.Parse(lotNo.Substring(lotNo.IndexOf("CP") + 2)) + 1;
+                        slotId = Int32.Parse(lotNo.Substring(lotNo.IndexOf("CP") + 2));
                         lotNo = lotNo.Substring(0, lotNo.IndexOf("CP"));
                     }
                     else
@@ -99,17 +99,17 @@ namespace DataToExcel.ExpDataToExcelFactory
                             int visualInspection = 0;
                             if (cmd.DieMatrix[x, y].Attribute.Equals(DieCategory.PassDie))
                             {
-                                visualInspection = 1;
+                                visualInspection = 0;
                             }
                             else if (cmd.DieMatrix[x, y].Attribute.Equals(DieCategory.FailDie))
                             {
-                                visualInspection = 0;
+                                visualInspection = 1;
                             } else
                             {
                                 continue;
                             }
-                            binQuanYield = String.Format("{0,4}{1,4}{2,4}{3,4}", cmd.DieMatrix[x, y].X - xMin, cmd.DieMatrix[x, y].Y - yMin,
-                                cmd.DieMatrix[x, y].Bin - 1, visualInspection);
+                            binQuanYield = String.Format("{0,4}{1,4}{2,4}{3,4}", cmd.DieMatrix[x, y].X - xMin, -1*(cmd.DieMatrix[x, y].Y - yMin),
+                                cmd.DieMatrix[x, y].Bin , visualInspection);
                             cmd.WriteString(binQuanYield);
                             cmd.WriteString(cmd.Enter);
                         }
