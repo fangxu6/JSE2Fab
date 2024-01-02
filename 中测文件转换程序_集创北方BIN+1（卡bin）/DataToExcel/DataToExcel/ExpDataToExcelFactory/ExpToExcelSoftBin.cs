@@ -112,6 +112,19 @@ namespace DataToExcel.ExpDataToExcelFactory
             return 0;
 
         }
+
+        public int equalOrOverYield(object[] arrayHeaderInfo, int binNo, double yield, Excel.Worksheet worksheet2, int num2)
+        {
+            int binCount = Convert.ToInt32(arrayHeaderInfo[binNo + 5]);
+            double totalCount = Convert.ToDouble(arrayHeaderInfo[1]);
+            if (binCount / totalCount >= yield)
+            {
+                worksheet2.get_Range(worksheet2.Cells[(num2 + 1) + 8, binNo + 6], worksheet2.Cells[(num2 + 1) + 8, binNo + 6]).Interior.ColorIndex = 7;
+                return 1;
+            }
+            return 0;
+
+        }
         //根据bin number卡控bin良率
 
         public int overQuantity(object[] arrayHeaderInfo, int binNo, int quantityThreshold, Excel.Worksheet worksheet2, int num2)
