@@ -282,7 +282,9 @@ namespace TSK_UPDATE
 
                //-----------------------------修改PASS BIN为untested-------------------------//
 
-                 /////--------------------Map版本为2，且无扩展信息TSK修改BIN信息代码-------------------////
+               //20231227 追加卡控，未经测试的数据要报警，不能生成新的tsk
+               bool createNewTsk=false;
+               /////--------------------Map版本为2，且无扩展信息TSK修改BIN信息代码-------------------////
                if ((arry_1.Count == 0) && ((Convert.ToInt32(MapVersion_1) == 2)))
                {
                    for (int k = 0; k < row1_1 * col1_1; k++)
@@ -306,8 +308,7 @@ namespace TSK_UPDATE
                            {
                                firstbyte1_1[k] = Convert.ToByte(firstbyte1_1[k] & 1);
                                firstbyte1_1[k] = Convert.ToByte(firstbyte1_1[k] | 0);//标记成untested
-                             
-
+                                createNewTsk = true;
                            }
 
 
@@ -346,12 +347,16 @@ namespace TSK_UPDATE
                                arry_1[4 * k + 1] = arry_1[4 * k + 1];
                                arry_1[4 * k + 2] = arry_1[4 * k + 2];
                                arry_1[4 * k + 3] = arry_1[4 * k + 3];
+                                createNewTsk = true;
                            }
                        }
                    }
                }
 
-
+               if (!createNewTsk) { 
+                    MessageBox.Show("该批次未经过测试，请确认！");
+                    return;
+                }
 
                 //----------------------------重写TSK----------------------------------------//
                 FileStream fw;

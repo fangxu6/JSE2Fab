@@ -16,3 +16,13 @@ D:\WorkSpaces\JSE2Fab\TSK-修改PASS为untested\TSK-UPDATE\TSK-UPDATE\obj\x86\De
 D:\WorkSpaces\JSE2Fab\TSK-修改PASS为untested\TSK-UPDATE\TSK-UPDATE\bin\Debug\TSK-UPDATE.exe.config
 D:\WorkSpaces\JSE2Fab\TSK-修改PASS为untested\TSK-UPDATE\TSK-UPDATE\bin\Debug\TSK-UPDATE.exe
 D:\WorkSpaces\JSE2Fab\TSK-修改PASS为untested\TSK-UPDATE\TSK-UPDATE\bin\Debug\TSK-UPDATE.pdb
+D:\Workspace\JSE2Fab\TSK-修改PASS为untested\TSK-UPDATE\TSK-UPDATE\bin\Debug\TSK-UPDATE.exe.config
+D:\Workspace\JSE2Fab\TSK-修改PASS为untested\TSK-UPDATE\TSK-UPDATE\bin\Debug\TSK-UPDATE.exe
+D:\Workspace\JSE2Fab\TSK-修改PASS为untested\TSK-UPDATE\TSK-UPDATE\bin\Debug\TSK-UPDATE.pdb
+D:\Workspace\JSE2Fab\TSK-修改PASS为untested\TSK-UPDATE\TSK-UPDATE\obj\x86\Debug\TSK-UPDATE.csproj.AssemblyReference.cache
+D:\Workspace\JSE2Fab\TSK-修改PASS为untested\TSK-UPDATE\TSK-UPDATE\obj\x86\Debug\TSK_UPDATE.Form1.resources
+D:\Workspace\JSE2Fab\TSK-修改PASS为untested\TSK-UPDATE\TSK-UPDATE\obj\x86\Debug\TSK_UPDATE.Properties.Resources.resources
+D:\Workspace\JSE2Fab\TSK-修改PASS为untested\TSK-UPDATE\TSK-UPDATE\obj\x86\Debug\TSK-UPDATE.csproj.GenerateResource.cache
+D:\Workspace\JSE2Fab\TSK-修改PASS为untested\TSK-UPDATE\TSK-UPDATE\obj\x86\Debug\TSK-UPDATE.csproj.CoreCompileInputs.cache
+D:\Workspace\JSE2Fab\TSK-修改PASS为untested\TSK-UPDATE\TSK-UPDATE\obj\x86\Debug\TSK-UPDATE.exe
+D:\Workspace\JSE2Fab\TSK-修改PASS为untested\TSK-UPDATE\TSK-UPDATE\obj\x86\Debug\TSK-UPDATE.pdb
