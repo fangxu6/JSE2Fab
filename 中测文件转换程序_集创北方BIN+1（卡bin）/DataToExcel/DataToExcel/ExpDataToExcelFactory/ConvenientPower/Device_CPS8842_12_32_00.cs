@@ -36,5 +36,16 @@ namespace DataToExcel.ExpDataToExcelFactory
                 MessageBox.Show(arrayHeaderInfo[0].ToString() + "--SBL超标,请检查图谱是否有问题");
             }
         }
+
+        public override bool defatultSave()
+        {
+            return false;
+        }
+
+        public override void Save(CmdTxt cmd)
+        {
+            cmd.Device = "18BCDG3";
+            Device_YiChong.Save(cmd);
+        }
     }
 }

@@ -108,7 +108,7 @@ namespace DataToExcel.ExpDataToExcelFactory
                             {
                                 continue;
                             }
-                            binQuanYield = String.Format("{0,4}{1,4}{2,4}{3,4}", cmd.DieMatrix[x, y].X - xMin, -1*(cmd.DieMatrix[x, y].Y - yMin),
+                            binQuanYield = String.Format("{0,4}{1,4}{2,4}{3,4}", -1 * (cmd.DieMatrix[x, y].X - xMin), cmd.DieMatrix[x, y].Y - yMin,
                                 cmd.DieMatrix[x, y].Bin , visualInspection);
                             cmd.WriteString(binQuanYield);
                             cmd.WriteString(cmd.Enter);
