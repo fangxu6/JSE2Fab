@@ -1134,7 +1134,15 @@ namespace DataToExcel
                 }
                 try
                 {
-                    this._notchAppoint = int.Parse(node2.Attributes["notchappoint"].InnerText);
+                    //this._notchAppoint = int.Parse(node2.Attributes["notchappoint"].InnerText);
+                    if (node2.Attributes["notchappoint"] == null)
+                    {
+                        this._notchAppoint = -1;
+                    }
+                    else
+                    {
+                        this._notchAppoint = int.Parse(node2.Attributes["notchappoint"].InnerText);
+                    }
                 }
                 catch
                 {
@@ -1142,7 +1150,14 @@ namespace DataToExcel
                 }
                 try
                 {
-                    this._trimDir = node2.Attributes["trimdir"].InnerText;
+                    if (node2.Attributes["trimdir"] == null)
+                    {
+                        this._trimDir = "";
+                    }
+                    else
+                    {
+                        this._trimDir = node2.Attributes["trimdir"].InnerText;
+                    }
                 }
                 catch
                 {
