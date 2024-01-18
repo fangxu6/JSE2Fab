@@ -133,8 +133,10 @@ namespace DataToExcel.ExpDataToExcelFactory
             rngbin44.Value2 = "CP2_Bin44:IDD_LDO_REGU_0P1S";
         }
 
-
-
+        public override bool defatultBinPlusOne()
+        {
+            return false;
+        }
         public override void showErrorMessage(object[] arrayHeaderInfo, Excel.Worksheet worksheet2, int num2)
         {
             int errflag = 0;

@@ -129,6 +129,7 @@
     <Compile Include="ExpDataToExcelFactory\ChipOne\Device_ICNC66-12-8-01P.cs" />
     <Compile Include="ExpDataToExcelFactory\ChipOne\Device_ICND2056-8-4-00P.cs" />
     <Compile Include="ExpDataToExcelFactory\ChipOne\Device_ICND2056-8-4-CP2.cs" />
+    <Compile Include="ExpDataToExcelFactory\SmartLink\Device_TMSW41D-8-8-00P.cs" />
     <Compile Include="ExpDataToExcelFactory\SmartLink\Device_THEMIS-8-8-02P.cs" />
     <Compile Include="ExpDataToExcelFactory\SmartLink\Device_THEMIS-8-8-00P.cs" />
     <Compile Include="ExpDataToExcelFactory\ConvenientPower\Device_YiChong.cs" />

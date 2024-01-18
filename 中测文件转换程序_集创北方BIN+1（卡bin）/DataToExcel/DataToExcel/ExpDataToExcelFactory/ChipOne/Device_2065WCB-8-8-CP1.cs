@@ -52,5 +52,9 @@ namespace DataToExcel.ExpDataToExcelFactory
             rngbin18.Value2 = "CP1_Bin18:IOUT_12K_AVE_1";
 
         }
+        public override bool defatultBinPlusOne()
+        {
+            return false;
+        }
     }
 }

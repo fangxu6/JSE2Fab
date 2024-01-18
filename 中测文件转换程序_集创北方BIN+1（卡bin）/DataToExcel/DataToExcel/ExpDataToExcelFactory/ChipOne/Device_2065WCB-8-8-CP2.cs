@@ -70,5 +70,9 @@ namespace DataToExcel.ExpDataToExcelFactory
             rngbin23.Value2 = "CP2_Bin23:FUN_mbist1";
 
         }
+        public override bool defatultBinPlusOne()
+        {
+            return false;
+        }
     }
 }

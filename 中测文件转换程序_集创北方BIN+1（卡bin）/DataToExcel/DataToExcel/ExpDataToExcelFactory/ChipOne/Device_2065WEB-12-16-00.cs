@@ -54,6 +54,11 @@ namespace DataToExcel.ExpDataToExcelFactory
             rngbin18.Value2 = "CP1_Bin18:IOUT_12K_AVE_1";
         }
 
+        public override bool defatultBinPlusOne()
+        {
+            return false;
+        }
+
         public override void showErrorMessage(object[] arrayHeaderInfo, Excel.Worksheet worksheet2, int num2)
         {
             int errflag = 0;

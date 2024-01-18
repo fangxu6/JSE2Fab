@@ -30,7 +30,10 @@ namespace DataToExcel.ExpDataToExcelFactory
                         slotId = Int32.Parse(lotNo.Substring(lotNo.IndexOf("CP") + 2)) + 1;
                         lotNo = lotNo.Substring(0, lotNo.IndexOf("CP"));
                     }
-                    else
+                    else if (cmd.Device.Equals("18BCDG3"))
+                    {
+                        slotId = 2;
+                    }else
                     {
                         MessageBox.Show("TSK解析错误，TSK中批次号不包含工序CP。");
                         return;
@@ -76,6 +79,7 @@ namespace DataToExcel.ExpDataToExcelFactory
 
                     int xMin = Int32.MaxValue;
                     int yMin = Int32.MaxValue;
+                    int xMax = Int32.MinValue;
                     for (int y = 0; y < cmd.DieMatrix.YMax; y++)
                     {
                         for (int x = 0; x < cmd.DieMatrix.XMax; x++)
@@ -87,6 +91,10 @@ namespace DataToExcel.ExpDataToExcelFactory
                             if (yMin > cmd.DieMatrix[x, y].Y)
                             {
                                 yMin = cmd.DieMatrix[x, y].Y;
+                            }
+                            if (xMax < cmd.DieMatrix[x, y].X)
+                            {
+                                xMax = cmd.DieMatrix[x, y].X;
                             }
                         }
                     }
@@ -108,7 +116,7 @@ namespace DataToExcel.ExpDataToExcelFactory
                             {
                                 continue;
                             }
-                            binQuanYield = String.Format("{0,4}{1,4}{2,4}{3,4}", cmd.DieMatrix[x, y].X - xMin, cmd.DieMatrix[x, y].Y - yMin,
+                            binQuanYield = String.Format("{0,4}{1,4}{2,4}{3,4}", xMax - cmd.DieMatrix[x, y].X, cmd.DieMatrix[x, y].Y - yMin,
                                 cmd.DieMatrix[x, y].Bin, visualInspection);
                             cmd.WriteString(binQuanYield);
                             cmd.WriteString(cmd.Enter);

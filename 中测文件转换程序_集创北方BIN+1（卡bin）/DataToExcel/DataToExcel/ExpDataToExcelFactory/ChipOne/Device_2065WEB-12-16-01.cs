@@ -73,6 +73,11 @@ namespace DataToExcel.ExpDataToExcelFactory
             rngbin23.Value2 = "CP2_Bin23:FUNC_mbist_1P4V";
         }
 
+        public override bool defatultBinPlusOne()
+        {
+            return false;
+        }
+
 
         public override void showErrorMessage(object[] arrayHeaderInfo, Excel.Worksheet worksheet2, int num2)
         {

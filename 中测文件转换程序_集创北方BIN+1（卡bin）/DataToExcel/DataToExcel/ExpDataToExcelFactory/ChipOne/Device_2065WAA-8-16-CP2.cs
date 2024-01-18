@@ -134,6 +134,10 @@ namespace DataToExcel.ExpDataToExcelFactory
 
         }
 
+        public override bool defatultBinPlusOne()
+        {
+            return false;
+        }
 
         public override void showErrorMessage(object[] arrayHeaderInfo, Excel.Worksheet worksheet2, int num2)
         {
