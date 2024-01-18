@@ -192,7 +192,6 @@ namespace Tsk_update
                     arrysecondbyte2.Add(br.ReadByte());
                     arrythirdbyte1.Add(br.ReadByte());
                     arrythirdbyte2.Add(br.ReadByte());
-
                 }
 
 
@@ -251,87 +250,270 @@ namespace Tsk_update
                     circleNum = 3;
                 }
 
-                
-                for (int k = 0; k < row1 * col1 - row1; k++)
+
+
+
+
+                bool[] isNext = new bool[row1*col1];
+                for (int j = 0; j < row1; j++)
                 {
-                    if ((secondbyte1[k] & 192) == 0&& (secondbyte1[k] & 2) == 2)//Dummy Die
+                    for (int k = 0; k < col1; k++)
                     {
-                        continue;
+                        isNext[k * row1 + j] = false;
                     }
-                    if (((secondbyte1[k] & 192) != 64))//Mark Die|Skip Die
-                    {
-                        //是否是边缘Mark Die|Skip Die 临时方案 周边一圈至少有4颗Mark Die|Skip Die才是边缘
-                        //其实需要先检测到是边缘
-                        int tempCircle = 1;
-                        int sumTempMarkDie = 0;
-                        for(int ii = tempCircle * (-1); ii <= tempCircle; ii++)
-                        {
-                            for (int jj = tempCircle * (-1); jj <= tempCircle; jj++)
-                            {
-                                int currentDie = k + ii * row1 +jj;
-                                if (currentDie < 0 | currentDie >= row1 * col1)
-                                {
-                                    continue;
-                                }
-                                if (((secondbyte1[currentDie] & 192) != 64))
-                                {
-                                    sumTempMarkDie++;
-                                }
-                            }
-                        }
-                        if ((sumTempMarkDie < 4))
-                        {
-                            continue;
-                        }
-                        
-                        //上下
-                        for (int m = circleNum * (-1); m <= circleNum; m++)
-                        {
-                            int currentDie = k + m * row1;
-                            
-
-                            if (currentDie < 0 | currentDie >= row1 * col1)
-                            {
-                                continue;
-                            }
-                            if ((secondbyte1[currentDie] & 192) == 64)//为测试DIE
-                            {
-                                if ((firstbyte1[currentDie] & 128) != 128)//不是fail Die
-                                {
-                                    firstbyte1[currentDie] = Convert.ToByte((firstbyte1[currentDie] & 1));
-                                    firstbyte1[currentDie] = Convert.ToByte(firstbyte1[currentDie] | 128);//标记为Fail
-
-                                    thirdbyte2[currentDie] = Convert.ToByte((thirdbyte2[currentDie] & 192));
-                                    thirdbyte2[currentDie] = Convert.ToByte((thirdbyte2[currentDie] | 60));  //换category,全部换成60
-                                }
-
-                            }
-                        }
-
-                        //左右
-                        for (int m = circleNum * (-1); m <= circleNum; m++)
-                        {
-                            int currentDie = k + m;
-                            if (currentDie < 0 | currentDie >= row1 * col1)
-                            {
-                                continue;
-                            }
-                            if ((secondbyte1[currentDie] & 192) == 64)//为测试DIE
-                            {
-                                if ((firstbyte1[currentDie] & 128) != 128)//不是fail Die
-                                {
-                                    firstbyte1[currentDie] = Convert.ToByte((firstbyte1[currentDie] & 1));
-                                    firstbyte1[currentDie] = Convert.ToByte(firstbyte1[currentDie] | 128);//标记为Fail
-
-                                    thirdbyte2[currentDie] = Convert.ToByte((thirdbyte2[currentDie] & 192));
-                                    thirdbyte2[currentDie] = Convert.ToByte((thirdbyte2[currentDie] | 60));  //换category,全部换成60
-                                }
-
-                            }
-                        }
-                    }
-
                 }
+                //上 row1是x，表示列；col1是y，表示行
+                for (int j = 0; j < row1; j++)
+                {
+                    for (int k = 0; k < col1; k++)
+                    {
+
+                        if (IsMarkDie(k * row1 + j, secondbyte1, firstbyte1, thirdbyte2))
+                        {
+                            isNext[k * row1 + j] = true;
+                        }
+                    }
+                }
+
+                for (int ii = 0; ii < 3; ii++)
+                {
+                    for (int j = 0; j < row1; j++)
+                    {
+                        for (int k = 0; k < col1; k++)
+                        {
+
+                            if (IsFailDie(k * row1 + j, secondbyte1, firstbyte1, thirdbyte2))
+                            {
+                                int curDie = k * row1 + j;
+                                if (isNext[k * row1 + j - 1])
+                                {
+                                    isNext[k * row1 + j] = true;
+                                }
+                                if (isNext[k * row1 + j + 1])
+                                {
+                                    isNext[k * row1 + j] = true;
+                                }
+                                if (isNext[k * row1 + j - row1])
+                                {
+                                    isNext[k * row1 + j] = true;
+                                }
+                                if (isNext[k * row1 + j + row1])
+                                {
+                                    isNext[k * row1 + j] = true;
+                                }
+                            }
+                        }
+                    }
+                }
+                for (int j = 0; j < row1; j++)
+                {
+                    for (int k = 0; k < col1; k++)
+                    {
+                        if ((k - 1) >= 0)
+                        {
+                            if (isNext[(k - 1) * row1 + j])
+                            {
+                                if (IsPassDieOrFail60(k * row1 + j, secondbyte1, firstbyte1, thirdbyte2))
+                                {
+                                    for (int m = 0; m < circleNum; m++)
+                                    {
+                                        int currentDie = (k + m) * row1 + j;
+                                        firstbyte1[currentDie] = Convert.ToByte((firstbyte1[currentDie] & 1));
+                                        firstbyte1[currentDie] = Convert.ToByte(firstbyte1[currentDie] | 128);//标记为Fail
+
+                                        thirdbyte2[currentDie] = Convert.ToByte((thirdbyte2[currentDie] & 192));
+                                        thirdbyte2[currentDie] = Convert.ToByte((thirdbyte2[currentDie] | 60));  //换category,全部换成60
+                                    }
+                                }
+                                //break;
+                            }
+                        }
+
+                        //if (!IsPassDieOrFail60(k * row1 + j, secondbyte1, firstbyte1, thirdbyte2))
+                        //{
+                        //    isNext[j] = true;
+                        //}
+                        //else
+                        //{
+                        //    isNext[j] = false;
+                        //}
+
+
+
+                    }
+                }
+
+                //下 row1是x，表示列；col1是y，表示行
+                for (int j = 0; j < row1; j++)
+                {
+                    for (int k = col1 - 1; k >= 0; k--)
+                    {
+                        if ((k + 1) <col1 && isNext[(k + 1) * row1 + j] && IsPassDieOrFail60(k * row1 + j, secondbyte1, firstbyte1, thirdbyte2))
+                        {
+                            for (int m = 0; m < circleNum; m++)
+                            {
+                                int currentDie = (k - m) * row1 + j;
+                                firstbyte1[currentDie] = Convert.ToByte((firstbyte1[currentDie] & 1));
+                                firstbyte1[currentDie] = Convert.ToByte(firstbyte1[currentDie] | 128);//标记为Fail
+
+                                thirdbyte2[currentDie] = Convert.ToByte((thirdbyte2[currentDie] & 192));
+                                thirdbyte2[currentDie] = Convert.ToByte((thirdbyte2[currentDie] | 60));  //换category,全部换成60
+                            }
+                            //break;
+                        }
+                        //if (!IsPassDieOrFail60(k * row1 + j, secondbyte1, firstbyte1, thirdbyte2))
+                        //{
+                        //    isNext[j] = true;
+                        //}
+                        //else
+                        //{
+                        //    isNext[j] = false;
+                        //}
+                        
+                    }
+                }
+
+                //左 row1是x，表示列；col1是y，表示行
+                for (int k = 0; k < col1; k++)
+                {
+                    for (int j = 0; j < row1; j++)
+                    {
+                        if (j>0 && isNext[k * row1 + j-1] && IsPassDieOrFail60(k * row1 + j, secondbyte1, firstbyte1, thirdbyte2))
+                        {
+                            for (int m = 0; m < circleNum; m++)
+                            {
+                                int currentDie = k * row1 + j + m;
+                                firstbyte1[currentDie] = Convert.ToByte((firstbyte1[currentDie] & 1));
+                                firstbyte1[currentDie] = Convert.ToByte(firstbyte1[currentDie] | 128);//标记为Fail
+
+                                thirdbyte2[currentDie] = Convert.ToByte((thirdbyte2[currentDie] & 192));
+                                thirdbyte2[currentDie] = Convert.ToByte((thirdbyte2[currentDie] | 60));  //换category,全部换成60
+                            }
+                            //break;
+                        }
+                        //if (!IsPassDieOrFail60(k * row1 + j, secondbyte1, firstbyte1, thirdbyte2))
+                        //{
+                        //    isNext[j] = true;
+                        //}
+                        //else
+                        //{
+                        //    isNext[j] = false;
+                        //}
+
+                    }
+                }
+
+                //右 row1是x，表示列；col1是y，表示行
+                for (int k = 0; k < col1; k++)
+                {
+                    for (int j = row1 - 1; j >= 0; j--)
+                    {
+                        if ((j+1) < row1 && isNext[k * row1 + j + 1] && IsPassDieOrFail60(k * row1 + j, secondbyte1, firstbyte1, thirdbyte2))
+                        {
+                            for (int m = 0; m < circleNum; m++)
+                            {
+                                int currentDie = k * row1 + j - m;
+                                firstbyte1[currentDie] = Convert.ToByte((firstbyte1[currentDie] & 1));
+                                firstbyte1[currentDie] = Convert.ToByte(firstbyte1[currentDie] | 128);//标记为Fail
+
+                                thirdbyte2[currentDie] = Convert.ToByte((thirdbyte2[currentDie] & 192));
+                                thirdbyte2[currentDie] = Convert.ToByte((thirdbyte2[currentDie] | 60));  //换category,全部换成60
+                            }
+                            //break;
+                        }
+
+                        //if (!IsPassDieOrFail60(k * row1 + j, secondbyte1, firstbyte1, thirdbyte2))
+                        //{
+                        //    isNext[j] = true;
+                        //}
+                        //else
+                        //{
+                        //    isNext[j] = false;
+                        //}
+                        
+                    }
+                }
+
+                //for (int k = 0; k < row1 * col1 - row1; k++)
+                //{
+                //    if ((secondbyte1[k] & 192) == 0 && (secondbyte1[k] & 2) == 2)//Dummy Die
+                //    {
+                //        continue;
+                //    }
+                //    if (((secondbyte1[k] & 192) != 64))//Mark Die|Skip Die
+                //    {
+                //        //是否是边缘Mark Die|Skip Die 临时方案 周边一圈至少有4颗Mark Die|Skip Die才是边缘
+                //        //其实需要先检测到是边缘
+                //        int tempCircle = 1;
+                //        int sumTempMarkDie = 0;
+                //        for (int ii = tempCircle * (-1); ii <= tempCircle; ii++)
+                //        {
+                //            for (int jj = tempCircle * (-1); jj <= tempCircle; jj++)
+                //            {
+                //                int currentDie = k + ii * row1 + jj;
+                //                if (currentDie < 0 | currentDie >= row1 * col1)
+                //                {
+                //                    continue;
+                //                }
+                //                if (((secondbyte1[currentDie] & 192) != 64))
+                //                {
+                //                    sumTempMarkDie++;
+                //                }
+                //            }
+                //        }
+                //        if ((sumTempMarkDie < 4))
+                //        {
+                //            continue;
+                //        }
+
+                //        //上下
+                //        for (int m = circleNum * (-1); m <= circleNum; m++)
+                //        {
+                //            int currentDie = k + m * row1;
+
+
+                //            if (currentDie < 0 | currentDie >= row1 * col1)
+                //            {
+                //                continue;
+                //            }
+                //            if ((secondbyte1[currentDie] & 192) == 64)//为测试DIE
+                //            {
+                //                if ((firstbyte1[currentDie] & 128) != 128)//不是fail Die
+                //                {
+                //                    firstbyte1[currentDie] = Convert.ToByte((firstbyte1[currentDie] & 1));
+                //                    firstbyte1[currentDie] = Convert.ToByte(firstbyte1[currentDie] | 128);//标记为Fail
+
+                //                    thirdbyte2[currentDie] = Convert.ToByte((thirdbyte2[currentDie] & 192));
+                //                    thirdbyte2[currentDie] = Convert.ToByte((thirdbyte2[currentDie] | 60));  //换category,全部换成60
+                //                }
+
+                //            }
+                //        }
+
+                //        //左右
+                //        for (int m = circleNum * (-1); m <= circleNum; m++)
+                //        {
+                //            int currentDie = k + m;
+                //            if (currentDie < 0 | currentDie >= row1 * col1)
+                //            {
+                //                continue;
+                //            }
+                //            if ((secondbyte1[currentDie] & 192) == 64)//为测试DIE
+                //            {
+                //                if ((firstbyte1[currentDie] & 128) != 128)//不是fail Die
+                //                {
+                //                    firstbyte1[currentDie] = Convert.ToByte((firstbyte1[currentDie] & 1));
+                //                    firstbyte1[currentDie] = Convert.ToByte(firstbyte1[currentDie] | 128);//标记为Fail
+
+                //                    thirdbyte2[currentDie] = Convert.ToByte((thirdbyte2[currentDie] & 192));
+                //                    thirdbyte2[currentDie] = Convert.ToByte((thirdbyte2[currentDie] | 60));  //换category,全部换成60
+                //                }
+
+                //            }
+                //        }
+                //    }
+
+                //}
 
                 /*
                 if (((secondbyte1[k] & 192) == 128) && ((secondbyte1[k + 1] & 192) == 64))//Mark Die,且右边为测试DIE
@@ -622,13 +804,88 @@ namespace Tsk_update
 
             MessageBox.Show("修改完成");
 
-
-
-
         }
 
+        void dfs(int[][] grid, int r, int c)
+        {
+            // 若坐标不合法，直接返回
+            if (!(0 <= r && r < grid.Length && 0 <= c && c < grid[0].Length))
+            {
+                return;
+            }
+            // 已遍历过（值为2）的岛屿在这里会直接返回，不会重复遍历
+            if (grid[r][c] != 1)
+            {
+                return;
+            }
+            grid[r][c] = 2; // 将方格标记为"已遍历"
 
 
+
+            dfs(grid, r - 1, c); // 上边相邻
+            dfs(grid, r + 1, c); // 下边相邻
+            dfs(grid, r, c - 1); // 左边相邻
+            dfs(grid, r, c + 1); // 右边相邻
+        }
+
+        private bool IsPassDieOrFail60(int k, byte[] secondbyte1, byte[] firstbyte1, byte[] thirdbyte2)
+        {
+            //if ((secondbyte1[k] & 192) == 0 && (secondbyte1[k] & 2) == 2)//Dummy Die
+            //{
+            //    return false;
+            //}
+            //if (((secondbyte1[k] & 192) != 64))//Mark Die|Skip Die
+            //{
+            //}
+            if ((secondbyte1[k] & 192) == 64)//Test Die
+            {
+                if ((firstbyte1[k] & 128) != 128)//Pass Die
+                {
+                    return true;
+                }
+                if ((firstbyte1[k] & 128) == 128)//Fail Die且是Fail60
+                {
+                    if ((thirdbyte2[k] & 60) == 60)
+                    {
+                        return true;
+                    }
+                    
+                }
+            }
+            return false;
+        }
+
+        private bool IsMarkDie(int k, byte[] secondbyte1, byte[] firstbyte1, byte[] thirdbyte2)
+        {
+            if ((secondbyte1[k] & 192) == 0 && (secondbyte1[k] & 2) == 2)//Dummy Die
+            {
+                return true;
+            }
+            if (((secondbyte1[k] & 192) != 64))//Mark Die|Skip Die
+            {
+                return true;
+            }
+            return false;
+        }
+
+        private bool IsFailDie(int k, byte[] secondbyte1, byte[] firstbyte1, byte[] thirdbyte2)
+        {
+            if ((secondbyte1[k] & 192) == 64)//Test Die
+            {
+                if ((firstbyte1[k] & 128) != 128)//Pass Die
+                {
+                    return false;
+                }
+                if ((firstbyte1[k] & 128) == 128)//Fail Die且是Fail60
+                {
+                    if ((thirdbyte2[k] & 60) != 60)
+                    {
+                        return true;
+                    }
+                }
+            }
+            return false;
+        }
 
         private void Reverse(ref byte[] target)
         {
