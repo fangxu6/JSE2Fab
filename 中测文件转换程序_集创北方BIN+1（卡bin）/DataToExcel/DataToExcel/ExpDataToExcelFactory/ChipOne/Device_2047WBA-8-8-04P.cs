@@ -33,5 +33,21 @@ namespace DataToExcel.ExpDataToExcelFactory
             Excel.Range rngbin11 = (Excel.Range)worksheet.Cells[7, 17];
             rngbin11.Value2 = "Bin11:ft_open_debug";
         }
+
+        public override bool defatultBinPlusOne()
+        {
+            return false;
+        }
+
+        public override bool defatultSave()
+        {
+            return false;
+        }
+
+        public override void Save(CmdTxt cmd)
+        {
+            Device_2065WAA.Save(cmd);
+        }
     }
+    
 }

@@ -564,6 +564,10 @@ namespace DataToExcel
                                     case 3:
                                         die.Attribute = DieCategory.FailDie;
                                         die.Bin = die1[i, 4]+1;    //zjf 2008.08.28
+                                        if (die.Bin == 2)
+                                        {
+                                            die.Bin = 60+1;
+                                        }
                                         break;
                                     default:
                                         die.Attribute = DieCategory.Unknow;
@@ -591,10 +595,30 @@ namespace DataToExcel
                 }
 
 
-                //for (int j = 0; j < total; j++)
+
+                //for(int i=0;i<172;i++)
                 //{
-                //    byte[] buffer1 = this._reader.ReadBytes(4);
+                //    bufferhead.Add(br_1.ReadByte());///正常TSK文件继续读取172页内容结束
                 //}
+
+                byte[] bufferhead1_20 = this._reader.ReadBytes(20);
+                byte[] bufferhead2_16 = this._reader.ReadBytes(32);
+                byte[] bufferhead_total = this._reader.ReadBytes(4);
+                byte[] bufferhead_pass = this._reader.ReadBytes(4);
+                byte[] bufferhead_fail = this._reader.ReadBytes(4);
+                byte[] bufferhead4_11 = this._reader.ReadBytes(44);
+                byte[] bufferhead1_64 = this._reader.ReadBytes(64);
+
+                //while (this._reader.BaseStream.Position < this._reader.BaseStream.Length)
+                //{
+                //    for (int j = 0; j < total; j++)
+                //    {
+                //        byte[] buffer1 = this._reader.ReadBytes(4);
+                //    }
+                //}
+
+
+
 
             }
             catch (Exception ee)
@@ -1019,6 +1043,10 @@ namespace DataToExcel
                         case 3:
                             die.Attribute = DieCategory.FailDie;
                             die.Bin = binNum+1;    //zjf 2008.08.28
+                            if (die.Bin == 2)
+                            {
+                                die.Bin = 61;
+                            }
                             break;
                         default:
                             die.Attribute = DieCategory.Unknow;

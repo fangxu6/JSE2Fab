@@ -31,49 +31,7 @@ namespace DataToExcel
             }
             expToExcelSoftBin.SaveToTxt(source, txtfile);
 
-            //// 创建新文件
-            //CmdTxt cmdtxt = new CmdTxt(txtfile);
-
-
-            //// 导入 die 列表
-            //cmdtxt.DieMatrix = source.DieMatrix.Clone();
-            //cmdtxt.RowCount = cmdtxt.DieMatrix.YMax;
-            //cmdtxt.ColCount = cmdtxt.DieMatrix.XMax;
-
-            ////zjf 2008.09.03
-            ////begin
-            //cmdtxt.Device = source.Device;
-            //cmdtxt.LotNo = source.LotNo;
-            //cmdtxt.WaferID = source.WaferID;
-            //cmdtxt.WaferSize = source.WaferSize;
-            //cmdtxt.TotalDie = source.TotalDie;
-            //cmdtxt.IndexSizeX = source.IndexSizeX;
-            //cmdtxt.IndexSizeY = source.IndexSizeY;
-            //cmdtxt.LoadTime = source.LoadTime;
-            //cmdtxt.UnloadTime = source.UnloadTime;
-            //cmdtxt.StartTime = source.StartTime;
-            //cmdtxt.EndTime = source.EndTime;
-            //cmdtxt.SlotNo = source.SlotNo;
-            //cmdtxt.FlatDir = source.FlatDir;
-            ////end
-
-            //// 重新计算统计数据
-            //cmdtxt.PassDie = 0;
-            //cmdtxt.FailDie = 0;
-
-            //foreach (DieData die in cmdtxt.DieMatrix.Items)
-            //{
-            //    if (die.Attribute == DieCategory.FailDie)
-            //        cmdtxt.FailDie += 1;
-            //    else if (die.Attribute == DieCategory.PassDie)
-            //        cmdtxt.PassDie += 1;
-            //}
-
-            //// 旋转角度 default
-            ////cmdtxt.DeasilRotate(0);
-
-            //// 保存文件
-            //cmdtxt.Save();
+            
         }
 
         public override IMappingFile Convert(IMappingFile source)
