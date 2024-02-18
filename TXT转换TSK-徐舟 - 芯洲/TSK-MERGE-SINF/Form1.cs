@@ -393,7 +393,6 @@ namespace TSK_MERGE_SINF
                     this.txtFlat = "180";
                 }
                 int txtFlat1 = Convert.ToInt32(this.txtFlat);
-                txtFlat1 = 0;
                 int flatDifference = Math.Abs(TSKFlat1 - txtFlat1);
 
                 if (flatDifference == 180)////TXT转180
@@ -497,7 +496,7 @@ namespace TSK_MERGE_SINF
             }
 
             //int temp = getTotalOfX(DegtxtData, "1", col1_1, row1_1);
-           int  temp = getTotalOfX(TxtMap, "1", col1_1, row1_1);
+           //int  temp = getTotalOfX(TxtMap, "1", col1_1, row1_1);
 
             ///////------------------------------TXT图谱补边工作---------------------------//
             byte[] firstbyte1_1 = (byte[])arryfirstbyte1_1.ToArray(typeof(byte));
@@ -532,7 +531,6 @@ namespace TSK_MERGE_SINF
                 }
             }
 
-            temp = getTotalOfX(TSKMap, "1", col1_1,row1_1);
 
             int tskrowmin = 0, tskcolmin = 0, tskrowmax = 0, tskcolmax = 0;
             int flag = 0;
@@ -542,7 +540,7 @@ namespace TSK_MERGE_SINF
                 {
                     if ((TSKMap[i, j].ToString() != "."))
                     {
-                        tskrowmin = i;
+                        tskcolmin = i;
                         flag = 1;
                         break;
 
@@ -561,7 +559,7 @@ namespace TSK_MERGE_SINF
                 {
                     if ((TSKMap[i, j].ToString() != "."))
                     {
-                        tskrowmax = i;
+                        tskcolmax = i;
                         flag = 1;
                         break;
 
@@ -582,7 +580,7 @@ namespace TSK_MERGE_SINF
                 {
                     if ((TSKMap[j, i].ToString() != "."))
                     {
-                        tskcolmin = i;
+                        tskrowmin = i;
                         flag = 1;
 
                     }
@@ -601,7 +599,7 @@ namespace TSK_MERGE_SINF
                 {
                     if ((TSKMap[j, i].ToString() != "."))
                     {
-                        tskcolmax = i;
+                        tskrowmax = i;
                         flag = 1;
 
                     }
@@ -623,12 +621,12 @@ namespace TSK_MERGE_SINF
                 }
             }
 
-            for (int i = 0; i < col1_1; i++)
+            for (int i = tskcolmin; i <= tskcolmax; i++)
             {
-                for (int j = 0; j < row1_1; j++)
+                for (int j = tskrowmin; j <= tskrowmax; j++)
                 {
 
-                    TxtNewMap[i, j] = TxtMap[i , j ];
+                    TxtNewMap[i, j] = TxtMap[i - tskcolmin, j - tskrowmin];
                 }
             }
 
@@ -651,7 +649,6 @@ namespace TSK_MERGE_SINF
 
                 }
             }
-            temp = getTotalOfX(TxtNewMap, "1", col1_1, row1_1);
             ///////////////////////////对位点比对工作//////////////////////////////////////////////////
 
             tskPass = 0;
@@ -690,7 +687,7 @@ namespace TSK_MERGE_SINF
 
             //////////////////////////////PASS数比对///////////////////////////////////////
 
-            if (txtTotal != (tskPass + tskFail))
+            if (this.txtPass+this.txtFail != (tskPass + tskFail))
             {
 
                 if (MessageBox.Show("总颗数不匹配!", "确认", MessageBoxButtons.YesNo) == DialogResult.Yes)
@@ -732,7 +729,7 @@ namespace TSK_MERGE_SINF
                     else
                     {
 
-                        if (txtNewData[k].ToString() == "P")//sinf =pass 不改
+                        if (txtNewData[k].ToString() == "1")//sinf =pass 不改
                         {
                             //  firstbyte1_1[k] = firstbyte1_1[k];
                             //  firstbyte2_1[k] = firstbyte2_1[k];
@@ -745,7 +742,7 @@ namespace TSK_MERGE_SINF
 
                         }
 
-                        if (txtNewData[k].ToString() == "F")//sinf fail,需要改为fail属性，BIN也需要改
+                        if (txtNewData[k].ToString() == "X")//sinf fail,需要改为fail属性，BIN也需要改
                         {
                             firstbyte1_1[k] = Convert.ToByte(firstbyte1_1[k] & 1);
                             firstbyte1_1[k] = Convert.ToByte(firstbyte1_1[k] | 128);//标记成fail
@@ -798,7 +795,7 @@ namespace TSK_MERGE_SINF
 
                             thirdbyte1_1[k] = thirdbyte1_1[k];
                             thirdbyte2_1[k] = Convert.ToByte(thirdbyte2_1[k] & 192);
-                            thirdbyte2_1[k] = Convert.ToByte(thirdbyte2_1[k] | 57);//换成想要的BIN58
+                            thirdbyte2_1[k] = Convert.ToByte(thirdbyte2_1[k] | 57);//换成想要的BIN57
 
 
                             arry_1[4 * k] = arry_1[4 * k];//sitenum
@@ -1088,7 +1085,7 @@ namespace TSK_MERGE_SINF
                             this.txtPass = Convert.ToInt32(body);
                             break;
                         case "Fail Die":
-                            this.txtTotal = Convert.ToInt32(body);
+                            this.txtFail = Convert.ToInt32(body);
                             break;
 
                     }
@@ -1106,14 +1103,32 @@ namespace TSK_MERGE_SINF
 
         private void ParseDies(string s)
         {
-            if(s.StartsWith("RowData"))
+            if (s.StartsWith("RowData"))
             {
-                this.txtColct = s.Length;
-                for (int i = 0; i < s.Length; i++)
+                //this.txtColct = s.Length;
+                //for (int i = 0; i < s.Length; i++)
+                //{
+                //    txtData.Add(s[i].ToString());
+                //}
+                //this.txtRowct++;
+                string newLine = s.Substring(s.IndexOf("RowData") + 7 + 1);
+                for (int i = 0; i < newLine.Length;)
                 {
-                    txtData.Add(s[i].ToString());
+                    string binNo = newLine.Substring(i, 2);
+                    if (binNo.StartsWith("_"))
+                    {
+                        txtData.Add(".");
+                    }
+                    else if (binNo.Trim().Equals("00"))
+                    {
+                        txtData.Add("1");
+                    }
+                    else
+                    {
+                        txtData.Add("X");
+                    }
+                    i = i + 3;
                 }
-                this.txtRowct++;
             }
         }
 
