@@ -114,17 +114,17 @@ namespace TSK_MERGE_SINF
 
         private void button3_Click(object sender, EventArgs e)
         {
-            //if (this.textBox2.Text == "")
-            //{
-            //    MessageBox.Show("请选择txt图谱");
-            //}
+            if (this.textBox2.Text == "")
+            {
+                MessageBox.Show("请选择txt图谱");
+            }
 
-            //if (this.textBox1.Text == "")
-            //{
-            //    MessageBox.Show("请选择TSK图谱");
-            //}
-            this.textBox2.Text = "D:\\Workspace\\JSE2Fab\\TXT转换TSK-徐舟\\徐舟转tsk\\UPM6720-TXT-TSK\\HA9T77.1-bump-map\\HA9T77-01.txt";
-            this.textBox1.Text = "D:\\Workspace\\JSE2Fab\\TXT转换TSK-徐舟\\徐舟转tsk\\UPM6720-TXT-TSK\\HA9T77.1-TSK\\001.HA9T77.1-01";
+            if (this.textBox1.Text == "")
+            {
+                MessageBox.Show("请选择TSK图谱");
+            }
+            //this.textBox2.Text = "D:\\Workspace\\JSE2Fab\\TXT转换TSK-徐舟\\徐舟转tsk\\UPM6720-TXT-TSK\\HA9T77.1-bump-map\\HA9T77-01.txt";
+            //this.textBox1.Text = "D:\\Workspace\\JSE2Fab\\TXT转换TSK-徐舟\\徐舟转tsk\\UPM6720-TXT-TSK\\HA9T77.1-TSK\\001.HA9T77.1-01";
             //////////TXT-READ//////////////////////////////
             FileStream txt_1;
 
@@ -411,7 +411,7 @@ namespace TSK_MERGE_SINF
                     }
                 }
 
-                else if (flatDifference == 90)////TXT转270
+                else if (flatDifference == 270)////TXT转270
                 {
 
                     int x = -1, y = -1, xr = -1, yr = -1;
@@ -435,7 +435,7 @@ namespace TSK_MERGE_SINF
 
                 }
 
-                else if (flatDifference == 270)////TXT转90
+                else if (flatDifference == 90)////TXT转90
                 {
 
                     int x = -1, y = -1, xr = -1, yr = -1;
@@ -614,9 +614,9 @@ namespace TSK_MERGE_SINF
                 }
             }
 
-            for (int i = tskcolmin; i < tskcolmax; i++)
+            for (int i = tskcolmin; i <= tskcolmax; i++)
             {
-                for (int j = tskrowmin; j < tskrowmax; j++)
+                for (int j = tskrowmin; j <= tskrowmax; j++)
                 {
 
                     TxtNewMap[i, j] = TxtMap[i- tskcolmin, j- tskrowmin];
@@ -681,14 +681,14 @@ namespace TSK_MERGE_SINF
 
             //////////////////////////////PASS数比对///////////////////////////////////////
 
-            if (txtTotal != (tskPass + tskFail))
-            {
+            //if (this.txtPass + this.txtFail != (tskPass + tskFail))
+            //{
 
-                if (MessageBox.Show("总颗数不匹配!", "确认", MessageBoxButtons.YesNo) == DialogResult.Yes)
-                {
-                    //Environment.Exit(0);
-                }
-            }
+            //    if (MessageBox.Show("总颗数不匹配!", "确认", MessageBoxButtons.YesNo) == DialogResult.Yes)
+            //    {
+            //        //Environment.Exit(0);
+            //    }
+            //}
 
             //------------------------------根据SINF生成新的TSK-MAP----------------------------//
 
@@ -697,7 +697,7 @@ namespace TSK_MERGE_SINF
 
 
             // fw = new FileStream("D:\\MERGE\\" + this.txtSlot.ToString("000") + "." + this.txtWaferID.TrimEnd('\0'), FileMode.Create);
-            fw = new FileStream("D:\\MERGE\\" + Convert.ToInt32(this.comboBox1.Text).ToString("000") + "." + this.txtWaferID.TrimEnd('\0'), FileMode.Create);
+            fw = new FileStream("D:\\MERGE\\" + Convert.ToInt32(this.comboBox1.Text).ToString("000") + "." + WaferID_1.TrimEnd('\0'), FileMode.Create);
             BinaryWriter bw = new BinaryWriter(fw);
 
             //byte[] firstbyte1_1 = (byte[])arryfirstbyte1_1.ToArray(typeof(byte));
@@ -723,18 +723,18 @@ namespace TSK_MERGE_SINF
                     else
                     {
 
-                        if (txtNewData[k].ToString() == "P")//sinf =pass 不改
-                        {
-                            //  firstbyte1_1[k] = firstbyte1_1[k];
-                            //  firstbyte2_1[k] = firstbyte2_1[k];
-                            firstbyte1_1[k] = Convert.ToByte(firstbyte1_1[k] & 1);
-                            firstbyte1_1[k] = Convert.ToByte(firstbyte1_1[k] | 0);//标记成untested
-                            secondbyte1_1[k] = secondbyte1_1[k];
-                            secondbyte2_1[k] = secondbyte2_1[k];
-                            thirdbyte1_1[k] = thirdbyte1_1[k];
-                            thirdbyte2_1[k] = thirdbyte2_1[k];
+                        //if (txtNewData[k].ToString() == "P")//sinf =pass 不改
+                        //{
+                        //    //  firstbyte1_1[k] = firstbyte1_1[k];
+                        //    //  firstbyte2_1[k] = firstbyte2_1[k];
+                        //    firstbyte1_1[k] = Convert.ToByte(firstbyte1_1[k] & 1);
+                        //    firstbyte1_1[k] = Convert.ToByte(firstbyte1_1[k] | 0);//标记成untested
+                        //    secondbyte1_1[k] = secondbyte1_1[k];
+                        //    secondbyte2_1[k] = secondbyte2_1[k];
+                        //    thirdbyte1_1[k] = thirdbyte1_1[k];
+                        //    thirdbyte2_1[k] = thirdbyte2_1[k];
 
-                        }
+                        //}
 
                         if (txtNewData[k].ToString() == "F")//sinf fail,需要改为fail属性，BIN也需要改
                         {
@@ -745,7 +745,7 @@ namespace TSK_MERGE_SINF
                             secondbyte2_1[k] = secondbyte2_1[k];
                             thirdbyte1_1[k] = thirdbyte1_1[k];
                             thirdbyte2_1[k] = Convert.ToByte(thirdbyte2_1[k] & 192);
-                            thirdbyte2_1[k] = Convert.ToByte(thirdbyte2_1[k] | 57);//换成想要的BIN57
+                            thirdbyte2_1[k] = Convert.ToByte(thirdbyte2_1[k] | 61);//换成想要的BIN57
 
                         }
 
@@ -756,9 +756,9 @@ namespace TSK_MERGE_SINF
 
                 }
             }
-
+            
             /////--------------------Map版本为2，且有扩展信息TSK修改BIN信息代码-------------------////
-            if ((arry_1.Count > 0) && ((Convert.ToInt32(MapVersion_1) == 2)))
+            if (arry_1.Count > 0)
             {
                 for (int k = 0; k < row1_1 * col1_1; k++)
                 {
@@ -771,16 +771,16 @@ namespace TSK_MERGE_SINF
                     else
                     {
 
-                        if (txtNewData[k].ToString() == "1")//sinf =pass 不改
-                        {
-                            firstbyte1_1[k] = Convert.ToByte(firstbyte1_1[k] & 1);
-                            firstbyte1_1[k] = Convert.ToByte(firstbyte1_1[k] | 0);//标记成untested
+                        //if (txtNewData[k].ToString() == "0")//sinf =pass 不改
+                        //{
+                        //    firstbyte1_1[k] = Convert.ToByte(firstbyte1_1[k] & 1);
+                        //    firstbyte1_1[k] = Convert.ToByte(firstbyte1_1[k] | 0);//标记成untested
 
-                            arry_1[4 * k] = arry_1[4 * k];
-                            arry_1[4 * k + 1] = arry_1[4 * k + 1];
-                            arry_1[4 * k + 2] = arry_1[4 * k + 2];
-                            arry_1[4 * k + 3] = arry_1[4 * k + 3];
-                        }
+                        //    arry_1[4 * k] = arry_1[4 * k];
+                        //    arry_1[4 * k + 1] = arry_1[4 * k + 1];
+                        //    arry_1[4 * k + 2] = arry_1[4 * k + 2];
+                        //    arry_1[4 * k + 3] = arry_1[4 * k + 3];
+                        //}
 
                         if (txtNewData[k].ToString() == "X")//sinf fail,需要改为fail属性，BIN也需要改
                         {
@@ -789,13 +789,13 @@ namespace TSK_MERGE_SINF
 
                             thirdbyte1_1[k] = thirdbyte1_1[k];
                             thirdbyte2_1[k] = Convert.ToByte(thirdbyte2_1[k] & 192);
-                            thirdbyte2_1[k] = Convert.ToByte(thirdbyte2_1[k] | 57);//换成想要的BIN58
+                            thirdbyte2_1[k] = Convert.ToByte(thirdbyte2_1[k] | 61);//换成想要的BIN58
 
 
                             arry_1[4 * k] = arry_1[4 * k];//sitenum
                                                           // arry_1[4 * k + 1] = arry_1[4 * k + 1];//cate
                             arry_1[4 * k + 1] = Convert.ToByte(Convert.ToByte(arry_1[4 * k + 1]) & 192);
-                            arry_1[4 * k + 1] = Convert.ToByte(Convert.ToByte(arry_1[4 * k + 1]) | 57);//换成想要的BIN58
+                            arry_1[4 * k + 1] = Convert.ToByte(Convert.ToByte(arry_1[4 * k + 1]) | 61);//换成想要的BIN58
 
 
                             arry_1[4 * k + 2] = arry_1[4 * k + 2];
@@ -852,7 +852,7 @@ namespace TSK_MERGE_SINF
             bw.Write(MapDataForm_1);
 
             //NewWaferID
-            str = string.Format("{0,-21:G}", this.txtWaferID.TrimEnd('\0'));
+            str = string.Format("{0,-21:G}", WaferID_1.TrimEnd('\0'));
             bw.Write(Encoding.ASCII.GetBytes(str), 0, 21);
 
 
@@ -860,7 +860,7 @@ namespace TSK_MERGE_SINF
             bw.Write(BitConverter.GetBytes(ProbingNo_1), 0, 1);
 
             //NewLotNo
-            str = string.Format("{0,-18:G}", this.txtLot);
+            str = string.Format("{0,-18:G}", LotNo_1);
             bw.Write(Encoding.ASCII.GetBytes(str), 0, 18);
 
             //CN
@@ -868,7 +868,7 @@ namespace TSK_MERGE_SINF
             this.Reverse(ref buf);
             bw.Write(buf, 0, 2);
             //SN
-            SlotNo_1 = Convert.ToInt16(comboBox1.Text);
+            //SlotNo_1 = Convert.ToInt16(comboBox1.Text);
             buf = BitConverter.GetBytes((short)SlotNo_1);
             this.Reverse(ref buf);
             bw.Write(buf, 0, 2);
@@ -929,20 +929,22 @@ namespace TSK_MERGE_SINF
             bw.Write(Reserved3_1);
             //Totaldice
             //buf = BitConverter.GetBytes((short)(tskFail+tskPass));-----20221128
-            buf = BitConverter.GetBytes((short)(tskFail));
-            this.Reverse(ref buf);
-            bw.Write(buf, 0, 2);
+            //buf = BitConverter.GetBytes((short)(tskFail));
+            bw.Write(Totaldice_1);
+            //this.Reverse(ref buf);
+            //bw.Write(buf, 0, 2);
             // bw.Write(Totaldice_1);
             //TotalPdice
             // bw.Write(TotalPdice_1);
-            buf = BitConverter.GetBytes((short)(0));
-            this.Reverse(ref buf);
-            bw.Write(buf, 0, 2);
+            //buf = BitConverter.GetBytes((short)(0));
+            //this.Reverse(ref buf);
+            //bw.Write(buf, 0, 2);
+            bw.Write(TotalPdice_1);
             //TotalFdice
-            buf = BitConverter.GetBytes((short)(tskFail));
-            this.Reverse(ref buf);
-            bw.Write(buf, 0, 2);
-            // bw.Write(TotalFdice_1);
+            //buf = BitConverter.GetBytes((short)(tskFail));
+            //this.Reverse(ref buf);
+            //bw.Write(buf, 0, 2);
+            bw.Write(TotalFdice_1);
             //DIAdress
             bw.Write(TDIAdress_1);
             //Numbercategory
@@ -979,15 +981,17 @@ namespace TSK_MERGE_SINF
             //byte[] bufferhead1_64 = br_1.ReadBytes(64);
             bw.Write(bufferhead1_20);
             bw.Write(bufferhead2_16);
-            // buf = BitConverter.GetBytes((int)(tskFail + tskPass));////不能写total
-            buf = BitConverter.GetBytes((int)(tskFail));
+            //buf = BitConverter.GetBytes((int)(tskFail + tskPass));////不能写total
+            //bw.Write((int)ByteToInt16(ref Totaldice_1));
+            //bw.Write((int)ByteToInt16(ref TotalPdice_1));
+            //bw.Write((int)ByteToInt16(ref TotalFdice_1));
+            buf = BitConverter.GetBytes((int)(ByteToInt16(ref Totaldice_1)));
             this.Reverse(ref buf);
             bw.Write(buf, 0, 4);
-            buf = BitConverter.GetBytes((int)(0));
+            buf = BitConverter.GetBytes((int)(ByteToInt16(ref TotalPdice_1)));
             this.Reverse(ref buf);
             bw.Write(buf, 0, 4);
-            //TotalFdice
-            buf = BitConverter.GetBytes((int)(tskFail));
+            buf = BitConverter.GetBytes((int)(ByteToInt16(ref TotalFdice_1)));
             this.Reverse(ref buf);
             bw.Write(buf, 0, 4);
             bw.Write(bufferhead4_11);
@@ -1075,8 +1079,11 @@ namespace TSK_MERGE_SINF
                         case "COLCT":
                             this.txtColct = Convert.ToInt32(body);
                             break;
-                        case "GOOD_DIES":
+                        case "Pass Die":
                             this.txtPass = Convert.ToInt32(body);
+                            break;
+                        case "Fail Die":
+                            this.txtFail = Convert.ToInt32(body);
                             break;
                         case "GROSS_DIES":
                             this.txtTotal = Convert.ToInt32(body);
@@ -1111,8 +1118,7 @@ namespace TSK_MERGE_SINF
                         txtData.Add("0");
                     } else
                     {
-                        int binNumber = int.Parse(binNo)%10;
-                        txtData.Add(binNumber.ToString());
+                        txtData.Add("X");
                     }
                     i = i + 4;
                 }

@@ -703,7 +703,7 @@ namespace TSK_MERGE_SINF
 
 
             // fw = new FileStream("D:\\MERGE\\" + this.txtSlot.ToString("000") + "." + this.txtWaferID.TrimEnd('\0'), FileMode.Create);
-            fw = new FileStream("D:\\MERGE\\" + Convert.ToInt32(this.comboBox1.Text).ToString("000") + "." + this.txtWaferID.TrimEnd('\0'), FileMode.Create);
+            fw = new FileStream("D:\\MERGE\\" + Convert.ToInt32(this.comboBox1.Text).ToString("000") + "." + this.txtLot.TrimEnd('\0'), FileMode.Create);
             BinaryWriter bw = new BinaryWriter(fw);
 
             //byte[] firstbyte1_1 = (byte[])arryfirstbyte1_1.ToArray(typeof(byte));
