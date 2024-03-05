@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?><?xml-stylesheet type='text/xsl' href='_UpgradeReport_Files/UpgradeReport.xslt'?><UpgradeLog>
+<Properties><Property Name="Solution" Value="DataToExcel">
+</Property><Property Name="解决方案文件" Value="D:\软件开发\TSK转ASC\DataToExcel\DataToExcel.sln">
+</Property><Property Name="用户选项文件" Value="D:\软件开发\TSK转ASC\DataToExcel\DataToExcel.suo">
+</Property><Property Name="Date" Value="2018年5月8日">
+</Property><Property Name="Time" Value="10:52">
+</Property></Properties><Event ErrorLevel="0" Project="" Source="DataToExcel.sln" Description="文件已成功备份为 D:\软件开发\TSK转ASC\DataToExcel\Backup\DataToExcel.sln">
+</Event><Event ErrorLevel="0" Project="" Source="DataToExcel.suo" Description="文件已成功备份为 D:\软件开发\TSK转ASC\DataToExcel\Backup\DataToExcel.suo">
+</Event><Event ErrorLevel="0" Project="DataToExcel" Source="DataToExcel\DataToExcel.csproj" Description="项目文件已成功备份为 D:\软件开发\TSK转ASC\DataToExcel\Backup\DataToExcel\DataToExcel.csproj">
+</Event><Event ErrorLevel="0" Project="DataToExcel" Source="DataToExcel\DataToExcel.csproj.user" Description="项目用户文件成功备份为 D:\软件开发\TSK转ASC\DataToExcel\Backup\DataToExcel\DataToExcel.csproj.user">
+</Event><Event ErrorLevel="0" Project="DataToExcel" Source="DataToExcel\About.cs" Description="文件已成功备份为 D:\软件开发\TSK转ASC\DataToExcel\Backup\DataToExcel\About.cs">
+</Event><Event ErrorLevel="0" Project="DataToExcel" Source="DataToExcel\About.Designer.cs" Description="文件已成功备份为 D:\软件开发\TSK转ASC\DataToExcel\Backup\DataToExcel\About.Designer.cs">
+</Event><Event ErrorLevel="0" Project="DataToExcel" Source="DataToExcel\File\ConverterBase.cs" Description="文件已成功备份为 D:\软件开发\TSK转ASC\DataToExcel\Backup\DataToExcel\File\ConverterBase.cs">
+</Event><Event ErrorLevel="0" Project="DataToExcel" Source="DataToExcel\File\Dat.cs" Description="文件已成功备份为 D:\软件开发\TSK转ASC\DataToExcel\Backup\DataToExcel\File\Dat.cs">
+</Event><Event ErrorLevel="0" Project="DataToExcel" Source="DataToExcel\File\IConverter.cs" Description="文件已成功备份为 D:\软件开发\TSK转ASC\DataToExcel\Backup\DataToExcel\File\IConverter.cs">
+</Event><Event ErrorLevel="0" Project="DataToExcel" Source="DataToExcel\File\IMapingFile.cs" Description="文件已成功备份为 D:\软件开发\TSK转ASC\DataToExcel\Backup\DataToExcel\File\IMapingFile.cs">
+</Event><Event ErrorLevel="0" Project="DataToExcel" Source="DataToExcel\File\MappingBase.cs" Description="文件已成功备份为 D:\软件开发\TSK转ASC\DataToExcel\Backup\DataToExcel\File\MappingBase.cs">
+</Event><Event ErrorLevel="0" Project="DataToExcel" Source="DataToExcel\File\Sinf.cs" Description="文件已成功备份为 D:\软件开发\TSK转ASC\DataToExcel\Backup\DataToExcel\File\Sinf.cs">
+</Event><Event ErrorLevel="0" Project="DataToExcel" Source="DataToExcel\File\Tma.cs" Description="文件已成功备份为 D:\软件开发\TSK转ASC\DataToExcel\Backup\DataToExcel\File\Tma.cs">
+</Event><Event ErrorLevel="0" Project="DataToExcel" Source="DataToExcel\File\Tsk.cs" Description="文件已成功备份为 D:\软件开发\TSK转ASC\DataToExcel\Backup\DataToExcel\File\Tsk.cs">
+</Event><Event ErrorLevel="0" Project="DataToExcel" Source="DataToExcel\File\TskToTma.cs" Description="文件已成功备份为 D:\软件开发\TSK转ASC\DataToExcel\Backup\DataToExcel\File\TskToTma.cs">
+</Event><Event ErrorLevel="0" Project="DataToExcel" Source="DataToExcel\MappingToExcel.cs" Description="文件已成功备份为 D:\软件开发\TSK转ASC\DataToExcel\Backup\DataToExcel\MappingToExcel.cs">
+</Event><Event ErrorLevel="0" Project="DataToExcel" Source="DataToExcel\MappingToExcel.Designer.cs" Description="文件已成功备份为 D:\软件开发\TSK转ASC\DataToExcel\Backup\DataToExcel\MappingToExcel.Designer.cs">
+</Event><Event ErrorLevel="0" Project="DataToExcel" Source="DataToExcel\Program.cs" Description="文件已成功备份为 D:\软件开发\TSK转ASC\DataToExcel\Backup\DataToExcel\Program.cs">
+</Event><Event ErrorLevel="0" Project="DataToExcel" Source="DataToExcel\Properties\AssemblyInfo.cs" Description="文件已成功备份为 D:\软件开发\TSK转ASC\DataToExcel\Backup\DataToExcel\Properties\AssemblyInfo.cs">
+</Event><Event ErrorLevel="0" Project="DataToExcel" Source="DataToExcel\Properties\Resources.Designer.cs" Description="文件已成功备份为 D:\软件开发\TSK转ASC\DataToExcel\Backup\DataToExcel\Properties\Resources.Designer.cs">
+</Event><Event ErrorLevel="0" Project="DataToExcel" Source="DataToExcel\Properties\Settings.Designer.cs" Description="文件已成功备份为 D:\软件开发\TSK转ASC\DataToExcel\Backup\DataToExcel\Properties\Settings.Designer.cs">
+</Event><Event ErrorLevel="0" Project="DataToExcel" Source="DataToExcel\PubClass.cs" Description="文件已成功备份为 D:\软件开发\TSK转ASC\DataToExcel\Backup\DataToExcel\PubClass.cs">
+</Event><Event ErrorLevel="0" Project="DataToExcel" Source="DataToExcel\Util\CMDTskToTxt.cs" Description="文件已成功备份为 D:\软件开发\TSK转ASC\DataToExcel\Backup\DataToExcel\Util\CMDTskToTxt.cs">
+</Event><Event ErrorLevel="0" Project="DataToExcel" Source="DataToExcel\Util\CmdTxt.cs" Description="文件已成功备份为 D:\软件开发\TSK转ASC\DataToExcel\Backup\DataToExcel\Util\CmdTxt.cs">
+</Event><Event ErrorLevel="0" Project="DataToExcel" Source="DataToExcel\Util\Define.cs" Description="文件已成功备份为 D:\软件开发\TSK转ASC\DataToExcel\Backup\DataToExcel\Util\Define.cs">
+</Event><Event ErrorLevel="0" Project="DataToExcel" Source="DataToExcel\Util\UtilFunction.cs" Description="文件已成功备份为 D:\软件开发\TSK转ASC\DataToExcel\Backup\DataToExcel\Util\UtilFunction.cs">
+</Event><Event ErrorLevel="0" Project="DataToExcel" Source="DataToExcel\ClassDiagram1.cd" Description="文件已成功备份为 D:\软件开发\TSK转ASC\DataToExcel\Backup\DataToExcel\ClassDiagram1.cd">
+</Event><Event ErrorLevel="0" Project="DataToExcel" Source="DataToExcel\Properties\Settings.settings" Description="文件已成功备份为 D:\软件开发\TSK转ASC\DataToExcel\Backup\DataToExcel\Properties\Settings.settings">
+</Event><Event ErrorLevel="0" Project="DataToExcel" Source="DataToExcel\About.resx" Description="文件已成功备份为 D:\软件开发\TSK转ASC\DataToExcel\Backup\DataToExcel\About.resx">
+</Event><Event ErrorLevel="0" Project="DataToExcel" Source="DataToExcel\MappingToExcel.resx" Description="文件已成功备份为 D:\软件开发\TSK转ASC\DataToExcel\Backup\DataToExcel\MappingToExcel.resx">
+</Event><Event ErrorLevel="0" Project="DataToExcel" Source="DataToExcel\Properties\Resources.resx" Description="文件已成功备份为 D:\软件开发\TSK转ASC\DataToExcel\Backup\DataToExcel\Properties\Resources.resx">
+</Event><Event ErrorLevel="1" Project="DataToExcel" Source="DataToExcel\DataToExcel.csproj" Description="您的项目以 .NET Framework 2.0 或 3.0 为目标。如果您的项目使用的程序集需要更新的 .NET Framework，则项目生成将失败。通过单击项目菜单上的“属性”，然后在“.NET Framework”下拉框中选择一个新版本，可以更改 .NET Framework 的版本。(在 Visual Basic 中，可在单击“高级编辑器选项...”按钮时显示的“编译”选项卡上找到此下拉框。)">
+</Event><Event ErrorLevel="0" Project="DataToExcel" Source="DataToExcel\DataToExcel.csproj" Description="项目已成功转换">
+</Event><Event ErrorLevel="3" Project="DataToExcel" Source="DataToExcel\DataToExcel.csproj" Description="Converted">
+</Event><Event ErrorLevel="0" Project="" Source="DataToExcel.sln" Description="成功转换解决方案">
+</Event><Event ErrorLevel="3" Project="" Source="DataToExcel.sln" Description="Converted">
+</Event><Event ErrorLevel="0" Project="DataToExcel" Source="DataToExcel\DataToExcel.csproj" Description="扫描完成: 项目文件不需要升级。">
+</Event></UpgradeLog>
