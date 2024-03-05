@@ -114,6 +114,8 @@ namespace TSK_MERGE_SINF
 
         private void button3_Click(object sender, EventArgs e)
         {
+            txtRowct = 0;
+            txtColct = 0;
             if (this.textBox2.Text == "")
             {
                 MessageBox.Show("请选择txt图谱");
@@ -147,7 +149,8 @@ namespace TSK_MERGE_SINF
                 if (line != null)
                 {
                     this.Parse(line);
-                } else
+                }
+                else
                 { break; }
 
             }
@@ -383,7 +386,7 @@ namespace TSK_MERGE_SINF
             if (!String.IsNullOrEmpty(this.txtFlat))
             {
                 int txtFlat1 = Convert.ToInt32(this.txtFlat);
-                int flatDifference = (TSKFlat1 - txtFlat1 +360)%360;
+                int flatDifference = (TSKFlat1 - txtFlat1 + 360) % 360;
 
                 if (flatDifference == 180)////TXT转180
                 {
@@ -470,7 +473,7 @@ namespace TSK_MERGE_SINF
                 }
             }
 
-            
+
             //TODO 
             string[,] TxtMap = new string[this.txtRowct, this.txtColct];
 
@@ -486,7 +489,7 @@ namespace TSK_MERGE_SINF
             }
 
             //int temp = getTotalOfX(DegtxtData, "1", col1_1, row1_1);
-           //int  temp = getTotalOfX(TxtMap, "1", col1_1, row1_1);
+            //int  temp = getTotalOfX(TxtMap, "1", col1_1, row1_1);
 
             ///////------------------------------TXT图谱补边工作---------------------------//
             byte[] firstbyte1_1 = (byte[])arryfirstbyte1_1.ToArray(typeof(byte));
@@ -572,7 +575,7 @@ namespace TSK_MERGE_SINF
                     if ((TSKMap[j, i].ToString() != "."))
                     {
                         tskrowmin = i;
-                        
+
                         flag = 1;
 
                     }
@@ -592,7 +595,7 @@ namespace TSK_MERGE_SINF
                     if ((TSKMap[j, i].ToString() != "."))
                     {
                         tskrowmax = i;
-                        
+
                         flag = 1;
 
                     }
@@ -619,7 +622,7 @@ namespace TSK_MERGE_SINF
                 for (int j = tskrowmin; j <= tskrowmax; j++)
                 {
 
-                    TxtNewMap[i, j] = TxtMap[i- tskcolmin, j- tskrowmin];
+                    TxtNewMap[i, j] = TxtMap[i - tskcolmin, j - tskrowmin];
                 }
             }
 
@@ -756,7 +759,7 @@ namespace TSK_MERGE_SINF
 
                 }
             }
-            
+
             /////--------------------Map版本为2，且有扩展信息TSK修改BIN信息代码-------------------////
             if (arry_1.Count > 0)
             {
@@ -1032,9 +1035,9 @@ namespace TSK_MERGE_SINF
         private int getTotalOfX(string[,] txtNewData, string v, int col1_1, int row1_1)
         {
             int total = 0;
-            for(int i = 0; i < col1_1; i++)
+            for (int i = 0; i < col1_1; i++)
             {
-                for(int j = 0; j < row1_1; j++)
+                for (int j = 0; j < row1_1; j++)
                 {
                     if ((string)(txtNewData[i, j]) == v)
                     {
@@ -1042,7 +1045,7 @@ namespace TSK_MERGE_SINF
                     }
                 }
             }
-           
+
             return total;
         }
 
@@ -1052,7 +1055,7 @@ namespace TSK_MERGE_SINF
             {
                 if (!line.StartsWith("RowData"))
                 {
-                    string[] strs = line.Split(new char[] { ':','=' });
+                    string[] strs = line.Split(new char[] { ':', '=' });
                     string head = strs[0].Trim().ToUpper();
                     string body = strs[1].Trim();
 
@@ -1104,19 +1107,21 @@ namespace TSK_MERGE_SINF
 
         private void ParseDies(string s)
         {
-            if(s.StartsWith("RowData"))
+            if (s.StartsWith("RowData"))
             {
-                string newLine = s.Substring(s.IndexOf("RowData") + 7+1);
-                for (int i = 0; i < newLine.Length; )
+                string newLine = s.Substring(s.IndexOf("RowData") + 7 + 1);
+                for (int i = 0; i < newLine.Length;)
                 {
-                    string binNo=newLine.Substring(i, 3);
+                    string binNo = newLine.Substring(i, 3);
                     if (binNo.StartsWith("_"))
                     {
                         txtData.Add(".");
-                    } else if (binNo.StartsWith("0"))
+                    }
+                    else if (binNo.Equals("000"))
                     {
                         txtData.Add("0");
-                    } else
+                    }
+                    else
                     {
                         txtData.Add("X");
                     }
