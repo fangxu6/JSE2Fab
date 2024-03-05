@@ -113,6 +113,8 @@ namespace TSK_MERGE_SINF
 
         private void button3_Click(object sender, EventArgs e)
         {
+            txtRowct = 0;
+            txtColct = 0;
             if (this.textBox2.Text == "")
             {
                 MessageBox.Show("请选择txt图谱");
@@ -157,7 +159,8 @@ namespace TSK_MERGE_SINF
 
             }
 
-
+            this.txtWaferID=this.textBox3.Text.Trim();
+            this.txtWaferID = this.txtWaferID + "-"+Convert.ToInt32(this.comboBox1.Text).ToString("00");
 
             if (txtRowct > 0 && txtColct > 0)
             {
@@ -1036,10 +1039,10 @@ namespace TSK_MERGE_SINF
                             this.txtDevice = strs[1].Trim();
                             break;
                         case "Lot NO":
-                            this.txtLot = strs[1].Trim();
+                            this.txtLot = this.textBox3.Text;
                             break;
                         case "Slot NO":
-                            this.txtSlot = Convert.ToInt32(strs[1].Trim()); ;
+                            this.txtSlot = 0; ;
                             break;
                         case "Wafer ID":
                             this.txtWaferID = strs[1].Trim();
@@ -1133,9 +1136,6 @@ namespace TSK_MERGE_SINF
             return BitConverter.ToInt16(target, 0);
 
         }
-
-
-
 
     }
 }
