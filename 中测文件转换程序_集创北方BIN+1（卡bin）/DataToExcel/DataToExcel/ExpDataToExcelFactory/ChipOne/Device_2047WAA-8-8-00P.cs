@@ -36,5 +36,20 @@ namespace DataToExcel.ExpDataToExcelFactory
             Excel.Range rngbin13 = (Excel.Range)worksheet.Cells[7, 19];
             rngbin13.Value2 = "Bin13:OS_PMU_1";
         }
+        public override bool defatultBinPlusOne()
+        {
+            return false;
+        }
+
+        public override bool defatultSave()
+        {
+            return false;
+        }
+
+        public override void Save(CmdTxt cmd)
+        {
+            Device_2065WAA.Save(cmd);
+        }
     }
+    
 }
