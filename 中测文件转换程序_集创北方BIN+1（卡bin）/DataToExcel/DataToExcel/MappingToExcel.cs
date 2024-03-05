@@ -1293,7 +1293,7 @@ namespace DataToExcel
                 {
                     if (i >= flag11)
                     {
-                        string binResult = arrayHeaderInfo[i].ToString() + " (" + Math.Round((double)(Convert.ToDouble(arrayHeaderInfo[i]) / total), 4).ToString("0.00%") + ")";
+                        string binResult = arrayHeaderInfo[i].ToString() ;
                         worksheet2.get_Range(worksheet2.Cells[(num2 + 1) + 8, 1 + i], worksheet2.Cells[(num2 + 1) + 8, 1 + i]).Value2 = binResult;
                     }
                     else

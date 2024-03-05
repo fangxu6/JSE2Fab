@@ -12,6 +12,10 @@ namespace DataToExcel.ExpDataToExcelFactory
             
         }
 
+        public override bool defatultBinPlusOne()
+        {
+            return false;
+        }
         public override void showErrorMessage(object[] arrayHeaderInfo, Excel.Worksheet worksheet2, int num2)
         {
             //批≥99%  片≥99%  BIN 3<0.1%  BIN4<0.5%  BIN 5<0.15%  BIN 6<0.5%  BIN 7<0.5%  BIN8<0.15%

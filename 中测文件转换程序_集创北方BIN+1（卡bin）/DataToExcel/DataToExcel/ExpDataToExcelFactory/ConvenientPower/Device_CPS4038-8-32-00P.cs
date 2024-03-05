@@ -71,6 +71,10 @@ namespace DataToExcel.ExpDataToExcelFactory
 
         }
 
+        public override bool defatultBinPlusOne()
+        {
+            return false;
+        }
         public override bool defatultSave()
         {
             return false;
