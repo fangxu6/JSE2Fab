@@ -12,6 +12,9 @@ namespace DataToExcel.ExpDataToExcelFactory
             Type o = Type.GetType(clazzNmae);
             if (o == null)
             {
+                //易冲特殊处理，原tsk没有型号
+                //clazzNmae="DataToExcel.ExpDataToExcelFactory.Device_UPM6720_8_16_04P";
+                //o = Type.GetType(clazzNmae);
                 MessageBox.Show("该型号未定义，请联系IT并告知批次号。");
                 throw new Exception("该型号不支持");
             }
