@@ -213,7 +213,7 @@ namespace DataToExcel
                     if (!File.Exists(this._fullName))
                         throw new Exception("File " + this._fullName + " is not Exists.");
 
-                    this._reader = new BinaryReader(File.Open(this._fullName, FileMode.Open));
+                    this._reader = new BinaryReader(File.Open(this._fullName, FileMode.Open, FileAccess.Read));
                 }
             }
             catch (Exception ee)
