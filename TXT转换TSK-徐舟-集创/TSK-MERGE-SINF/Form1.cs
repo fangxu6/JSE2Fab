@@ -122,17 +122,17 @@ namespace TSK_MERGE_SINF
         {
             txtRowct = 0;
             txtColct = 0;
-            //if (this.textBox2.Text == "")
-            //{
-            //    MessageBox.Show("请选择txt图谱");
-            //}
+            if (this.textBox2.Text == "")
+            {
+                MessageBox.Show("请选择txt图谱");
+            }
 
-            //if (this.textBox1.Text == "")
-            //{
-            //    MessageBox.Show("请选择TSK图谱");
-            //}
-            this.textBox2.Text = "C:\\Users\\fangx\\Desktop\\txt2tsk\\txt\\UPE110.C02-12.txt";
-            this.textBox1.Text = "C:\\Users\\fangx\\Desktop\\txt2tsk\\originalTsk\\013.UPE110.Y1CP1-13";
+            if (this.textBox1.Text == "")
+            {
+                MessageBox.Show("请选择TSK图谱");
+            }
+            //this.textBox2.Text = "C:\\Users\\fangx\\Desktop\\txt2tsk\\txt\\UPE110.C02-12.txt";
+            //this.textBox1.Text = "C:\\Users\\fangx\\Desktop\\txt2tsk\\originalTsk\\013.UPE110.Y1CP1-13";
             //////////TXT-READ//////////////////////////////
             FileStream txt_1;
 
@@ -396,7 +396,7 @@ namespace TSK_MERGE_SINF
                 //string binNo = newLine.Substring(i, 1);
 
                 //this.txtFail.Substring();
-                int txtFlat1 = GetAngle(this.txtFlat)+180;
+                int txtFlat1 = GetAngle(this.txtFlat);
                 int flatDifference = (TSKFlat1 - txtFlat1 + 360) % 360;
 
                 if (flatDifference == 180)////TXT转180
@@ -632,7 +632,7 @@ namespace TSK_MERGE_SINF
                 for (int j = tskrowmin; j <= tskrowmax; j++)
                 {
 
-                    TxtNewMap[i, j] = TxtMap[i - tskcolmin, j - tskrowmin];
+                    TxtNewMap[i, j] = TxtMap[i, j];
                 }
             }
 
@@ -998,6 +998,7 @@ namespace TSK_MERGE_SINF
             //bw.Write((int)ByteToInt16(ref Totaldice_1));
             //bw.Write((int)ByteToInt16(ref TotalPdice_1));
             //bw.Write((int)ByteToInt16(ref TotalFdice_1));
+            
             buf = BitConverter.GetBytes((int)(ByteToInt16(ref Totaldice_1)));
             this.Reverse(ref buf);
             bw.Write(buf, 0, 4);
