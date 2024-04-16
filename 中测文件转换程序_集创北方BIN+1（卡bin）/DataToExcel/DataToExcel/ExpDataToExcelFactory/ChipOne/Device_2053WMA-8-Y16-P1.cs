@@ -88,7 +88,10 @@ namespace DataToExcel.ExpDataToExcelFactory
             }
         }
 
-
+        public override bool defatultBinPlusOne()
+        {
+            return false;
+        }
 
 
         public override int defatultRotate()
