@@ -130,7 +130,7 @@ namespace TSK_MERGE_SINF
             //////////TXT-READ//////////////////////////////
             FileStream txt_1;
 
-            txt_1 = new FileStream(this.textBox2.Text, FileMode.Open);
+            txt_1 = new FileStream(this.textBox2.Text, FileMode.Open,FileAccess.Read);
             StreamReader read = new StreamReader(txt_1, Encoding.Default);
 
 
@@ -360,6 +360,8 @@ namespace TSK_MERGE_SINF
             byte[] bufferhead_fail = br_1.ReadBytes(4);
             byte[] bufferhead4_11 = br_1.ReadBytes(44);
             byte[] bufferhead1_64 = br_1.ReadBytes(64);
+            
+            //byte[] bufferhead1_348 = br_1.ReadBytes(348);
 
 
             while (br_1.BaseStream.Position < br_1.BaseStream.Length)
@@ -699,20 +701,12 @@ namespace TSK_MERGE_SINF
             int flag2 = 0;
 
 
-            // fw = new FileStream("D:\\MERGE\\" + this.txtSlot.ToString("000") + "." + this.txtWaferID.TrimEnd('\0'), FileMode.Create);
             fw = new FileStream("D:\\MERGE\\" + Convert.ToInt32(this.comboBox1.Text).ToString("000") + "." + WaferID_1.TrimEnd('\0'), FileMode.Create);
             BinaryWriter bw = new BinaryWriter(fw);
 
-            //byte[] firstbyte1_1 = (byte[])arryfirstbyte1_1.ToArray(typeof(byte));
-            //byte[] firstbyte2_1 = (byte[])arryfirstbyte2_1.ToArray(typeof(byte));
-
-            //byte[] secondbyte1_1 = (byte[])arrysecondbyte1_1.ToArray(typeof(byte));
-            //byte[] secondbyte2_1 = (byte[])arrysecondbyte2_1.ToArray(typeof(byte));
-
-            //byte[] thirdbyte1_1 = (byte[])arrythirdbyte1_1.ToArray(typeof(byte));
-            //byte[] thirdbyte2_1 = (byte[])arrythirdbyte2_1.ToArray(typeof(byte));
 
             /////--------------------Map版本为2，且无扩展信息TSK修改BIN信息代码-------------------////
+            const int binNo = 61;
             if ((arry_1.Count == 0) && ((Convert.ToInt32(MapVersion_1) == 2)))
             {
                 for (int k = 0; k < row1_1 * col1_1; k++)
@@ -726,37 +720,11 @@ namespace TSK_MERGE_SINF
                     else
                     {
 
-                        //if (txtNewData[k].ToString() == "P")//sinf =pass 不改
-                        //{
-                        //    //  firstbyte1_1[k] = firstbyte1_1[k];
-                        //    //  firstbyte2_1[k] = firstbyte2_1[k];
-                        //    firstbyte1_1[k] = Convert.ToByte(firstbyte1_1[k] & 1);
-                        //    firstbyte1_1[k] = Convert.ToByte(firstbyte1_1[k] | 0);//标记成untested
-                        //    secondbyte1_1[k] = secondbyte1_1[k];
-                        //    secondbyte2_1[k] = secondbyte2_1[k];
-                        //    thirdbyte1_1[k] = thirdbyte1_1[k];
-                        //    thirdbyte2_1[k] = thirdbyte2_1[k];
-
-                        //}
-
                         if (txtNewData[k].ToString() == "F")//sinf fail,需要改为fail属性，BIN也需要改
                         {
-                            firstbyte1_1[k] = Convert.ToByte(firstbyte1_1[k] & 1);
-                            firstbyte1_1[k] = Convert.ToByte(firstbyte1_1[k] | 128);//标记成fail
-                            firstbyte2_1[k] = firstbyte2_1[k];
-                            secondbyte1_1[k] = secondbyte1_1[k];
-                            secondbyte2_1[k] = secondbyte2_1[k];
-                            thirdbyte1_1[k] = thirdbyte1_1[k];
-                            thirdbyte2_1[k] = Convert.ToByte(thirdbyte2_1[k] & 192);
-                            thirdbyte2_1[k] = Convert.ToByte(thirdbyte2_1[k] | 61);//换成想要的BIN57
-
+                            convertToFailBin(firstbyte1_1, thirdbyte1_1, thirdbyte2_1, binNo, k);
                         }
-
-
-
                     }
-
-
                 }
             }
 
@@ -773,44 +741,28 @@ namespace TSK_MERGE_SINF
 
                     else
                     {
+                        if(Convert.ToInt32(MapVersion_1) == 2){
+                            if (txtNewData[k].ToString() == "X")//sinf fail,需要改为fail属性，BIN也需要改
+                            {
+                                convertToFailBin(firstbyte1_1, thirdbyte1_1, thirdbyte2_1, binNo, k);
 
-                        //if (txtNewData[k].ToString() == "0")//sinf =pass 不改
-                        //{
-                        //    firstbyte1_1[k] = Convert.ToByte(firstbyte1_1[k] & 1);
-                        //    firstbyte1_1[k] = Convert.ToByte(firstbyte1_1[k] | 0);//标记成untested
-
-                        //    arry_1[4 * k] = arry_1[4 * k];
-                        //    arry_1[4 * k + 1] = arry_1[4 * k + 1];
-                        //    arry_1[4 * k + 2] = arry_1[4 * k + 2];
-                        //    arry_1[4 * k + 3] = arry_1[4 * k + 3];
-                        //}
-
-                        if (txtNewData[k].ToString() == "X")//sinf fail,需要改为fail属性，BIN也需要改
-                        {
-                            firstbyte1_1[k] = Convert.ToByte(firstbyte1_1[k] & 1);
-                            firstbyte1_1[k] = Convert.ToByte(firstbyte1_1[k] | 128);//标记成fail
-
-                            thirdbyte1_1[k] = thirdbyte1_1[k];
-                            thirdbyte2_1[k] = Convert.ToByte(thirdbyte2_1[k] & 192);
-                            thirdbyte2_1[k] = Convert.ToByte(thirdbyte2_1[k] | 61);//换成想要的BIN58
+                                arry_1[4 * k + 1] = Convert.ToByte(Convert.ToByte(arry_1[4 * k + 1]) & 192);
+                                arry_1[4 * k + 1] = Convert.ToByte(Convert.ToByte(arry_1[4 * k + 1]) | binNo);//换成想要的BIN58
 
 
-                            arry_1[4 * k] = arry_1[4 * k];//sitenum
-                                                          // arry_1[4 * k + 1] = arry_1[4 * k + 1];//cate
-                            arry_1[4 * k + 1] = Convert.ToByte(Convert.ToByte(arry_1[4 * k + 1]) & 192);
-                            arry_1[4 * k + 1] = Convert.ToByte(Convert.ToByte(arry_1[4 * k + 1]) | 61);//换成想要的BIN58
-
-
-                            arry_1[4 * k + 2] = arry_1[4 * k + 2];
-                            arry_1[4 * k + 3] = arry_1[4 * k + 3];
-
+                            }
                         }
+                        else if(Convert.ToInt32(MapVersion_1) == 4)
+                        {
+                            if (txtNewData[k].ToString() == "X")//sinf fail,需要改为fail属性，BIN也需要改
+                            {
+                                convertToFailBin(firstbyte1_1, thirdbyte1_1, thirdbyte2_1, binNo, k);
 
+                                arry_1[4 * k + 3] = Convert.ToByte(Convert.ToByte(arry_1[4 * k + 3]) | binNo);//换成想要的BIN58
 
-
+                            }
+                        }
                     }
-
-
                 }
             }
 
@@ -999,6 +951,7 @@ namespace TSK_MERGE_SINF
             bw.Write(buf, 0, 4);
             bw.Write(bufferhead4_11);
             bw.Write(bufferhead1_64);
+            //bw.Write(bufferhead1_348);
 
 
             //foreach (byte obj in bufferhead)
@@ -1030,6 +983,16 @@ namespace TSK_MERGE_SINF
             }
 
 
+        }
+
+        private static void convertToFailBin(byte[] firstbyte1_1, byte[] thirdbyte1_1, byte[] thirdbyte2_1, int binNo, int k)
+        {
+            firstbyte1_1[k] = Convert.ToByte(firstbyte1_1[k] & 1);
+            firstbyte1_1[k] = Convert.ToByte(firstbyte1_1[k] | 128);//标记成fail
+
+            thirdbyte1_1[k] = thirdbyte1_1[k];
+            thirdbyte2_1[k] = Convert.ToByte(thirdbyte2_1[k] & 192);
+            thirdbyte2_1[k] = Convert.ToByte(thirdbyte2_1[k] | binNo);//换成想要的BIN58
         }
 
         private int getTotalOfX(string[,] txtNewData, string v, int col1_1, int row1_1)
