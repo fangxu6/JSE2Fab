@@ -131,7 +131,7 @@ namespace TSK_MERGE_SINF
             {
                 MessageBox.Show("请选择TSK图谱");
             }
-            //this.textBox2.Text = "C:\\Users\\fangx\\Desktop\\txt2tsk\\txt\\UPE110.C02-12.txt";
+            //this.textBox2.Text = "C:\\Users\\fangx\\Desktop\\txt2tsk\\UPE110.C0212.smic";
             //this.textBox1.Text = "C:\\Users\\fangx\\Desktop\\txt2tsk\\originalTsk\\013.UPE110.Y1CP1-13";
             //////////TXT-READ//////////////////////////////
             FileStream txt_1;
@@ -182,8 +182,8 @@ namespace TSK_MERGE_SINF
 
             else
             {
-                // MessageBox.Show("SINF格式不正确!");
-                if (MessageBox.Show("TXT格式不正确!", "确认", MessageBoxButtons.YesNo) == DialogResult.Yes)
+                MessageBox.Show("SINF格式不正确!");
+                if (MessageBox.Show("smic格式不正确!", "确认", MessageBoxButtons.YesNo) == DialogResult.Yes)
                 {
                     Environment.Exit(0);
                 }
@@ -391,6 +391,8 @@ namespace TSK_MERGE_SINF
                 DegtxtData.Add(".");
             }
 
+            
+
             if (!String.IsNullOrEmpty(this.txtFlat))
             {
                 //string binNo = newLine.Substring(i, 1);
@@ -482,7 +484,10 @@ namespace TSK_MERGE_SINF
                     }
 
                 }
+
+
             }
+
 
 
             string[,] TxtMap = new string[this.txtRowct, this.txtColct];
@@ -632,7 +637,7 @@ namespace TSK_MERGE_SINF
                 for (int j = tskrowmin; j <= tskrowmax; j++)
                 {
 
-                    TxtNewMap[i, j] = TxtMap[i, j];
+                    TxtNewMap[i, j] = TxtMap[i- tskcolmin, j- tskrowmin];
                 }
             }
 
@@ -758,7 +763,7 @@ namespace TSK_MERGE_SINF
                             secondbyte2_1[k] = secondbyte2_1[k];
                             thirdbyte1_1[k] = thirdbyte1_1[k];
                             thirdbyte2_1[k] = Convert.ToByte(thirdbyte2_1[k] & 192);
-                            thirdbyte2_1[k] = Convert.ToByte(thirdbyte2_1[k] | 61);//换成想要的BIN57
+                            thirdbyte2_1[k] = Convert.ToByte(thirdbyte2_1[k] | 0);//换成想要的BIN57
 
                         }
 
@@ -802,13 +807,13 @@ namespace TSK_MERGE_SINF
 
                             thirdbyte1_1[k] = thirdbyte1_1[k];
                             thirdbyte2_1[k] = Convert.ToByte(thirdbyte2_1[k] & 192);
-                            thirdbyte2_1[k] = Convert.ToByte(thirdbyte2_1[k] | 61);//换成想要的BIN58
+                            thirdbyte2_1[k] = Convert.ToByte(thirdbyte2_1[k] | 0);//换成想要的BIN58
 
 
                             arry_1[4 * k] = arry_1[4 * k];//sitenum
                                                           // arry_1[4 * k + 1] = arry_1[4 * k + 1];//cate
                             arry_1[4 * k + 1] = Convert.ToByte(Convert.ToByte(arry_1[4 * k + 1]) & 192);
-                            arry_1[4 * k + 1] = Convert.ToByte(Convert.ToByte(arry_1[4 * k + 1]) | 61);//换成想要的BIN58
+                            arry_1[4 * k + 1] = Convert.ToByte(Convert.ToByte(arry_1[4 * k + 1]) | 0);//换成想要的BIN58
 
 
                             arry_1[4 * k + 2] = arry_1[4 * k + 2];
@@ -1074,7 +1079,7 @@ namespace TSK_MERGE_SINF
 
                     switch (head)
                     {
-                        case "PRODUCT ID":
+                        case "PRODUCTID":
                             this.txtProductID = body;
                             break;
                         case "LOT ID":
@@ -1086,7 +1091,7 @@ namespace TSK_MERGE_SINF
                         case "FLOW ID":
                             this.txtFlowID = body;
                             break;
-                        case "SOURCE NOTCH":
+                        case "NOTCH SIDE":
                             this.txtFlat = body;
                             break;
                         case "MAP ROW":
@@ -1098,7 +1103,7 @@ namespace TSK_MERGE_SINF
                         case "PASS DIE":
                             this.txtPass = Convert.ToInt32(body);
                             break;
-                        case "Fail Die":
+                        case "FAIL Die":
                             this.txtFail = Convert.ToInt32(body);
                             break;
                         case "TESTED DIE":
@@ -1128,29 +1133,49 @@ namespace TSK_MERGE_SINF
             return Char.IsDigit(str, 0);
         }
 
+        //判断所在行是否是图谱数据
+        private bool IsPictureLine(string str)
+        {
+            if (str == null || str.Length == 0)
+            {
+                return false;
+            }
+            if (str.StartsWith(".") || str.StartsWith("AA") || str.StartsWith("AX") || str.StartsWith("A.") || str.StartsWith("XX") || str.StartsWith("XA") || str.StartsWith("X."))
+            {
+                return true;
+            } else
+            {
+                return false;
+            }
+        }
+
         private void ParseDies(string s)
         {
-            if (IsStartWithNumber(s))
+            if (IsPictureLine(s))
             {
-                string newLine = s.Substring(7);
-                for (int i = 0; i < newLine.Length;)
+                string newLine = s.Replace(" ", "");
+                for (int i = 0; i < newLine.Length;i++)
                 {
                     string binNo = newLine.Substring(i, 1);
                     if (binNo.Equals("."))
                     {
                         txtData.Add(".");
                     }
-                    else if (binNo.Equals("Y"))
+                    else if (binNo.Equals("A"))
                     {
                         txtData.Add("0");
                         txtPassCount++;
                     }
-                    else
+                    else if (binNo.Equals("X"))
                     {
                         txtData.Add("X");
+                    } else
+                    {
+                        txtData.Add("M");
                     }
-                    i = i + 2;
                 }
+                txtRowct++;
+                txtColct = newLine.Length;
             }
         }
 
@@ -1170,6 +1195,21 @@ namespace TSK_MERGE_SINF
                 {
                     angle = 90;
                 }
+            } else if (str.ToUpper().Equals("DOWN"))
+            {
+                angle = 180;
+            }
+            else if (str.ToUpper().Equals("UP"))
+            {
+                angle = 0;
+            }
+            else if (str.ToUpper().Equals("LEFT"))
+            {
+                angle = 270;
+            }
+            else if (str.ToUpper().Equals("RIGHT"))
+            {
+                angle = 90;
             }
             return angle;
         }
