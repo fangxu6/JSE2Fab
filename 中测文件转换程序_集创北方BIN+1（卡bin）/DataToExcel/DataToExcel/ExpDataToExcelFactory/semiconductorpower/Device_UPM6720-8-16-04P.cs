@@ -493,7 +493,7 @@ namespace DataToExcel.ExpDataToExcelFactory
                     cmd.WriteString("bin  62(`)" + String.Format("{0,8}{1,7}", binCount[62], Math.Round((double)(binCount[62]) / ((double)(cmd.TotalDie)), 4).ToString("0.00%")) + cmd.Enter);
 
                     cmd.WriteString("pass die :" + cmd.PassDie + cmd.Enter);
-                    cmd.WriteString("fial die :" + cmd.FailDie + cmd.Enter);
+                    cmd.WriteString("fail die :" + cmd.FailDie + cmd.Enter);
                     cmd.WriteString("total die:" + cmd.TotalDie + cmd.Enter);
 
 
