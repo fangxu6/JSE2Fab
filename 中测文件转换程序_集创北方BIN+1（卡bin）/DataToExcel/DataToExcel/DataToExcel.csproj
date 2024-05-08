@@ -92,7 +92,7 @@
     <Compile Include="ExpDataToExcelFactory\ChipOne\Device_CGD001-12-16-00P.cs" />
     <Compile Include="ExpDataToExcelFactory\ChipOne\Device_C8N011-12-30-00P.cs" />
     <Compile Include="ExpDataToExcelFactory\ChipOne\Device_CTD001WAA-12-1-0.cs" />
-    <Compile Include="ExpDataToExcelFactory\ConvenientPower\Device_CPS4061-12-32-02.cs" />
+    <Compile Include="ExpDataToExcelFactory\ConvenientPower\Device_CPS4061-12-32-00.cs" />
     <Compile Include="ExpDataToExcelFactory\ConvenientPower\Device_YiChong_General.cs" />
     <Compile Include="ExpDataToExcelFactory\Device_General.cs" />
     <Compile Include="ExpDataToExcelFactory\semiconductorpower\Device_UPM6720-8-16-00.cs" />
