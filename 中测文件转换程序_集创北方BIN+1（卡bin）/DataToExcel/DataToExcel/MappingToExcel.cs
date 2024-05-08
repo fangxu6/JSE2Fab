@@ -53,9 +53,9 @@ namespace DataToExcel
             }
             else
             {
-                if (!Directory.Exists(this.textBox1.Text + @"\ExcelOutFile\" + this.LotNo))
+                if (!Directory.Exists(this.textBox1.Text + @"\NewMap\" + this.LotNo))
                 {
-                    Directory.CreateDirectory(this.textBox1.Text + @"\ExcelOutFile\" + this.LotNo);
+                    Directory.CreateDirectory(this.textBox1.Text + @"\NewMap\" + this.LotNo);
                 }
                 else if (MessageBox.Show("The folder is Existed!Do you want to cover it?", "Confirm", MessageBoxButtons.YesNo) == DialogResult.No)
                 {
@@ -63,8 +63,8 @@ namespace DataToExcel
                 }
                 this.progressBar1.Maximum = this.lsvItems.Items.Count;
                 this.progressBar1.Value = 0;
-                this.ExpDataToExcel();
-                if (MessageBox.Show("Export EXCEL File Success!Would you like to open it?", "Confirm", MessageBoxButtons.YesNo) == DialogResult.Yes)
+                this.ExpDataToTSK();
+                if (MessageBox.Show("Export TSK Success!Would you like to open it?", "Confirm", MessageBoxButtons.YesNo) == DialogResult.Yes)
                 {
                     Process.Start(this.ResultFileName);
                 }
@@ -792,6 +792,62 @@ namespace DataToExcel
             return true;
         }
 
+        private bool ExpDataToTSK()
+        {
+            int num2;
+            Excel.Application application = new Excel.ApplicationClass();
+            application.Visible = false;
+            object updateLinks = Missing.Value;
+            DateTime now = DateTime.Now;
+            Excel.Workbook workbook = application.Workbooks._Open(this.FilePath + @"\Sample.xlsx", updateLinks, updateLinks, updateLinks, updateLinks, updateLinks, updateLinks, updateLinks, updateLinks, updateLinks, updateLinks, updateLinks, updateLinks);
+            OperateExcel excel = new OperateExcel(workbook);
+
+
+
+            waferNum = this.lsvItems.Items.Count;
+            for (num2 = 0; num2 <= (waferNum - 2); num2++)
+            {
+                excel.Copy("Sheet1", "aa");
+                excel.Rename("Sheet1 (2)", this.lsvItems.Items[num2 + 1].Text.Trim());
+
+            }
+            excel.Rename("Sheet1", this.lsvItems.Items[0].Text.Trim());
+
+            int num3 = this.FieldListBox1.CheckedItems.Count;
+            object[] objArray = new object[num3];//Total 信息
+            object[] objArray4 = new object[num3];//平均值信息
+
+            int flag11 = 0;
+
+
+            for (num2 = 0; num2 <= (waferNum - 1); num2++)
+            {
+                this._currFile = (IMappingFile)this.lsvItems.Items[num2].Tag;
+                Tsk tsk = (Tsk)this._currFile;
+                tsk.FlatDir = tsk.FlatDir + 90;
+                tsk.DeasilRotate(90);
+                tsk.Save();
+                
+                Device = ((Tsk)this._currFile).Device;
+
+                
+                        //case "OF Direction":
+                        //    {
+                        //        objArray3[i] = ((Tsk)this._currFile).FlatDir;
+                        //        objArray[i] = "";
+                        //        continue;
+                        //    }
+                       
+
+            }
+
+            ////////////////////////////////////////add total and average////////////////////////////////
+            
+
+            this.ResultFileName = this.textBox1.Text + @"\NewMap\" + this.LotNo;
+            
+            return true;
+        }
         public string ReturnName2(string a, int n)
         {
             string[] b = a.Split(new char[] { '-' }, StringSplitOptions.None);

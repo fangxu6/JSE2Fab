@@ -83,7 +83,7 @@ namespace DataToExcel.ExpDataToExcelFactory
         public override void Save(CmdTxt cmd)
         {
             cmd.Device = "TMNS01";
-            Device_YiChong.Save(cmd);
+            Device_YiChong_General.Save(cmd);
         }
 
         public override void showErrorMessage(object[] arrayHeaderInfo, Excel.Worksheet worksheet2, int num2)

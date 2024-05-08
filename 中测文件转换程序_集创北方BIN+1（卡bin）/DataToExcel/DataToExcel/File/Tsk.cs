@@ -438,7 +438,7 @@ namespace DataToExcel
 
                 else if (this.MapVersion == 4)
                 {
-                    int[,] die1 = new int[total, 5];
+                    int[,] die1 = new int[total, 6];
                     int[,] die2 = new int[total, 2];
 
                     for (int i = 0; i < total; i++)
@@ -472,7 +472,7 @@ namespace DataToExcel
                         int s9 = buffer[1];
 
                         // Dummy data(excerpt warfer)
-                        int s6 = (buffer[0] >> 1) & 0x1;
+                        int s6 = (buffer[0] >> 1) & 0x1;//Dummy Data (except wafer) 0skip2 1skip
                         // code bit of coordinator value x
                         int s5 = (buffer[0] >> 2) & 0x1;
                         // code bit of coordinator value y
@@ -514,11 +514,12 @@ namespace DataToExcel
                         // block area judgement function
                         int t4 = (buffer[0] >> 6) & 0x3;
 
-                        die1[i, 0] = s1;
-                        die1[i, 1] = f1;
+                        die1[i, 0] = s1;//Die Property 0skip 1probeing
+                        die1[i, 1] = f1;//Die Test Result 0not test 1pass 2Fail 3Fail
                         die1[i, 2] = (s4 == 0 ? f6 : f6 * (-1));//X
                         die1[i, 3] = (s5 == 0 ? s7 : s7 * (-1));//Y
-                        die1[i, 4] = t5;
+                        die1[i, 4] = t5;//Category Data (0 to 63)
+                        die1[i, 5] = s6;//Dummy Data (except wafer) 0skip2 1skip
 
                     }
 
@@ -547,8 +548,20 @@ namespace DataToExcel
                         switch (die1[i, 0])
                         {
                             case 0:
-                                die.Attribute = DieCategory.SkipDie;
+                                // die.Attribute = DieCategory.SkipDie;
+                                // break;
+                                if (die1[i, 5] == 1)
+                                {
+                                    die.Attribute = DieCategory.SkipDie;
+                                    break;
+                                }
+                                else if (die1[i, 5] == 0)
+                                {
+                                    die.Attribute = DieCategory.SkipDie2;
+                                    break;
+                                }
                                 break;
+
                             case 1:
                                 switch (die1[i, 1])
                                 {
@@ -558,12 +571,12 @@ namespace DataToExcel
                                     case 1:
                                         //die.Attribute = DieCategory.PassDie;
                                         die.Attribute = DieCategory.PassDie;
-                                        die.Bin = die1[i, 4]+1;//-------2013.7.18
+                                        die.Bin = die1[i, 4] + 1;//-------2013.7.18
                                         break;
                                     case 2:
                                     case 3:
                                         die.Attribute = DieCategory.FailDie;
-                                        die.Bin = die1[i, 4]+1;    //zjf 2008.08.28
+                                        die.Bin = die1[i, 4] + 1;    //zjf 2008.08.28
                                         break;
                                     default:
                                         die.Attribute = DieCategory.Unknow;
@@ -662,7 +675,7 @@ namespace DataToExcel
             int s9 = buffer[1];
 
             // Dummy data(excerpt warfer)
-            int s6 = (buffer[0] >> 1) & 0x1;
+            int s6 = (buffer[0] >> 1) & 0x1;//Dummy Data (except wafer) 1skip2 0skip
             // code bit of coordinator value x
             int s5 = (buffer[0] >> 2) & 0x1;
             // code bit of coordinator value y
@@ -732,12 +745,12 @@ namespace DataToExcel
                         case 1:
                             //die.Attribute = DieCategory.PassDie;
                             die.Attribute = DieCategory.PassDie;
-                            die.Bin = binNum+1;//-------2013.7.18
+                            die.Bin = binNum + 1;//-------2013.7.18
                             break;
                         case 2:
                         case 3:
                             die.Attribute = DieCategory.FailDie;
-                            die.Bin = binNum+1;    //zjf 2008.08.28
+                            die.Bin = binNum + 1;    //zjf 2008.08.28
                             break;
                         default:
                             die.Attribute = DieCategory.Unknow;
@@ -751,7 +764,7 @@ namespace DataToExcel
                     die.Attribute = DieCategory.Unknow;
                     break;
             }
-           
+
             die.X = s4 == 0 ? f6 : f6 * (-1);
             die.Y = s5 == 0 ? s7 : s7 * (-1);
 
