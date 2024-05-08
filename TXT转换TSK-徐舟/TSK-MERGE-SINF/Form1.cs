@@ -114,23 +114,97 @@ namespace TSK_MERGE_SINF
 
         private void button3_Click(object sender, EventArgs e)
         {
-            txtRowct = 0;
-            txtColct = 0;
-            if (this.textBox2.Text == "")
+
+            //if (this.textBox2.Text == "")
+            //{
+            //    MessageBox.Show("请选择txt图谱");
+            //}
+
+            //if (this.textBox1.Text == "")
+            //{
+            //    MessageBox.Show("请选择TSK图谱");
+            //}
+            string[] txts = { "NBX675010-22" };
+            //            string[] txts = { "HAHM23-01",
+            //"HAHM23-02",
+            //"HAHM23-03",
+            //"HAHM23-04",
+            //"HAHM23-05",
+            //"HAHM23-06",
+            //"HAHM23-07",
+            //"HAHM23-08",
+            //"HAHM23-09",
+            //"HAHM23-10",
+            //"HAHM23-11",
+            //"HAHM23-12",
+            //"HAHM23-13",
+            //"HAHM23-14",
+            //"HAHM23-15",
+            //"HAHM23-16",
+            //"HAHM23-17",
+            //"HAHM23-18",
+            //"HAHM23-19",
+            //"HAHM23-20",
+            //"HAHM23-21",
+            //"HAHM23-22",
+            //"HAHM23-23",
+            //"HAHM23-24",
+            //"HAHM23-25" };
+            //            string[] txts = { "HAHK34-01","HAHK34-02","HAHK34-03","HAHK34-04","HAHK34-05","HAHK34-06","HAHK34-07","HAHK34-08","HAHK34-09","HAHK34-10","HAHK34-11","HAHK34-12",
+            //"HAHK34-13","HAHK34-14","HAHK34-15","HAHK34-16","HAHK34-17","HAHK34-18","HAHK34-19","HAHK34-20","HAHK34-21","HAHK34-22","HAHK34-23","HAHK34-24","HAHK34-25" };
+
+            string[] tsks = { "022.NBX675-22-F4" };
+                //string[] tsks
+                //   = { "001.HAHK34-01E4","002.HAHK34-02D7","003.HAHK34-03D2","004.HAHK34-04C5","005.HAHK34-05C0","006.HAHK34-06B3","007.HAHK34-07A6","008.HAHK34-08A1","009.HAHK34-09G7",
+                //"010.HAHK34-10A1","011.HAHK34-11G7","012.HAHK34-12G2","013.HAHK34-13F5","014.HAHK34-14F0","015.HAHK34-15E3","016.HAHK34-16D6","017.HAHK34-17D1","018.HAHK34-18C4","019.HAHK34-19B7",
+                //"020.HAHK34-20C4","021.HAHK34-21B7","022.HAHK34-22B2","023.HAHK34-23A5","024.HAHK34-24A0","025.HAHK34-25G6" };
+                //            string[] tsks
+                //               = { "001.HAHM23-01B5",
+                //"002.HAHM23-02B0",
+                //"003.HAHM23-03A3",
+                //"004.HAHM23-04H1",
+                //"005.HAHM23-05G4",
+                //"006.HAHM23-06F7",
+                //"007.HAHM23-07F2",
+                //"008.HAHM23-08E5",
+                //"009.HAHM23-09E0",
+                //"010.HAHM23-10E5",
+                //"011.HAHM23-11E0",
+                //"012.HAHM23-12D3",
+                //"013.HAHM23-13C6",
+                //"014.HAHM23-14C1",
+                //"015.HAHM23-15B4",
+                //"016.HAHM23-16A7",
+                //"017.HAHM23-17A2",
+                //"018.HAHM23-18H0",
+                //"019.HAHM23-19G3",
+                //"020.HAHM23-20H0",
+                //"021.HAHM23-21G3",
+                //"022.HAHM23-22F6",
+                //"023.HAHM23-23F1",
+                //"024.HAHM23-24E4",
+                //"025.HAHM23-25D7"};
+            for (int i = 0; i < txts.Length; i++)
             {
-                MessageBox.Show("请选择txt图谱");
+                Txt2Tsk(txts[i], tsks[i]);
+            }
+            if (MessageBox.Show("转换成功，是否打开?", "确定", MessageBoxButtons.YesNo) == DialogResult.Yes)
+            {
+                Process.Start("D:\\MERGE\\");
             }
 
-            if (this.textBox1.Text == "")
-            {
-                MessageBox.Show("请选择TSK图谱");
-            }
-            //this.textBox2.Text = "D:\\Workspace\\JSE2Fab\\TXT转换TSK-徐舟\\徐舟转tsk\\UPM6720-TXT-TSK\\HA9T77.1-bump-map\\HA9T77-01.txt";
-            //this.textBox1.Text = "D:\\Workspace\\JSE2Fab\\TXT转换TSK-徐舟\\徐舟转tsk\\UPM6720-TXT-TSK\\HA9T77.1-TSK\\001.HA9T77.1-01";
+        }
+
+        private void Txt2Tsk(string text1, string text2)
+        {
+            txtRowct = 0;
+            txtColct = 0;
+            this.textBox2.Text = "C:\\Users\\fangx\\Desktop\\NBX675010\\" + text1 + ".txt";
+            this.textBox1.Text = "C:\\Users\\fangx\\Desktop\\NBX675010-tsk\\" + text2 ;
             //////////TXT-READ//////////////////////////////
             FileStream txt_1;
 
-            txt_1 = new FileStream(this.textBox2.Text, FileMode.Open,FileAccess.Read);
+            txt_1 = new FileStream(this.textBox2.Text, FileMode.Open, FileAccess.Read);
             StreamReader read = new StreamReader(txt_1, Encoding.Default);
 
 
@@ -360,7 +434,7 @@ namespace TSK_MERGE_SINF
             byte[] bufferhead_fail = br_1.ReadBytes(4);
             byte[] bufferhead4_11 = br_1.ReadBytes(44);
             byte[] bufferhead1_64 = br_1.ReadBytes(64);
-            
+
             //byte[] bufferhead1_348 = br_1.ReadBytes(348);
 
 
@@ -706,7 +780,7 @@ namespace TSK_MERGE_SINF
 
 
             /////--------------------Map版本为2，且无扩展信息TSK修改BIN信息代码-------------------////
-            const int binNo = 61;
+            const int inkBinNo = 61;
             if ((arry_1.Count == 0) && ((Convert.ToInt32(MapVersion_1) == 2)))
             {
                 for (int k = 0; k < row1_1 * col1_1; k++)
@@ -722,7 +796,7 @@ namespace TSK_MERGE_SINF
 
                         if (txtNewData[k].ToString() == "F")//sinf fail,需要改为fail属性，BIN也需要改
                         {
-                            convertToFailBin(firstbyte1_1, thirdbyte1_1, thirdbyte2_1, binNo, k);
+                            convertToFailBin(firstbyte1_1, thirdbyte1_1, thirdbyte2_1, inkBinNo, k);
                         }
                     }
                 }
@@ -741,24 +815,26 @@ namespace TSK_MERGE_SINF
 
                     else
                     {
-                        if(Convert.ToInt32(MapVersion_1) == 2){
+                        if (Convert.ToInt32(MapVersion_1) == 2)
+                        {
                             if (txtNewData[k].ToString() == "X")//sinf fail,需要改为fail属性，BIN也需要改
                             {
-                                convertToFailBin(firstbyte1_1, thirdbyte1_1, thirdbyte2_1, binNo, k);
+                                convertToFailBinWithExtention(firstbyte1_1, thirdbyte1_1, thirdbyte2_1, inkBinNo, k, arry_1, 4 * k + 1);
 
-                                arry_1[4 * k + 1] = Convert.ToByte(Convert.ToByte(arry_1[4 * k + 1]) & 192);
-                                arry_1[4 * k + 1] = Convert.ToByte(Convert.ToByte(arry_1[4 * k + 1]) | binNo);//换成想要的BIN58
+                                //arry_1[4 * k + 1] = Convert.ToByte(Convert.ToByte(arry_1[4 * k + 1]) & 192);
+                                //arry_1[4 * k + 1] = Convert.ToByte(Convert.ToByte(arry_1[4 * k + 1]) | binNo);//换成想要的BIN58
 
 
                             }
                         }
-                        else if(Convert.ToInt32(MapVersion_1) == 4)
+                        else if (Convert.ToInt32(MapVersion_1) == 4)
                         {
                             if (txtNewData[k].ToString() == "X")//sinf fail,需要改为fail属性，BIN也需要改
                             {
-                                convertToFailBin(firstbyte1_1, thirdbyte1_1, thirdbyte2_1, binNo, k);
+                                convertToFailBinWithExtention(firstbyte1_1, thirdbyte1_1, thirdbyte2_1, inkBinNo, k, arry_1, 4 * k + 3);
 
-                                arry_1[4 * k + 3] = Convert.ToByte(Convert.ToByte(arry_1[4 * k + 3]) | binNo);//换成想要的BIN58
+
+                                //arry_1[4 * k + 3] = Convert.ToByte(Convert.ToByte(arry_1[4 * k + 3]) | binNo);//换成想要的BIN58
 
                             }
                         }
@@ -977,10 +1053,7 @@ namespace TSK_MERGE_SINF
 
 
 
-            if (MessageBox.Show("转换成功，是否打开?", "确定", MessageBoxButtons.YesNo) == DialogResult.Yes)
-            {
-                Process.Start("D:\\MERGE\\");
-            }
+            
 
 
         }
@@ -993,6 +1066,21 @@ namespace TSK_MERGE_SINF
             thirdbyte1_1[k] = thirdbyte1_1[k];
             thirdbyte2_1[k] = Convert.ToByte(thirdbyte2_1[k] & 192);
             thirdbyte2_1[k] = Convert.ToByte(thirdbyte2_1[k] | binNo);//换成想要的BIN58
+        }
+
+        private static void convertToFailBinWithExtention(byte[] firstbyte1_1, byte[] thirdbyte1_1, byte[] thirdbyte2_1, int binNo, int k,
+            ArrayList arry_1, int ExtentionIndex)
+        {
+            
+            firstbyte1_1[k] = Convert.ToByte(firstbyte1_1[k] & 1);
+            firstbyte1_1[k] = Convert.ToByte(firstbyte1_1[k] | 128);//标记成fail
+
+            thirdbyte1_1[k] = thirdbyte1_1[k];
+            thirdbyte2_1[k] = Convert.ToByte(thirdbyte2_1[k] & 192);
+            thirdbyte2_1[k] = Convert.ToByte(thirdbyte2_1[k] | binNo);
+
+            arry_1[ExtentionIndex] = Convert.ToByte(Convert.ToByte(arry_1[ExtentionIndex]) & 0);
+            arry_1[ExtentionIndex] = Convert.ToByte(Convert.ToByte(arry_1[ExtentionIndex]) | binNo);
         }
 
         private int getTotalOfX(string[,] txtNewData, string v, int col1_1, int row1_1)

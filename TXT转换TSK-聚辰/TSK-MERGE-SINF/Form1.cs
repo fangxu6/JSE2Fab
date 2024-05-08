@@ -147,7 +147,7 @@ namespace TSK_MERGE_SINF
             //for (int ii = 0; ii < tsk_Name1.Count; ii++)
             //{
             //}
-                ///////-------------------------------TSK读取-------------------------//////
+            ///////-------------------------------TSK读取-------------------------//////
             //    Tsk tsk = new Tsk(this.textBox1.Text);
             //tsk.Read();
             //DieMatrix dieMatrix= tsk.DieMatrix;
@@ -695,6 +695,11 @@ namespace TSK_MERGE_SINF
                         tskPass++;
                     }
 
+                    if (TxtNewMap[i, j].ToString() == "B")
+                    {
+                        tskPass++;
+                    }
+
                     if (TxtNewMap[i, j].ToString() == "X")
                     {
                         tskFail++;
@@ -739,14 +744,20 @@ namespace TSK_MERGE_SINF
 
 
             /////--------------------Map版本为2，且无扩展信息TSK修改BIN信息代码-------------------////
-            const int binNo = 61;
+            const int inkBinNo = 61;
+            const int specialBinNo = 62;
+
             if ((arry_1.Count == 0) && ((Convert.ToInt32(MapVersion_1) == 2)))
             {
                 for (int k = 0; k < row1_1 * col1_1; k++)
                 {
                     if (txtNewData[k].ToString() == "F")//sinf fail,需要改为fail属性，BIN也需要改
                     {
-                        convertToFailBin(firstbyte1_1, thirdbyte1_1, thirdbyte2_1, binNo, k);
+                        convertToFailBin(firstbyte1_1, thirdbyte1_1, thirdbyte2_1, inkBinNo, k);
+                    }
+                    if (txtNewData[k].ToString() == "B")//客户指定PASS
+                    {
+                        convertToSpecialBin(firstbyte1_1, thirdbyte1_1, thirdbyte2_1, specialBinNo, k);
                     }
                 }
             }
@@ -760,14 +771,23 @@ namespace TSK_MERGE_SINF
                     if(Convert.ToInt32(MapVersion_1) == 2){
                         if (txtNewData[k].ToString() == "X")//sinf fail,需要改为fail属性，BIN也需要改
                         {
-                            convertToFailBinWithExtention(firstbyte1_1, thirdbyte1_1, thirdbyte2_1, binNo, k, arry_1, 4 * k + 1);
+                            convertToFailBinWithExtention(firstbyte1_1, thirdbyte1_1, thirdbyte2_1, inkBinNo, k, arry_1, 4 * k + 1);
+                        }
+                        if (txtNewData[k].ToString() == "B")//客户指定PASS
+                        {
+                            convertToSpecialBinWithExtention(firstbyte1_1, thirdbyte1_1, thirdbyte2_1, specialBinNo, k, arry_1, 4 * k + 1);
                         }
                     }
                     else if(Convert.ToInt32(MapVersion_1) == 4)
                     {
                         if (txtNewData[k].ToString() == "X")//sinf fail,需要改为fail属性，BIN也需要改
                         {
-                            convertToFailBinWithExtention(firstbyte1_1, thirdbyte1_1, thirdbyte2_1, binNo, k, arry_1, 4 * k + 3);
+                            convertToFailBinWithExtention(firstbyte1_1, thirdbyte1_1, thirdbyte2_1, inkBinNo, k, arry_1, 4 * k + 3);
+
+                        }
+                        if (txtNewData[k].ToString() == "B")//客户指定PASS
+                        {
+                            convertToSpecialBinWithExtention(firstbyte1_1, thirdbyte1_1, thirdbyte2_1, specialBinNo, k, arry_1, 4 * k + 3);
 
                         }
                     }
@@ -998,7 +1018,7 @@ namespace TSK_MERGE_SINF
 
         }
 
-        private static void convertToFailBin(byte[] firstbyte1_1, byte[] thirdbyte1_1, byte[] thirdbyte2_1, int binNo, int k)
+        private static void convertToFailBin(byte[] firstbyte1_1, byte[] thirdbyte1_1, byte[] thirdbyte2_1, int inkBinNo, int k)
         {
             if((firstbyte1_1[k] & 128)==128)
             {
@@ -1009,7 +1029,17 @@ namespace TSK_MERGE_SINF
 
             thirdbyte1_1[k] = thirdbyte1_1[k];
             thirdbyte2_1[k] = Convert.ToByte(thirdbyte2_1[k] & 192);
-            thirdbyte2_1[k] = Convert.ToByte(thirdbyte2_1[k] | binNo);//换成想要的BIN58
+            thirdbyte2_1[k] = Convert.ToByte(thirdbyte2_1[k] | inkBinNo);//换成想要的BIN58
+        }
+
+        private static void convertToSpecialBin(byte[] firstbyte1_1, byte[] thirdbyte1_1, byte[] thirdbyte2_1, int inkBinNo, int k)
+        {
+            if ((firstbyte1_1[k] & 64) == 64)
+            {
+                thirdbyte2_1[k] = Convert.ToByte(thirdbyte2_1[k] & 192);
+                thirdbyte2_1[k] = Convert.ToByte(thirdbyte2_1[k] | inkBinNo);
+            }
+            
         }
 
         private static void convertToFailBinWithExtention(byte[] firstbyte1_1, byte[] thirdbyte1_1, byte[] thirdbyte2_1, int binNo, int k,
@@ -1025,6 +1055,19 @@ namespace TSK_MERGE_SINF
             thirdbyte1_1[k] = thirdbyte1_1[k];
             thirdbyte2_1[k] = Convert.ToByte(thirdbyte2_1[k] & 192);
             thirdbyte2_1[k] = Convert.ToByte(thirdbyte2_1[k] | binNo);
+
+            arry_1[ExtentionIndex] = Convert.ToByte(Convert.ToByte(arry_1[ExtentionIndex]) | binNo);
+        }
+
+        private static void convertToSpecialBinWithExtention(byte[] firstbyte1_1, byte[] thirdbyte1_1, byte[] thirdbyte2_1, int binNo, int k,
+            ArrayList arry_1,  int ExtentionIndex)
+        {
+            if ((firstbyte1_1[k] & 64) == 64)
+            {
+                thirdbyte2_1[k] = Convert.ToByte(thirdbyte2_1[k] & 192);
+                thirdbyte2_1[k] = Convert.ToByte(thirdbyte2_1[k] | binNo);
+            }
+           
 
             arry_1[ExtentionIndex] = Convert.ToByte(Convert.ToByte(arry_1[ExtentionIndex]) | binNo);
         }
@@ -1093,6 +1136,11 @@ namespace TSK_MERGE_SINF
                     else if (binNo.Equals("A"))
                     {
                         txtData.Add("0");
+                        txtPassCount++;
+                    }
+                    else if (binNo.Equals("B"))
+                    {
+                        txtData.Add("B");
                         txtPassCount++;
                     }
                     else if (binNo.Equals("X")||binNo.Equals("M"))
