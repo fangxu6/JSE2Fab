@@ -86,9 +86,7 @@ namespace DataToExcel.ExpDataToExcelFactory
                                 case DieCategory.PassDie:
                                     {
                                         int xxx = cmd.DieMatrix[x, y].Bin;
-                                        //cmd.WriteString(string.Format("{0,1:G}", "1"));
-                                        cmd.WriteString(string.Format("{0,1:G}", cmd.DieMatrix[x, y].Bin));
-                                        binCount[cmd.DieMatrix[x, y].Bin]++;
+                                        cmd.WriteString(string.Format("{0,1:G}", "1"));
                                         break;
                                     }
                                 case DieCategory.MarkDie:
@@ -435,7 +433,7 @@ namespace DataToExcel.ExpDataToExcelFactory
 
 
                     string yield = Math.Round((double)(cmd.PassDie) / ((double)(cmd.TotalDie)), 4).ToString("0.00%");
-                    cmd.WriteString("bin     1 " + String.Format("{0,8}{1,7}", binCount[1], Math.Round((double)(binCount[1]) / ((double)(cmd.TotalDie)), 4).ToString("0.00%")) + cmd.Enter);
+                    cmd.WriteString("bin     1 " + String.Format("{0,8}{1,7}", cmd.PassDie, yield) + cmd.Enter);
                     cmd.WriteString("bin     2 " + String.Format("{0,8}{1,7}", binCount[2], Math.Round((double)(binCount[2]) / ((double)(cmd.TotalDie)), 4).ToString("0.00%")) + cmd.Enter);
                     cmd.WriteString("bin     3 " + String.Format("{0,8}{1,7}", binCount[3], Math.Round((double)(binCount[3]) / ((double)(cmd.TotalDie)), 4).ToString("0.00%")) + cmd.Enter);
                     cmd.WriteString("bin     4 " + String.Format("{0,8}{1,7}", binCount[4], Math.Round((double)(binCount[4]) / ((double)(cmd.TotalDie)), 4).ToString("0.00%")) + cmd.Enter);

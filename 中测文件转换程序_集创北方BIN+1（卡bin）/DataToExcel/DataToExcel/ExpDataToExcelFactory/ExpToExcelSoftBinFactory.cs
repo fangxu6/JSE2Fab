@@ -17,7 +17,7 @@ namespace DataToExcel.ExpDataToExcelFactory
                 //o = Type.GetType(clazzNmae);
                 //通用转换
                 //MessageBox.Show("该型号在笑脸整合软件中未定义，将使用通用格式txt图谱。");
-                clazzNmae = "DataToExcel.ExpDataToExcelFactory.Device_General";
+                clazzNmae = "DataToExcel.ExpDataToExcelFactory.Device_UPM6720_8_16_00";
                 o = Type.GetType(clazzNmae);
                 //MessageBox.Show("该型号未定义，请联系IT并告知批次号。");
                 //throw new Exception("该型号不支持");
