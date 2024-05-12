@@ -11,11 +11,6 @@ namespace DataToExcel.ExpDataToExcelFactory
 
         }
 
-        public override int defatultRotate()
-        {
-            return 90;
-        }
-
         public override bool defatultSave()
         {
             return false;
@@ -38,6 +33,27 @@ namespace DataToExcel.ExpDataToExcelFactory
                         File.Delete(cmd.FullName);
                     }
                     cmd.OpenWriter();
+
+                    string orientation="";
+                    if (cmd.FlatDir == 0)
+                    {
+                        cmd.DeasilRotate(180);
+                        orientation = "Down";
+                    }
+                    else if (cmd.FlatDir == 90)
+                    {
+                        cmd.DeasilRotate(90);
+                        orientation = "Down";
+                    }
+                    else if (cmd.FlatDir == 180)
+                    {
+                        orientation = "Down";
+                    }
+                    else
+                    {
+                        cmd.DeasilRotate(270);
+                        orientation = "Down";
+                    }
 
                     int xMin = Int32.MaxValue;
                     int yMin = Int32.MaxValue;
@@ -408,23 +424,7 @@ namespace DataToExcel.ExpDataToExcelFactory
                     cmd.WriteString("X max coor.  = " + cmd.RowCount + cmd.Enter);
                     cmd.WriteString("Y max coor.  = " + cmd.ColCount + cmd.Enter);
 
-                    string orientation;
-                    if (cmd.FlatDir == 0)
-                    {
-                        orientation = "Up";
-                    }
-                    else if (cmd.FlatDir == 90)
-                    {
-                        orientation = "Right";
-                    }
-                    else if (cmd.FlatDir == 180)
-                    {
-                        orientation = "Down";
-                    }
-                    else
-                    {
-                        orientation = "Left";
-                    }
+                    
                     cmd.WriteString("Flat         = " + orientation + cmd.Enter);
                     cmd.WriteString(cmd.Enter);
 

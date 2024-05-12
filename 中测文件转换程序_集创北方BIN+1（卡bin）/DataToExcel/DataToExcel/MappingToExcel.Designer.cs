@@ -86,7 +86,7 @@
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(97, 29);
             this.button1.TabIndex = 2;
-            this.button1.Text = "ExportToExcel";
+            this.button1.Text = "TSK转90度";
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
@@ -176,7 +176,7 @@
             this.FieldListBox1.FormattingEnabled = true;
             this.FieldListBox1.Location = new System.Drawing.Point(491, 12);
             this.FieldListBox1.Name = "FieldListBox1";
-            this.FieldListBox1.Size = new System.Drawing.Size(103, 258);
+            this.FieldListBox1.Size = new System.Drawing.Size(103, 252);
             this.FieldListBox1.TabIndex = 4;
             this.FieldListBox1.Visible = false;
             // 
@@ -257,7 +257,7 @@
             this.label1.AutoSize = true;
             this.label1.Location = new System.Drawing.Point(3, 6);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(154, 24);
+            this.label1.Size = new System.Drawing.Size(116, 18);
             this.label1.TabIndex = 5;
             this.label1.Text = "Target Path:";
             // 
@@ -266,7 +266,7 @@
             this.textBox1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.textBox1.Location = new System.Drawing.Point(86, 4);
             this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(444, 35);
+            this.textBox1.Size = new System.Drawing.Size(444, 28);
             this.textBox1.TabIndex = 10;
             this.textBox1.Leave += new System.EventHandler(this.textBox1_Leave);
             // 
@@ -301,7 +301,7 @@
             this.图谱合并ToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(723, 36);
+            this.menuStrip1.Size = new System.Drawing.Size(723, 32);
             this.menuStrip1.TabIndex = 7;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -312,7 +312,7 @@
             this.loadFileToolStripMenuItem,
             this.clearListToolStripMenuItem});
             this.文件ToolStripMenuItem.Name = "文件ToolStripMenuItem";
-            this.文件ToolStripMenuItem.Size = new System.Drawing.Size(78, 32);
+            this.文件ToolStripMenuItem.Size = new System.Drawing.Size(78, 28);
             this.文件ToolStripMenuItem.Text = "File(&F)";
             // 
             // setPathToolStripMenuItem
@@ -346,7 +346,7 @@
             this.expToTxtToolStripMenuItem,
             this.expToTmaToolStripMenuItem});
             this.导出ToolStripMenuItem.Name = "导出ToolStripMenuItem";
-            this.导出ToolStripMenuItem.Size = new System.Drawing.Size(104, 32);
+            this.导出ToolStripMenuItem.Size = new System.Drawing.Size(104, 28);
             this.导出ToolStripMenuItem.Text = "Export(&E)";
             // 
             // expToExcelToolStripMenuItem
@@ -378,7 +378,7 @@
             this.aboutToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.aboutToolStripMenuItem1});
             this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
-            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(93, 32);
+            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(93, 28);
             this.aboutToolStripMenuItem.Text = "Help(&H)";
             // 
             // aboutToolStripMenuItem1
@@ -394,7 +394,7 @@
             this.图谱合并ToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.sINF合并TSKToolStripMenuItem});
             this.图谱合并ToolStripMenuItem.Name = "图谱合并ToolStripMenuItem";
-            this.图谱合并ToolStripMenuItem.Size = new System.Drawing.Size(98, 32);
+            this.图谱合并ToolStripMenuItem.Size = new System.Drawing.Size(98, 28);
             this.图谱合并ToolStripMenuItem.Text = "图谱合并";
             // 
             // sINF合并TSKToolStripMenuItem
@@ -414,9 +414,9 @@
             this.groupBox3.Controls.Add(this.button3);
             this.groupBox3.Controls.Add(this.button1);
             this.groupBox3.Dock = System.Windows.Forms.DockStyle.Right;
-            this.groupBox3.Location = new System.Drawing.Point(607, 36);
+            this.groupBox3.Location = new System.Drawing.Point(607, 32);
             this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(116, 369);
+            this.groupBox3.Size = new System.Drawing.Size(116, 373);
             this.groupBox3.TabIndex = 8;
             this.groupBox3.TabStop = false;
             // 

@@ -27,10 +27,12 @@ namespace DataToExcel.ExpDataToExcelFactory
         {
             try
             {
+                cmd.FullName = ReFullName(cmd.FullName, Path.GetFileNameWithoutExtension(cmd.FullName));
                 if (File.Exists(cmd.FullName))
                 {
                     File.Delete(cmd.FullName);
                 }
+                
                 cmd.OpenWriter();
                 int ymin = 1000;
                 int xmin = 1000;
@@ -120,7 +122,7 @@ namespace DataToExcel.ExpDataToExcelFactory
                     str = "00";
                     break;
                 case DieCategory.FailDie:
-                    if (bin == 28 || bin == 15)
+                    if (bin == 14 || bin == 15)
                     {
                         str = "02";
                     }
@@ -137,6 +139,13 @@ namespace DataToExcel.ExpDataToExcelFactory
                     break;
             }
             return str;
+        }
+
+        public static string ReFullName(string fullName, string newFileName)
+        {
+            string parentPath = fullName.Substring(0, fullName.LastIndexOf(@"\"));
+            string newFullName = parentPath + @"\" + newFileName + ".sinf";
+            return newFullName;
         }
     }
     

@@ -219,14 +219,7 @@ namespace DataToExcel.ExpDataToExcelFactory
                     str = "00";
                     break;
                 case DieCategory.FailDie:
-                    if (bin == 28 || bin == 15)
-                    {
-                        str = "02";
-                    }
-                    else
-                    {
-                        str = "01";
-                    }
+                    str = "01";
                     break;
                 case DieCategory.SkipDie2:
                     str = "@@";
