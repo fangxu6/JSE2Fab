@@ -124,7 +124,7 @@ namespace TSK_MERGE_SINF
             //{
             //    MessageBox.Show("请选择TSK图谱");
             //}
-            string[] txts = { "NBX675010-22" };
+            string[] txts = { "H6P456-11B4" };
             //            string[] txts = { "HAHM23-01",
             //"HAHM23-02",
             //"HAHM23-03",
@@ -153,7 +153,7 @@ namespace TSK_MERGE_SINF
             //            string[] txts = { "HAHK34-01","HAHK34-02","HAHK34-03","HAHK34-04","HAHK34-05","HAHK34-06","HAHK34-07","HAHK34-08","HAHK34-09","HAHK34-10","HAHK34-11","HAHK34-12",
             //"HAHK34-13","HAHK34-14","HAHK34-15","HAHK34-16","HAHK34-17","HAHK34-18","HAHK34-19","HAHK34-20","HAHK34-21","HAHK34-22","HAHK34-23","HAHK34-24","HAHK34-25" };
 
-            string[] tsks = { "022.NBX675-22-F4" };
+            string[] tsks = { "011.H6P456-11B4" };
                 //string[] tsks
                 //   = { "001.HAHK34-01E4","002.HAHK34-02D7","003.HAHK34-03D2","004.HAHK34-04C5","005.HAHK34-05C0","006.HAHK34-06B3","007.HAHK34-07A6","008.HAHK34-08A1","009.HAHK34-09G7",
                 //"010.HAHK34-10A1","011.HAHK34-11G7","012.HAHK34-12G2","013.HAHK34-13F5","014.HAHK34-14F0","015.HAHK34-15E3","016.HAHK34-16D6","017.HAHK34-17D1","018.HAHK34-18C4","019.HAHK34-19B7",
@@ -199,8 +199,8 @@ namespace TSK_MERGE_SINF
         {
             txtRowct = 0;
             txtColct = 0;
-            this.textBox2.Text = "C:\\Users\\fangx\\Desktop\\NBX675010\\" + text1 + ".txt";
-            this.textBox1.Text = "C:\\Users\\fangx\\Desktop\\NBX675010-tsk\\" + text2 ;
+            this.textBox2.Text = "C:\\Users\\fangx\\Desktop\\H6P456.1\\" + text1 + ".txt";
+            this.textBox1.Text = "C:\\Users\\fangx\\Desktop\\H6P456.8\\" + text2 ;
             //////////TXT-READ//////////////////////////////
             FileStream txt_1;
 
@@ -785,20 +785,13 @@ namespace TSK_MERGE_SINF
             {
                 for (int k = 0; k < row1_1 * col1_1; k++)
                 {
-                    if (txtNewData[k].ToString() == ".")//Skip Die
-                    {
-                        continue;
 
+
+                    if (txtNewData[k].ToString() == "F")//sinf fail,需要改为fail属性，BIN也需要改
+                    {
+                        convertToFailBin(firstbyte1_1, thirdbyte1_1, thirdbyte2_1, inkBinNo, k);
                     }
 
-                    else
-                    {
-
-                        if (txtNewData[k].ToString() == "F")//sinf fail,需要改为fail属性，BIN也需要改
-                        {
-                            convertToFailBin(firstbyte1_1, thirdbyte1_1, thirdbyte2_1, inkBinNo, k);
-                        }
-                    }
                 }
             }
 
@@ -1049,13 +1042,6 @@ namespace TSK_MERGE_SINF
             fw.Close();
 
 
-
-
-
-
-            
-
-
         }
 
         private static void convertToFailBin(byte[] firstbyte1_1, byte[] thirdbyte1_1, byte[] thirdbyte2_1, int binNo, int k)
@@ -1065,7 +1051,7 @@ namespace TSK_MERGE_SINF
 
             thirdbyte1_1[k] = thirdbyte1_1[k];
             thirdbyte2_1[k] = Convert.ToByte(thirdbyte2_1[k] & 192);
-            thirdbyte2_1[k] = Convert.ToByte(thirdbyte2_1[k] | binNo);//换成想要的BIN58
+            thirdbyte2_1[k] = Convert.ToByte(thirdbyte2_1[k] | binNo);
         }
 
         private static void convertToFailBinWithExtention(byte[] firstbyte1_1, byte[] thirdbyte1_1, byte[] thirdbyte2_1, int binNo, int k,
@@ -1112,7 +1098,7 @@ namespace TSK_MERGE_SINF
 
                     switch (head)
                     {
-                        case "PRODUCT":
+                        case "DEVICE":
                             this.txtDevice = body;
                             break;
                         case "LOT":
@@ -1124,7 +1110,7 @@ namespace TSK_MERGE_SINF
                         case "WAFER":
                             this.txtWaferID = body;
                             break;
-                        case "FNLOC":
+                        case "FNLOC"://txt和tsk角度一致
                             this.txtFlat = body;
                             break;
                         case "ROWCT":
@@ -1158,6 +1144,45 @@ namespace TSK_MERGE_SINF
 
         private void ParseDies(string s)
         {
+            if (this.txtDevice.Contains("UPM7231"))
+            {
+                PasrseDieWithDeviceUPM7231(s);
+            } else
+            {
+                PasrseDieWithDeviceUPM6700(s);
+            }
+        }
+
+        private void PasrseDieWithDeviceUPM7231(string s)
+        {
+            if (s.StartsWith("RowData"))
+            {
+                string newLine = s.Substring(s.IndexOf("RowData") + 7 + 1);
+                for (int i = 0; i < newLine.Length;)
+                {
+                    string binNo = newLine.Substring(i, 2);
+                    if (binNo.StartsWith("_"))
+                    {
+                        txtData.Add(".");
+                    }
+                    else if (binNo.Equals("00"))
+                    {
+                        txtData.Add("0");
+                    }
+                    else if (binNo.Equals("@@"))//对位点比较
+                    {
+                        txtData.Add("#");
+                    }
+                    else
+                    {
+                        txtData.Add("X");
+                    }
+                    i = i + 3;
+                }
+            }
+        }
+        private void PasrseDieWithDeviceUPM6700(string s)
+        {
             if (s.StartsWith("RowData"))
             {
                 string newLine = s.Substring(s.IndexOf("RowData") + 7 + 1);
@@ -1180,8 +1205,6 @@ namespace TSK_MERGE_SINF
                 }
             }
         }
-
-
 
         private void Reverse(ref byte[] target)
         {
