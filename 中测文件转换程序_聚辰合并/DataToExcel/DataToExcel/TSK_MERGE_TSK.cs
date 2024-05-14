@@ -15,6 +15,7 @@ namespace DataToExcel
 {
     public partial class TSK_MERGE_TSK : Form
     {
+        ArrayList waferList = new ArrayList();
         public TSK_MERGE_TSK()
         {
             InitializeComponent();
@@ -43,19 +44,21 @@ namespace DataToExcel
 
         private void LoadTSK1()
         {
-
+            tsk_Name1.Clear();
             FolderBrowserDialog dialog = new FolderBrowserDialog();
-            if (dialog.ShowDialog() == DialogResult.OK)
+            //if (dialog.ShowDialog() == DialogResult.OK)
+            //{
+            //this.textBox1.Text ;
+            DirectoryInfo TheFolder = new DirectoryInfo(this.textBox2.Text);
+            FileInfo[] fileNames = TheFolder.GetFiles("*", SearchOption.AllDirectories);
+            //Array.Sort(fileNames, StringComparer.InvariantCulture);
+
+            foreach (FileInfo str in fileNames)
             {
-                this.textBox1.Text = dialog.SelectedPath;
-                DirectoryInfo TheFolder = new DirectoryInfo(this.textBox1.Text);
+                tsk_Name1.Add(str.Name);
 
-                foreach (FileInfo str in TheFolder.GetFiles("*", SearchOption.AllDirectories))
-                {
-                    tsk_Name1.Add(str.Name);
-
-                }
             }
+            //}
 
         }
 
@@ -78,19 +81,21 @@ namespace DataToExcel
 
         private void LoadTSK2()
         {
-
+            tsk_Name2.Clear();
             FolderBrowserDialog dialog = new FolderBrowserDialog();
-            if (dialog.ShowDialog() == DialogResult.OK)
+            //if (dialog.ShowDialog() == DialogResult.OK)
+            //{
+            //this.textBox2.Text = dialog.SelectedPath;
+            DirectoryInfo TheFolder = new DirectoryInfo(this.textBox2.Text);
+            FileInfo[] fileNames = TheFolder.GetFiles("*", SearchOption.AllDirectories);
+            //Array.Sort(fileNames, StringComparer.InvariantCulture);
+
+            foreach (FileInfo str in fileNames)
             {
-                this.textBox2.Text = dialog.SelectedPath;
-                DirectoryInfo TheFolder = new DirectoryInfo(this.textBox2.Text);
+                tsk_Name2.Add(str.Name);
 
-                foreach (FileInfo str in TheFolder.GetFiles("*", SearchOption.AllDirectories))
-                {
-                    tsk_Name2.Add(str.Name);
-
-                }
             }
+            //}
 
             if (tsk_Name1.Count != tsk_Name2.Count)
             {
@@ -100,9 +105,22 @@ namespace DataToExcel
 
         }
 
+        /// C#按文件名排序（顺序）
+        /// </summary>
+        /// <param name="arrFi">待排序数组</param>
+        //private void SortAsFileName(ref FileInfo[] arrFi)
+        //{
+        //    Array.Sort(arrFi, delegate (FileInfo x, FileInfo y) { returnx.Name.CompareTo(y.Name); });
+        //}
+
         private void button3_Click(object sender, EventArgs e)
         {
-
+            LoadTSK1();
+            LoadTSK2();
+            if (waferList != null)
+            {
+                waferList.Clear();
+            }
             if (this.textBox2.Text == "")
             {
                 MessageBox.Show("请选择CP2图谱");
@@ -115,8 +133,8 @@ namespace DataToExcel
 
             string LotNo_1 = "";
             string LotNo_2 = "";
-            object[,] LotSum = new object[100, 100];
-
+            object[,] LotSum = new object[1000, 1000];
+            Dictionary<string, int> hashMap = new Dictionary<string, int>();
             for (int ii = 0; ii < tsk_Name1.Count; ii++)
             {
 
@@ -339,10 +357,21 @@ namespace DataToExcel
 
              //-----------------------------------------TSK2-READ--------------------------------//
                 FileStream fs2_1;
-                string tskcp2name = tsk_Name1[ii].ToString().Replace("CP1", "CP2");//根据CP1名字找CP2图谱，防止合并错误
+                string tskcp2name;
+                if (tsk_Name1[ii].ToString().Contains("CP1"))
+                {
+                    tskcp2name = tsk_Name1[ii].ToString().Replace("CP1", "CP2");//根据CP1名字找CP2图谱，防止合并错误
+                } else
+                {
+                    tskcp2name = tsk_Name1[ii].ToString().Replace("CP2", "CP3");//根据CP1名字找CP2图谱，防止合并错误
+                }
+                //string tskcp2name = tsk_Name1[ii].ToString().Replace("CP1", "CP2");//根据CP1名字找CP2图谱，防止合并错误
+                waferList.Add(tskcp2name);
                 fs2_1 = new FileStream(this.textBox2.Text + @"\" + tskcp2name, FileMode.Open);
                 //fs2_1 = new FileStream(this.textBox2.Text + @"\" + tsk_Name2[ii], FileMode.Open);
                 BinaryReader br2_1 = new BinaryReader(fs2_1);
+
+                
 
                 ///TSK1头文件-------------------------------------------------------//
 
@@ -553,6 +582,8 @@ namespace DataToExcel
                     }
                 }
                 //------------------------------TSK2模板Read 结束------------------------------//
+                
+
                 object[,] TSKMap3 = new object[col21_1, row21_1];
                 int mergepass = 0, mergefail = 0;
 
@@ -586,6 +617,20 @@ namespace DataToExcel
                             TSKMap3[i, j] = "S";
                             mergepass++;
 
+                        }
+
+                        if (TSKMap1[i, j].ToString() == "X" && TSKMap2[i, j].ToString() == "A")
+                        {
+                            TSKMap3[i, j] = "X";
+                            if (hashMap.ContainsKey(tskcp2name))
+                            {
+                                hashMap[tskcp2name]++; ;
+                            }
+                            else
+                            {
+                                hashMap.Add(tskcp2name, 1);
+                            }
+                            //mergefail++;
                         }
 
                         if (TSKMap3[i, j].ToString() == "X")
@@ -650,7 +695,6 @@ namespace DataToExcel
                         {
                             tskcolmin = i;
                             flag = 1;
-
                         }
 
                     }
@@ -681,15 +725,21 @@ namespace DataToExcel
 
 
                 ////////////////////////////////输出TXT//////////////////////////////////
-              
+               
+
+                
 
                 if (!Directory.Exists("D:\\MERGE\\" + LotNo_1 + "\\"))
                 {
                     Directory.CreateDirectory("D:\\MERGE\\" + LotNo_1 + "\\");
                 }
                 FileStream fw;
-                //fw = new FileStream("D:\\MERGE\\" + LotNo_1 + "\\" + SlotNo_1.ToString("000") + WaferID_1.TrimEnd('\0') + ".txt", FileMode.Create);
-                fw = new FileStream("D:\\MERGE\\" + LotNo_1 + "\\" + LotNo_1 + "." + SlotNo_1.ToString(), FileMode.Create);
+                fw = new FileStream("D:\\MERGE\\" + LotNo_1 + "\\" + SlotNo_1.ToString("000") + WaferID_1.TrimEnd('\0') + ".txt", FileMode.Create);
+                
+
+                //FileStream fwerrtxt;
+                //fwerrtxt = new FileStream("D:\\Error\\" + LotNo_1 + "\\" + LotNo_1 + "." + SlotNo_1.ToString(), FileMode.Create);
+
                 StreamWriter sw = new StreamWriter(fw);
                 sw.WriteLine("Lot ID : " + LotNo_1);
                 sw.WriteLine("CTM Lot ID: " + LotNo_1);
@@ -731,30 +781,21 @@ namespace DataToExcel
             }
 
             FileStream fwt;
-            fwt = new FileStream("D:\\MERGE\\" + LotNo_1 + "\\" + LotNo_1 + "_Summary" + ".txt", FileMode.Create);
+            fwt = new FileStream("D:\\MERGE\\" + LotNo_1 + "\\" + LotNo_1 + "_error_waferid" + ".txt", FileMode.Create);
             StreamWriter swt = new StreamWriter(fwt);
-            swt.WriteLine("JSE Wafer Sort Summary Report");
-            swt.WriteLine("Lot ID : "+LotNo_1);
-            swt.WriteLine("CTM Lot ID: " + LotNo_1);
-            swt.WriteLine("-----------------");
-            swt.WriteLine("|WAF| Good|  YLD|");
-            swt.WriteLine("|NO.| Dies|    %|");
-            swt.WriteLine("|---+-----+-----+");
-            int alldie = 0, allpass = 0, allfail = 0;
             for (int ii = 0; ii < tsk_Name1.Count; ii++)
             {
-                swt.WriteLine("| " + LotSum[ii, 1] + "|" + LotSum[ii, 4] + "|" + LotSum[ii, 6]+"|");
-                alldie += Convert.ToInt32(LotSum[ii, 3]);
-                allpass += Convert.ToInt32(LotSum[ii, 4]);
-                allfail += Convert.ToInt32(LotSum[ii, 5]);
+                swt.WriteLine(tsk_Name1[ii]+" "+ tsk_Name2[ii]);
             }
+            swt.WriteLine();
+            swt.WriteLine("CP2 Fail but CP3 Pass WaferID:");
 
-            swt.WriteLine("|TTl| " + allpass + "|" + Math.Round((double)(Convert.ToDouble(allpass) / ((double)Convert.ToInt32(allpass + allfail))), 4).ToString("0.00%") + "|");
-            swt.WriteLine("----------------");
-            swt.WriteLine();
-            swt.WriteLine();
-            swt.WriteLine("Wafer Count : " + tsk_Name1.Count);
-            swt.WriteLine("Total Good Dies :  " + allpass);
+            foreach (KeyValuePair<string, int> kvp in hashMap)
+            {
+                swt.WriteLine(kvp.Key+"\t bin count: "+ kvp.Value);
+            }
+            
+           
             swt.Close();
             fwt.Close();
            
@@ -765,7 +806,7 @@ namespace DataToExcel
             {
 
 
-                Process.Start("D:\\MERGE\\");
+                Process.Start("D:\\MERGE\\" + LotNo_1 + "\\");
             }
 
         }
