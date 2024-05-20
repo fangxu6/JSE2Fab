@@ -432,7 +432,6 @@ namespace DataToExcel
                         arry.Add(this.ReadDie());
                     }
 
-
                     this._dieMatrix = new DieMatrix(arry, rows, cols);
                 }
 
@@ -600,7 +599,7 @@ namespace DataToExcel
 
                     this._dieMatrix = new DieMatrix(arry, rows, cols);
 
-
+                    return;
                 }
 
 
@@ -618,13 +617,48 @@ namespace DataToExcel
                 byte[] bufferhead4_11 = this._reader.ReadBytes(44);
                 byte[] bufferhead1_64 = this._reader.ReadBytes(64);
 
-                //while (this._reader.BaseStream.Position < this._reader.BaseStream.Length)
-                //{
-                //    for (int j = 0; j < total; j++)
-                //    {
-                //        byte[] buffer1 = this._reader.ReadBytes(4);
-                //    }
-                //}
+                while (this._reader.BaseStream.Position < this._reader.BaseStream.Length)
+                {
+                    foreach (DieData die in this.DieMatrix.Items)
+                    {
+                        byte[] buffer = this._reader.ReadBytes(2);
+                        byte[] buffer2 = this._reader.ReadBytes(2);
+                        int extSite;
+                        int extCategory;
+                        if (this.MapVersion == 4)
+                        {
+                            extSite = buffer[1];
+                            extCategory = buffer2[1];
+
+                        } else
+                        {
+                            extSite = buffer[0];
+                            extCategory = buffer[1];
+                        }
+
+                        if (die.Attribute== DieCategory.FailDie|| die.Attribute == DieCategory.PassDie)
+                        {
+                            if (extCategory == 0)
+                            {
+                                Console.WriteLine("error");
+                            }
+                        }
+
+                    }
+                    //    for (int j = 0; j < total; j++)
+                    //{
+                    //    byte[] buffer = this._reader.ReadBytes(2);
+                    //    int extSite = buffer[0];
+                    //    int extCategory = buffer[1];
+                    //    this._dieMatrix.
+                    //    if (extCategory == 0)
+                    //    {
+
+                    //    }
+
+                    //    buffer = this._reader.ReadBytes(2);
+                    //}
+                }
 
 
 
@@ -746,11 +780,19 @@ namespace DataToExcel
                             //die.Attribute = DieCategory.PassDie;
                             die.Attribute = DieCategory.PassDie;
                             die.Bin = binNum + 1;//-------2013.7.18
+                            if (binNum == 0)
+                            {
+                                Console.WriteLine("error");
+                            }
                             break;
                         case 2:
                         case 3:
                             die.Attribute = DieCategory.FailDie;
                             die.Bin = binNum + 1;    //zjf 2008.08.28
+                            if (binNum == 0)
+                            {
+                                Console.WriteLine("error");
+                            }
                             break;
                         default:
                             die.Attribute = DieCategory.Unknow;
