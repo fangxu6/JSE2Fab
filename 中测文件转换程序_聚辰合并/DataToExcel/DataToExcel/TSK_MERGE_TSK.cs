@@ -372,14 +372,14 @@ namespace DataToExcel
              //-----------------------------------------TSK2-READ--------------------------------//
                 FileStream fs2_1;
                 string tskcp2name;
-                if (tsk_Name2[ii].ToString().Contains("CP1"))
-                {
-                    tskcp2name = tsk_Name2[ii].ToString().Replace("CP1", "CP2");//根据CP1名字找CP2图谱，防止合并错误
-                } else
-                {
-                    tskcp2name = tsk_Name2[ii].ToString().Replace("CP2", "CP3");//根据CP1名字找CP2图谱，防止合并错误
-                }
-                //string tskcp2name = tsk_Name1[ii].ToString().Replace("CP1", "CP2");//根据CP1名字找CP2图谱，防止合并错误
+                //if (tsk_Name2[ii].ToString().Contains("CP1"))
+                //{
+                //    tskcp2name = tsk_Name2[ii].ToString().Replace("CP1", "CP2");//根据CP1名字找CP2图谱，防止合并错误
+                //} else
+                //{
+                //    tskcp2name = tsk_Name2[ii].ToString().Replace("CP2", "CP3");//根据CP1名字找CP2图谱，防止合并错误
+                //}
+                tskcp2name = tsk_Name1[ii].ToString();
                 waferList.Add(tskcp2name);
                 fs2_1 = new FileStream(this.textBox2.Text + @"\" + tsk_Name2[ii].ToString(), FileMode.Open);
                 //fs2_1 = new FileStream(this.textBox2.Text + @"\" + tsk_Name2[ii], FileMode.Open);
@@ -630,7 +630,7 @@ namespace DataToExcel
                         int binNoFromTsk1 = thirdbyte1_1[k] & 0xff;
                         if (binNo==49|| binNo == 50)
                         {
-                            continue;
+                            //continue;
                         }
                         if ((firstbyte1_1[k] & 128) == 128)
                         {
@@ -658,7 +658,7 @@ namespace DataToExcel
                             int binNoFromTsk1 = Convert.ToByte(arry_1[4 * k + 1]);
                             if (binNo == 49 || binNo == 50)//易冲特殊处理
                             {
-                                continue;
+                                //continue;
                             }
                             if ((firstbyte1_1[k] & 128) == 128)
                             {
@@ -682,7 +682,7 @@ namespace DataToExcel
                             }
                             if (binNo == 49 || binNo == 50)//易冲特殊处理
                             {
-                                continue;
+                                //continue;
                             }
                             if ((firstbyte1_1[k] & 128) == 128)
                             {
@@ -1110,7 +1110,7 @@ namespace DataToExcel
                 swt.WriteLine(tsk_Name1[ii]+" "+ tsk_Name2[ii]);
             }
             swt.WriteLine();
-            swt.WriteLine("CP2 Fail but CP3 Pass WaferID:");
+            swt.WriteLine("CP1/2 Fail but CP2/3 Pass WaferID:");
 
             foreach (KeyValuePair<string, int> kvp in hashMap)
             {
@@ -1118,7 +1118,7 @@ namespace DataToExcel
             }
 
             swt.WriteLine();
-            swt.WriteLine("CP2 Fail Bin No different with CP3 Fail No WaferID:");
+            swt.WriteLine("CP1/2 Fail Bin No different with CP2/3 Fail No WaferID:");
             foreach (KeyValuePair<string, int> kvp in binDiffHashMap)
             {
                 swt.WriteLine(kvp.Key + "\t bin count: " + kvp.Value);
