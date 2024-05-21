@@ -1,27 +1,14 @@
 ﻿using Excel;
-using System.Windows.Forms;
 using System;
 using System.IO;
+using System.Runtime.CompilerServices;
+using System.Windows.Forms;
+
 namespace DataToExcel.ExpDataToExcelFactory
 {
-    public class Device_General : ExpToExcelSoftBin
+    public class Device_XinHe
     {
-        public override void expToExcel(Worksheet worksheet)
-        {
-
-        }
-
-        public override bool defatultSave()
-        {
-            return false;
-        }
-
-        public override bool defatultBinPlusOne()
-        {
-            return false;
-        }
-
-        public override void Save(CmdTxt cmd)
+        public static void Save(CmdTxt cmd)
         {
             try
             {
@@ -34,13 +21,34 @@ namespace DataToExcel.ExpDataToExcelFactory
                     }
                     cmd.OpenWriter();
 
+                    string orientation = "";
+                    if (cmd.FlatDir == 0)
+                    {
+                        cmd.DeasilRotate(180);
+                        orientation = "Down";
+                    }
+                    else if (cmd.FlatDir == 90)
+                    {
+                        cmd.DeasilRotate(90);
+                        orientation = "Down";
+                    }
+                    else if (cmd.FlatDir == 180)
+                    {
+                        orientation = "Down";
+                    }
+                    else
+                    {
+                        cmd.DeasilRotate(270);
+                        orientation = "Down";
+                    }
+
                     int xMin = Int32.MaxValue;
                     int yMin = Int32.MaxValue;
                     int xMax = Int32.MinValue;
                     int yMax = Int32.MinValue;
-                    for (int y = 0; y < cmd.DieMatrix.YMax; y++)//83
+                    for (int y = 0; y < cmd.DieMatrix.YMax; y++)
                     {
-                        for (int x = 0; x < cmd.DieMatrix.XMax; x++)//57
+                        for (int x = 0; x < cmd.DieMatrix.XMax; x++)
                         {
 
                             if (cmd.DieMatrix[x, y].Attribute.Equals(DieCategory.FailDie))
@@ -71,9 +79,9 @@ namespace DataToExcel.ExpDataToExcelFactory
                         binCount[i] = 0;
                     }
 
-                    for (int y = 0; y < cmd.DieMatrix.YMax; y++)
+                    for (int y = yMin; y <= yMax; y++)
                     {
-                        for (int x = 0; x < cmd.DieMatrix.XMax; x++)
+                        for (int x = xMin; x <= xMax; x++)
                         {
                             switch (cmd.DieMatrix[x, y].Attribute)
                             {
@@ -394,6 +402,8 @@ namespace DataToExcel.ExpDataToExcelFactory
                     cmd.WriteString(cmd.Enter);
                     cmd.WriteString(cmd.Enter);
                     cmd.WriteString(cmd.Enter);
+                    int rowCount = yMax - yMin + 1;
+                    int colCount = xMax - xMin + 1;
                     cmd.WriteString("[Product Information]" + cmd.Enter);
                     cmd.WriteString(cmd.Enter);
                     cmd.WriteString("Product name = " + cmd.Device.Split('-')[0] + cmd.Enter);
@@ -401,26 +411,10 @@ namespace DataToExcel.ExpDataToExcelFactory
                     cmd.WriteString("Wafer-ID     = " + cmd.WaferID + cmd.Enter);
                     cmd.WriteString("WF Start time= " + cmd.StartTime + cmd.Enter);
                     cmd.WriteString("WF End   time= " + cmd.EndTime + cmd.Enter);
-                    cmd.WriteString("Row Count    = " + cmd.RowCount + cmd.Enter);
-                    cmd.WriteString("Col Count    = " + cmd.ColCount + cmd.Enter);
+                    cmd.WriteString("X max coor.  = " + colCount + cmd.Enter);//列数
+                    cmd.WriteString("Y max coor.  = " + rowCount + cmd.Enter);//行数
 
-                    string orientation;
-                    if (cmd.FlatDir == 0)
-                    {
-                        orientation = "Up";
-                    }
-                    else if (cmd.FlatDir == 90)
-                    {
-                        orientation = "Right";
-                    }
-                    else if (cmd.FlatDir == 180)
-                    {
-                        orientation = "Down";
-                    }
-                    else
-                    {
-                        orientation = "Left";
-                    }
+
                     cmd.WriteString("Flat         = " + orientation + cmd.Enter);
                     cmd.WriteString(cmd.Enter);
 
@@ -509,6 +503,13 @@ namespace DataToExcel.ExpDataToExcelFactory
             {
                 cmd.CloseWriter();
             }
+        }
+
+        public static string ReFullName(string fullName,string newFileName)
+        {
+            string parentPath = fullName.Substring(0,fullName.LastIndexOf(@"\"));
+            string newFullName= parentPath +@"\" + newFileName + ".txt";
+            return newFullName;
         }
     }
 }

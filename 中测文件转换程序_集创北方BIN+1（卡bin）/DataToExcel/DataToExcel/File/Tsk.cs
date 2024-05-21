@@ -630,34 +630,41 @@ namespace DataToExcel
                             extSite = buffer[1];
                             extCategory = buffer2[1];
 
-                        } else
+                        }
+                        else
                         {
                             extSite = buffer[0];
                             extCategory = buffer[1];
                         }
 
-                        if (die.Attribute== DieCategory.FailDie|| die.Attribute == DieCategory.PassDie)
+                        if (die.Attribute == DieCategory.FailDie || die.Attribute == DieCategory.PassDie)
                         {
                             if (extCategory == 0)
                             {
                                 Console.WriteLine("error");
                             }
                         }
-
                     }
-                    //    for (int j = 0; j < total; j++)
+                    break;
+                    //for (int j = 0; j < total; j++)
                     //{
                     //    byte[] buffer = this._reader.ReadBytes(2);
+                    //    byte[] buffer2 = this._reader.ReadBytes(2);
                     //    int extSite = buffer[0];
                     //    int extCategory = buffer[1];
-                    //    this._dieMatrix.
-                    //    if (extCategory == 0)
+                    //    if (this.MapVersion == 4)
                     //    {
+                    //        extSite = buffer[1];
+                    //        extCategory = buffer2[1];
 
                     //    }
-
-                    //    buffer = this._reader.ReadBytes(2);
+                    //    else
+                    //    {
+                    //        extSite = buffer[0];
+                    //        extCategory = buffer[1];
+                    //    }
                     //}
+
                 }
 
 

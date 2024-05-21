@@ -95,6 +95,7 @@
     <Compile Include="ExpDataToExcelFactory\ConvenientPower\Device_CPS4061-12-32-00.cs" />
     <Compile Include="ExpDataToExcelFactory\ConvenientPower\Device_YiChong_General.cs" />
     <Compile Include="ExpDataToExcelFactory\Device_General.cs" />
+    <Compile Include="ExpDataToExcelFactory\semiconductorpower\Device_UPA2610-8-8-CP3.cs" />
     <Compile Include="ExpDataToExcelFactory\semiconductorpower\Device_UPM6720-8-16-00.cs" />
     <Compile Include="ExpDataToExcelFactory\semiconductorpower\Device_UPM6722_12_8_00P.cs" />
     <Compile Include="ExpDataToExcelFactory\semiconductorpower\Device_UPM6720-8-16-04P.cs" />
@@ -131,6 +132,7 @@
     <Compile Include="ExpDataToExcelFactory\ChipOne\Device_2065WEB-12-16-01.cs" />
     <Compile Include="ExpDataToExcelFactory\ConvenientPower\Device_CPS8842_12_32_00.cs" />
     <Compile Include="ExpDataToExcelFactory\ConvenientPower\Device_CPS8602_8_32_00P.cs" />
+    <Compile Include="ExpDataToExcelFactory\semiconductorpower\Device_XinHe.cs" />
     <Compile Include="ExpDataToExcelFactory\SmartLink\Device_JieLian.cs" />
     <Compile Include="ExpDataToExcelFactory\ConvenientPower\Device_CPS4019-8-32-01P.cs" />
     <Compile Include="ExpDataToExcelFactory\ConvenientPower\Device_CPS4038-8-32-00P.cs" />
