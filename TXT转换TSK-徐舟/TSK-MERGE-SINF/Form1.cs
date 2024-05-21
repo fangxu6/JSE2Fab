@@ -11,6 +11,7 @@ using System.Windows.Forms;
 using System.Reflection;
 using System.Collections;
 using System.Linq;
+using System.Drawing.Drawing2D;
 
 namespace TSK_MERGE_SINF
 {
@@ -725,7 +726,7 @@ namespace TSK_MERGE_SINF
             int flag2 = 0;
 
 
-            fw = new FileStream("D:\\MERGE\\" +  WaferID_1.TrimEnd('\0'), FileMode.Create);
+            fw = new FileStream("D:\\MERGE\\" + WaferID_1.TrimEnd('\0'), FileMode.Create);
             BinaryWriter bw = new BinaryWriter(fw);
 
 
@@ -990,8 +991,23 @@ namespace TSK_MERGE_SINF
             bw.Flush();
             bw.Close();
             fw.Close();
+            printTxtTskPair(LotNo_1);
 
+        }
 
+        private void printTxtTskPair(string LotNo_1)
+        {
+            ////////////////////////////////输出TXT//////////////////////////////////
+            FileStream fwt = new FileStream("D:\\MERGE\\" + LotNo_1 + "_txt_with_tsk" + ".txt", FileMode.Create);
+            StreamWriter swt = new StreamWriter(fwt);
+            for (int ii = 0; ii < tsk_Name.Count; ii++)
+            {
+                swt.WriteLine(txt_Name[ii] + " " + tsk_Name[ii]);
+            }
+            swt.WriteLine();
+
+            swt.Close();
+            fwt.Close();
         }
 
         private static void convertToFailBin(byte[] firstbyte1_1, byte[] thirdbyte1_1, byte[] thirdbyte2_1, int binNo, int k)
