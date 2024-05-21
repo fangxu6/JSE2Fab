@@ -16,6 +16,9 @@ namespace TSK_MERGE_SINF
 {
     public partial class Form1 : Form
     {
+        ArrayList txt_Name = new ArrayList();
+        ArrayList tsk_Name = new ArrayList();
+
         public Form1()
         {
             InitializeComponent();
@@ -47,23 +50,28 @@ namespace TSK_MERGE_SINF
 
         private void LoadTSK()
         {
-            OpenFileDialog dialog = new OpenFileDialog();
-            dialog.RestoreDirectory = false;
-            dialog.Multiselect = true;
-
+            tsk_Name.Clear();
+            FolderBrowserDialog dialog = new FolderBrowserDialog();
             if (dialog.ShowDialog() == DialogResult.OK)
             {
-                foreach (string str in dialog.FileNames)
+                this.textBox1.Text = dialog.SelectedPath;
+                DirectoryInfo TheFolder = new DirectoryInfo(this.textBox1.Text);
+
+                foreach (FileInfo str in TheFolder.GetFiles("*", SearchOption.AllDirectories))
                 {
-                    this.textBox1.Text = str;
+                    tsk_Name.Add(str.Name);
 
                 }
+            }
+
+            if (txt_Name.Count != tsk_Name.Count)
+            {
+                MessageBox.Show("图谱数量不对应");
             }
         }
 
         private void button2_Click(object sender, EventArgs e)
         {
-
             try
             {
                 this.LoadSINFFile();
@@ -81,15 +89,16 @@ namespace TSK_MERGE_SINF
 
         private void LoadSINF()
         {
-            OpenFileDialog dialog = new OpenFileDialog();
-            dialog.RestoreDirectory = false;
-            dialog.Multiselect = true;
-
+            txt_Name.Clear();
+            FolderBrowserDialog dialog = new FolderBrowserDialog();
             if (dialog.ShowDialog() == DialogResult.OK)
             {
-                foreach (string str in dialog.FileNames)
+                this.textBox2.Text = dialog.SelectedPath;
+                DirectoryInfo TheFolder = new DirectoryInfo(this.textBox2.Text);
+
+                foreach (FileInfo str in TheFolder.GetFiles("*", SearchOption.AllDirectories))
                 {
-                    this.textBox2.Text = str;
+                    txt_Name.Add(str.Name);
 
                 }
             }
@@ -115,78 +124,21 @@ namespace TSK_MERGE_SINF
         private void button3_Click(object sender, EventArgs e)
         {
 
-            //if (this.textBox2.Text == "")
-            //{
-            //    MessageBox.Show("请选择txt图谱");
-            //}
-
-            //if (this.textBox1.Text == "")
-            //{
-            //    MessageBox.Show("请选择TSK图谱");
-            //}
-            string[] txts = { "H6P456-11B4" };
-            //            string[] txts = { "HAHM23-01",
-            //"HAHM23-02",
-            //"HAHM23-03",
-            //"HAHM23-04",
-            //"HAHM23-05",
-            //"HAHM23-06",
-            //"HAHM23-07",
-            //"HAHM23-08",
-            //"HAHM23-09",
-            //"HAHM23-10",
-            //"HAHM23-11",
-            //"HAHM23-12",
-            //"HAHM23-13",
-            //"HAHM23-14",
-            //"HAHM23-15",
-            //"HAHM23-16",
-            //"HAHM23-17",
-            //"HAHM23-18",
-            //"HAHM23-19",
-            //"HAHM23-20",
-            //"HAHM23-21",
-            //"HAHM23-22",
-            //"HAHM23-23",
-            //"HAHM23-24",
-            //"HAHM23-25" };
-            //            string[] txts = { "HAHK34-01","HAHK34-02","HAHK34-03","HAHK34-04","HAHK34-05","HAHK34-06","HAHK34-07","HAHK34-08","HAHK34-09","HAHK34-10","HAHK34-11","HAHK34-12",
-            //"HAHK34-13","HAHK34-14","HAHK34-15","HAHK34-16","HAHK34-17","HAHK34-18","HAHK34-19","HAHK34-20","HAHK34-21","HAHK34-22","HAHK34-23","HAHK34-24","HAHK34-25" };
-
-            string[] tsks = { "011.H6P456-11B4" };
-                //string[] tsks
-                //   = { "001.HAHK34-01E4","002.HAHK34-02D7","003.HAHK34-03D2","004.HAHK34-04C5","005.HAHK34-05C0","006.HAHK34-06B3","007.HAHK34-07A6","008.HAHK34-08A1","009.HAHK34-09G7",
-                //"010.HAHK34-10A1","011.HAHK34-11G7","012.HAHK34-12G2","013.HAHK34-13F5","014.HAHK34-14F0","015.HAHK34-15E3","016.HAHK34-16D6","017.HAHK34-17D1","018.HAHK34-18C4","019.HAHK34-19B7",
-                //"020.HAHK34-20C4","021.HAHK34-21B7","022.HAHK34-22B2","023.HAHK34-23A5","024.HAHK34-24A0","025.HAHK34-25G6" };
-                //            string[] tsks
-                //               = { "001.HAHM23-01B5",
-                //"002.HAHM23-02B0",
-                //"003.HAHM23-03A3",
-                //"004.HAHM23-04H1",
-                //"005.HAHM23-05G4",
-                //"006.HAHM23-06F7",
-                //"007.HAHM23-07F2",
-                //"008.HAHM23-08E5",
-                //"009.HAHM23-09E0",
-                //"010.HAHM23-10E5",
-                //"011.HAHM23-11E0",
-                //"012.HAHM23-12D3",
-                //"013.HAHM23-13C6",
-                //"014.HAHM23-14C1",
-                //"015.HAHM23-15B4",
-                //"016.HAHM23-16A7",
-                //"017.HAHM23-17A2",
-                //"018.HAHM23-18H0",
-                //"019.HAHM23-19G3",
-                //"020.HAHM23-20H0",
-                //"021.HAHM23-21G3",
-                //"022.HAHM23-22F6",
-                //"023.HAHM23-23F1",
-                //"024.HAHM23-24E4",
-                //"025.HAHM23-25D7"};
-            for (int i = 0; i < txts.Length; i++)
+            if (this.textBox2.Text == "")
             {
-                Txt2Tsk(txts[i], tsks[i]);
+                MessageBox.Show("请选择txt图谱");
+            }
+
+            if (this.textBox1.Text == "")
+            {
+                MessageBox.Show("请选择TSK图谱");
+            }
+            
+            for (int i = 0; i < tsk_Name.Count; i++)
+            {
+                string txtFile = this.textBox2.Text + @"\" + txt_Name[i];
+                string tskFile = this.textBox1.Text + @"\" + tsk_Name[i];
+                Txt2Tsk(txtFile, tskFile);
             }
             if (MessageBox.Show("转换成功，是否打开?", "确定", MessageBoxButtons.YesNo) == DialogResult.Yes)
             {
@@ -195,16 +147,14 @@ namespace TSK_MERGE_SINF
 
         }
 
-        private void Txt2Tsk(string text1, string text2)
+        private void Txt2Tsk(string txtFile, string tskFile)
         {
             txtRowct = 0;
             txtColct = 0;
-            this.textBox2.Text = "C:\\Users\\fangx\\Desktop\\H6P456.1\\" + text1 + ".txt";
-            this.textBox1.Text = "C:\\Users\\fangx\\Desktop\\H6P456.8\\" + text2 ;
             //////////TXT-READ//////////////////////////////
             FileStream txt_1;
 
-            txt_1 = new FileStream(this.textBox2.Text, FileMode.Open, FileAccess.Read);
+            txt_1 = new FileStream(txtFile, FileMode.Open, FileAccess.Read);
             StreamReader read = new StreamReader(txt_1, Encoding.Default);
 
 
@@ -264,7 +214,7 @@ namespace TSK_MERGE_SINF
             FileStream fs_1;
 
 
-            fs_1 = new FileStream(this.textBox1.Text, FileMode.Open);
+            fs_1 = new FileStream(tskFile, FileMode.Open);
             BinaryReader br_1 = new BinaryReader(fs_1);
 
             ///TSK1头文件-------------------------------------------------------//
@@ -775,7 +725,7 @@ namespace TSK_MERGE_SINF
             int flag2 = 0;
 
 
-            fw = new FileStream("D:\\MERGE\\" + Convert.ToInt32(this.comboBox1.Text).ToString("000") + "." + WaferID_1.TrimEnd('\0'), FileMode.Create);
+            fw = new FileStream("D:\\MERGE\\" +  WaferID_1.TrimEnd('\0'), FileMode.Create);
             BinaryWriter bw = new BinaryWriter(fw);
 
 
