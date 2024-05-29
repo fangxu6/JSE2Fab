@@ -42,25 +42,16 @@ namespace DataToExcel.ExpDataToExcelFactory
                     {
                         for (int x = 0; x < cmd.DieMatrix.XMax; x++)//57
                         {
-
-                            if (cmd.DieMatrix[x, y].Attribute.Equals(DieCategory.FailDie))
+                            switch (cmd.DieMatrix[x, y].Attribute)
                             {
-                                if (xMin > x)
-                                {
-                                    xMin = x;
-                                }
-                                if (yMin > y)
-                                {
-                                    yMin = y;
-                                }
-                                if (xMax < x)
-                                {
-                                    xMax = x;
-                                }
-                                if (yMax < y)
-                                {
-                                    yMax = y;
-                                }
+                                case DieCategory.PassDie:
+                                case DieCategory.FailDie:
+                                case DieCategory.SkipDie2:
+                                    if (xMin > x) { xMin = x; }
+                                    if (yMin > y) { yMin = y; }
+                                    if (yMax < y) { yMax = y; }
+                                    if (xMax < x) { xMax = x; }
+                                    break;
                             }
                         }
                     }
