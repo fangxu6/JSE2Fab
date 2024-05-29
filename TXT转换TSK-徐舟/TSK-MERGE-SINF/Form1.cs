@@ -738,7 +738,7 @@ namespace TSK_MERGE_SINF
                 {
 
 
-                    if (txtNewData[k].ToString() == "F")//sinf fail,需要改为fail属性，BIN也需要改
+                    if (txtNewData[k].ToString() == "X")//sinf fail,需要改为fail属性，BIN也需要改
                     {
                         convertToFailBin(firstbyte1_1, thirdbyte1_1, thirdbyte2_1, inkBinNo, k);
                     }
