@@ -1047,10 +1047,6 @@ namespace DataToExcel
 
 
                 ////////////////////////////////输出TXT//////////////////////////////////
-               
-
-                
-
                 if (!Directory.Exists("D:\\MERGE\\" + LotNo_1 + "\\"))
                 {
                     Directory.CreateDirectory("D:\\MERGE\\" + LotNo_1 + "\\");
