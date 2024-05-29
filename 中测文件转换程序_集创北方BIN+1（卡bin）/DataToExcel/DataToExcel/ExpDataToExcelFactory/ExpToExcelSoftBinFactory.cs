@@ -22,7 +22,7 @@ namespace DataToExcel.ExpDataToExcelFactory
                     clazzNmae = "DataToExcel.ExpDataToExcelFactory.Device_CPS4061_12_32_00";
                 } else
                 {
-                    clazzNmae = "DataToExcel.ExpDataToExcelFactory.Device_UPM6720_8_16_00";
+                    clazzNmae = "DataToExcel.ExpDataToExcelFactory.Device_General";
                 }
                 o = Type.GetType(clazzNmae);
                 //MessageBox.Show("该型号未定义，请联系IT并告知批次号。");
