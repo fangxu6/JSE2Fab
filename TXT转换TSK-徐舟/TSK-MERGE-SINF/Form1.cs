@@ -31,6 +31,9 @@ namespace TSK_MERGE_SINF
         int tskPass = 0;
         int tskFail = 0;
 
+        int tskTotal = 0;
+
+
         private void button1_Click(object sender, EventArgs e)
         {
 
@@ -152,6 +155,9 @@ namespace TSK_MERGE_SINF
         {
             txtRowct = 0;
             txtColct = 0;
+            this.txtFail = 0;
+            this.txtPass = 0;
+            this.tskTotal = 0;
             //////////TXT-READ//////////////////////////////
             FileStream txt_1;
 
@@ -360,10 +366,19 @@ namespace TSK_MERGE_SINF
             {
                 arryfirstbyte1_1.Add(br_1.ReadByte());
                 arryfirstbyte2_1.Add(br_1.ReadByte());
-                arrysecondbyte1_1.Add(br_1.ReadByte());
+                byte buff = br_1.ReadByte();
+                arrysecondbyte1_1.Add(buff);
                 arrysecondbyte2_1.Add(br_1.ReadByte());
                 arrythirdbyte1_1.Add(br_1.ReadByte());
                 arrythirdbyte2_1.Add(br_1.ReadByte());
+
+                // die property
+                int s1 = (buff >> 6) & 0x3;
+                if (s1 == 1)
+                {
+                    this.tskTotal++;
+                }
+
 
             }
 
@@ -504,9 +519,9 @@ namespace TSK_MERGE_SINF
             //TODO 
             string[,] TxtMap = new string[this.txtRowct, this.txtColct];
 
-            for (int i = 0; i < this.txtRowct; i++)
+            for (int i = 0; i < this.txtRowct; i++)//y坐标
             {
-                for (int j = 0; j < this.txtColct; j++)
+                for (int j = 0; j < this.txtColct; j++)//x坐标
                 {
 
                     TxtMap[i, j] = DegtxtData[j + i * txtColct];
@@ -529,9 +544,9 @@ namespace TSK_MERGE_SINF
             byte[] thirdbyte2_1 = (byte[])arrythirdbyte2_1.ToArray(typeof(byte));
             string[,] TSKMap = new string[col1_1, row1_1];
 
-            for (int i = 0; i < col1_1; i++)
+            for (int i = 0; i < col1_1; i++)//y坐标
             {
-                for (int j = 0; j < row1_1; j++)
+                for (int j = 0; j < row1_1; j++)//x坐标
                 {
                     if ((secondbyte1_1[j + i * row1_1] & 192) == 0)//Skip Die
                     {
@@ -710,15 +725,25 @@ namespace TSK_MERGE_SINF
             }
 
             //////////////////////////////PASS数比对///////////////////////////////////////
+            //旋转角度后的比较
+            if (this.txtPass + this.txtFail != (tskPass + tskFail))
+            {
+                if (MessageBox.Show("旋转角度后txt后总颗数不匹配!", "确认", MessageBoxButtons.YesNo) == DialogResult.Yes)
+                {
+                    Environment.Exit(0);
+                }
+            }
 
-            //if (this.txtPass + this.txtFail != (tskPass + tskFail))
-            //{
+            //txt和tsk颗数比较
+            if (this.txtPass + this.txtFail != this.tskTotal)
+            {
+                if (MessageBox.Show("txt和tsk总颗数不匹配!", "确认", MessageBoxButtons.YesNo) == DialogResult.Yes)
+                {
+                    Environment.Exit(0);
+                }
+            }
 
-            //    if (MessageBox.Show("总颗数不匹配!", "确认", MessageBoxButtons.YesNo) == DialogResult.Yes)
-            //    {
-            //        //Environment.Exit(0);
-            //    }
-            //}
+
 
             //------------------------------根据SINF生成新的TSK-MAP----------------------------//
 
@@ -1085,10 +1110,10 @@ namespace TSK_MERGE_SINF
                         case "COLCT":
                             this.txtColct = Convert.ToInt32(body);
                             break;
-                        case "Pass Die":
+                        case "PASS DIE":
                             this.txtPass = Convert.ToInt32(body);
                             break;
-                        case "Fail Die":
+                        case "FAIL DIE":
                             this.txtFail = Convert.ToInt32(body);
                             break;
                         case "GROSS_DIES":
@@ -1134,6 +1159,7 @@ namespace TSK_MERGE_SINF
                     else if (binNo.Equals("00"))
                     {
                         txtData.Add("0");
+                        this.txtPass++;
                     }
                     else if (binNo.Equals("@@"))//对位点比较
                     {
@@ -1142,6 +1168,7 @@ namespace TSK_MERGE_SINF
                     else
                     {
                         txtData.Add("X");
+                        this.txtFail++;
                     }
                     i = i + 3;
                 }
@@ -1162,10 +1189,12 @@ namespace TSK_MERGE_SINF
                     else if (binNo.Equals("000"))
                     {
                         txtData.Add("0");
+                        this.txtPass++;
                     }
                     else
                     {
                         txtData.Add("X");
+                        this.txtFail++;
                     }
                     i = i + 4;
                 }
