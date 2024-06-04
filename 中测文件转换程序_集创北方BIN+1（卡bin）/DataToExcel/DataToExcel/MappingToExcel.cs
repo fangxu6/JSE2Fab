@@ -795,11 +795,6 @@ namespace DataToExcel
 
         private bool ExpDataToTSK(string newFileDirectory)
         {
-            
-           
-
-
-
             waferNum = this.lsvItems.Items.Count;
             
 
@@ -892,10 +887,6 @@ namespace DataToExcel
 
                 }
             }
-
-
-
-
         }
 
         private void lsvItems_MouseClick(object sender, MouseEventArgs e)

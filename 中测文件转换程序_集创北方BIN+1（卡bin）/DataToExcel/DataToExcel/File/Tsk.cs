@@ -570,12 +570,12 @@ namespace DataToExcel
                                     case 1:
                                         //die.Attribute = DieCategory.PassDie;
                                         die.Attribute = DieCategory.PassDie;
-                                        die.Bin = die1[i, 4] + 1;//-------2013.7.18
+                                        die.Bin = die1[i, 4] + 1;//-------2013.7.18  还是用的基础信息
                                         break;
                                     case 2:
                                     case 3:
                                         die.Attribute = DieCategory.FailDie;
-                                        die.Bin = die1[i, 4] + 1;    //zjf 2008.08.28
+                                        die.Bin = die1[i, 4] + 1;    //zjf 2008.08.28 还是用的基础信息
                                         break;
                                     default:
                                         die.Attribute = DieCategory.Unknow;
