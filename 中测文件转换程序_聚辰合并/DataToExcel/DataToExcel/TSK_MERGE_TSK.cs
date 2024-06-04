@@ -136,7 +136,10 @@ namespace DataToExcel
             object[,] LotSum = new object[1000, 1000];
             Dictionary<string, int> hashMap = new Dictionary<string, int>();
             Dictionary<string, int> binDiffHashMap = new Dictionary<string, int>();
-            Dictionary<string, int[]> binIndexXY = new Dictionary<string, int[]>();
+            Dictionary<string, List<DieData>> binDiffOriginalListMap = new Dictionary<string, List<DieData>>();
+            Dictionary<string, List<DieData>> binDiffNewListMap = new Dictionary<string, List<DieData>>();
+
+
             //ArrayList binIndexXY= new ArrayList();
             for (int ii = 0; ii < tsk_Name1.Count; ii++)
             {
@@ -622,10 +625,29 @@ namespace DataToExcel
 
                 /////--------------------Map版本为2，且无扩展信息TSK修改BIN信息代码-------------------////
                 //const int inkBinNo = 61;
+                int x;
+                int y;
+                List<DieData> dieArry = new List<DieData>();
+                List<DieData> dieOriginalArry = new List<DieData>();
+
                 if ((arry_1.Count == 0) && ((Convert.ToInt32(MapVersion_1) == 2)))
                 {
                     for (int k = 0; k < row1_1 * col1_1; k++)
                     {
+                        DieData die = new DieData();
+                        DieData origianlDie = new DieData();
+
+
+                        int s4 = (secondbyte1_1[k] >> 3) & 0x1;
+                        int highXNumber = (firstbyte1_1[k] & 0x1) * 256;
+                        int f6 = firstbyte2_1[k] & 0xff + highXNumber;
+
+                        int s5 = (secondbyte1_1[k] >> 2) & 0x1;
+                        int highYNumber = (secondbyte1_1[k] & 0x1) * 256;
+                        int s7 = secondbyte2_1[k] & 0xff + highYNumber;
+
+
+
                         int binNo = thirdbyte21_1[k] & 0xff;
                         int binNoFromTsk1 = thirdbyte1_1[k] & 0xff;
                         if (binNo==49|| binNo == 50)
@@ -634,6 +656,22 @@ namespace DataToExcel
                         }
                         if ((firstbyte1_1[k] & 128) == 128)
                         {
+                            die.X = s4 == 0 ? f6 : f6 * (-1);
+                            die.Y = s5 == 0 ? s7 : s7 * (-1);
+                            die.Bin = binNo;
+                            die.Attribute = DieCategory.FailDie;
+
+                            origianlDie.X = die.X;
+                            origianlDie.Y = die.Y;
+                            origianlDie.Bin = binNoFromTsk1;
+                            origianlDie.Attribute = DieCategory.FailDie;
+
+                            if (!binNo.Equals(binNoFromTsk1))
+                            {
+                                dieArry.Add(die);
+                                dieOriginalArry.Add(origianlDie);
+                            }
+
                             getDifferentBinNo(binDiffHashMap, tskcp2name, binNo, binNoFromTsk1);
                             convertToFailBin(firstbyte1_1, firstbyte2_1, secondbyte1_1, secondbyte2_1,thirdbyte1_1, thirdbyte2_1, 
                                 firstbyte21_1, firstbyte22_1, secondbyte21_1, secondbyte22_1, thirdbyte21_1, thirdbyte22_1, k);
@@ -641,13 +679,24 @@ namespace DataToExcel
 
                     }
                 }
-
+                
                 /////--------------------Map版本为2，且有扩展信息TSK修改BIN信息代码-------------------////
                 if (arry_1.Count > 0)
                 {
                     for (int k = 0; k < row1_1 * col1_1; k++)
                     {
-                        
+                        DieData die = new DieData();
+                        DieData origianlDie = new DieData();
+
+                        int s4 = (secondbyte1_1[k] >> 3) & 0x1;
+                        int highXNumber = (firstbyte1_1[k] & 0x1) * 256;
+                        int f6 = firstbyte2_1[k] & 0xff + highXNumber;
+
+                        int s5 = (secondbyte1_1[k] >> 2) & 0x1;
+                        int highYNumber = (secondbyte1_1[k] & 0x1) * 256;
+                        int s7 = secondbyte2_1[k] & 0xff + highYNumber;
+
+
                         if (Convert.ToInt32(MapVersion_1) == 2)
                         {
                             int binNo = Convert.ToByte(arry2_1[4 * k + 1]);
@@ -662,6 +711,24 @@ namespace DataToExcel
                             }
                             if ((firstbyte1_1[k] & 128) == 128)
                             {
+
+                                die.X = s4 == 0 ? f6 : f6 * (-1);
+                                die.Y = s5 == 0 ? s7 : s7 * (-1);
+                                die.Bin = binNo;
+                                die.Attribute = DieCategory.FailDie;
+
+                                origianlDie.X = die.X;
+                                origianlDie.Y = die.Y;
+                                origianlDie.Bin = binNoFromTsk1;
+                                origianlDie.Attribute = DieCategory.FailDie;
+
+                                if (!binNo.Equals(binNoFromTsk1))
+                                {
+                                    dieArry.Add(die);
+                                    dieOriginalArry.Add(origianlDie);   
+                                }
+
+
                                 getDifferentBinNo(binDiffHashMap, tskcp2name, binNo, binNoFromTsk1);
 
                                 convertToFailBin(firstbyte1_1, firstbyte2_1, secondbyte1_1, secondbyte2_1, thirdbyte1_1, thirdbyte2_1,
@@ -686,6 +753,17 @@ namespace DataToExcel
                             }
                             if ((firstbyte1_1[k] & 128) == 128)
                             {
+                                die.X = s4 == 0 ? f6 : f6 * (-1);
+                                die.Y = s5 == 0 ? s7 : s7 * (-1);
+                                die.Bin = binNo;
+                                die.Attribute = DieCategory.FailDie;
+
+                                if (!binNo.Equals(binNoFromTsk1))
+                                {
+                                    dieArry.Add(die);
+                                }
+
+
                                 getDifferentBinNo(binDiffHashMap, tskcp2name, binNo, binNoFromTsk1);
                                 convertToFailBin(firstbyte1_1, firstbyte2_1, secondbyte1_1, secondbyte2_1, thirdbyte1_1, thirdbyte2_1,
                                     firstbyte21_1, firstbyte22_1, secondbyte21_1, secondbyte22_1, thirdbyte21_1, thirdbyte22_1, k);
@@ -700,7 +778,12 @@ namespace DataToExcel
                 }
 
 
-             
+
+                if (binDiffHashMap.ContainsKey(tskcp2name))
+                {
+                    binDiffNewListMap.Add(tskcp2name, dieArry);
+                    binDiffOriginalListMap.Add(tskcp2name, dieOriginalArry);
+                }
 
 
 
@@ -1120,6 +1203,27 @@ namespace DataToExcel
                 swt.WriteLine(kvp.Key + "\t bin count: " + kvp.Value);
             }
 
+            swt.WriteLine("Bin Count and Bin Index of (x,y)");
+            foreach (KeyValuePair<string, List<DieData>> kvp in binDiffNewListMap)
+            {
+                List<DieData> dies = kvp.Value;
+                swt.WriteLine(kvp.Key + "\t bin count: " + dies.Count);
+
+                for(int i = 0; i < dies.Count; i++)
+                {
+                    DieData die = dies[i];
+                    DieData origianlDie = binDiffOriginalListMap[kvp.Key][i];
+                    swt.WriteLine(string.Format("x = {0}, y = {1}, binNo={2}, origianlBinNo={3}", die.X, die.Y, die.Bin,origianlDie.Bin));
+
+                }
+
+                //foreach (DieData die in dies)
+                //{
+                //}
+            }
+
+            
+
 
             swt.Close();
             fwt.Close();
@@ -1150,7 +1254,7 @@ namespace DataToExcel
                 }
             }
         }
-
+        
         private void convertToFailBin(byte[] firstbyte1_1, byte[] firstbyte2_1, byte[] secondbyte1_1, byte[] secondbyte2_1, byte[] thirdbyte1_1, byte[] thirdbyte2_1, 
             byte[] firstbyte21_1, byte[] firstbyte22_1, byte[] secondbyte21_1, byte[] secondbyte22_1, byte[] thirdbyte21_1, byte[] thirdbyte22_1, int k)
         {
