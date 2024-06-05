@@ -54,6 +54,7 @@ namespace DataToExcel.ExpDataToExcelFactory
                 else if (die.Attribute == DieCategory.PassDie)
                     cmdtxt.PassDie += 1;
             }
+            cmdtxt.TotalDie = cmdtxt.FailDie + cmdtxt.PassDie;
 
             // 旋转角度
             if (defatultRotate() > 0)
