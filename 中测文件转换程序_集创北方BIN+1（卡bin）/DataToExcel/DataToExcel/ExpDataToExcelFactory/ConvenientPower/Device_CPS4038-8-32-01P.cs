@@ -4,7 +4,7 @@ using System;
 
 namespace DataToExcel.ExpDataToExcelFactory
 {
-    public class Device_CPS4038_8_32_00P : ExpToExcelSoftBin
+    public class Device_CPS4038_8_32_01P : ExpToExcelSoftBin
     {
         public override void expToExcel(Worksheet worksheet)
         {

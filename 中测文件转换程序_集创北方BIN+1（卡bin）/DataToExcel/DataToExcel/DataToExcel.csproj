@@ -90,6 +90,7 @@
       <DependentUpon>AllMapMerge.cs</DependentUpon>
     </Compile>
     <Compile Include="ExpDataToExcelFactory\ChipOne\Device_7972ZC-8-2-L01.cs" />
+    <Compile Include="ExpDataToExcelFactory\ConvenientPower\Device_CPS4038-8-32-01P.cs" />
     <Compile Include="ExpDataToExcelFactory\megain\Device_MG7530-8-16-CP1.cs" />
     <Compile Include="ExpDataToExcelFactory\ChipOne\Device_C8N003-12-46-00P.cs" />
     <Compile Include="ExpDataToExcelFactory\ChipOne\Device_CGD001-12-16-00P.cs" />
