@@ -1,4 +1,5 @@
-﻿using System;
+﻿using NPOI.OpenXmlFormats.Dml.Diagram;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -13,6 +14,8 @@ using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Xml;
+using System.Xml.Serialization;
 
 namespace FileChange
 {
@@ -1787,5 +1790,88 @@ namespace FileChange
             }
         }
         #endregion
+
+        private void button5_Click(object sender, EventArgs e)
+        {
+            ///Methos1
+            //clsPerson p = new clsPerson();
+            //p.FirstName = "Jeff";
+            //p.MI = "A";
+            //p.LastName = "Price";
+            //System.Xml.Serialization.XmlSerializer x = new System.Xml.Serialization.XmlSerializer(p.GetType());
+            //x.Serialize(Console.Out, p);
+            //Console.WriteLine();
+            //Console.ReadLine();
+
+            var tangoCpFormat = new TangoCpFormat
+            {
+                Header = new Header
+                {
+                    Version = "1.0",
+                    LotId = "LOT1234",
+                    OpName = "Operator1",
+                    WafNo = 1,
+                    WaferId = "WAF1234",
+                    ProductId = "PROD1234",
+                    GrossDie = 1000,
+                    TestDie = 950,
+                    PassCount = 900,
+                    EqpId = "EQP1234",
+                    EqpName = "Equipment1",
+                    SubsysId = "SUBSYS1234",
+                    OperatorId = "OP1234",
+                    TestPg = "TEST1234",
+                    StartTime = DateTime.Now.AddHours(-1),
+                    EndTime = DateTime.Now,
+                    ProbCardId = "PROB1234",
+                    LoadBoardId = "LOAD1234",
+                    Temperature = 25,
+                    BinDefName = "BINDEF1234",
+                    VendorId = "VENDOR1234",
+                    VendorLotId = "VENDORLOT1234",
+                    FabLotId = "FABLOT1234",
+                    PartId = "PART1234",
+                    Notch = "N",
+                    XyDir = 1,
+                    TestVendorId = "TESTVENDOR1234",
+                    LotType = "",
+                    ExtendInfo = "",
+                    RawFile = ""
+                },
+                Limits = new Limits
+                {
+                    Bin = new List<string> { "BIN1", "BIN2" }
+                },
+                DieData = new DieData
+                {
+                    BinSum = new BinSum
+                    {
+                        Bin = new List<string> { "BIN_SUM1", "BIN_SUM2" }
+                    },
+                    BinMap = new BinMap
+                    {
+                        Bin = "BIN_MAP_DATA"
+                    }
+                }
+            };
+
+            XmlSerializer serializer = new XmlSerializer(typeof(TangoCpFormat));
+
+            // 保存到文件
+            using (StreamWriter file = new StreamWriter("tango.xml"))
+            {
+                serializer.Serialize(file, tangoCpFormat);
+            }
+
+            Console.WriteLine("XML file generated and saved as tango.xml");
+        }
+
+        public class clsPerson
+        {
+            public string FirstName;
+            public string MI;
+            public string LastName;
+        }
+
     }
 }

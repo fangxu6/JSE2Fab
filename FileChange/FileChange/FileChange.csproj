@@ -85,6 +85,7 @@
     <Compile Include="ty_csv_helper.cs" />
     <Compile Include="ty_csv_helper01.cs" />
     <Compile Include="ty_csv_helper03.cs" />
+    <Compile Include="XML\TangoCpFormat.cs" />
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
     </EmbeddedResource>
@@ -109,5 +110,6 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

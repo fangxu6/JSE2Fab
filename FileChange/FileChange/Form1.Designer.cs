@@ -61,6 +61,7 @@ namespace FileChange
             this.textBox8 = new System.Windows.Forms.TextBox();
             this.label13 = new System.Windows.Forms.Label();
             this.textBox13 = new System.Windows.Forms.TextBox();
+            this.button5 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.tableLayoutPanel2.SuspendLayout();
             this.SuspendLayout();
@@ -443,11 +444,23 @@ namespace FileChange
             this.textBox13.TabIndex = 18;
             this.textBox13.Text = "2.0";
             // 
+            // button5
+            // 
+            this.button5.Location = new System.Drawing.Point(697, 10);
+            this.button5.Margin = new System.Windows.Forms.Padding(4);
+            this.button5.Name = "button5";
+            this.button5.Size = new System.Drawing.Size(148, 68);
+            this.button5.TabIndex = 26;
+            this.button5.Text = "测试";
+            this.button5.UseVisualStyleBackColor = true;
+            this.button5.Click += new System.EventHandler(this.button5_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 18F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1178, 744);
+            this.Controls.Add(this.button5);
             this.Controls.Add(this.tableLayoutPanel2);
             this.Controls.Add(this.dataGridView1);
             this.Controls.Add(this.button4);
@@ -497,6 +510,7 @@ namespace FileChange
         private System.Windows.Forms.DataGridViewTextBoxColumn Column2;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column4;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column3;
+        private System.Windows.Forms.Button button5;
     }
 }
 
