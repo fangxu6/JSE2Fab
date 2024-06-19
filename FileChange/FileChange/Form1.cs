@@ -1,4 +1,8 @@
-﻿using NPOI.OpenXmlFormats.Dml.Diagram;
+﻿using CsvHelper;
+using CsvHelper.Configuration;
+using NPOI.OpenXmlFormats.Dml.Diagram;
+using NPOI.SS.Formula.Functions;
+using NPOI.Util;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -16,6 +20,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Xml;
 using System.Xml.Serialization;
+using Match = System.Text.RegularExpressions.Match;
 
 namespace FileChange
 {
@@ -51,7 +56,7 @@ namespace FileChange
             for (int i = 0; i < fileList.Count; i++)
             {
                 string str = fileList[i].Split(',')[0];
-                string strTime= fileList[i].Split(',')[1];
+                string strTime = fileList[i].Split(',')[1];
                 string searchString = "csv";
 
                 bool containsCsv = str.IndexOf(searchString, StringComparison.OrdinalIgnoreCase) >= 0;
@@ -91,9 +96,9 @@ namespace FileChange
         #endregion
 
         #region 获取#前的文件名
-        public  string ExtractString(string input, string pattern)
+        public string ExtractString(string input, string pattern)
         {
-            Match match = Regex.Match(input, pattern);
+            System.Text.RegularExpressions.Match match = Regex.Match(input, pattern);
             if (match.Success)
             {
                 return match.Groups[1].Value;
@@ -118,7 +123,7 @@ namespace FileChange
                 MessageBox.Show("请选择目标路径", "系统信息");
                 return;
             }
-            if (this.dataGridView1.Rows.Count<=0)
+            if (this.dataGridView1.Rows.Count <= 0)
             {
                 MessageBox.Show("该文件夹下没有需要转换的文件，请核对文件路径是否正确", "系统信息");
                 return;
@@ -140,7 +145,7 @@ namespace FileChange
             string pattern = @"\\([^\\#]+)#";
             string s = ExtractString(filePath, pattern);
             #region CSV/XML
-            string mubiaoPath = fileMuBiao + @"\csv"+s;
+            string mubiaoPath = fileMuBiao + @"\csv" + s;
             if (!Directory.Exists(mubiaoPath))
             {
                 Directory.CreateDirectory(mubiaoPath);
@@ -160,7 +165,7 @@ namespace FileChange
                 string pathlist = pathGroup[i].Split('@')[0];
                 int a = pathlist.Split('$').Length;
                 string nameStrings = GetName(pathlist.Split('$')[0]);
-                if (a==1)
+                if (a == 1)
                 {
                     //List<string> nameList = GetName(pathlist);
                     //string nameStrings = textBox5.Text + "_" + nameList[0] + "_" + textBox11.Text + "_" + nameList[1] + "_" + textBox6.Text + "_" +  pathGroup[i].Split('@')[1];
@@ -194,11 +199,11 @@ namespace FileChange
                     continue;
                 }
                 string filename = fileMuBiao + "\\" + fileList[j].Split(',')[0];
-                MyFileAnalyDo(filename, s,folderName);
+                MyFileAnalyDo(filename, s, folderName);
             }
             #endregion
 
-            MessageBox.Show("解析完成","系统信息");
+            MessageBox.Show("解析完成", "系统信息");
         }
         #endregion
 
@@ -246,7 +251,7 @@ namespace FileChange
             //}
             for (int i = 0; i < files.Length; i++)
             {
-                list.Add(files[i].Name+","+files[i].LastWriteTime.ToString("yyyyMMddHHmmss"));//添加文件名到列表中 
+                list.Add(files[i].Name + "," + files[i].LastWriteTime.ToString("yyyyMMddHHmmss"));//添加文件名到列表中 
             }
             //获取子文件夹内的文件列表，递归遍历  
             foreach (DirectoryInfo dd in directs)
@@ -297,7 +302,7 @@ namespace FileChange
         #endregion
 
         #region 转换csv文件
-        public static DataTable  CSVGetDataTable(string filePath)
+        public static DataTable CSVGetDataTable(string filePath)
         {
             //实例化一个datatable用来存储数据
             DataTable dt = new DataTable();
@@ -331,7 +336,7 @@ namespace FileChange
         {
             int titleNum = dtTitle.Rows.Count;
             int contentNum = dtContent.Rows.Count;
-            if (titleNum==0|| contentNum==0)
+            if (titleNum == 0 || contentNum == 0)
             {
                 return null;
             }
@@ -343,7 +348,7 @@ namespace FileChange
             int start = 0;
             for (int i = 0; i < dt.Rows.Count; i++)
             {
-                if (o==1)
+                if (o == 1)
                 {
                     continue;
                 }
@@ -358,7 +363,7 @@ namespace FileChange
             List<string> oldList = new List<string>();
             List<string> newList = new List<string>();
             List<string> indexList = new List<string>();
-            List<string> intinList=new List<string>();
+            List<string> intinList = new List<string>();
             for (int i = start; i < dt.Rows.Count; i++)
             {
                 dt.Rows[i]["id"] = i + 1;
@@ -379,7 +384,7 @@ namespace FileChange
                     intinList.Add(id);
                     continue;
                 }
-                if (str2 == "" || str3 == "" || str2 == "0" || str3 == "0" )
+                if (str2 == "" || str3 == "" || str2 == "0" || str3 == "0")
                 {
                     continue;
                 }
@@ -389,20 +394,20 @@ namespace FileChange
                 oldList.Add(stre);
             }
 
-            for (int i = dtContent.Rows.Count-1; i >=0 ; i--)
+            for (int i = dtContent.Rows.Count - 1; i >= 0; i--)
             {
                 string index = dtContent.Rows[i]["id"].ToString();
                 for (int j = 0; j < intinList.Count; j++)
                 {
-                    if (index==intinList[j])
+                    if (index == intinList[j])
                     {
                         dtContent.Rows.RemoveAt(i);
                     }
                 }
             }
             list = RemoveT(list);
-            List<string> see=new List<string>();
-            List<string> idindex=new List<string>();
+            List<string> see = new List<string>();
+            List<string> idindex = new List<string>();
 
             for (int i = 0; i < list.Count; i++)
             {
@@ -420,12 +425,12 @@ namespace FileChange
                         string binstr = dataRow[3].ToString();
                         string xstr = dataRow[5].ToString();
                         string ystr = dataRow[6].ToString();
-                        string idstr = dataRow[rowCol-1].ToString();
+                        string idstr = dataRow[rowCol - 1].ToString();
                         if (a == dr.Length)
                         {
                             newList.Add(passstr + "," + binstr + "," + xstr + "," + ystr + "," + idstr);
                         }
-                        else if(a < dr.Length)
+                        else if (a < dr.Length)
                         {
                             indexList.Add(idstr);
                             see.Add(binstr + "," + xstr + "," + ystr + "," + idstr);
@@ -481,7 +486,7 @@ namespace FileChange
             {
                 string bin = binNew[j];
                 binCount = CountTimes(binList, bin);
-                dic.Add(bin,binCount);
+                dic.Add(bin, binCount);
             }
 
             double total = 0;
@@ -501,11 +506,11 @@ namespace FileChange
             {
                 string bin = binNew[i];
                 total += dic[bin];
-                if (bin=="1")
+                if (bin == "1")
                 {
                     continue;
                 }
-                fail+= dic[bin];
+                fail += dic[bin];
             }
 
             passp = (pass / total).ToString("0.00%");
@@ -517,7 +522,7 @@ namespace FileChange
             int sample = 0;
             for (int i = 0; i < dtTitle.Rows.Count; i++)
             {
-                if (over==1)
+                if (over == 1)
                 {
                     continue;
                 }
@@ -526,9 +531,9 @@ namespace FileChange
                 {
                     row = i;
                     over = 1;
-                }if (str.Replace(" ","").Contains("SamplePass"))
+                } if (str.Replace(" ", "").Contains("SamplePass"))
                 {
-                    sample = i+1;
+                    sample = i + 1;
                 }
             }
 
@@ -536,12 +541,12 @@ namespace FileChange
             for (int i = row; i < dtTitle.Rows.Count; i++)
             {
                 string match = dtTitle.Rows[i][0].ToString();
-                if (Regex.Matches(match, @"^[A-Za-z]").Count<0)
+                if (Regex.Matches(match, @"^[A-Za-z]").Count < 0)
                 {
                     continue;
                 }
                 string str = dtTitle.Rows[i][0].ToString();
-                List<string> strList=new List<string>();
+                List<string> strList = new List<string>();
                 strList = ChangeList(str);
                 //if (str.Contains("Total:"))
                 //{
@@ -567,17 +572,17 @@ namespace FileChange
                     for (int j = 0; j < strList.Count; j++)
                     {
                         string reg = strList[j];
-                        if (reg!="")
+                        if (reg != "")
                         {
                             ind.Add(j);
                         }
                     }
 
-                    int countList = ind.Count+1;
+                    int countList = ind.Count + 1;
                     if (!dic.Keys.Contains(bin))
                     {
-                        strList[ind[countList-3]] = "0";
-                        strList[ind[countList-2]] = "0.00%";
+                        strList[ind[countList - 3]] = "0";
+                        strList[ind[countList - 2]] = "0.00%";
                     }
                     else
                     {
@@ -592,16 +597,16 @@ namespace FileChange
                     continue;
                 }
 
-                if (strList[0]=="")
+                if (strList[0] == "")
                 {
                     continue;
                 }
 
                 string s = dtTitle.Rows[i][0].ToString();
-                List<string> str111=new List<string>();
+                List<string> str111 = new List<string>();
                 for (int j = 0; j < strList.Count; j++)
                 {
-                    if (strList[j]=="")
+                    if (strList[j] == "")
                     {
                         continue;
                     }
@@ -645,17 +650,17 @@ namespace FileChange
             }
             #endregion
 
-            DataTable dtSum=getDatatable(dtTitle, dtContent);
+            DataTable dtSum = getDatatable(dtTitle, dtContent);
             return dtSum;
         }
         #endregion
 
         #region 线程池
-       
-    #endregion
+
+        #endregion
 
         #region 计算list里元素出现的次数
-    public static int CountTimes<T>(List<T> inputList, T searchItem)
+        public static int CountTimes<T>(List<T> inputList, T searchItem)
 
         {
             return ((from t in inputList where t.Equals(searchItem) select t).Count());
@@ -704,7 +709,7 @@ namespace FileChange
             int row = dt1.Rows.Count;
             for (int i = row1; i < row2; i++)
             {
-                string str = "info" + i+1;
+                string str = "info" + i + 1;
                 dt1.Columns.Add(str);
             }
 
@@ -730,8 +735,8 @@ namespace FileChange
         public List<string> GroupFile()
         {
             List<string> pathList = new List<string>();//文件名集合
-            StringBuilder sb=new StringBuilder();
-           
+            StringBuilder sb = new StringBuilder();
+
 
 
 
@@ -748,13 +753,13 @@ namespace FileChange
                 pathList.Add(path);
             }
 
-            string time = this.dataGridView1.Rows[rowCount-1].Cells[3].Value.ToString();
-            var groupedFiles = pathList.GroupBy(file => GetGroupNumber(file.Split('\\')[file.Split('\\').Length-1]));
+            string time = this.dataGridView1.Rows[rowCount - 1].Cells[3].Value.ToString();
+            var groupedFiles = pathList.GroupBy(file => GetGroupNumber(file.Split('\\')[file.Split('\\').Length - 1]));
 
             List<string> resultList = new List<string>();
             foreach (var group in groupedFiles)
             {
-                string filesString = string.Join("$", group)+"@"+ time;
+                string filesString = string.Join("$", group) + "@" + time;
                 resultList.Add(filesString);
             }
 
@@ -831,7 +836,7 @@ namespace FileChange
         #endregion
 
         #region 寻找匹配的文件路径
-        public  int GetGroupNumber(string file)
+        public int GetGroupNumber(string file)
         {
             //Regex regex = new Regex(@"-(\d+)");
             //Match match = regex.Match(file);
@@ -883,11 +888,11 @@ namespace FileChange
             {
                 string value = item.Replace("Wafer Id", "").Replace("WAFER_ID", "").Replace("Wafer ID", "").Replace("Lot Id", "").Replace("Lot ID", "").Replace("LOT_ID", "").Replace("Program", "").Replace("Site", "").Replace(",", "").Replace("-CP1F", "").Replace("-CP2F", "").Replace("-CP3F", "").Replace("-CP1", "").Replace("-CP2", "").Replace("-CP3", "").Replace("CP1", "").Replace("CP2", "").Replace("CP3", "").Replace("F", "");
 
-                if (item.Contains("Wafer Id") || item.Contains("WAFER_ID")|| item.Contains("Wafer ID"))
+                if (item.Contains("Wafer Id") || item.Contains("WAFER_ID") || item.Contains("Wafer ID"))
                 {
                     Wafer_Id = value.Trim().Split(':')[1].Split('-')[1];
                 }
-                if (item.Contains("Lot Id") || item.Contains("LOT_ID")|| item.Contains("LotID")|| item.Contains("Lot ID"))
+                if (item.Contains("Lot Id") || item.Contains("LOT_ID") || item.Contains("LotID") || item.Contains("Lot ID"))
                 {
                     Lot_Id = value.Trim().Split(':')[1];
                 }
@@ -937,8 +942,8 @@ namespace FileChange
             {
                 if (item.Contains("Test End Date"))
                 {
-                    string[] splitArray = item.ToString().Split(new[] { ','},2);
-                    if(splitArray.Length < 1)
+                    string[] splitArray = item.ToString().Split(new[] { ',' }, 2);
+                    if (splitArray.Length < 1)
                     {
                         continue;
                     }
@@ -953,7 +958,7 @@ namespace FileChange
             }
             string nameStrings = PRODUCT_ID + "_" + Lot_Id.ToUpper().Replace("CP1", "").Replace("CP2", "").Replace("CP3", "") + "_" + 委工单 + "_" + Wafer_Id.PadLeft(2, '0') + "_" + OP_NAME + "_" + Ending_Time.Replace("-", "").Replace(":", "").Replace(" ", "");
             return nameStrings;
-        } 
+        }
         #endregion
 
         #region 转换xml
@@ -961,7 +966,7 @@ namespace FileChange
         /// 处理最终文件
         /// </summary>
         /// <param name="filePath"></param>
-        public void MyFileAnalyDo(string filePath,string s,string cp)//,string fileName 
+        public void MyFileAnalyDo(string filePath, string s, string cp)//,string fileName 
         {
             string PRODUCT_ID = this.textBox5.Text;
             string OP_NAME = this.textBox6.Text;
@@ -1008,25 +1013,25 @@ namespace FileChange
                 {
                     Wafer_Id = item.Replace("WAFER_ID:", "").Replace(",", "").Replace("-CP1F", "").Replace("-CP2F", "").Replace("-CP3F", "").Replace("-CP1", "").Replace("-CP2", "").Replace("-CP3", "").Replace("CP1", "").Replace("CP2", "").Replace("CP3", "").Replace("F", "");
                     Wafer_no = Wafer_Id.Trim().Substring(Wafer_Id.LastIndexOf('-') + 1).Replace(",", "");
-                }if (item.Contains("Wafer ID"))
+                } if (item.Contains("Wafer ID"))
                 {
                     Wafer_Id = item.Replace("Wafer ID", "").Replace(",", "").Replace("-CP1F", "").Replace("-CP2F", "").Replace("-CP3F", "").Replace("-CP1", "").Replace("-CP2", "").Replace("-CP3", "").Replace("CP1", "").Replace("CP2", "").Replace("CP3", "").Replace("F", "").Split(':')[1];
                     Wafer_no = Wafer_Id.Trim().Split('-')[1];
                 }
                 if (item.Contains("Lot Id:"))
                 {
-                    string str= Lot_Id = item.Replace("Lot Id:", "").Replace(",", "").Replace("-CP1F", "").Replace("-CP2F", "").Replace("-CP3F", "").Replace("-CP1", "").Replace("-CP2", "").Replace("-CP3", "").Replace("CP1", "").Replace("CP2", "").Replace("CP3", "").Split('S')[0];
+                    string str = Lot_Id = item.Replace("Lot Id:", "").Replace(",", "").Replace("-CP1F", "").Replace("-CP2F", "").Replace("-CP3F", "").Replace("-CP1", "").Replace("-CP2", "").Replace("-CP3", "").Replace("CP1", "").Replace("CP2", "").Replace("CP3", "").Split('S')[0];
                     Lot_Id = item.Replace("Lot Id:", "").Replace(",", "").Replace("-CP1F", "").Replace("-CP2F", "").Replace("-CP3F", "").Replace("-CP1", "").Replace("-CP2", "").Replace("-CP3", "").Replace("CP1", "").Replace("CP2", "").Replace("CP3", "").Replace("CP1F", "").Replace("CP2F", "").Replace("CP3F", "").Split('S')[0];
-                }if (item.Contains("LOT_ID:"))
+                } if (item.Contains("LOT_ID:"))
                 {
                     Lot_Id = item.Replace("LOT_ID:", "").Replace(",", "").Replace("-CP1F", "").Replace("-CP2F", "").Replace("-CP3F", "").Replace("-CP1", "").Replace("-CP2", "").Replace("-CP3", "").Replace("CP1", "").Replace("CP2", "").Replace("CP3", "").Replace("CP1F", "").Replace("CP2F", "").Replace("CP3F", "").Split('S')[0];
-                }if (item.Contains("Wafer_Lot ID:"))
+                } if (item.Contains("Wafer_Lot ID:"))
                 {
                     Lot_Id = item.Replace("Wafer_Lot ID:", "").Replace(",", "").Replace("-CP1F", "").Replace("-CP2F", "").Replace("-CP3F", "").Replace("-CP1", "").Replace("-CP2", "").Replace("-CP3", "").Replace("CP1", "").Replace("CP2", "").Replace("CP3", "").Replace("CP1F", "").Replace("CP2F", "").Replace("CP3F", "").Split('S')[0];
-                }if (item.Contains("LotID:"))
+                } if (item.Contains("LotID:"))
                 {
                     Lot_Id = item.Replace("LotID:", "").Replace(",", "").Replace("-CP1F", "").Replace("-CP2F", "").Replace("-CP3F", "").Replace("-CP1", "").Replace("-CP2", "").Replace("-CP3", "").Replace("CP1", "").Replace("CP2", "").Replace("CP3", "").Replace("CP1F", "").Replace("CP2F", "").Replace("CP3F", "").Split('S')[0];
-                }if (item.Contains("Lot ID"))
+                } if (item.Contains("Lot ID"))
                 {
                     Lot_Id = item.Replace("Lot ID", "").Replace(",", "").Replace("-CP1F", "").Replace("-CP2F", "").Replace("-CP3F", "").Replace("-CP1", "").Replace("-CP2", "").Replace("-CP3", "").Replace("CP1", "").Replace("CP2", "").Replace("CP3", "").Replace("CP1F", "").Replace("CP2F", "").Replace("CP3F", "").Split('S')[0].Split(':')[1];
                 }
@@ -1069,7 +1074,7 @@ namespace FileChange
 
             }
             #endregion
-           
+
 
             foreach (var item in dic_time_data)
             {
@@ -1113,7 +1118,7 @@ namespace FileChange
                     tdtl.bin_no = item.Substring(54).Trim().Replace(",", "");
                     data_total_list.Add(tdtl.bin_name, tdtl);
                 }
-            } 
+            }
             #endregion
             #region Bin信息
             string TTTTTTT = "";
@@ -1176,7 +1181,7 @@ namespace FileChange
             {
                 passBIN = "58";
             }
-            else if(cp.Contains("CP2")|| cp.Contains("CP3"))
+            else if (cp.Contains("CP2") || cp.Contains("CP3"))
             {
                 passBIN = "1";
             }
@@ -1321,12 +1326,12 @@ namespace FileChange
             {
                 str5 = Lot_Id.ToUpper();
             }
-            
+
             string txt = txt_helper.ReadTxtStr(Application.StartupPath + @"\xml_module.txt");
             txt = string.Format(txt, bin_temp_str, site_list_str, post_list_str, Beginning_Time, Ending_Time, str5.ToUpper().Trim(), Wafer_Id.ToUpper().Trim(),
                 Total, Pass, Program_name, PRODUCT_ID, OP_NAME, Wafer_no,
                 VERSION, TEMPERATURE, NOTCH, XYDIR, LOT_TYPE);
-            string save_xml = textBox3.Text + @"\xml"+s+@"\";
+            string save_xml = textBox3.Text + @"\xml" + s + @"\";
             string xy = "";
             if (!Directory.Exists(save_xml))
             {
@@ -1346,7 +1351,7 @@ namespace FileChange
 
         #region 解析
 
-        public void JieXi(List<string> pathList,string fileMuBiao,string name)
+        public void JieXi(List<string> pathList, string fileMuBiao, string name)
         {
             DataTable dt = new DataTable();
             DataTable csvTitledt = new DataTable();
@@ -1369,8 +1374,8 @@ namespace FileChange
             int Sum_Min = 0;//总时间
             int Sum_Sec = 0;//总时间
             int index = 1;
-            
-            List<string> binList=new List<string>();
+
+            List<string> binList = new List<string>();
             #endregion
             for (int i = 0; i < fileCount; i++)
             {
@@ -1404,7 +1409,7 @@ namespace FileChange
                     c = 1;
                 }
                 program = program.Split('\\')[program.Split('\\').Length - 2];
-                string mubiao= fileMuBiao+@"\error.txt";
+                string mubiao = fileMuBiao + @"\error.txt";
                 //if (c==0)
                 //{
                 //    if (!program.Contains("C1"))
@@ -1422,7 +1427,7 @@ namespace FileChange
                 //    }
                 //}
 
-                if (csvContentdt.Columns.Count==55)
+                if (csvContentdt.Columns.Count == 55)
                 {
                     csvContentdt.Columns.Remove("info54");
                 }
@@ -1579,7 +1584,7 @@ namespace FileChange
                 #endregion
             }
 
-            if (over==1)
+            if (over == 1)
             {
                 return;
             }
@@ -1605,8 +1610,8 @@ namespace FileChange
             }
             binList = RemoveT(binList);
             Dictionary<int, int> binDictionary = new Dictionary<int, int>();
-            List<int> iList=new List<int>();
-            List<int> bList=new List<int>();
+            List<int> iList = new List<int>();
+            List<int> bList = new List<int>();
             List<string> binListNew = new List<string>();
             for (int i = 0; i < binList.Count; i++)
             {
@@ -1624,7 +1629,7 @@ namespace FileChange
             for (int i = 0; i < iList.Count; i++)
             {
                 string space = "";
-                if (iList[i].ToString().Length==1)
+                if (iList[i].ToString().Length == 1)
                 {
                     space = "  ";
                 }
@@ -1719,7 +1724,7 @@ namespace FileChange
 
             #region 生成csv
 
-            if (Lot_Id=="")
+            if (Lot_Id == "")
             {
                 return;
             }
@@ -1873,5 +1878,237 @@ namespace FileChange
             public string LastName;
         }
 
+        /// <summary>
+        /// 合并文件v0.1版 后续还有把颗数合并，序号递增
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        /// <exception cref="Exception"></exception>
+        private void button6_Click(object sender, EventArgs e)
+        {
+            var config = new CsvConfiguration(CultureInfo.InvariantCulture)
+            {
+                IgnoreBlankLines = false,
+            };
+            string originalFilePath = "D:\\Workspace\\JSE2Fab\\FileChange\\文件\\1.csv";
+            string targetFilePath = "D:\\Workspace\\JSE2Fab\\FileChange\\文件\\2.csv";
+
+            int i = 0;
+
+
+            //获取csv文件最大列数，该列数所在行就是die数据
+            //同时用于确认多个文件的列数是否一致，不一致后续需要确认是否有问题，暂时卡控
+            int[] originalFirstRowNumberAndColumnLength = getTheFirstRowNumberAndColumnLengthFromCSV(config, originalFilePath);
+            int[] targetFirstRowNumberAndColumnLength = getTheFirstRowNumberAndColumnLengthFromCSV(config, targetFilePath);
+            if (originalFirstRowNumberAndColumnLength[1] != targetFirstRowNumberAndColumnLength[1])
+            {
+                throw new Exception("两个文件的列数不一致");
+            }
+
+            //获取待合并到文件的die数据的map
+            Dictionary<string, string[]> targetDataMap = new Dictionary<string, string[]>();
+            getDataMapFromCSV(config, targetFilePath, targetDataMap, targetFirstRowNumberAndColumnLength);
+
+            //合并第一个文件到第二个文件
+            mergeOrigianlCSVToTargetCSV(config, originalFilePath, targetFilePath, targetDataMap, targetFirstRowNumberAndColumnLength);
+        }
+
+        private static int mergeOrigianlCSVToTargetCSV(CsvConfiguration config, string orginalFilePath, string targetFilePath, Dictionary<string, string[]> orginalDataMap, int[] firstRowNumberAndColumnLength)
+        {
+            int i = 0;
+            string XYKey;
+
+            //获取
+            int lastIndex = int.Parse(orginalDataMap.Last().Value[0]);
+
+            using (var reader = new StreamReader(orginalFilePath))
+            using (var csv = new CsvReader(reader, config))
+            using (var stream = File.Open(targetFilePath, FileMode.Append))
+            using (var writer = new StreamWriter(stream))
+            using (var csv2 = new CsvWriter(writer, config))
+            {
+                while (csv.Read())
+                {
+                    if (i > firstRowNumberAndColumnLength[0]) //die数据开始的行数 dataRowNumber2[1]
+                    {
+
+                        string[] rawRecord = csv.Parser.Record;
+                        XYKey = rawRecord[3] + "_" + rawRecord[4]; //x坐标_y坐标
+
+                        if (orginalDataMap.ContainsKey(XYKey))
+                        {
+                            i++;
+                            continue;
+                        }
+                        else
+                        {
+                            for (int j = 0; j < rawRecord.Length; j++)
+                            {
+                                if (string.IsNullOrEmpty(rawRecord[j]))
+                                {
+                                    continue;
+                                }
+                                if (j == 0)
+                                {
+                                    lastIndex++;
+                                    csv2.WriteField(lastIndex);
+                                }
+                                else
+                                {
+                                    csv2.WriteField(rawRecord[j]);
+                                }
+                            }
+                            csv2.NextRecord();//换行
+                        }
+
+                        
+                    }
+                    i++;
+
+                }
+                Console.WriteLine("Line number:" + i);
+            }
+            Console.WriteLine("Done");
+            return i;
+        }
+
+        /// <summary>
+        /// 获取csv文件数据开始前的行号和列数
+        /// </summary>
+        /// <param name="config"></param>
+        /// <param name="filePath"></param>
+        /// <returns></returns>
+        private static int[] getTheFirstRowNumberAndColumnLengthFromCSV(CsvConfiguration config, string filePath)
+        {
+            int rowNumber = 0;
+            int columnLength = int.MinValue;
+            int[] firstRowAndColumnLength = new int[2];
+
+            int i = 0;
+
+            using (var reader = new StreamReader(filePath))
+            using (var csv = new CsvReader(reader, config))
+            {
+
+                while (csv.Read())
+                {
+                    string[] rawRecord = csv.Parser.Record;
+                    int tempLength = int.MinValue;
+                    for (int j=0; j < rawRecord.Length; j++)
+                    {
+                        if (string.IsNullOrEmpty(rawRecord[j]))
+                        {
+                            tempLength = j;
+                            break;
+                        }
+                        if(j== rawRecord.Length - 1)
+                        {
+                            rowNumber = i;
+                            firstRowAndColumnLength[0] = rowNumber;
+                            firstRowAndColumnLength[1] = rawRecord.Length;
+                            return firstRowAndColumnLength;
+                        }
+                    }
+
+                    if (tempLength > columnLength)
+                    {
+                        columnLength = tempLength;
+                        rowNumber = i;
+                    }
+                    i++;
+                }
+            }
+            firstRowAndColumnLength[0] = rowNumber;//第一行是数据前的行数
+            firstRowAndColumnLength[1] = columnLength;//数据列的长度
+            return firstRowAndColumnLength;
+        }
+        private static void getDataMapFromCSV(CsvConfiguration config, string filePath, Dictionary<string, string[]> dataMap, int[] firstRowNumberAndColumnLength)
+        {
+            string XYKey;
+            int i = 0;
+            using (var reader = new StreamReader(filePath))
+            using (var csv2 = new CsvReader(reader, config))
+            {
+                while (csv2.Read())
+                {
+                    if (i > firstRowNumberAndColumnLength[0]) //die数据开始的行数 dataRowNumber1[1]
+                    {
+                        string[] rawRecord = csv2.Parser.Record;
+                        XYKey = rawRecord[3] + "_" + rawRecord[4];
+                        if (dataMap.ContainsKey(XYKey))
+                        {
+
+                        }
+                        else
+                        {
+                            dataMap.Add(XYKey, rawRecord);
+                        }
+                        i++;
+                    }
+                    i++;
+                }
+            }
+        }
+
+
+        public static void miniExcelExample(){
+            string path1 = "D:\\Workspace\\JSE2Fab\\FileChange\\文件\\1.csv";
+
+            string path2 = "D:\\Workspace\\JSE2Fab\\FileChange\\文件\\2.csv";
+            //var rows = MiniExcel.Query(path1).ToList();
+            //var dataTable = MiniExcel.QueryAsDataTable(path1, useHeaderRow: true);
+            //int dieLineNumber = int.MaxValue;
+            //int lineNumber = 0;
+            //List<DataDieDate> dieList = new List<DataDieDate>();
+            ////foreach (var row in rows)
+            ////{
+            ////    if (row.A.ToUpper().Contains("SERIAL#"))
+            ////    {
+            ////        dieLineNumber = lineNumber;
+            ////    }
+            ////    //parseHeader(row);
+            ////    if(lineNumber> dieLineNumber)
+            ////    {
+            ////       DataDieDate die = parseDie(row);
+            ////        dieList.Add(die);
+            ////    }
+            ////    lineNumber++;
+            ////}
+
+            //for (int i = 0; i < dieList.Count; i++)
+            //{
+            //    dieList[i].Content.ToString();
+            //    MiniExcel.Insert(path2, dieList[i].Content);
+            //}
+
+            ////var csv2 = MiniExcel.QueryAsDataTable(path2, useHeaderRow: false);
+            ////for (int i = 0; i < csv2.Rows.Count; i++)
+            ////{
+            ////    if(i <= 40)
+            ////    {
+            ////        continue;
+            ////    }
+            ////    var aaa = csv2.Rows[i];
+            ////    var x = aaa[0];
+            ////    var y = aaa[1];
+            ////    var binNo = aaa[2];
+            ////}
+        }
+
+
+private void parseHeader(dynamic row)
+        {
+            throw new NotImplementedException();
+        }
+
+        private DataDieDate parseDie(dynamic row)
+        {
+            DataDieDate die = new DataDieDate();
+            die.X = int.Parse(row.D);
+            die.Y = int.Parse(row.E);
+            die.BinNo = int.Parse(row.C);
+            die.Content = row;
+            return die;
+        }
     }
 }
