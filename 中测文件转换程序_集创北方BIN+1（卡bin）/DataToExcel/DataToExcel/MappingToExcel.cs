@@ -98,31 +98,31 @@ namespace DataToExcel
                 this.progressBar1.Value = 0;
                 ToCountDie._ToCountDie = new Hashtable();
                 CmdTxt.InitTotal();
-                if (this.LotNo.EndsWith("CP1") || this.LotNo.EndsWith("CP2") || this.LotNo.EndsWith("CP3"))
-                {
-                    for (num2 = 0; num2 <= (count - 1); num2++)
-                    {
-                        string WaferID = this.lsvItems.Items[num2].Text.Trim();
-                        string[] WaferIDs = WaferID.Split('-');
-                        WaferID= WaferID.Substring(WaferID.IndexOf("-")+1);
-                        new CMDTskToTxt().Convert(this.lsvItems.Items[num2].SubItems[1].Text.Trim(), this.textBox1.Text + @"\TxtOutFile\" + LotNo + @"\" + LotNo + "-" + WaferID + ".txt");
-                        this.progressBar1.Value++;
-                    }
-                }
-                else
-                {
+                //if (this.LotNo.EndsWith("CP1") || this.LotNo.EndsWith("CP2") || this.LotNo.EndsWith("CP3"))
+                //{
+                //    for (num2 = 0; num2 <= (count - 1); num2++)
+                //    {
+                //        string WaferID = this.lsvItems.Items[num2].Text.Trim();
+                //        string[] WaferIDs = WaferID.Split('-');
+                //        WaferID= WaferID.Substring(WaferID.IndexOf("-")+1);
+                //        new CMDTskToTxt().Convert(this.lsvItems.Items[num2].SubItems[1].Text.Trim(), this.textBox1.Text + @"\TxtOutFile\" + LotNo + @"\" + LotNo + "-" + WaferID + ".txt");
+                //        this.progressBar1.Value++;
+                //    }
+                //}
+                //else
+                //{
                     for (num2 = 0; num2 <= (count - 1); num2++)
                     {
                         new CMDTskToTxt().Convert(this.lsvItems.Items[num2].SubItems[1].Text.Trim(), this.textBox1.Text + @"\TxtOutFile\" + this.LotNo + @"\" + this.lsvItems.Items[num2].Text.Trim() + ".txt");
                         this.progressBar1.Value++;
                     }
-                }
+                //}
 
                 
 
                 if (MessageBox.Show("Export TXT File Success!Would you like to open it?", "confirm", MessageBoxButtons.YesNo) == DialogResult.Yes)
                 {
-                    Process.Start(this.textBox1.Text + @"\TxtOutFile\" + LotNo + @"\");
+                    Process.Start(this.textBox1.Text + @"\TxtOutFile\" + this.LotNo + @"\");
                 }
             }
         }

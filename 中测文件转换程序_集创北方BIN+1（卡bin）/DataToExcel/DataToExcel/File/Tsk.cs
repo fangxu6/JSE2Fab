@@ -796,7 +796,7 @@ namespace DataToExcel
                         case 3:
                             die.Attribute = DieCategory.FailDie;
                             die.Bin = binNum + 1;    //zjf 2008.08.28
-                            if (binNum == 0)
+                            if (binNum == 0 || binNum == 1)
                             {
                                 Console.WriteLine("error");
                             }
