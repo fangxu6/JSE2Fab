@@ -136,7 +136,7 @@ namespace TSK_MERGE_SINF
             //////////TXT-READ//////////////////////////////
             FileStream txt_1;
 
-            txt_1 = new FileStream(this.textBox2.Text, FileMode.Open);
+            txt_1 = new FileStream(this.textBox2.Text, FileMode.Open, FileAccess.Read);
             StreamReader read = new StreamReader(txt_1, Encoding.Default);
 
 
@@ -198,7 +198,7 @@ namespace TSK_MERGE_SINF
             FileStream fs_1;
 
 
-            fs_1 = new FileStream(this.textBox1.Text, FileMode.Open);
+            fs_1 = new FileStream(this.textBox1.Text, FileMode.Open,FileAccess.Read);
             BinaryReader br_1 = new BinaryReader(fs_1);
 
             ///TSK1头文件-------------------------------------------------------//
@@ -685,14 +685,14 @@ namespace TSK_MERGE_SINF
                         txtMark++;
                     }
 
-                    //if (TxtNewMap[i, j].ToString() == "M" && TSKMap[i, j].ToString() != ".")
-                    //{
-                    //    if (MessageBox.Show("对位点不正确!", "确认", MessageBoxButtons.YesNo) == DialogResult.Yes)
-                    //    {
-                    //        Environment.Exit(0);
-                    //    }
+                    if (TxtNewMap[i, j].ToString() == "M" && TSKMap[i, j].ToString() != ".")
+                    {
+                        if (MessageBox.Show("对位点不正确!", "确认", MessageBoxButtons.YesNo) == DialogResult.Yes)
+                        {
+                            Environment.Exit(0);
+                        }
 
-                    //}
+                    }
 
                 }
             }
