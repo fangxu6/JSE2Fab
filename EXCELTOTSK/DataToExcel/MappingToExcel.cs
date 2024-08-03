@@ -12,6 +12,8 @@ using Excel;
 using System.Reflection;
 using System.Collections;
 using MiniExcelLibs;
+using System.Linq;
+using DataTable = System.Data.DataTable;
 
 //using Jcap.MappingConverter;
 
@@ -955,6 +957,7 @@ namespace DataToExcel
 
         }
 
+        
         private bool ToMapping()
         {
 
@@ -973,7 +976,7 @@ namespace DataToExcel
             {
 
                 //this.FileName = this.lsvItems.Items[count - 2].SubItems[1].Text; //文件的路径
-                string path = "C:\\Users\\fangx\\Desktop\\nkk\\data\\#22数据.csv";
+                string path = @"C:\Users\fangx\Desktop\图谱恢复\待恢复.xlsx";
                 this.FileName =  path;
 
                 Excel.Workbook xBook = xAPP.Workbooks._Open(this.FileName,
@@ -983,9 +986,9 @@ namespace DataToExcel
                 // 打开指定路径的文件 this.FileName
 
                 var table = MiniExcel.QueryAsDataTable(path, useHeaderRow: false);
-                
 
-                
+
+
 
 
                 Excel.Worksheet xSheet1 = (Excel.Worksheet)xBook.Sheets[1];//源文件的Sheet
@@ -1001,7 +1004,8 @@ namespace DataToExcel
 
                 FileStream fs;
                 // fs = new FileStream(arrayFilepath[i].ToString(), FileMode.Open);
-                fs = new FileStream(@"C:\Users\fangx\Desktop\nkk\tsk\022.NBY009-22-F3", FileMode.Open,FileAccess.Read);
+                string tskFileName = "022.UQ6889-22";
+                fs = new FileStream(@"C:\Users\fangx\Desktop\huangyan\UQ6889-tsk\UQ6889-1\" + tskFileName, FileMode.Open,FileAccess.Read);
                 BinaryReader br = new BinaryReader(fs);
 
                 ///头文件-------------------------------------------------------//
@@ -1160,7 +1164,7 @@ namespace DataToExcel
                 int flag2 = 0;
 
 
-                fw = new FileStream("D:\\New-Tsk\\" + "012" + "." + "3049931-12", FileMode.Create);
+                fw = new FileStream("D:\\New-Tsk\\" + tskFileName, FileMode.Create);
                 BinaryWriter bw = new BinaryWriter(fw);
 
                 byte[] firstbyte1 = (byte[])arryfirstbyte1.ToArray(typeof(byte));
@@ -1384,10 +1388,11 @@ namespace DataToExcel
 
 
 
+                xBook.Close();
 
 
 
-                this.progressBar1.Value++;//进度条进度
+              //  this.progressBar1.Value++;//进度条进度
                 xBook = null;
                 xAPP.Quit();
                 xAPP = null;
