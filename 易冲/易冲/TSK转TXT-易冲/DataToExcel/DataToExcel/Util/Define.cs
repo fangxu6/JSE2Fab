@@ -34,6 +34,7 @@ namespace DataToExcel
         PassDie = 2,
         FailDie = 4,
         SkipDie = 8,
+        SkipDie2 = 9,
         NoneDie = 16,
         MarkDie = 32,
 
