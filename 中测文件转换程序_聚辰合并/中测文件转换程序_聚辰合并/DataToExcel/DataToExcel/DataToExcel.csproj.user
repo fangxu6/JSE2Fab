@@ -15,4 +15,7 @@
     <ProjectView>ProjectFiles</ProjectView>
     <ErrorReportUrlHistory />
   </PropertyGroup>
+  <PropertyGroup>
+    <EnableSecurityDebugging>false</EnableSecurityDebugging>
+  </PropertyGroup>
 </Project>

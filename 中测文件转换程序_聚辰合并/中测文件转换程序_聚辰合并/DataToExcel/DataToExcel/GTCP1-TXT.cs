@@ -254,13 +254,13 @@ namespace DataToExcel
                         if ((secondbyte1_1[j + i * row1_1] & 192) == 0)//Skip Die
                         {
                             // TSKMap[i, j] = ".";
-                            TSKMap1[i, j] = ".";
+                            TSKMap1[i, j] = "S";
 
                         }
 
                         if ((secondbyte1_1[j + i * row1_1] & 192) == 128)//Mark Die
                         {
-                            TSKMap1[i, j] = ".";
+                            TSKMap1[i, j] = "#";
                         }
 
                         if ((secondbyte1_1[j + i * row1_1] & 192) == 64)//Probe Die

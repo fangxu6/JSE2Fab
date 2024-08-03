@@ -523,7 +523,7 @@ namespace DataToExcel
 
                         if ((secondbyte21_1[j + i * row21_1] & 192) == 128)//Mark Die
                         {
-                            TSKMap2[i, j] = ".";
+                            TSKMap2[i, j] = "#";
                         }
 
                         if ((secondbyte21_1[j + i * row21_1] & 192) == 64)//Probe Die
@@ -532,10 +532,10 @@ namespace DataToExcel
                             if ((firstbyte21_1[j + i * row21_1] & 64) == 64)//PASS
                             {
                                 TSKMap2[i, j] = "A";
-                                if ((thirdbyte21_1[j + i * row21_1] ) >= 61)//temp 客户特殊bin
+/*                                if ((thirdbyte21_1[j + i * row21_1] ) >= 61)//temp 客户特殊bin
                                 {
                                     TSKMap2[i, j] = "B";
-                                }
+                                }*/
                             }
 
                             if ((firstbyte21_1[j + i * row21_1] & 128) == 128)//FAIL
@@ -558,6 +558,11 @@ namespace DataToExcel
                     {
                         TSKMap3[i, j] = "X";
 
+                        if (TSKMap1[i, j].ToString() == "." && TSKMap2[i, j].ToString() == "#")
+                        {
+                            TSKMap3[i, j] = "#";
+
+                        }
                         if (TSKMap1[i, j].ToString() == "." && TSKMap2[i, j].ToString() == ".")
                         {
                             TSKMap3[i, j] = ".";
@@ -569,10 +574,10 @@ namespace DataToExcel
                             mergepass++;
 
                         }
-                        if (TSKMap1[i, j].ToString() == "A" && TSKMap2[i, j].ToString() == "B")
+                        if (TSKMap1[i, j].ToString() == "A" && TSKMap2[i, j].ToString() == "X")
                         {
-                            TSKMap3[i, j] = "B";
-                            mergepass++;
+                            TSKMap3[i, j] = "X";
+                            mergefail++;
 
                         }
 
