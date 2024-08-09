@@ -77,19 +77,19 @@ namespace WindowsFormTool
                 MessageBox.Show("请先选择 TSK空图谱文件路径", "错误提醒", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return false;
             }
-            richTextBox1.Text += "开始恢复TSK图谱\n";
+            UpdateRichTextBox("开始恢复TSK图谱\n");
             //string path = "C:\\Users\\fangx\\Desktop\\图谱恢复\\#3待恢复.xlsx";
             // 打开指定路径的文件 this.FileName
             var table = MiniExcel.QueryAsDataTable(ExcelFilePath, useHeaderRow: false);
 
-            richTextBox1.Text += "解析Excel信息成功\n";
+            UpdateRichTextBox("解析Excel信息成功\n");
             FileStream fs = new FileStream(TSKFilePath, FileMode.Open, FileAccess.Read);
 
-            richTextBox1.Text += "打开TSk空图谱成功\n";
+            UpdateRichTextBox("打开TSk空图谱成功\n");
             //------------TSK READ--------------------------------------------------//
             BinaryReader br = new BinaryReader(fs);
 
-            richTextBox1.Text += "开始解析TSk空图谱\n";
+            UpdateRichTextBox("开始解析TSk空图谱\n");
             ///头文件-------------------------------------------------------//
             //Operator Size 20
             string Operator = Encoding.ASCII.GetString(br.ReadBytes(20)).Trim();
@@ -203,7 +203,7 @@ namespace WindowsFormTool
             byte[] MCategory = br.ReadBytes(2);
             //Do not use,Reserved4 Size2
             byte[] Reserved4 = br.ReadBytes(2);
-            richTextBox1.Text += "解析TSk空图谱头信息部分完成\n";
+            UpdateRichTextBox("解析TSk空图谱头信息部分完成\n");
             ////////Die 信息/////////////////////
 
             int row1 = ByteToInt16(ref row);
@@ -234,12 +234,12 @@ namespace WindowsFormTool
             br.Close();
             fs.Close();
 
-            richTextBox1.Text += "解析TSk空图谱结束\n";
+            UpdateRichTextBox("解析TSk空图谱结束\n");
             //------------------------------TSK模板Read 结束------------------------------//
 
             //-------------------------------------------------------写TSK MAP--------------------------------------
 
-            richTextBox1.Text += "开始写入TSk空图谱\n";
+            UpdateRichTextBox("开始写入TSk空图谱\n");
             FileStream fw;
             int flag2 = 0;
             string newTskFilePath = @"D:\New-Tsk\" + Path.GetFileName(TSKFilePath);
@@ -285,9 +285,9 @@ namespace WindowsFormTool
                         var x = aaa[0];
                         var y = aaa[1];
                         var binNo = aaa[2];
-                       
 
-                        if(x == null || y == null || binNo == null)
+
+                        if (x == null || y == null || binNo == null)
                         {
                             continue;
                         }
@@ -344,7 +344,7 @@ namespace WindowsFormTool
             }
             //----------------------------TSK修改BIN信息-----------------------------------------------------
 
-            richTextBox1.Text += "正在写入TSk空图谱\n";
+            UpdateRichTextBox("正在写入TSk空图谱\n");
             //Operator Size20
             string str = string.Format("{0,-20:G}", Operator);
             bw.Write(Encoding.ASCII.GetBytes(str), 0, 20);
@@ -473,7 +473,7 @@ namespace WindowsFormTool
             //Reserved4
             bw.Write(Reserved4);
 
-            richTextBox1.Text += "正在写入TSk空图谱...\n";
+            UpdateRichTextBox("正在写入TSk空图谱...\n");
             for (int k = 0; k < row1 * col1; k++)
             {
                 bw.Write(firstbyte1[k]);
@@ -483,7 +483,7 @@ namespace WindowsFormTool
                 bw.Write(thirdbyte1[k]);
                 bw.Write(thirdbyte2[k]);
             }
-            richTextBox1.Text += "TSk新图谱生成\n";
+            UpdateRichTextBox("TSk新图谱生成\n");
             //扩展模式
             foreach (byte obj in arry)
             {
@@ -518,6 +518,12 @@ namespace WindowsFormTool
         {
             this.Reverse(ref target);
             return BitConverter.ToInt16(target, 0);
+        }
+        //更新RichTextBox
+        private void UpdateRichTextBox(string message)
+        {
+            richTextBox1.Text += message;
+            Application.DoEvents();
         }
     }
 }
