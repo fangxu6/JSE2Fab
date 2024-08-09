@@ -69,7 +69,7 @@ namespace TSK_MERGE_SINF
             if (dialog.ShowDialog() == DialogResult.OK)
             {
                 //this.textBox1.Text = dialog.SelectedPath;
-                this.textBox1.Text = "C:\\Users\\fangx\\Desktop\\7972";
+                this.textBox1.Text = @"C:\Users\fangx\Desktop\卢浩楠合图\tsk";
                 DirectoryInfo TheFolder = new DirectoryInfo(this.textBox1.Text);
 
                 foreach (FileInfo str in TheFolder.GetFiles("*", SearchOption.AllDirectories))
@@ -108,7 +108,7 @@ namespace TSK_MERGE_SINF
             if (dialog.ShowDialog() == DialogResult.OK)
             {
                 //this.textBox2.Text = dialog.SelectedPath;
-                this.textBox2.Text = "C:\\Users\\fangx\\Desktop\\7972仅低温MAP_5.29\\RS5YT\\RS5YT-txt";//TODO 优化
+                this.textBox2.Text = @"C:\Users\fangx\Desktop\卢浩楠合图\txt";//TODO 优化
                 DirectoryInfo TheFolder = new DirectoryInfo(this.textBox2.Text);
 
                 foreach (FileInfo str in TheFolder.GetFiles("*", SearchOption.AllDirectories))
@@ -197,7 +197,7 @@ namespace TSK_MERGE_SINF
                 string line = read.ReadLine();
                 if (line != null)
                 {
-                    this.Parse(line);
+                    this.Parse(line);//每家客户的来料文件不同 所以parse方法也不同
                 }
                 else
                 { break; }
@@ -278,7 +278,7 @@ namespace TSK_MERGE_SINF
             int countFail = 0;
             int countMark = 0;
             CountPassAndFail(tsk, TxtNewMap, ref countPass, ref countFail, ref countMark);
-            tskPass = countPass;
+            tskPass = countPass;//TODO 这个需要优化
             tskFail = countFail;
             txtMark = countMark;
             for (int y = 0; y < tsk.DieMatrix.YMax; y++)
@@ -688,9 +688,13 @@ namespace TSK_MERGE_SINF
                     string[] strs = line.Split(new char[] { ':', '=' });
                     string head = strs[0].Trim().ToUpper();
                     string body = strs[1].Trim();
-
+                    if (string.IsNullOrEmpty(body))
+                    {
+                        return;
+                    }
                     switch (head)
                     {
+                    
                         case "DEVICE":
                         case "DEVICE NAME":
                             this.txtDevice = body;
@@ -742,7 +746,7 @@ namespace TSK_MERGE_SINF
 
         private void ParseDies(string s)
         {
-            PasrseDieWithDeviceIML7972(s);
+            PasrseDieWithDeviceWTM2100COfZhiCun(s);
             //TODO null报错
             //if (this.txtDevice.Contains("IML7972"))
             //{
@@ -756,6 +760,43 @@ namespace TSK_MERGE_SINF
             //}
         }
 
+        private void PasrseDieWithDeviceWTM2100COfZhiCun(string s)
+        {
+            if (s.Contains("|"))
+            {
+                string newLine = s.Substring(s.IndexOf("|") + 1);
+                txtColct = newLine.Length/3;
+                txtRowct++;
+                for (int i = 0; i < newLine.Length;)
+                {
+                    
+                    string binNo = newLine.Substring(i+2, 1);
+                    if (binNo.Equals("."))
+                    {
+                        txtData.Add(".");
+                    }
+                    else if (binNo.Equals("P"))
+                    {
+                        txtData.Add("0");
+                        this.txtPass++;
+                    }
+                    else if (binNo.Equals("M"))//对位点比较
+                    {
+                        txtData.Add("#");
+                    }
+                    else
+                    {
+                        txtData.Add("X");
+                        this.txtFail++;
+                    }
+                    i = i + 3;
+                }
+
+                // 312/3 = 104 列
+                // 123行 123*104= 12792
+            }
+            Console.WriteLine("txtRowct:" + txtData.Count);
+        }
         private void PasrseDieWithDeviceIML7972(string s)
         {
             if (s.StartsWith(".") || s.StartsWith("S") || s.StartsWith("#"))
