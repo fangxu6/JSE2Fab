@@ -162,8 +162,10 @@ namespace WindowsFormTool
             byte[] CoordinatorY = br.ReadBytes(4);
             //First Die Coordinator X Size4
             byte[] FdcX = br.ReadBytes(4);
+            int FirstDirX = ByteToInt32(ref FdcX);
             //First Die Coordinator Y Size4
             byte[] FdcY = br.ReadBytes(4);
+            int FirstDirY = ByteToInt32(ref FdcY);
             //Wafer Testing Start Time Data Size12
             byte[] WTSTime = br.ReadBytes(12);
             //Wafer Testing End Time Data Size12
@@ -518,6 +520,12 @@ namespace WindowsFormTool
         {
             this.Reverse(ref target);
             return BitConverter.ToInt16(target, 0);
+        }
+
+        private int ByteToInt32(ref byte[] target)
+        {
+            this.Reverse(ref target);
+            return BitConverter.ToInt32(target, 0);
         }
         //更新RichTextBox
         private void UpdateRichTextBox(string message)
