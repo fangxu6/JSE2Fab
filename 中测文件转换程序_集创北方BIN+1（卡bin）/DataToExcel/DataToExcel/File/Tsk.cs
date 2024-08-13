@@ -74,6 +74,27 @@ namespace DataToExcel
             set { this._properties["MapVersion"] = value; }
         }
 
+        // 用于标识是否有扩展数据
+        public bool ExtendFlag
+        {
+            get { return (bool)this._properties["ExtendFlag"]; }
+            set { this._properties["ExtendFlag"] = value; }
+        }
+
+
+        public int Rows
+        {
+            get { return (int)this._properties["Rows"]; }
+            set { this._properties["Rows"] = value; }
+        }
+
+        public int Cols
+        {
+            get { return (int)this._properties["Cols"]; }
+            set { this._properties["Cols"] = value; }
+        }
+
+
         public int MapDataForm
         {
             get { return (int)this._properties["MapDataForm"]; }
@@ -195,6 +216,8 @@ namespace DataToExcel
 
             this._keys.Add("MachineType");
             this._keys.Add("MapVersion");
+            this._keys.Add("Rows");
+            this._keys.Add("Cols");
             this._keys.Add("MapDataForm");
 
             this._keys.Add("WaferID");
@@ -245,6 +268,9 @@ namespace DataToExcel
             this._keys.Add("MaxCategories");
             this._keys.Add("Reserved3");
 
+            // 用于标识是否有扩展数据
+            this._keys.Add("ExtendFlag"); 
+
             this._properties.Add("Operator", "");
             this._properties.Add("Device", "");
             this._properties.Add("WaferSize", 0);
@@ -255,6 +281,8 @@ namespace DataToExcel
 
             this._properties.Add("MachineType", (byte)0);
             this._properties.Add("MapVersion", (byte)0);
+            this._properties.Add("Rows", 0);
+            this._properties.Add("Cols", 0);
             this._properties.Add("MapDataForm", 0);
 
             this._properties.Add("WaferID", "");
@@ -304,6 +332,8 @@ namespace DataToExcel
             this._properties.Add("MaxMultiSite", (short)0);
             this._properties.Add("MaxCategories", (short)0);
             this._properties.Add("Reserved3", (short)0);
+
+            this._properties.Add("ExtendFlag", false);
         }
 
         public override void Read()
@@ -323,8 +353,8 @@ namespace DataToExcel
                 this.MachineType = this.ReadToByte();
                 this.MapVersion = this.ReadToByte();
 
-                int rows = this.ReadToInt16();// 记录行数
-                int cols = this.ReadToInt16();// 记录列数
+                this.Rows = this.ReadToInt16();// 记录列数 X坐标
+                this.Cols = this.ReadToInt16();// 记录行数 Y坐标
 
                 this.MapDataForm = this.ReadToInt32();
                 this.WaferID = this.ReadToString(21).TrimEnd('\0');
@@ -336,9 +366,9 @@ namespace DataToExcel
                 this.CassetteNo = this.ReadToInt16();
                 this.SlotNo = this.ReadToInt16();
 
-                // X coordinates increase direction
+                // X coordinates increase direction   XCoordinates 1 leftforward 负, 2 rightforward 正
                 this._properties["XCoordinates"] = this.ReadToByte();
-                // Y coordinates increase direction
+                // Y coordinates increase direction   YCoordinates 1 forward 正, 2 backforward 负
                 this._properties["YCoordinates"] = this.ReadToByte();
                 // Reference dir setting procedures
                 this._properties["RefeDir"] = this.ReadToByte();
@@ -421,18 +451,23 @@ namespace DataToExcel
                 // 设置流的起始指针为 die 测试数据起始指针
                 this._reader.BaseStream.Position = dieSP;
 
-                int total = rows * cols;
+                int total = this.Rows * this.Cols;
                 ArrayList arry = new ArrayList();
+
+                if (this._reader.BaseStream.Position < this._reader.BaseStream.Length)
+                {
+                    this.ExtendFlag = true;
+                }
 
                 if (this.MapVersion == 2 || this.MapVersion == 0)
                 {
 
                     for (int i = 0; i < total; i++)
                     {
-                        arry.Add(this.ReadDie());
+                        arry.Add(this.ReadDie(i));
                     }
 
-                    this._dieMatrix = new DieMatrix(arry, rows, cols);
+                    this._dieMatrix = new DieMatrix(arry, this.Rows, this.Cols);
                 }
 
                 else if (this.MapVersion == 4)
@@ -597,7 +632,7 @@ namespace DataToExcel
 
                     }
 
-                    this._dieMatrix = new DieMatrix(arry, rows, cols);
+                    this._dieMatrix = new DieMatrix(arry, this.Rows, this.Cols);
 
                     return;
                 }
@@ -682,7 +717,7 @@ namespace DataToExcel
             }
         }
 
-        private DieData ReadDie()
+        private DieData ReadDie(int index)
         {
             /*
              * First word
@@ -813,10 +848,34 @@ namespace DataToExcel
                     die.Attribute = DieCategory.Unknow;
                     break;
             }
+            //die.X = s4 == 0 ? f6 : f6 * (-1);
+            //die.Y = s5 == 0 ? s7 : s7 * (-1);
+            int x = s4 == 0 ? f6 : f6 * (-1);
+            int y = s5 == 0 ? s7 : s7 * (-1);
+            if (this._properties["XCoordinates"].Equals(2))
+            {
+                die.X = Convert.ToInt32(this._properties["FirstDirX"]) + index % this.Rows;
+            } else
+            {
+                die.X = Convert.ToInt32(this._properties["FirstDirX"]) - index % this.Rows;
+            }
 
-            die.X = s4 == 0 ? f6 : f6 * (-1);
-            die.Y = s5 == 0 ? s7 : s7 * (-1);
-
+            if (this._properties["YCoordinates"].Equals(1))
+            {
+                die.Y = Convert.ToInt32(this._properties["FirstDirY"]) + index / this.Rows;
+            }
+            else
+            {
+                die.Y = Convert.ToInt32(this._properties["FirstDirY"]) - index / this.Rows;
+            }
+            //if (x != die.X)
+            //{
+            //    Console.WriteLine("error");
+            //}
+            //if (y != die.Y)
+            //{
+            //    Console.WriteLine("error");
+            //}
             return die;
         }
 
