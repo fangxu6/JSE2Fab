@@ -1,4 +1,4 @@
-﻿namespace WindowsFormTool
+﻿namespace DataToExcel
 {
     partial class Form1
     {
