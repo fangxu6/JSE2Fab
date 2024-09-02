@@ -519,6 +519,21 @@ namespace DataToExcel
                                 extSite = buffer[0];
                                 extCategory = buffer[1];
                             }
+                            if (this.DieMatrix[k].Attribute == DieCategory.FailDie)
+                            {
+                                if (extCategory == 0|| extCategory == 1)
+                                {
+                                    Console.WriteLine("error");
+                                }
+                            }
+
+                            if (this.DieMatrix[k].Attribute == DieCategory.PassDie)
+                            {
+                                if ( extCategory != 1)
+                                {
+                                    Console.WriteLine("error");
+                                }
+                            }
                             this.DieMatrix[k].Bin = extCategory;
                         }
                         //Debug
@@ -614,7 +629,7 @@ namespace DataToExcel
             // According to user special,8-bit area may be used.
             int t6 = buffer[1];
             // category data (0 to 63)
-            int binNum = buffer[1] & 0xff;
+            int binNum = buffer[1] & 0x3f;
             int t7 = buffer[0];
 
             // block area judgement function
@@ -649,7 +664,7 @@ namespace DataToExcel
                             //die.Attribute = DieCategory.PassDie;
                             die.Attribute = DieCategory.PassDie;
                             die.Bin = binNum + 1;//-------2013.7.18
-                            if (binNum == 0)
+                            if (binNum != 1)
                             {
                                 Console.WriteLine("error");
                             }
