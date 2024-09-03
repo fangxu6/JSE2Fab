@@ -10,6 +10,7 @@ namespace DataToExcel
     using System;
     using System.Text;
     using System.Collections;
+    using System.Reflection;
 
     public class Tsk : MappingBase
     {
@@ -476,7 +477,7 @@ namespace DataToExcel
 
                 for (int i = 0; i < total; i++)
                 {
-                    arry.Add(this.ReadDie());
+                    arry.Add(this.ReadDie(i));
                 }
 
                 this._dieMatrix = new DieMatrix(arry, rows, cols);
@@ -559,7 +560,7 @@ namespace DataToExcel
             }
         }
 
-        private DieData ReadDie()
+        private DieData ReadDie(int index)
         {
             /*
              * First word
@@ -691,8 +692,31 @@ namespace DataToExcel
                     break;
             }
 
-            die.X = s4 == 0 ? f6 : f6 * (-1);
-            die.Y = s5 == 0 ? s7 : s7 * (-1);
+            //die.X = s4 == 0 ? f6 : f6 * (-1);
+            //die.Y = s5 == 0 ? s7 : s7 * (-1);
+            // X coordinates increase direction   XCoordinates 1 leftforward 负, 2 rightforward 正
+            die.X = Convert.ToInt32(this._properties["FirstDirX"]) + 
+                (this._properties["XCoordinates"].Equals(2) ? index % this.Rows : -index % this.Rows);
+            //if (this._properties["XCoordinates"].Equals(2))
+            //{
+            //    die.X = Convert.ToInt32(this._properties["FirstDirX"]) + index % this.Rows;
+            //}
+            //else
+            //{
+            //    die.X = Convert.ToInt32(this._properties["FirstDirX"]) - index % this.Rows;
+            //}
+
+            // Y coordinates increase direction   YCoordinates 1 forward 正, 2 backforward 负
+            die.Y = Convert.ToInt32(this._properties["FirstDirY"]) + 
+                (this._properties["YCoordinates"].Equals(1) ? index / this.Rows : -index / this.Rows);
+            //if (this._properties["YCoordinates"].Equals(1))
+            //{
+            //    die.Y = Convert.ToInt32(this._properties["FirstDirY"]) + index / this.Rows;
+            //}
+            //else
+            //{
+            //    die.Y = Convert.ToInt32(this._properties["FirstDirY"]) - index / this.Rows;
+            //}
 
             return die;
         }

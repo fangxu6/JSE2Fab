@@ -10,6 +10,7 @@ namespace DataToExcel
     using System;
     using System.Text;
     using System.Collections;
+    using System.Reflection;
 
     public class Tsk : MappingBase
     {
@@ -385,9 +386,9 @@ namespace DataToExcel
                 this.CassetteNo = this.ReadToInt16();
                 this.SlotNo = this.ReadToInt16();
 
-                // X coordinates increase direction
+                // X coordinates increase direction   XCoordinates 1 leftforward 负, 2 rightforward 正
                 this._properties["XCoordinates"] = this.ReadToByte();
-                // Y coordinates increase direction
+                // Y coordinates increase direction   YCoordinates 1 forward 正, 2 backforward 负
                 this._properties["YCoordinates"] = this.ReadToByte();
                 // Reference dir setting procedures
                 this._properties["RefeDir"] = this.ReadToByte();
@@ -473,10 +474,10 @@ namespace DataToExcel
                 int total = rows * cols;
                 ArrayList arry = new ArrayList();
 
-               
+
                 for (int i = 0; i < total; i++)
                 {
-                    arry.Add(this.ReadDie());
+                    arry.Add(this.ReadDie(i));
                 }
 
                 this._dieMatrix = new DieMatrix(arry, rows, cols);
@@ -494,9 +495,9 @@ namespace DataToExcel
                     this._properties["ExtensionHead_64"] = this._reader.ReadBytes(64);
                 }
 
-                
 
-                
+
+
                 while (this._reader.BaseStream.Position < this._reader.BaseStream.Length)
                 {
                     this.ExtendFlag = true;
@@ -519,6 +520,21 @@ namespace DataToExcel
                                 extSite = buffer[0];
                                 extCategory = buffer[1];
                             }
+                            if (this.DieMatrix[k].Attribute == DieCategory.FailDie)
+                            {
+                                if (extCategory == 0 || extCategory == 1)
+                                {
+                                    Console.WriteLine("error");
+                                }
+                            }
+
+                            if (this.DieMatrix[k].Attribute == DieCategory.PassDie)
+                            {
+                                if (extCategory != 1)
+                                {
+                                    Console.WriteLine("error");
+                                }
+                            }
                             this.DieMatrix[k].Bin = extCategory;
                         }
                         //Debug
@@ -530,7 +546,7 @@ namespace DataToExcel
                         //    }
                         //}
                     }
-                    break;
+                    break; //可以注释
                 }
             }
             catch (Exception ee)
@@ -544,7 +560,7 @@ namespace DataToExcel
             }
         }
 
-        private DieData ReadDie()
+        private DieData ReadDie(int index)
         {
             /*
              * First word
@@ -562,7 +578,7 @@ namespace DataToExcel
             // marking
             int f2 = (buffer[0] >> 5) & 0x1;
             // die test result
-            int f1 = (buffer[0] >> 6) & 0x3;
+            int dieTestResult = (buffer[0] >> 6) & 0x3;
 
             // die coordinator values * (0 to 511)
             buffer[0] = (byte)(buffer[0] & 0x1);
@@ -578,7 +594,7 @@ namespace DataToExcel
             int s9 = buffer[1];
 
             // Dummy data(excerpt warfer)
-            int s6 = (buffer[0] >> 1) & 0x1;
+            int s6 = (buffer[0] >> 1) & 0x1;//Dummy Data (except wafer) 1skip2 0skip
             // code bit of coordinator value x
             int s5 = (buffer[0] >> 2) & 0x1;
             // code bit of coordinator value y
@@ -588,7 +604,7 @@ namespace DataToExcel
             // needle marking inspection execution die selection
             int s2 = (buffer[0] >> 5) & 0x1;
             // die property
-            int s1 = (buffer[0] >> 6) & 0x3;
+            int dieProperty = (buffer[0] >> 6) & 0x3;
 
             // die coordinator value Y
             buffer[0] = (byte)(buffer[0] & 0x1);
@@ -614,7 +630,7 @@ namespace DataToExcel
             // According to user special,8-bit area may be used.
             int t6 = buffer[1];
             // category data (0 to 63)
-            int t5 = buffer[1] & 0xff;
+            int binNum = buffer[1] & 0x3f;
             int t7 = buffer[0];
 
             // block area judgement function
@@ -622,7 +638,7 @@ namespace DataToExcel
 
             DieData die = new DieData();
 
-            switch (s1)
+            switch (dieProperty)
             {
                 case 0:
                     // die.Attribute = DieCategory.SkipDie;
@@ -640,7 +656,7 @@ namespace DataToExcel
                     break;
 
                 case 1:
-                    switch (f1)
+                    switch (dieTestResult)
                     {
                         case 0:
                             die.Attribute = DieCategory.NoneDie;
@@ -648,12 +664,20 @@ namespace DataToExcel
                         case 1:
                             //die.Attribute = DieCategory.PassDie;
                             die.Attribute = DieCategory.PassDie;
-                            die.Bin = t5;//-------2013.7.18
+                            die.Bin = binNum;//-------2013.7.18
+                            if (binNum != 1)
+                            {
+                                Console.WriteLine("error");
+                            }
                             break;
                         case 2:
                         case 3:
                             die.Attribute = DieCategory.FailDie;
-                            die.Bin = t5;    //zjf 2008.08.28
+                            die.Bin = binNum;    //zjf 2008.08.28
+                            if (binNum == 0 || binNum == 1)
+                            {
+                                Console.WriteLine("error");
+                            }
                             break;
                         default:
                             die.Attribute = DieCategory.Unknow;
@@ -668,8 +692,31 @@ namespace DataToExcel
                     break;
             }
 
-            die.X = s4 == 0 ? f6 : f6 * (-1);
-            die.Y = s5 == 0 ? s7 : s7 * (-1);
+            //die.X = s4 == 0 ? f6 : f6 * (-1);
+            //die.Y = s5 == 0 ? s7 : s7 * (-1);
+            // X coordinates increase direction   XCoordinates 1 leftforward 负, 2 rightforward 正
+            die.X = Convert.ToInt32(this._properties["FirstDirX"]) +
+                (this._properties["XCoordinates"].Equals(2) ? index % this.Rows : -index % this.Rows);
+            //if (this._properties["XCoordinates"].Equals(2))
+            //{
+            //    die.X = Convert.ToInt32(this._properties["FirstDirX"]) + index % this.Rows;
+            //}
+            //else
+            //{
+            //    die.X = Convert.ToInt32(this._properties["FirstDirX"]) - index % this.Rows;
+            //}
+
+            // Y coordinates increase direction   YCoordinates 1 forward 正, 2 backforward 负
+            die.Y = Convert.ToInt32(this._properties["FirstDirY"]) +
+                (this._properties["YCoordinates"].Equals(1) ? index / this.Rows : -index / this.Rows);
+            //if (this._properties["YCoordinates"].Equals(1))
+            //{
+            //    die.Y = Convert.ToInt32(this._properties["FirstDirY"]) + index / this.Rows;
+            //}
+            //else
+            //{
+            //    die.Y = Convert.ToInt32(this._properties["FirstDirY"]) - index / this.Rows;
+            //}
 
             return die;
         }
@@ -1036,7 +1083,8 @@ namespace DataToExcel
                 this._writer.Write(extentionFirstWord, 0, 2);
 
                 this._writer.Write(extentionSecondWord, 0, 2);
-            } else
+            }
+            else
             {
                 byte[] extentionFirstWord = BitConverter.GetBytes(0);
                 byte[] extentionSecondWord = BitConverter.GetBytes(binNo);
@@ -1046,7 +1094,7 @@ namespace DataToExcel
                 this.Reverse(ref extentionSecondWord);
                 this._writer.Write(extentionSecondWord, 0, 2);
             }
-            
+
         }
 
 
