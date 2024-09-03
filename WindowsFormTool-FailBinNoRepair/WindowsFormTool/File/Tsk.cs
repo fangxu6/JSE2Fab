@@ -11,12 +11,6 @@ namespace DataToExcel
     using System.Text;
     using System.Collections;
 
-    using System.Windows.Forms;
-    using System.IO;
-    using System.Reflection;
-    using DataToExcel;
-    using System.Collections.Generic;
-
     public class Tsk : MappingBase
     {
         public string Operator
@@ -73,9 +67,19 @@ namespace DataToExcel
             set { this._properties["MapVersion"] = value; }
         }
 
-        // 用于标识是否有扩展数据
-        public bool ExtendFlag { get; set; }
-        
+        // 用于标识是否有扩展数据 扩展头信息
+        public bool ExtendHeadFlag
+        {
+            get { return (bool)this._properties["ExtendHeadFlag"]; }
+            set { this._properties["ExtendHeadFlag"] = value; }
+        }
+
+        public bool ExtendFlag
+        {
+            get { return (bool)this._properties["ExtendFlag"]; }
+            set { this._properties["ExtendFlag"] = value; }
+        }
+
 
         public int Rows
         {
@@ -182,6 +186,7 @@ namespace DataToExcel
         public Tsk(string file)
             : base(ConstDefine.FileType_TSK, file)
         {
+            this.ExtendHeadFlag = false;
             this.ExtendFlag = false;
         }
 
@@ -263,6 +268,17 @@ namespace DataToExcel
             this._keys.Add("MaxCategories");
             this._keys.Add("Reserved3");
 
+            // 用于标识是否有扩展数据
+            this._keys.Add("ExtendHeadFlag");
+            this._keys.Add("ExtendFlag");
+            this._keys.Add("ExtensionHead_20");
+            this._keys.Add("ExtensionHead_16");
+            this._keys.Add("ExtensionHead_total");
+            this._keys.Add("ExtensionHead_pass");
+            this._keys.Add("ExtensionHead_fail");
+            this._keys.Add("ExtensionHead_44");
+            this._keys.Add("ExtensionHead_64");
+
             this._properties.Add("Operator", "");
             this._properties.Add("Device", "");
             this._properties.Add("WaferSize", 0);
@@ -324,6 +340,17 @@ namespace DataToExcel
             this._properties.Add("MaxMultiSite", (short)0);
             this._properties.Add("MaxCategories", (short)0);
             this._properties.Add("Reserved3", (short)0);
+
+            this._properties.Add("ExtendHeadFlag", false);
+            this._properties.Add("ExtendFlag", false);
+
+            this._properties.Add("ExtensionHead_20", new byte[20]);
+            this._properties.Add("ExtensionHead_16", new byte[16]);
+            this._properties.Add("ExtensionHead_total", (int)0);
+            this._properties.Add("ExtensionHead_pass", (int)0);
+            this._properties.Add("ExtensionHead_fail", (int)0);
+            this._properties.Add("ExtensionHead_44", new byte[44]);
+            this._properties.Add("ExtensionHead_64", new byte[64]);
         }
 
         public override void Read()
@@ -446,250 +473,65 @@ namespace DataToExcel
                 int total = rows * cols;
                 ArrayList arry = new ArrayList();
 
-                if (this.MapVersion == 2 || this.MapVersion == 0)
+
+                for (int i = 0; i < total; i++)
                 {
-
-                    for (int i = 0; i < total; i++)
-                    {
-                        arry.Add(this.ReadDie());
-                    }
-
-                    this._dieMatrix = new DieMatrix(arry, rows, cols);
+                    arry.Add(this.ReadDie());
                 }
 
-                else if (this.MapVersion == 4)
+                this._dieMatrix = new DieMatrix(arry, rows, cols);
+
+                if (this._reader.BaseStream.Position < this._reader.BaseStream.Length)
                 {
-                    int[,] die1 = new int[total, 6];
-                    int[,] die2 = new int[total, 2];
+                    this.ExtendHeadFlag = true;
 
-                    for (int i = 0; i < total; i++)
-                    {
-                        byte[] buffer = this._reader.ReadBytes(2);
-                        int f7 = buffer[0];
-                        int f8 = buffer[1];
-
-                        // needle mark inspection result(added jan/23'96)(not handled)
-                        int f5 = (buffer[0] >> 1) & 0x1;
-                        // re-probing result
-                        int f4 = (buffer[0] >> 2) & 0x3;
-                        // fail mark inspection
-                        int f3 = (buffer[0] >> 4) & 0x1;
-                        // marking
-                        int f2 = (buffer[0] >> 5) & 0x1;
-                        // die test result
-                        int f1 = (buffer[0] >> 6) & 0x3;
-
-                        // die coordinator values * (0 to 511)
-                        buffer[0] = (byte)(buffer[0] & 0x1);
-                        this.Reverse(ref buffer);
-                        int f6 = BitConverter.ToInt16(buffer, 0);
-
-
-                        /*
-                         * Second word
-                         */
-                        buffer = this._reader.ReadBytes(2);
-                        int s8 = buffer[0];
-                        int s9 = buffer[1];
-
-                        // Dummy data(excerpt warfer)
-                        int s6 = (buffer[0] >> 1) & 0x1;//Dummy Data (except wafer) 0skip2 1skip
-                        // code bit of coordinator value x
-                        int s5 = (buffer[0] >> 2) & 0x1;
-                        // code bit of coordinator value y
-                        int s4 = (buffer[0] >> 3) & 0x1;
-                        // sampling die
-                        int s3 = (buffer[0] >> 4) & 0x1;
-                        // needle marking inspection execution die selection
-                        int s2 = (buffer[0] >> 5) & 0x1;
-                        // die property
-                        int s1 = (buffer[0] >> 6) & 0x3;
-
-                        // die coordinator value Y
-                        buffer[0] = (byte)(buffer[0] & 0x1);
-                        this.Reverse(ref buffer);
-                        int s7 = BitConverter.ToInt16(buffer, 0);
-
-
-
-                        /*
-                         * Third word
-                         */
-                        buffer = this._reader.ReadBytes(2);
-                        int t8 = buffer[0];
-                        int t9 = buffer[1];
-
-                        // test execution site no.(0 to 63)
-                        int t3 = buffer[0] & 0x3f;
-                        // reject chip flag
-                        int t2 = (buffer[0] >> 6) & 0x1;
-                        // measurement finish flag at "No-Over-Travel" probing
-                        int t1 = (buffer[0] >> 7) & 0x1;
-
-                        // According to user special,8-bit area may be used.
-                        int t6 = buffer[1];
-                        // category data (0 to 63)
-                        int t5 = buffer[1] & 0xff;
-                        int t7 = buffer[0];
-
-                        // block area judgement function
-                        int t4 = (buffer[0] >> 6) & 0x3;
-
-                        die1[i, 0] = s1;//Die Property 0skip 1probeing
-                        die1[i, 1] = f1;//Die Test Result 0not test 1pass 2Fail 3Fail
-                        die1[i, 2] = (s4 == 0 ? f6 : f6 * (-1));//X
-                        die1[i, 3] = (s5 == 0 ? s7 : s7 * (-1));//Y
-                        die1[i, 4] = t5;//Category Data (0 to 63)
-                        die1[i, 5] = s6;//Dummy Data (except wafer) 0skip2 1skip
-
-                    }
-
-                    byte[] bufferhead = this._reader.ReadBytes(172);//过滤头文件
-
-                    for (int i = 0; i < total; i++)
-                    {
-                        byte[] buffer = this._reader.ReadBytes(2);
-                        int f1 = buffer[0];
-                        int f2 = buffer[1];
-
-                        die2[i, 0] = f2;//SiteNum
-
-                        buffer = this._reader.ReadBytes(2);
-                        int s1 = buffer[0];
-                        int s2 = buffer[1];
-
-                        // buffer[0] = (byte)(buffer[0] & 0x3);
-                        //  this.Reverse(ref buffer);
-                        //  int s6 = BitConverter.ToInt16(buffer, 0);
-                        die2[i, 1] = s2;// Bin over 256
-                        die1[i, 4] = s2;
-
-                        DieData die = new DieData();
-
-                        switch (die1[i, 0])
-                        {
-                            case 0:
-                                // die.Attribute = DieCategory.SkipDie;
-                                // break;
-                                if (die1[i, 5] == 1)
-                                {
-                                    die.Attribute = DieCategory.SkipDie;
-                                    break;
-                                }
-                                else if (die1[i, 5] == 0)
-                                {
-                                    die.Attribute = DieCategory.SkipDie2;
-                                    break;
-                                }
-                                break;
-
-                            case 1:
-                                switch (die1[i, 1])
-                                {
-                                    case 0:
-                                        die.Attribute = DieCategory.NoneDie;
-                                        break;
-                                    case 1:
-                                        //die.Attribute = DieCategory.PassDie;
-                                        die.Attribute = DieCategory.PassDie;
-                                        die.Bin = die1[i, 4];//-------2013.7.18
-                                        break;
-                                    case 2:
-                                    case 3:
-                                        die.Attribute = DieCategory.FailDie;
-                                        die.Bin = die1[i, 4];    //zjf 2008.08.28
-                                        break;
-                                    default:
-                                        die.Attribute = DieCategory.Unknow;
-                                        break;
-                                }
-                                break;
-                            case 2:
-                                die.Attribute = DieCategory.MarkDie;
-                                break;
-                            default:
-                                die.Attribute = DieCategory.Unknow;
-                                break;
-                        }
-
-                        die.X = die1[i, 2];
-                        die.Y = die1[i, 3];
-
-                        arry.Add(die);
-
-                    }
-
-                    this._dieMatrix = new DieMatrix(arry, rows, cols);
-
-                    return;
+                    this._properties["ExtensionHead_20"] = this._reader.ReadBytes(20);
+                    this._properties["ExtensionHead_16"] = this._reader.ReadBytes(32);
+                    this._properties["ExtensionHead_total"] = this.ReadToInt32();
+                    this._properties["ExtensionHead_pass"] = this.ReadToInt32();
+                    this._properties["ExtensionHead_fail"] = this.ReadToInt32();
+                    this._properties["ExtensionHead_44"] = this._reader.ReadBytes(44);
+                    this._properties["ExtensionHead_64"] = this._reader.ReadBytes(64);
                 }
 
 
 
-                //for(int i=0;i<172;i++)
-                //{
-                //    bufferhead.Add(br_1.ReadByte());///正常TSK文件继续读取172页内容结束
-                //}
 
-                byte[] bufferhead1_20 = this._reader.ReadBytes(20);
-                byte[] bufferhead2_16 = this._reader.ReadBytes(32);
-                byte[] bufferhead_total = this._reader.ReadBytes(4);
-                byte[] bufferhead_pass = this._reader.ReadBytes(4);
-                byte[] bufferhead_fail = this._reader.ReadBytes(4);
-                byte[] bufferhead4_11 = this._reader.ReadBytes(44);
-                byte[] bufferhead1_64 = this._reader.ReadBytes(64);
-
-                if(this._reader.BaseStream.Position < this._reader.BaseStream.Length)
-                {
-                    this.ExtendFlag = true;
-                }
                 while (this._reader.BaseStream.Position < this._reader.BaseStream.Length)
                 {
-                   
-                    foreach (DieData die in this.DieMatrix.Items)
+                    this.ExtendFlag = true;
+
+                    for (int k = 0; k < arry.Count; k++)
                     {
                         byte[] buffer = this._reader.ReadBytes(2);
                         byte[] buffer2 = this._reader.ReadBytes(2);
                         int extSite;
                         int extCategory;
-
-                        extSite = buffer[0];
-                        extCategory = buffer[1];
-
-
-                        if (die.Attribute == DieCategory.FailDie || die.Attribute == DieCategory.PassDie)
+                        if (this.DieMatrix[k].Attribute == DieCategory.FailDie || this.DieMatrix[k].Attribute == DieCategory.PassDie)
                         {
-                            if (extCategory == 0)
+                            if (this.MapVersion == 4 || this.MapVersion == 7)
                             {
-                                Console.WriteLine("error");
+                                extSite = buffer[1];
+                                extCategory = buffer2[1];
                             }
+                            else
+                            {
+                                extSite = buffer[0];
+                                extCategory = buffer[1];
+                            }
+                            this.DieMatrix[k].Bin = extCategory;
                         }
+                        //Debug
+                        //if (die.Attribute == DieCategory.FailDie || die.Attribute == DieCategory.PassDie)
+                        //{
+                        //    if (extCategory == 0)
+                        //    {
+                        //        Console.WriteLine("error");
+                        //    }
+                        //}
                     }
                     break;
-                    //for (int j = 0; j < total; j++)
-                    //{
-                    //    byte[] buffer = this._reader.ReadBytes(2);
-                    //    byte[] buffer2 = this._reader.ReadBytes(2);
-                    //    int extSite = buffer[0];
-                    //    int extCategory = buffer[1];
-                    //    if (this.MapVersion == 4)
-                    //    {
-                    //        extSite = buffer[1];
-                    //        extCategory = buffer2[1];
-
-                    //    }
-                    //    else
-                    //    {
-                    //        extSite = buffer[0];
-                    //        extCategory = buffer[1];
-                    //    }
-                    //}
-
                 }
-
-
-
-
             }
             catch (Exception ee)
             {
@@ -1076,257 +918,40 @@ namespace DataToExcel
                         this.WriteDie(this.DieMatrix[j, i]);
                     }
                 }
-            }
-            catch (Exception ee)
-            {
-                throw ee;
-            }
-            finally
-            {
-                this.CloseWriter();
-            }
-        }
-
-        public void SaveWithTxtMap(List<string> txtNewData, int inkBinNo)
-        {
-            try
-            {
-                byte[] buf;
-
-                // 打开或创建文件
-                this.OpenWriter();
-
-                string str = string.Format("{0,-20:G}", this.Operator);
-                this._writer.Write(Encoding.ASCII.GetBytes(str), 0, 20);
-
-                str = string.Format("{0,-16:G}", this.Device);
-                this._writer.Write(Encoding.ASCII.GetBytes(str), 0, 16);
-
-                buf = BitConverter.GetBytes((short)this.WaferSize);
-                this.Reverse(ref buf);
-                this._writer.Write(buf, 0, 2);
-                buf = BitConverter.GetBytes((short)this.MachineNo);
-                this.Reverse(ref buf);
-                this._writer.Write(buf, 0, 2);
-                buf = BitConverter.GetBytes(this.IndexSizeX);
-                this.Reverse(ref buf);
-                this._writer.Write(buf, 0, 4);
-                buf = BitConverter.GetBytes(this.IndexSizeY);
-                this.Reverse(ref buf);
-                this._writer.Write(buf, 0, 4);
-                buf = BitConverter.GetBytes((short)this.FlatDir);
-                this.Reverse(ref buf);
-                this._writer.Write(buf, 0, 2);
-                this._writer.Write(BitConverter.GetBytes(this.MachineType), 0, 1);
-                this._writer.Write(BitConverter.GetBytes(this.MapVersion), 0, 1);
-
-                buf = BitConverter.GetBytes((short)this.DieMatrix.XMax);
-                this.Reverse(ref buf);
-                this._writer.Write(buf, 0, 2);
-                buf = BitConverter.GetBytes((short)this.DieMatrix.YMax);
-                this.Reverse(ref buf);
-                this._writer.Write(buf, 0, 2);
-
-                buf = BitConverter.GetBytes(this.MapDataForm);
-                this.Reverse(ref buf);
-                this._writer.Write(buf, 0, 4);
-
-                str = string.Format("{0,-21:G}", this.WaferID);
-                this._writer.Write(Encoding.ASCII.GetBytes(str), 0, 21);
-                this._writer.Write(BitConverter.GetBytes(this.ProbingNo), 0, 1);
-
-                str = string.Format("{0,-18:G}", this.LotNo);
-                this._writer.Write(Encoding.ASCII.GetBytes(str), 0, 18);
-
-                buf = BitConverter.GetBytes((short)this.CassetteNo);
-                this.Reverse(ref buf);
-                this._writer.Write(buf, 0, 2);
-                buf = BitConverter.GetBytes((short)this.SlotNo);
-                this.Reverse(ref buf);
-                this._writer.Write(buf, 0, 2);
-
-                // X coordinates increase direction
-                this._writer.Write(BitConverter.GetBytes((byte)this._properties["XCoordinates"]), 0, 1);
-                // Y coordinates increase direction
-                this._writer.Write(BitConverter.GetBytes((byte)this._properties["YCoordinates"]), 0, 1);
-                // Reference dir setting procedures
-                this._writer.Write(BitConverter.GetBytes((byte)this._properties["RefeDir"]), 0, 1);
-                // (Reserved)
-                this._writer.Write(BitConverter.GetBytes((byte)this._properties["Reserved0"]), 0, 1);
-
-                // Target die position X
-                buf = BitConverter.GetBytes((int)this._properties["TargetX"]);
-                this.Reverse(ref buf);
-                this._writer.Write(buf, 0, 4);
-
-                // Target die position Y
-                buf = BitConverter.GetBytes((int)this._properties["TargetY"]);
-                this.Reverse(ref buf);
-                this._writer.Write(buf, 0, 4);
-
-                buf = BitConverter.GetBytes((short)this.Refpx);
-                this.Reverse(ref buf);
-                this._writer.Write(buf, 0, 2);
-                buf = BitConverter.GetBytes((short)this.Refpy);
-                this.Reverse(ref buf);
-                this._writer.Write(buf, 0, 2);
-
-                // Probing start position
-                this._writer.Write(BitConverter.GetBytes((byte)this._properties["ProbingSP"]), 0, 1);
-                // Probing direction
-                this._writer.Write(BitConverter.GetBytes((byte)this._properties["ProbingDir"]), 0, 1);
-
-                // (Reserved)
-                buf = BitConverter.GetBytes((short)this._properties["Reserved1"]);
-                this.Reverse(ref buf);
-                this._writer.Write(buf, 0, 2);
-
-                // Distance X to wafer center die origin
-                buf = BitConverter.GetBytes((int)this._properties["DistanceX"]);
-                this.Reverse(ref buf);
-                this._writer.Write(buf, 0, 4);
-                // Distance Y to wafer center die origin
-                buf = BitConverter.GetBytes((int)this._properties["DistanceY"]);
-                this.Reverse(ref buf);
-                this._writer.Write(buf, 0, 4);
-                // Coordinator X of wafer center die
-                buf = BitConverter.GetBytes((int)this._properties["CoordinatorX"]);
-                this.Reverse(ref buf);
-                this._writer.Write(buf, 0, 4);
-                // Coordinator Y of wafer center die
-                buf = BitConverter.GetBytes((int)this._properties["CoordinatorY"]);
-                this.Reverse(ref buf);
-                this._writer.Write(buf, 0, 4);
-                // First dir coordinator X
-                buf = BitConverter.GetBytes((int)this._properties["FirstDirX"]);
-                this.Reverse(ref buf);
-                this._writer.Write(buf, 0, 4);
-                // First dir coordinator Y
-                buf = BitConverter.GetBytes((int)this._properties["FirstDirY"]);
-                this.Reverse(ref buf);
-                this._writer.Write(buf, 0, 4);
-
-                // start time
-                str = this.StartTime.Year.ToString().Substring(2);
-                this._writer.Write(Encoding.ASCII.GetBytes(str), 0, 2);
-                str = String.Format("{0,2:G}", this.StartTime.Month.ToString());
-                this._writer.Write(Encoding.ASCII.GetBytes(str), 0, 2);
-                str = String.Format("{0,2:G}", this.StartTime.Day.ToString());
-                this._writer.Write(Encoding.ASCII.GetBytes(str), 0, 2);
-                str = String.Format("{0,2:G}", this.StartTime.Hour.ToString());
-                this._writer.Write(Encoding.ASCII.GetBytes(str), 0, 2);
-                str = String.Format("{0,2:G}", this.StartTime.Minute.ToString());
-                this._writer.Write(Encoding.ASCII.GetBytes(str), 0, 2);
-                // (Reserved)
-                this._writer.Write(Encoding.ASCII.GetBytes("00"), 0, 2);
-
-                // end time
-                str = this.EndTime.Year.ToString().Substring(2);
-                this._writer.Write(Encoding.ASCII.GetBytes(str), 0, 2);
-                str = String.Format("{0,2:G}", this.EndTime.Month.ToString());
-                this._writer.Write(Encoding.ASCII.GetBytes(str), 0, 2);
-                str = String.Format("{0,2:G}", this.EndTime.Day.ToString());
-                this._writer.Write(Encoding.ASCII.GetBytes(str), 0, 2);
-                str = String.Format("{0,2:G}", this.EndTime.Hour.ToString());
-                this._writer.Write(Encoding.ASCII.GetBytes(str), 0, 2);
-                str = String.Format("{0,2:G}", this.EndTime.Minute.ToString());
-                this._writer.Write(Encoding.ASCII.GetBytes(str), 0, 2);
-                // (Reserved)
-                this._writer.Write(Encoding.ASCII.GetBytes("00"), 0, 2);
-
-                // load time
-                str = this.LoadTime.Year.ToString().Substring(2);
-                this._writer.Write(Encoding.ASCII.GetBytes(str), 0, 2);
-                str = String.Format("{0,2:G}", this.LoadTime.Month.ToString());
-                this._writer.Write(Encoding.ASCII.GetBytes(str), 0, 2);
-                str = String.Format("{0,2:G}", this.LoadTime.Day.ToString());
-                this._writer.Write(Encoding.ASCII.GetBytes(str), 0, 2);
-                str = String.Format("{0,2:G}", this.LoadTime.Hour.ToString());
-                this._writer.Write(Encoding.ASCII.GetBytes(str), 0, 2);
-                str = String.Format("{0,2:G}", this.LoadTime.Minute.ToString());
-                this._writer.Write(Encoding.ASCII.GetBytes(str), 0, 2);
-                // (Reserved)
-                this._writer.Write(Encoding.ASCII.GetBytes("00"), 0, 2);
-
-                // unload time
-                str = this.UnloadTime.Year.ToString().Substring(2);
-                this._writer.Write(Encoding.ASCII.GetBytes(str), 0, 2);
-                str = String.Format("{0,2:G}", this.UnloadTime.Month.ToString());
-                this._writer.Write(Encoding.ASCII.GetBytes(str), 0, 2);
-                str = String.Format("{0,2:G}", this.UnloadTime.Day.ToString());
-                this._writer.Write(Encoding.ASCII.GetBytes(str), 0, 2);
-                str = String.Format("{0,2:G}", this.UnloadTime.Hour.ToString());
-                this._writer.Write(Encoding.ASCII.GetBytes(str), 0, 2);
-                str = String.Format("{0,2:G}", this.UnloadTime.Minute.ToString());
-                this._writer.Write(Encoding.ASCII.GetBytes(str), 0, 2);
-                // (Reserved)
-                this._writer.Write(Encoding.ASCII.GetBytes("00"), 0, 2);
-
-                // Machine No.
-                buf = BitConverter.GetBytes((int)this._properties["MachineNo1"]);
-                this.Reverse(ref buf);
-                this._writer.Write(buf, 0, 4);
-                // Machine No.
-                buf = BitConverter.GetBytes((int)this._properties["MachineNo2"]);
-                this.Reverse(ref buf);
-                this._writer.Write(buf, 0, 4);
-                // Special characters
-                buf = BitConverter.GetBytes((int)this._properties["SpecialChar"]);
-                this.Reverse(ref buf);
-                this._writer.Write(buf, 0, 4);
-                // Testing end information
-                this._writer.Write(BitConverter.GetBytes((byte)this._properties["TestingEnd"]), 0, 1);
-                // (Reserved)
-                this._writer.Write(BitConverter.GetBytes((byte)this._properties["Reserved2"]), 0, 1);
-
-                buf = BitConverter.GetBytes((short)this.TotalDie);
-                this.Reverse(ref buf);
-                this._writer.Write(buf, 0, 2);
-                buf = BitConverter.GetBytes((short)this.PassDie);
-                this.Reverse(ref buf);
-                this._writer.Write(buf, 0, 2);
-                buf = BitConverter.GetBytes((short)this.FailDie);
-                this.Reverse(ref buf);
-                this._writer.Write(buf, 0, 2);
-
-                // 记录 die 测试数据起始指针
-                buf = BitConverter.GetBytes(236);
-                this.Reverse(ref buf);
-                this._writer.Write(buf, 0, 4);
-
-                // Number of line category data
-                buf = BitConverter.GetBytes((int)this._properties["LineCategoryNo"]);
-                this.Reverse(ref buf);
-                this._writer.Write(buf, 0, 4);
-                // Line category address
-                buf = BitConverter.GetBytes((int)this._properties["LineCategoryAddr"]);
-                this.Reverse(ref buf);
-                this._writer.Write(buf, 0, 4);
-                // Map file configuration
-                //buf = BitConverter.GetBytes((short)this._properties["Configuration"]);
-                buf = BitConverter.GetBytes((short)0);
-                this.Reverse(ref buf);
-                this._writer.Write(buf, 0, 2);
-                // Max. multi site
-                buf = BitConverter.GetBytes((short)this._properties["MaxMultiSite"]);
-                this.Reverse(ref buf);
-                this._writer.Write(buf, 0, 2);
-                // Max. categories
-                buf = BitConverter.GetBytes((short)this._properties["MaxCategories"]);
-                this.Reverse(ref buf);
-                this._writer.Write(buf, 0, 2);
-                // Do not use,reserved
-                buf = BitConverter.GetBytes((short)this._properties["Reserved3"]);
-                this.Reverse(ref buf);
-                this._writer.Write(buf, 0, 2);
-
-                // write die data
-                for (int i = 0; i < this.DieMatrix.YMax; i++)
+                if ((bool)this._properties["ExtendHeadFlag"])
                 {
-                    for (int j = 0; j < this.DieMatrix.XMax; j++)
+                    // Extension head 20
+                    this._writer.Write((byte[])this._properties["ExtensionHead_20"], 0, 20);
+                    // Extension head 16
+                    this._writer.Write((byte[])this._properties["ExtensionHead_16"], 0, 16);
+                    // Extension head total
+                    buf = BitConverter.GetBytes((int)this._properties["ExtensionHead_total"]);
+                    this.Reverse(ref buf);
+                    this._writer.Write(buf, 0, 4);
+                    // Extension head pass
+                    buf = BitConverter.GetBytes((int)this._properties["ExtensionHead_pass"]);
+                    this.Reverse(ref buf);
+                    this._writer.Write(buf, 0, 4);
+                    // Extension head fail
+                    buf = BitConverter.GetBytes((int)this._properties["ExtensionHead_fail"]);
+                    this.Reverse(ref buf);
+                    this._writer.Write(buf, 0, 4);
+                    // Extension head 44
+                    this._writer.Write((byte[])this._properties["ExtensionHead_44"], 0, 44);
+                    // Extension head 64
+                    this._writer.Write((byte[])this._properties["ExtensionHead_64"], 0, 64);
+                }
+                if ((bool)this._properties["ExtendFlag"])
+                {
+                    // write extend data
+                    for (int i = 0; i < this.DieMatrix.YMax; i++)
                     {
-                        this.WriteDieWithTxtMap(this.DieMatrix[j, i], txtNewData, inkBinNo);
+                        for (int j = 0; j < this.DieMatrix.XMax; j++)
+                        {
+                            this.WriteDieExtention(this.DieMatrix[j, i]);
+                        }
                     }
+
                 }
             }
             catch (Exception ee)
@@ -1344,13 +969,6 @@ namespace DataToExcel
             ushort f = (ushort)Math.Abs(d.X);
             ushort s = (ushort)Math.Abs(d.Y);
             ushort t = (ushort)d.Bin;
-
-            //second word 
-            //s1 buff[0]>>6  0skip 1probing 2mark
-
-            //s6 = (buffer[0] >> 1) & 0x1;//Dummy Data (except wafer) 1skip2 0skip
-
-            //int dieTestResult = (buffer[0] >> 6) & 0x3; f1 xx 000000
 
             switch (d.Attribute)
             {
@@ -1407,56 +1025,31 @@ namespace DataToExcel
             this._writer.Write(tb, 0, 2);
         }
 
-        private void WriteDieWithTxtMap(DieData d, List<string> txtNewData, int inkBinNo)
+        private void WriteDieExtention(DieData d)
         {
-            ushort f = (ushort)Math.Abs(d.X);
-            ushort s = (ushort)Math.Abs(d.Y);
-
-            switch (d.Attribute)
+            ushort binNo = (ushort)d.Bin;
+            if (this.MapVersion == 2)
             {
-                case DieCategory.FailDie:
-                case DieCategory.TIRefFail:
-                    f = (ushort)(f | (ushort)0x8000);
-                    s = (ushort)(s | (ushort)0x4000);
-                    break;
-                case DieCategory.MarkDie:
-                    s = (ushort)(s | (ushort)0x8000);
-                    break;
-                case DieCategory.NoneDie:
-                    s = (ushort)(s | (ushort)0x4000);
-                    break;
-                case DieCategory.PassDie:
-                case DieCategory.TIRefPass:
-                    f = (ushort)(f | (ushort)0x4000);
-                    s = (ushort)(s | (ushort)0x4000);
-                    break;
-                case DieCategory.SkipDie:
-                    break;
-                case DieCategory.Unknow:
-                    s = (ushort)(s | (ushort)0xc000);
-                    break;
+                byte[] extentionFirstWord = BitConverter.GetBytes(binNo);
+                byte[] extentionSecondWord = BitConverter.GetBytes(0);
+                this.Reverse(ref extentionFirstWord);
+                this._writer.Write(extentionFirstWord, 0, 2);
+
+                this._writer.Write(extentionSecondWord, 0, 2);
+            }
+            else
+            {
+                byte[] extentionFirstWord = BitConverter.GetBytes(0);
+                byte[] extentionSecondWord = BitConverter.GetBytes(binNo);
+
+                this._writer.Write(extentionFirstWord, 0, 2);
+
+                this.Reverse(ref extentionSecondWord);
+                this._writer.Write(extentionSecondWord, 0, 2);
             }
 
-            if (d.X < 0)
-                s = (ushort)(s | (ushort)0x0800);
-
-            if (d.Y < 0)
-                s = (ushort)(s | (ushort)0x0400);
-
-            byte[] fb = BitConverter.GetBytes(f);
-            byte[] sb = BitConverter.GetBytes(s);
-
-            // first word
-            this.Reverse(ref fb);
-            this._writer.Write(fb, 0, 2);
-
-            // second word
-            this.Reverse(ref sb);
-            this._writer.Write(sb, 0, 2);
-
-            // third word
-            this._writer.Write(BitConverter.GetBytes(0), 0, 2);
         }
+
 
         /// <summary>
         /// 判断 mapping 文件的 die 矩阵中的一个 die 是否为空 die
