@@ -525,6 +525,7 @@ namespace DataToExcel
                                 if (extCategory == 0|| extCategory == 1)
                                 {
                                     Console.WriteLine("error");
+                                    continue;//只要bin不是超过64的，可以跳过
                                 }
                             }
 
@@ -533,6 +534,7 @@ namespace DataToExcel
                                 if ( extCategory != 1)
                                 {
                                     Console.WriteLine("error");
+                                    continue;//只要bin不是超过64的，可以跳过
                                 }
                             }
                             this.DieMatrix[k].Bin = extCategory;

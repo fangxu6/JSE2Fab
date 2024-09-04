@@ -104,6 +104,7 @@
     <Compile Include="ExpDataToExcelFactory\Device_General.cs" />
     <Compile Include="ExpDataToExcelFactory\semiconductorpower\Device_UPA2610-8-8-CP3.cs" />
     <Compile Include="ExpDataToExcelFactory\semiconductorpower\Device_UPM6720-8-16-00.cs" />
+    <Compile Include="ExpDataToExcelFactory\semiconductorpower\Device_6722-12-16-B-00P.cs" />
     <Compile Include="ExpDataToExcelFactory\semiconductorpower\Device_UPM6722_12_8_00P.cs" />
     <Compile Include="ExpDataToExcelFactory\semiconductorpower\Device_UPM6720-8-16-04P.cs" />
     <Compile Include="ExpDataToExcelFactory\aisinochip\Device_MONKEY-12-8-00P.cs" />
