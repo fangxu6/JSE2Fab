@@ -33,31 +33,10 @@ namespace WindowsFormTool
                     TSKFilePath = str.FullName;
                     button2.Text = TSKFilePath;
                     ToMapping();
-                    //Tsk tsk = new Tsk(str.FullName);
-                    //tsk.Read();
-                    //this.LotNo = tsk.LotNo.Trim();
-                    //ListViewItem item = new ListViewItem(tsk.WaferID);
-                    //item.Tag = tsk;
-                    //this.lsvItems.Items.Add(item);
-                    //item.SubItems.Add(str.FullName);
-
                 }
             }
 
-            //using (OpenFileDialog FileDialog = new OpenFileDialog())
-            //{
-            //    FileDialog.Title = "选择 TSK 空图谱文件";
-            //    FileDialog.RestoreDirectory = true; // 记住上次打开的目录
-
-            //    // 显示文件浏览对话框，并获取用户选择
-            //    DialogResult result = FileDialog.ShowDialog();
-
-            //    if (result == DialogResult.OK)
-            //    {
-            //        TSKFilePath = FileDialog.FileName;
-            //        button2.Text = TSKFilePath;
-            //    }
-            //}
+           
         }
 
         private void button1_Click(object sender, EventArgs e)
