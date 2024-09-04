@@ -692,31 +692,16 @@ namespace DataToExcel
                     break;
             }
 
+            ////原来计算x和y坐标的方法
             //die.X = s4 == 0 ? f6 : f6 * (-1);
             //die.Y = s5 == 0 ? s7 : s7 * (-1);
             // X coordinates increase direction   XCoordinates 1 leftforward 负, 2 rightforward 正
-            die.X = Convert.ToInt32(this._properties["FirstDirX"]) + 
-                (this._properties["XCoordinates"].Equals(2) ? index % this.Rows : -index % this.Rows);
-            //if (this._properties["XCoordinates"].Equals(2))
-            //{
-            //    die.X = Convert.ToInt32(this._properties["FirstDirX"]) + index % this.Rows;
-            //}
-            //else
-            //{
-            //    die.X = Convert.ToInt32(this._properties["FirstDirX"]) - index % this.Rows;
-            //}
-
+            die.X = Convert.ToInt32(this._properties["FirstDirX"]) +
+                (Convert.ToInt32(this._properties["XCoordinates"]).Equals(2) ? index % this.Rows : -index % this.Rows);
+            
             // Y coordinates increase direction   YCoordinates 1 forward 正, 2 backforward 负
-            die.Y = Convert.ToInt32(this._properties["FirstDirY"]) + 
-                (this._properties["YCoordinates"].Equals(1) ? index / this.Rows : -index / this.Rows);
-            //if (this._properties["YCoordinates"].Equals(1))
-            //{
-            //    die.Y = Convert.ToInt32(this._properties["FirstDirY"]) + index / this.Rows;
-            //}
-            //else
-            //{
-            //    die.Y = Convert.ToInt32(this._properties["FirstDirY"]) - index / this.Rows;
-            //}
+            die.Y = Convert.ToInt32(this._properties["FirstDirY"]) +
+                (Convert.ToInt32(this._properties["YCoordinates"]).Equals(1) ? index / this.Rows : -index / this.Rows);
 
             return die;
         }
