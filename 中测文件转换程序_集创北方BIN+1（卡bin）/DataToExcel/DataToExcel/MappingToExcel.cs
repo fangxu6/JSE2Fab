@@ -80,14 +80,9 @@ namespace DataToExcel
             else
             {
                 int num2;
-                string LotNo = this.LotNo;
-                if (this.LotNo.EndsWith("CP1") || this.LotNo.EndsWith("CP2") || this.LotNo.EndsWith("CP3"))
+                if (!Directory.Exists(this.textBox1.Text + @"\TxtOutFile\" + this.LotNo))
                 {
-                    LotNo = this.LotNo.Substring(0, this.LotNo.IndexOf("CP"));
-                }
-                if (!Directory.Exists(this.textBox1.Text + @"\TxtOutFile\" + LotNo))
-                {
-                    Directory.CreateDirectory(this.textBox1.Text + @"\TxtOutFile\" + LotNo);
+                    Directory.CreateDirectory(this.textBox1.Text + @"\TxtOutFile\" + this.LotNo);
                 }
                 else if (MessageBox.Show("The folder is Existed!Do you want to cover it?", "Confirm", MessageBoxButtons.YesNo) == DialogResult.No)
                 {
@@ -98,27 +93,13 @@ namespace DataToExcel
                 this.progressBar1.Value = 0;
                 ToCountDie._ToCountDie = new Hashtable();
                 CmdTxt.InitTotal();
-                //if (this.LotNo.EndsWith("CP1") || this.LotNo.EndsWith("CP2") || this.LotNo.EndsWith("CP3"))
-                //{
-                //    for (num2 = 0; num2 <= (count - 1); num2++)
-                //    {
-                //        string WaferID = this.lsvItems.Items[num2].Text.Trim();
-                //        string[] WaferIDs = WaferID.Split('-');
-                //        WaferID= WaferID.Substring(WaferID.IndexOf("-")+1);
-                //        new CMDTskToTxt().Convert(this.lsvItems.Items[num2].SubItems[1].Text.Trim(), this.textBox1.Text + @"\TxtOutFile\" + LotNo + @"\" + LotNo + "-" + WaferID + ".txt");
-                //        this.progressBar1.Value++;
-                //    }
-                //}
-                //else
-                //{
-                    for (num2 = 0; num2 <= (count - 1); num2++)
-                    {
-                        new CMDTskToTxt().Convert(this.lsvItems.Items[num2].SubItems[1].Text.Trim(), this.textBox1.Text + @"\TxtOutFile\" + this.LotNo + @"\" + this.lsvItems.Items[num2].Text.Trim() + ".txt");
-                        this.progressBar1.Value++;
-                    }
-                //}
+                for (num2 = 0; num2 <= (count - 1); num2++)
+                {
+                    new CMDTskToTxt().Convert(this.lsvItems.Items[num2].SubItems[1].Text.Trim(), this.textBox1.Text + @"\TxtOutFile\" + this.LotNo + @"\" + this.lsvItems.Items[num2].Text.Trim() + ".txt");
+                    this.progressBar1.Value++;
+                }
 
-                
+
 
                 if (MessageBox.Show("Export TXT File Success!Would you like to open it?", "confirm", MessageBoxButtons.YesNo) == DialogResult.Yes)
                 {
