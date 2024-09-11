@@ -101,6 +101,8 @@ namespace DataToExcel
             var binNoMap = new Dictionary<(int, int), int>();
             foreach (DataRow row in table.Rows)
             {
+                if (row[0] is DBNull || row[1] is DBNull || row[2] is DBNull)//Excel跳过空行
+                    continue;
                 if (row[0] != null && row[1] != null && row[2] != null)
                 {
                     int x = Convert.ToInt32(row[0]);
