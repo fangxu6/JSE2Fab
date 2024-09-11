@@ -81,6 +81,21 @@ namespace DataToExcel
             set { this._properties["ExtendFlag"] = value; }
         }
 
+        public bool ExtendFlag2
+        {
+            get { return (bool)this._properties["ExtendFlag2"]; }
+            set { this._properties["ExtendFlag2"] = value; }
+
+        }
+
+        public ArrayList ExtendList
+        {
+            get { return (ArrayList)this._properties["ExtendList"]; }
+            set { this._properties["ExtendList"] = value; }
+        }
+
+
+
 
         public int Rows
         {
@@ -189,6 +204,8 @@ namespace DataToExcel
         {
             this.ExtendHeadFlag = false;
             this.ExtendFlag = false;
+            this.ExtendFlag2 = false;
+            this.ExtendList = new ArrayList();
         }
 
         // 从 mapping 文件完整文件名中解析出文件名
@@ -273,12 +290,15 @@ namespace DataToExcel
             this._keys.Add("ExtendHeadFlag");
             this._keys.Add("ExtendFlag");
             this._keys.Add("ExtensionHead_20");
-            this._keys.Add("ExtensionHead_16");
+            this._keys.Add("ExtensionHead_32");
             this._keys.Add("ExtensionHead_total");
             this._keys.Add("ExtensionHead_pass");
             this._keys.Add("ExtensionHead_fail");
             this._keys.Add("ExtensionHead_44");
             this._keys.Add("ExtensionHead_64");
+            // 用于标识是否有额外扩展数据，只用于保存，不做修改
+            this._keys.Add("ExtendFlag2");
+            this._keys.Add("ExtendList");
 
             this._properties.Add("Operator", "");
             this._properties.Add("Device", "");
@@ -346,7 +366,7 @@ namespace DataToExcel
             this._properties.Add("ExtendFlag", false);
 
             this._properties.Add("ExtensionHead_20", new byte[20]);
-            this._properties.Add("ExtensionHead_16", new byte[16]);
+            this._properties.Add("ExtensionHead_32", new byte[32]);
             this._properties.Add("ExtensionHead_total", (int)0);
             this._properties.Add("ExtensionHead_pass", (int)0);
             this._properties.Add("ExtensionHead_fail", (int)0);
@@ -487,7 +507,7 @@ namespace DataToExcel
                     this.ExtendHeadFlag = true;
 
                     this._properties["ExtensionHead_20"] = this._reader.ReadBytes(20);
-                    this._properties["ExtensionHead_16"] = this._reader.ReadBytes(32);
+                    this._properties["ExtensionHead_32"] = this._reader.ReadBytes(32);
                     this._properties["ExtensionHead_total"] = this.ReadToInt32();
                     this._properties["ExtensionHead_pass"] = this.ReadToInt32();
                     this._properties["ExtensionHead_fail"] = this.ReadToInt32();
@@ -525,6 +545,7 @@ namespace DataToExcel
                                 if (extCategory == 0 || extCategory == 1)
                                 {
                                     Console.WriteLine("error");
+                                    continue;//只要bin不是超过64的，可以跳过
                                 }
                             }
 
@@ -533,6 +554,7 @@ namespace DataToExcel
                                 if (extCategory != 1)
                                 {
                                     Console.WriteLine("error");
+                                    continue;//只要bin不是超过64的，可以跳过
                                 }
                             }
                             this.DieMatrix[k].Bin = extCategory;
@@ -547,6 +569,13 @@ namespace DataToExcel
                         //}
                     }
                     break; //可以注释
+                }
+
+                while (this._reader.BaseStream.Position < this._reader.BaseStream.Length)
+                {
+                    this.ExtendFlag2 = true;
+                    //继续读取余下的数据并保存到list中
+                    ExtendList.Add(this._reader.ReadByte());
                 }
             }
             catch (Exception ee)
@@ -594,7 +623,7 @@ namespace DataToExcel
             int s9 = buffer[1];
 
             // Dummy data(excerpt warfer)
-            int s6 = (buffer[0] >> 1) & 0x1;//Dummy Data (except wafer) 1skip2 0skip
+            int s6 = (buffer[0] >> 1) & 0x1;//Dummy Data (except wafer) 1 skip 0 test die
             // code bit of coordinator value x
             int s5 = (buffer[0] >> 2) & 0x1;
             // code bit of coordinator value y
@@ -664,7 +693,7 @@ namespace DataToExcel
                         case 1:
                             //die.Attribute = DieCategory.PassDie;
                             die.Attribute = DieCategory.PassDie;
-                            die.Bin = binNum;//-------2013.7.18
+                            die.Bin = binNum;
                             if (binNum != 1)
                             {
                                 Console.WriteLine("error");
@@ -673,7 +702,7 @@ namespace DataToExcel
                         case 2:
                         case 3:
                             die.Attribute = DieCategory.FailDie;
-                            die.Bin = binNum;    //zjf 2008.08.28
+                            die.Bin = binNum;
                             if (binNum == 0 || binNum == 1)
                             {
                                 Console.WriteLine("error");
@@ -692,31 +721,16 @@ namespace DataToExcel
                     break;
             }
 
+            ////原来计算x和y坐标的方法
             //die.X = s4 == 0 ? f6 : f6 * (-1);
             //die.Y = s5 == 0 ? s7 : s7 * (-1);
             // X coordinates increase direction   XCoordinates 1 leftforward 负, 2 rightforward 正
             die.X = Convert.ToInt32(this._properties["FirstDirX"]) +
                 (Convert.ToInt32(this._properties["XCoordinates"]).Equals(2) ? index % this.Rows : -index % this.Rows);
-            //if (this._properties["XCoordinates"].Equals(2))
-            //{
-            //    die.X = Convert.ToInt32(this._properties["FirstDirX"]) + index % this.Rows;
-            //}
-            //else
-            //{
-            //    die.X = Convert.ToInt32(this._properties["FirstDirX"]) - index % this.Rows;
-            //}
 
             // Y coordinates increase direction   YCoordinates 1 forward 正, 2 backforward 负
             die.Y = Convert.ToInt32(this._properties["FirstDirY"]) +
                 (Convert.ToInt32(this._properties["YCoordinates"]).Equals(1) ? index / this.Rows : -index / this.Rows);
-            //if (this._properties["YCoordinates"].Equals(1))
-            //{
-            //    die.Y = Convert.ToInt32(this._properties["FirstDirY"]) + index / this.Rows;
-            //}
-            //else
-            //{
-            //    die.Y = Convert.ToInt32(this._properties["FirstDirY"]) - index / this.Rows;
-            //}
 
             return die;
         }
@@ -970,7 +984,7 @@ namespace DataToExcel
                     // Extension head 20
                     this._writer.Write((byte[])this._properties["ExtensionHead_20"], 0, 20);
                     // Extension head 16
-                    this._writer.Write((byte[])this._properties["ExtensionHead_16"], 0, 16);
+                    this._writer.Write((byte[])this._properties["ExtensionHead_32"], 0, 32);
                     // Extension head total
                     buf = BitConverter.GetBytes((int)this._properties["ExtensionHead_total"]);
                     this.Reverse(ref buf);
@@ -998,7 +1012,13 @@ namespace DataToExcel
                             this.WriteDieExtention(this.DieMatrix[j, i]);
                         }
                     }
-
+                }
+                if ((bool)this._properties["ExtendFlag2"])
+                {
+                    //this._properties["ExtendList"]转byte[]
+                    byte[] extendList = (byte[])this._properties["ExtendList"];
+                    //写入文件
+                    this._writer.Write(extendList, 0, extendList.Length);
                 }
             }
             catch (Exception ee)
