@@ -273,7 +273,7 @@ namespace DataToExcel
             this._keys.Add("ExtendHeadFlag");
             this._keys.Add("ExtendFlag");
             this._keys.Add("ExtensionHead_20");
-            this._keys.Add("ExtensionHead_16");
+            this._keys.Add("ExtensionHead_32");
             this._keys.Add("ExtensionHead_total");
             this._keys.Add("ExtensionHead_pass");
             this._keys.Add("ExtensionHead_fail");
@@ -346,7 +346,7 @@ namespace DataToExcel
             this._properties.Add("ExtendFlag", false);
 
             this._properties.Add("ExtensionHead_20", new byte[20]);
-            this._properties.Add("ExtensionHead_16", new byte[16]);
+            this._properties.Add("ExtensionHead_32", new byte[32]);
             this._properties.Add("ExtensionHead_total", (int)0);
             this._properties.Add("ExtensionHead_pass", (int)0);
             this._properties.Add("ExtensionHead_fail", (int)0);
@@ -487,7 +487,7 @@ namespace DataToExcel
                     this.ExtendHeadFlag = true;
 
                     this._properties["ExtensionHead_20"] = this._reader.ReadBytes(20);
-                    this._properties["ExtensionHead_16"] = this._reader.ReadBytes(32);
+                    this._properties["ExtensionHead_32"] = this._reader.ReadBytes(32);
                     this._properties["ExtensionHead_total"] = this.ReadToInt32();
                     this._properties["ExtensionHead_pass"] = this.ReadToInt32();
                     this._properties["ExtensionHead_fail"] = this.ReadToInt32();
@@ -957,7 +957,7 @@ namespace DataToExcel
                     // Extension head 20
                     this._writer.Write((byte[])this._properties["ExtensionHead_20"], 0, 20);
                     // Extension head 16
-                    this._writer.Write((byte[])this._properties["ExtensionHead_16"], 0, 16);
+                    this._writer.Write((byte[])this._properties["ExtensionHead_32"], 0, 32);
                     // Extension head total
                     buf = BitConverter.GetBytes((int)this._properties["ExtensionHead_total"]);
                     this.Reverse(ref buf);
