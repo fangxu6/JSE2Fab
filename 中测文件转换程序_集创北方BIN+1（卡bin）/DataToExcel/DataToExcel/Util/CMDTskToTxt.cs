@@ -21,14 +21,14 @@ namespace DataToExcel
             source.Read();
 
             ExpToExcelSoftBin expToExcelSoftBin = ExpToExcelSoftBinFactory.GetExpToExcelSoft(source.Device);
-            if (expToExcelSoftBin != null)
-            {
-                if (!expToExcelSoftBin.defatultBinPlusOne())
-                {
-                    //bin -1
-                    source.DieMatrix = source.DieMatrix.CloneWithMinusOne();
-                }
-            }
+            //if (expToExcelSoftBin != null)
+            //{
+            //    if (!expToExcelSoftBin.defatultBinPlusOne())
+            //    {
+            //        //bin -1
+            //        source.DieMatrix = source.DieMatrix.CloneWithMinusOne();
+            //    }
+            //}
             expToExcelSoftBin.SaveToTxt(source, txtfile);
 
             

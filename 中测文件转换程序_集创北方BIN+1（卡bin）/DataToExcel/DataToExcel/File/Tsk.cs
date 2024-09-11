@@ -596,7 +596,7 @@ namespace DataToExcel
             int s9 = buffer[1];
 
             // Dummy data(excerpt warfer)
-            int s6 = (buffer[0] >> 1) & 0x1;//Dummy Data (except wafer) 1skip2 0skip
+            int s6 = (buffer[0] >> 1) & 0x1;//Dummy Data (except wafer) 1 skip 0 test die
             // code bit of coordinator value x
             int s5 = (buffer[0] >> 2) & 0x1;
             // code bit of coordinator value y
@@ -666,7 +666,7 @@ namespace DataToExcel
                         case 1:
                             //die.Attribute = DieCategory.PassDie;
                             die.Attribute = DieCategory.PassDie;
-                            die.Bin = binNum + 1;//-------2013.7.18
+                            die.Bin = binNum;
                             if (binNum != 1)
                             {
                                 Console.WriteLine("error");
@@ -675,7 +675,7 @@ namespace DataToExcel
                         case 2:
                         case 3:
                             die.Attribute = DieCategory.FailDie;
-                            die.Bin = binNum + 1;    //zjf 2008.08.28
+                            die.Bin = binNum;
                             if (binNum == 0 || binNum == 1)
                             {
                                 Console.WriteLine("error");

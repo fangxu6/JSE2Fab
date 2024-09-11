@@ -1047,15 +1047,7 @@ namespace DataToExcel
                 this._currFile = (IMappingFile)this.lsvItems.Items[num2].Tag;
                 String deviceName = ((Tsk)this._currFile).Device;
                 ExpToExcelSoftBin expToExcelSoftBin = ExpToExcelSoftBinFactory.GetExpToExcelSoft(deviceName);
-                if (expToExcelSoftBin != null)
-                {
-                    if (!expToExcelSoftBin.defatultBinPlusOne())
-                    {
-                        //bin -1
-                        this._currFile.DieMatrix = this._currFile.DieMatrix.CloneWithMinusOne();
-                    }
-                }
-                else
+                if (expToExcelSoftBin == null)
                 {
                     MessageBox.Show("该型号未定义，请联系IT并告知批次号。");
                     return false;
