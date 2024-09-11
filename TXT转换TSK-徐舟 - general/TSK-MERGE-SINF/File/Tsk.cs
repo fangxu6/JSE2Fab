@@ -81,6 +81,21 @@ namespace DataToExcel
             set { this._properties["ExtendFlag"] = value; }
         }
 
+        public bool ExtendFlag2
+        {
+            get { return (bool)this._properties["ExtendFlag2"]; }
+            set { this._properties["ExtendFlag2"] = value; }
+
+        }
+
+        public ArrayList ExtendList
+        {
+            get { return (ArrayList)this._properties["ExtendList"]; }
+            set { this._properties["ExtendList"] = value; }
+        }
+
+
+
 
         public int Rows
         {
@@ -189,6 +204,8 @@ namespace DataToExcel
         {
             this.ExtendHeadFlag = false;
             this.ExtendFlag = false;
+            this.ExtendFlag2 = false;
+            this.ExtendList = new ArrayList();
         }
 
         // 从 mapping 文件完整文件名中解析出文件名
@@ -279,6 +296,9 @@ namespace DataToExcel
             this._keys.Add("ExtensionHead_fail");
             this._keys.Add("ExtensionHead_44");
             this._keys.Add("ExtensionHead_64");
+            // 用于标识是否有额外扩展数据，只用于保存，不做修改
+            this._keys.Add("ExtendFlag2");
+            this._keys.Add("ExtendList");
 
             this._properties.Add("Operator", "");
             this._properties.Add("Device", "");
@@ -549,6 +569,13 @@ namespace DataToExcel
                         //}
                     }
                     break; //可以注释
+                }
+
+                while (this._reader.BaseStream.Position < this._reader.BaseStream.Length)
+                {
+                    this.ExtendFlag2 = true;
+                    //继续读取余下的数据并保存到list中
+                    ExtendList.Add(this._reader.ReadByte());
                 }
             }
             catch (Exception ee)
@@ -985,6 +1012,13 @@ namespace DataToExcel
                             this.WriteDieExtention(this.DieMatrix[j, i]);
                         }
                     }
+                }
+                if ((bool)this._properties["ExtendFlag2"])
+                {
+                    //this._properties["ExtendList"]转byte[]
+                    byte[] extendList = (byte[])this._properties["ExtendList"];
+                    //写入文件
+                    this._writer.Write(extendList, 0, extendList.Length);
                 }
             }
             catch (Exception ee)
