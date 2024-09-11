@@ -68,8 +68,8 @@ namespace TSK_MERGE_SINF
             FolderBrowserDialog dialog = new FolderBrowserDialog();
             if (dialog.ShowDialog() == DialogResult.OK)
             {
-                //this.textBox1.Text = dialog.SelectedPath;
-                this.textBox1.Text = @"C:\Users\fangx\Desktop\卢浩楠合图\tsk";
+                this.textBox1.Text = dialog.SelectedPath;
+                //this.textBox1.Text = @"C:\Users\fangx\Desktop\卢浩楠合图\tsk";
                 DirectoryInfo TheFolder = new DirectoryInfo(this.textBox1.Text);
 
                 foreach (FileInfo str in TheFolder.GetFiles("*", SearchOption.AllDirectories))
@@ -107,8 +107,8 @@ namespace TSK_MERGE_SINF
             FolderBrowserDialog dialog = new FolderBrowserDialog();
             if (dialog.ShowDialog() == DialogResult.OK)
             {
-                //this.textBox2.Text = dialog.SelectedPath;
-                this.textBox2.Text = @"C:\Users\fangx\Desktop\卢浩楠合图\txt";//TODO 优化
+                this.textBox2.Text = dialog.SelectedPath;
+                //this.textBox2.Text = @"C:\Users\fangx\Desktop\卢浩楠合图\txt";//TODO 优化
                 DirectoryInfo TheFolder = new DirectoryInfo(this.textBox2.Text);
 
                 foreach (FileInfo str in TheFolder.GetFiles("*", SearchOption.AllDirectories))
@@ -229,6 +229,7 @@ namespace TSK_MERGE_SINF
             Tsk tsk = LoadTsk(tskFile);
 
             //------------------------------TXT读取------------------------------//
+            //get txtData
             LoadTxt(txtFile);
 
 
@@ -339,7 +340,6 @@ namespace TSK_MERGE_SINF
                     if (txtNewData[k].ToString() == ".")//Skip Die
                     {
                         continue;
-
                     }
 
                     else
@@ -531,8 +531,8 @@ namespace TSK_MERGE_SINF
 
             if (!String.IsNullOrEmpty(this.txtFlat))
             {
-                //int txtFlat1 = Convert.ToInt32(this.txtFlat);
-                int txtFlat1 = 180;
+                int txtFlat1 = Convert.ToInt32(this.txtFlat);
+                //int txtFlat1 = 180;
                 int flatDifference = (tsk.FlatDir - txtFlat1 + 360) % 360;
 
                 if (flatDifference == 180)////TXT转180
