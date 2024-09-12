@@ -795,17 +795,6 @@ namespace DataToExcel
                 tsk.FullName = newFileDirectory+ @"\" + Path.GetFileName(this._currFile.FullName);
                 tsk.Save();
                 
-                Device = ((Tsk)this._currFile).Device;
-
-                
-                        //case "OF Direction":
-                        //    {
-                        //        objArray3[i] = ((Tsk)this._currFile).FlatDir;
-                        //        objArray[i] = "";
-                        //        continue;
-                        //    }
-                       
-
             }
 
             ////////////////////////////////////////add total and average////////////////////////////////
