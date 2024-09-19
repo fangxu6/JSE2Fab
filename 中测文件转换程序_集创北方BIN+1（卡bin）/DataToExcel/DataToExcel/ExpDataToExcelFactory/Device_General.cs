@@ -38,13 +38,15 @@ namespace DataToExcel.ExpDataToExcelFactory
                     int yMin = Int32.MaxValue;
                     int xMax = Int32.MinValue;
                     int yMax = Int32.MinValue;
-                    for (int y = 0; y < cmd.DieMatrix.YMax; y++)//83
+                    for (int y = 0; y < cmd.DieMatrix.YMax; y++)
                     {
-                        for (int x = 0; x < cmd.DieMatrix.XMax; x++)//57
+                        for (int x = 0; x < cmd.DieMatrix.XMax; x++)
                         {
+
                             switch (cmd.DieMatrix[x, y].Attribute)
                             {
                                 case DieCategory.PassDie:
+                                case DieCategory.NoneDie:
                                 case DieCategory.FailDie:
                                 case DieCategory.SkipDie2:
                                     if (xMin > x) { xMin = x; }
@@ -62,9 +64,9 @@ namespace DataToExcel.ExpDataToExcelFactory
                         binCount[i] = 0;
                     }
 
-                    for (int y = 0; y < cmd.DieMatrix.YMax; y++)
+                    for (int y = yMin; y <= yMax; y++)
                     {
-                        for (int x = 0; x < cmd.DieMatrix.XMax; x++)
+                        for (int x = xMin; x <= xMax; x++)
                         {
                             switch (cmd.DieMatrix[x, y].Attribute)
                             {
@@ -78,7 +80,7 @@ namespace DataToExcel.ExpDataToExcelFactory
                                 case DieCategory.MarkDie:
                                     {
 
-                                        cmd.WriteString(string.Format("{0,1:G}", "#"));
+                                        cmd.WriteString(string.Format("{0,1:G}", "."));
                                         break;
                                     }
                                 case DieCategory.NoneDie:

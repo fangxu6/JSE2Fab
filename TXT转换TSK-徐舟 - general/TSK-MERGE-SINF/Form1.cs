@@ -165,7 +165,7 @@ namespace TSK_MERGE_SINF
         private Tsk LoadTsk(string tskFile)
         {
             Tsk tsk = new Tsk(tskFile);
-            tsk.Read(); //版本2和4的拓展还是没有体现进binNo
+            tsk.Read();
             //this.LotNo = tsk.LotNo.Trim();
             return tsk;
         }
@@ -239,7 +239,7 @@ namespace TSK_MERGE_SINF
 
 
             //生成txt图谱数据
-            string[,] TxtMap = new string[ this.txtColct, this.txtRowct];// 76行 70列
+            string[,] TxtMap = new string[ this.txtColct, this.txtRowct];
             for (int y = 0; y < this.txtRowct; y++)
             {
                 for (int x = 0; x < this.txtColct; x++)
@@ -286,13 +286,13 @@ namespace TSK_MERGE_SINF
             {
                 for (int x = 0; x < tsk.DieMatrix.XMax; x++)
                 {
-                    if (TxtNewMap[x, y].ToString() == "#" && TSKMap[x, y].ToString() != "#")
-                    {
-                        if (MessageBox.Show("对位点不正确!", "确认", MessageBoxButtons.YesNo) == DialogResult.Yes)
-                        {
-                            Environment.Exit(0);
-                        }
-                    }
+                    //if (TxtNewMap[x, y].ToString() == "#" && TSKMap[x, y].ToString() != "#")
+                    //{
+                    //    if (MessageBox.Show("对位点不正确!", "确认", MessageBoxButtons.YesNo) == DialogResult.Yes)
+                    //    {
+                    //        //Environment.Exit(0);
+                    //    }
+                    //}
                 }
             }
 
@@ -302,10 +302,10 @@ namespace TSK_MERGE_SINF
             if (this.txtPass + this.txtFail != (tskPass + tskFail))//12979 84  12811 77 13063
             {
 
-                if (MessageBox.Show("总颗数不匹配!", "确认", MessageBoxButtons.YesNo) == DialogResult.Yes)
-                {
-                    Environment.Exit(0);
-                }
+                //if (MessageBox.Show("总颗数不匹配!", "确认", MessageBoxButtons.YesNo) == DialogResult.Yes)
+                //{
+                //    //Environment.Exit(0);
+                //}
             }
 
             //------------------------------根据SINF生成新的TSK-MAP----------------------------//
@@ -317,14 +317,19 @@ namespace TSK_MERGE_SINF
 
 
             /////--------------------Map版本为2，且无扩展信息TSK修改BIN信息代码-------------------////
-            const int inkBinNo = 61;
+            int inkBinNo = 61;
             if (!tsk.ExtendFlag && ((Convert.ToInt32(tsk.MapVersion) == 2)))
             {
                 for (int k = 0; k < tsk.Rows * tsk.Cols; k++)
                 {
-                    if (txtNewData[k].ToString() == "X")//sinf fail,需要改为fail属性，BIN也需要改
+                    if (txtNewData[k].ToString() != "." && txtNewData[k].ToString() != "#" && txtNewData[k].ToString() != "0")//sinf fail,需要改为fail属性，BIN也需要改
                     {
                         tsk.DieMatrix[k].Attribute = DieCategory.FailDie;
+                        char firstChar = txtNewData[k][0];
+                        inkBinNo = ConvertCharToValue(firstChar);
+                        //根据txtNewData[k]的ascii码
+
+
                         tsk.DieMatrix[k].Bin = inkBinNo;
                         //convertToFailBin(firstbyte1_1, thirdbyte1_1, thirdbyte2_1, inkBinNo, k);
                     }
@@ -346,16 +351,16 @@ namespace TSK_MERGE_SINF
                     {
                         if (Convert.ToInt32(tsk.MapVersion) == 2)
                         {
-                            if (txtNewData[k].ToString() == "X")//sinf fail,需要改为fail属性，BIN也需要改
+                            if (txtNewData[k].ToString() != "." && txtNewData[k].ToString() != "#" && txtNewData[k].ToString() != "0")//sinf fail,需要改为fail属性，BIN也需要改
                             {
                                 tsk.DieMatrix[k].Attribute = DieCategory.FailDie;
+                                char firstChar = txtNewData[k][0];
+                                inkBinNo = ConvertCharToValue(firstChar);
+                                //根据txtNewData[k]的ascii码
+
+
                                 tsk.DieMatrix[k].Bin = inkBinNo;
-                                //convertToFailBinWithExtention(firstbyte1_1, thirdbyte1_1, thirdbyte2_1, inkBinNo, k, arry_1, 4 * k + 1);
-
-                                //arry_1[4 * k + 1] = Convert.ToByte(Convert.ToByte(arry_1[4 * k + 1]) & 192);
-                                //arry_1[4 * k + 1] = Convert.ToByte(Convert.ToByte(arry_1[4 * k + 1]) | binNo);//换成想要的BIN58
-
-
+                                //convertToFailBin(firstbyte1_1, thirdbyte1_1, thirdbyte2_1, inkBinNo, k);
                             }
                         }
                         else if (Convert.ToInt32(tsk.MapVersion) == 4)
@@ -388,6 +393,22 @@ namespace TSK_MERGE_SINF
 
 
 
+        }
+
+        static int ConvertCharToValue(char c)
+        {
+            if (c >= 'A' && c <= 'Z')
+            {
+                return c - 'A' + 10;
+            }
+            else if (c >= 'a' && c <= 'z')
+            {
+                return c - 'a' + 10+26;
+            }
+            else
+            {
+                return c - '0';
+            }
         }
 
         private static void CountPassAndFail(Tsk tsk, string[,] TxtNewMap, ref int countPass, ref int countFail, ref int countMark)
@@ -467,6 +488,7 @@ namespace TSK_MERGE_SINF
                     switch (tsk.DieMatrix[x, y].Attribute)
                     {
                         case DieCategory.PassDie:
+                        case DieCategory.NoneDie:
                         case DieCategory.FailDie:
                         case DieCategory.SkipDie2:
                             if (xMin > x) { xMin = x; }
@@ -482,8 +504,8 @@ namespace TSK_MERGE_SINF
         private static string[,] CreateTskMap(Tsk tsk)
         {
             //理解的不对
-            //int row1_1 = tsk.Rows;  //tsk的行和列和常规的反了 size of horizontal  水平方向 列  66  x轴方向的最大值
-            //int col1_1 = tsk.Cols;  //tsk的行和列和常规的反了 size of verticatl   垂直方向 行  63  y轴方向的最大值
+            //int row1_1 = tsk.Rows;  //tsk的行和列和常规的反了 size of horizontal  水平方向  x轴方向的最大值
+            //int col1_1 = tsk.Cols;  //tsk的行和列和常规的反了 size of verticatl   垂直方向  y轴方向的最大值
             string[,] TSKMap = new string[tsk.DieMatrix.XMax, tsk.DieMatrix.YMax];
             //74列 78行
 
@@ -531,8 +553,8 @@ namespace TSK_MERGE_SINF
 
             if (!String.IsNullOrEmpty(this.txtFlat))
             {
-                int txtFlat1 = Convert.ToInt32(this.txtFlat);
-                //int txtFlat1 = 180;
+                //int txtFlat1 = Convert.ToInt32(this.txtFlat);
+                int txtFlat1 = 270;
                 int flatDifference = (tsk.FlatDir - txtFlat1 + 360) % 360;
 
                 if (flatDifference == 180)////TXT转180
@@ -683,7 +705,7 @@ namespace TSK_MERGE_SINF
             try
             {
                 //TODO 头信息
-                if (line.Contains(':'))
+                if (line.Contains(':')|| line.Contains('='))
                 {
                     string[] strs = line.Split(new char[] { ':', '=' });
                     string head = strs[0].Trim().ToUpper();
@@ -708,10 +730,12 @@ namespace TSK_MERGE_SINF
                             break;
                         case "WAFER":
                         case "WAFER ID":
+                        case "WAFER-ID":
                             this.txtWaferID = body;
                             break;
                         case "FNLOC":
                         case "FLAT DIR":
+                        case "FLAT":
                             this.txtFlat = body;
                             break;
                         case "ROWCT":
@@ -746,11 +770,12 @@ namespace TSK_MERGE_SINF
 
         private void ParseDies(string s)
         {
-            PasrseDieWithDeviceWTM2100COfZhiCun(s);
+            PasrseDieWithDeviceGeneral(s);
+            //PasrseDieWithDeviceWTM2100COfZhiCun(s);
             //TODO null报错
             //if (this.txtDevice.Contains("IML7972"))
             //{
-            //    PasrseDieWithDeviceIML7972(s);
+            //PasrseDieWithDeviceIML7972(s);
             //} else if (this.txtDevice.Contains("UPM7231"))
             //{
             //    PasrseDieWithDeviceUPM7231(s);
@@ -827,6 +852,39 @@ namespace TSK_MERGE_SINF
                     else
                     {
                         txtData.Add("X");
+                        this.txtFail++;
+                    }
+                }
+            }
+        }
+
+        //笑脸Device_General
+        private void PasrseDieWithDeviceGeneral(string s)
+        {
+            if (s.StartsWith(".") || s.StartsWith("1") || s.StartsWith("S") || s.StartsWith("#"))
+            {
+                string newLine = s;
+                txtColct = newLine.Length;
+                txtRowct++;
+                for (int i = 0; i < newLine.Length; i++)
+                {
+                    string binNo = newLine.Substring(i, 1);
+                    if (binNo.Equals("."))
+                    {
+                        txtData.Add(".");
+                    }
+                    else if (binNo.Equals("#"))//对位点比较
+                    {
+                        txtData.Add("#");
+                    }
+                    else if (binNo.Equals("1"))
+                    {
+                        txtData.Add("0");
+                        this.txtPass++;
+                    }
+                    else
+                    {
+                        txtData.Add(binNo);
                         this.txtFail++;
                     }
                 }

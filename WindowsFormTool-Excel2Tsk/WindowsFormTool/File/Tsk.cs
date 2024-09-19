@@ -1034,7 +1034,10 @@ namespace DataToExcel
         private void WriteDie(DieData d)
         {
             ushort f = (ushort)Math.Abs(d.X);
+            f = (ushort)(f & (ushort)0x01ff);// x cord
             ushort s = (ushort)Math.Abs(d.Y);
+            s = (ushort)(s & (ushort)0x01ff);// y cord
+
             ushort t = (ushort)d.Bin;
 
             switch (d.Attribute)
