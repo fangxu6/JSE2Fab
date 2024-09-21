@@ -213,7 +213,11 @@ namespace TSK_MERGE_SINF
 
             //根据SINF生成新的TSK-MAP
             string WaferID_1 = this.txtWaferID;
-            tsk.FullName = "D:\\MERGE\\" + WaferID_1.TrimEnd('\0');
+            string slotNo = getSlotNo(this.txtWaferID);
+            tsk.FullName = "D:\\MERGE\\" + slotNo + "." + WaferID_1.TrimEnd('\0');
+            //const int inkBinNo = 61;
+            //tsk.SaveWithTxtMap(txtNewData, inkBinNo);//TODO
+
 
             int inkBinNo = Convert.ToInt32(comboBox1.Items);
             if (!tsk.ExtendFlag && ((Convert.ToInt32(tsk.MapVersion) == 2)))
@@ -319,7 +323,13 @@ namespace TSK_MERGE_SINF
             read.Close();
         }
 
-
+        private string getSlotNo(string txtWaferID)
+        {
+            //F9N984-09F5根据-获取-后面的2位，
+            string[] str = txtWaferID.Split('-');
+            //str[1].Substring(0, 2) 3位，第一位补0
+            return "0" + str[1].Substring(0, 2);
+        }
 
         static int ConvertCharToValue(char c)
         {
@@ -484,8 +494,8 @@ namespace TSK_MERGE_SINF
 
             if (!String.IsNullOrEmpty(this.txtFlat))
             {
-                //int txtFlat1 = Convert.ToInt32(this.txtFlat);
-                int txtFlat1 = 270;
+                int txtFlat1 = Convert.ToInt32(this.txtFlat);
+                //int txtFlat1 = 270;
                 int flatDifference = (tsk.FlatDir - txtFlat1 + 360) % 360;
 
                 if (flatDifference == 180)////TXT转180
@@ -684,8 +694,8 @@ namespace TSK_MERGE_SINF
 
         private void ParseDies(string s)
         {
-            PasrseDieWithDeviceGeneral(s);
-            //PasrseDieWithDeviceWTM2100COfZhiCun(s);
+            //PasrseDieWithDeviceGeneral(s);
+            PasrseDieWithDeviceWTM2100COfZhiCun(s);
             //TODO null报错
             //if (this.txtDevice.Contains("IML7972"))
             //{
@@ -769,6 +779,38 @@ namespace TSK_MERGE_SINF
             }
         }
 
+        ////IML C1A014ZB
+        //private void PasrseDieWithDeviceGeneral(string s)
+        //{
+        //    if (s.StartsWith(".") || s.StartsWith("1") || s.StartsWith("S") || s.StartsWith("#"))
+        //    {
+        //        string newLine = s;
+        //        txtColct = newLine.Length;
+        //        txtRowct++;
+        //        for (int i = 0; i < newLine.Length; i++)
+        //        {
+        //            string binNo = newLine.Substring(i, 1);
+        //            if (binNo.Equals("."))
+        //            {
+        //                txtData.Add(".");
+        //            }
+        //            else if (binNo.Equals("#"))//对位点比较
+        //            {
+        //                txtData.Add("#");
+        //            }
+        //            else if (binNo.Equals("1"))
+        //            {
+        //                txtData.Add("0");
+        //                this.txtPass++;
+        //            }
+        //            else
+        //            {
+        //                txtData.Add(binNo);
+        //                this.txtFail++;
+        //            }
+        //        }
+        //    }
+        //}
         //笑脸Device_General
         private void PasrseDieWithDeviceGeneral(string s)
         {
