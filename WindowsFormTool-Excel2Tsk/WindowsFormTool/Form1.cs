@@ -124,6 +124,21 @@ namespace DataToExcel
                 }
             }
 
+            tsk.PassDie = 0;
+            tsk.FailDie = 0;
+            for (int k = 0; k < tsk.Rows * tsk.Cols; k++)
+            {
+                if (tsk.DieMatrix[k].Attribute == DieCategory.PassDie)
+                {
+                    tsk.PassDie++;
+                }
+                else if (tsk.DieMatrix[k].Attribute == DieCategory.FailDie)
+                {
+                    tsk.FailDie++;
+                }
+            }
+            tsk.TotalDie = tsk.PassDie + tsk.FailDie;
+
 
             UpdateRichTextBox("开始生成新TSK图谱\n");
             tsk.FullName = newTskFilePath;

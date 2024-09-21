@@ -983,18 +983,18 @@ namespace DataToExcel
                 {
                     // Extension head 20
                     this._writer.Write((byte[])this._properties["ExtensionHead_20"], 0, 20);
-                    // Extension head 16
+                    // Extension head 32
                     this._writer.Write((byte[])this._properties["ExtensionHead_32"], 0, 32);
                     // Extension head total
-                    buf = BitConverter.GetBytes((int)this._properties["ExtensionHead_total"]);
+                    buf = BitConverter.GetBytes((int)this.TotalDie);
                     this.Reverse(ref buf);
                     this._writer.Write(buf, 0, 4);
                     // Extension head pass
-                    buf = BitConverter.GetBytes((int)this._properties["ExtensionHead_pass"]);
+                    buf = BitConverter.GetBytes((int)this.PassDie);
                     this.Reverse(ref buf);
                     this._writer.Write(buf, 0, 4);
                     // Extension head fail
-                    buf = BitConverter.GetBytes((int)this._properties["ExtensionHead_fail"]);
+                    buf = BitConverter.GetBytes((int)this.FailDie);
                     this.Reverse(ref buf);
                     this._writer.Write(buf, 0, 4);
                     // Extension head 44
