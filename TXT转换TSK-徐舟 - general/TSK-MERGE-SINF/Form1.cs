@@ -14,6 +14,7 @@ using System.Linq;
 using System.Drawing.Drawing2D;
 using DataToExcel;
 using System.Threading.Tasks;
+using TSK_MERGE_SINF.Util;
 
 namespace TSK_MERGE_SINF
 {
@@ -47,6 +48,7 @@ namespace TSK_MERGE_SINF
         {
             InitializeComponent();
             comboBox1.SelectedItem = "61";
+            comboBox2.SelectedItem = "是";
         }
 
         private void buttonLoadTxt_Click(object sender, EventArgs e)
@@ -137,139 +139,139 @@ namespace TSK_MERGE_SINF
 
         private void Txt2Tsk(string txtFile, string tskFile)
         {
-            txtRowct = 0;
-            txtColct = 0;
+            ZhiCunFileToTskImp zhiCunFileToTskImp = new ZhiCunFileToTskImp();
+            zhiCunFileToTskImp.Run(tskFile, txtFile, comboBox1.SelectedItem.ToString(), comboBox2.SelectedItem.ToString());
 
-            Tsk tsk = ParseTsk(tskFile);
+            //Tsk tsk = ParseTsk(tskFile);
 
-            //get txtData
-            LoadTxt(txtFile);
-            //TXT图谱转角度
-            GetDegtxtData(tsk, txtData);
+            ////get txtData
+            //LoadTxt(txtFile);
+            ////TXT图谱转角度
+            //GetDegtxtData(tsk, txtData);
 
-            //生成txt图谱数据
-            string[,] TxtMap = new string[this.txtColct, this.txtRowct];
-            for (int y = 0; y < this.txtRowct; y++)
-            {
-                for (int x = 0; x < this.txtColct; x++)
-                {
-                    TxtMap[x, y] = DegtxtData[x + y * txtColct];
-                }
-            }
-            //TXT图谱补边工作
-            //获取tskmap
-            string[,] TSKMap = CreateTskMap(tsk);
+            ////生成txt图谱数据
+            //string[,] TxtMap = new string[this.txtColct, this.txtRowct];
+            //for (int y = 0; y < this.txtRowct; y++)
+            //{
+            //    for (int x = 0; x < this.txtColct; x++)
+            //    {
+            //        TxtMap[x, y] = DegtxtData[x + y * txtColct];
+            //    }
+            //}
+            ////TXT图谱补边工作
+            ////获取tskmap
+            //string[,] TSKMap = CreateTskMap(tsk);
 
-            //获取tsk的边缘
-            int xMin = Int32.MaxValue;
-            int yMin = Int32.MaxValue;
-            int xMax = Int32.MinValue;
-            int yMax = Int32.MinValue;
-            GetXYMinMax(tsk, ref xMin, ref yMin, ref xMax, ref yMax);
+            ////获取tsk的边缘
+            //int xMin = Int32.MaxValue;
+            //int yMin = Int32.MaxValue;
+            //int xMax = Int32.MinValue;
+            //int yMax = Int32.MinValue;
+            //GetXYMinMax(tsk, ref xMin, ref yMin, ref xMax, ref yMax);
 
-            //生成新的TxtMap
-            if (txtRowct > yMax || txtColct > xMax)
-            {
-                xMin = 0;
-                yMin = 0;
-                xMax = txtColct - 1;
-                yMax = txtRowct - 1;
-            }
-            string[,] TxtNewMap = GetNewTxtMap(TxtMap, xMin, yMin, xMax, yMax, tsk.DieMatrix.XMax, tsk.DieMatrix.YMax);
+            ////生成新的TxtMap
+            //if (txtRowct > yMax || txtColct > xMax)
+            //{
+            //    xMin = 0;
+            //    yMin = 0;
+            //    xMax = txtColct - 1;
+            //    yMax = txtRowct - 1;
+            //}
+            //string[,] TxtNewMap = GetNewTxtMap(TxtMap, xMin, yMin, xMax, yMax, tsk.DieMatrix.XMax, tsk.DieMatrix.YMax);
 
-            //生成新的TxtData
-            GetNewTxtData(TxtNewMap, tsk.DieMatrix.XMax, tsk.DieMatrix.YMax);
-            //对位点比对工作
-            int countPass = 0;
-            int countFail = 0;
-            int countMark = 0;
+            ////生成新的TxtData
+            //GetNewTxtData(TxtNewMap, tsk.DieMatrix.XMax, tsk.DieMatrix.YMax);
+            ////对位点比对工作
+            //int countPass = 0;
+            //int countFail = 0;
+            //int countMark = 0;
 
-            CountPassAndFail(TxtNewMap, ref countPass, ref countFail, ref countMark);
-            tskPass = countPass;//TODO 这个需要优化
-            tskFail = countFail;
-            txtMark = countMark;
-            for (int y = 0; y < tsk.DieMatrix.YMax; y++)
-            {
-                for (int x = 0; x < tsk.DieMatrix.XMax; x++)
-                {
-                    if (TxtNewMap[x, y].ToString() == "#" && TSKMap[x, y].ToString() != "#")
-                    {
-                        if (MessageBox.Show("对位点不正确!", "确认", MessageBoxButtons.YesNo) == DialogResult.Yes)
-                        {
-                            Environment.Exit(0);
-                        }
-                    }
-                }
-            }
+            //CountPassAndFail(TxtNewMap, ref countPass, ref countFail, ref countMark);
+            //tskPass = countPass;//TODO 这个需要优化
+            //tskFail = countFail;
+            //txtMark = countMark;
+            //for (int y = 0; y < tsk.DieMatrix.YMax; y++)
+            //{
+            //    for (int x = 0; x < tsk.DieMatrix.XMax; x++)
+            //    {
+            //        if (TxtNewMap[x, y].ToString() == "#" && TSKMap[x, y].ToString() != "#")
+            //        {
+            //            if (MessageBox.Show("对位点不正确!", "确认", MessageBoxButtons.YesNo) == DialogResult.Yes)
+            //            {
+            //                Environment.Exit(0);
+            //            }
+            //        }
+            //    }
+            //}
 
-            //颗数比对
-            if (this.txtPass + this.txtFail != (tskPass + tskFail))//12979 84  12811 77 13063
-            {
-                if (MessageBox.Show("总颗数不匹配!", "确认", MessageBoxButtons.YesNo) == DialogResult.Yes)
-                {
-                    //Environment.Exit(0);
-                }
-            }
+            ////颗数比对
+            //if (this.txtPass + this.txtFail != (tskPass + tskFail))//12979 84  12811 77 13063
+            //{
+            //    if (MessageBox.Show("总颗数不匹配!", "确认", MessageBoxButtons.YesNo) == DialogResult.Yes)
+            //    {
+            //        //Environment.Exit(0);
+            //    }
+            //}
 
-            //根据SINF生成新的TSK-MAP
-            string WaferID_1 = this.txtWaferID;
-            string slotNo = getSlotNo(this.txtWaferID);
-            tsk.FullName = "D:\\MERGE\\" + slotNo + "." + WaferID_1.TrimEnd('\0');
-            //const int inkBinNo = 61;
-            //tsk.SaveWithTxtMap(txtNewData, inkBinNo);//TODO
+            ////根据SINF生成新的TSK-MAP
+            //string WaferID_1 = this.txtWaferID;
+            //string slotNo = getSlotNo(this.txtWaferID);
+            //tsk.FullName = "D:\\MERGE\\" + slotNo + "." + WaferID_1.TrimEnd('\0');
+            ////const int inkBinNo = 61;
+            ////tsk.SaveWithTxtMap(txtNewData, inkBinNo);//TODO
 
 
-            int inkBinNo = Convert.ToInt32(comboBox1.Items);
-            if (!tsk.ExtendFlag && ((Convert.ToInt32(tsk.MapVersion) == 2)))
-            {
-                for (int k = 0; k < tsk.Rows * tsk.Cols; k++)
-                {
-                    if (txtNewData[k].ToString() != "." && txtNewData[k].ToString() != "#" && txtNewData[k].ToString() != "0")//sinf fail,需要改为fail属性，BIN也需要改
-                    {
-                        tsk.DieMatrix[k].Attribute = DieCategory.FailDie;
-                        char firstChar = txtNewData[k][0];
-                        inkBinNo = ConvertCharToValue(firstChar);
-                        tsk.DieMatrix[k].Bin = inkBinNo;
-                    }
-                }
-            }
+            //int inkBinNo = Convert.ToInt32(comboBox1.Items);
+            //if (!tsk.ExtendFlag && ((Convert.ToInt32(tsk.MapVersion) == 2)))
+            //{
+            //    for (int k = 0; k < tsk.Rows * tsk.Cols; k++)
+            //    {
+            //        if (txtNewData[k].ToString() != "." && txtNewData[k].ToString() != "#" && txtNewData[k].ToString() != "0")//sinf fail,需要改为fail属性，BIN也需要改
+            //        {
+            //            tsk.DieMatrix[k].Attribute = DieCategory.FailDie;
+            //            char firstChar = txtNewData[k][0];
+            //            inkBinNo = ConvertCharToValue(firstChar);
+            //            tsk.DieMatrix[k].Bin = inkBinNo;
+            //        }
+            //    }
+            //}
 
-            if (tsk.ExtendFlag)
-            {
-                for (int k = 0; k < tsk.Rows * tsk.Cols; k++)
-                {
-                    if (txtNewData[k].ToString() == ".")//Skip Die
-                    {
-                        continue;
-                    }
-                    else
-                    {
-                        if (Convert.ToInt32(tsk.MapVersion) == 2)
-                        {
-                            if (txtNewData[k].ToString() != "." && txtNewData[k].ToString() != "#" && txtNewData[k].ToString() != "0")//sinf fail,需要改为fail属性，BIN也需要改
-                            {
-                                tsk.DieMatrix[k].Attribute = DieCategory.FailDie;
-                                char firstChar = txtNewData[k][0];
-                                inkBinNo = ConvertCharToValue(firstChar);
-                                tsk.DieMatrix[k].Bin = inkBinNo;
-                            }
-                        }
-                        else if (Convert.ToInt32(tsk.MapVersion) == 4 || Convert.ToInt32(tsk.MapVersion) == 7)
-                        {
-                            if (txtNewData[k].ToString() == "X")//sinf fail,需要改为fail属性，BIN也需要改
-                            {
-                                tsk.DieMatrix[k].Attribute = DieCategory.FailDie;
-                                tsk.DieMatrix[k].Bin = inkBinNo;
-                            }
-                        }
-                    }
-                }
-            }
+            //if (tsk.ExtendFlag)
+            //{
+            //    for (int k = 0; k < tsk.Rows * tsk.Cols; k++)
+            //    {
+            //        if (txtNewData[k].ToString() == ".")//Skip Die
+            //        {
+            //            continue;
+            //        }
+            //        else
+            //        {
+            //            if (Convert.ToInt32(tsk.MapVersion) == 2)
+            //            {
+            //                if (txtNewData[k].ToString() != "." && txtNewData[k].ToString() != "#" && txtNewData[k].ToString() != "0")//sinf fail,需要改为fail属性，BIN也需要改
+            //                {
+            //                    tsk.DieMatrix[k].Attribute = DieCategory.FailDie;
+            //                    char firstChar = txtNewData[k][0];
+            //                    inkBinNo = ConvertCharToValue(firstChar);
+            //                    tsk.DieMatrix[k].Bin = inkBinNo;
+            //                }
+            //            }
+            //            else if (Convert.ToInt32(tsk.MapVersion) == 4 || Convert.ToInt32(tsk.MapVersion) == 7)
+            //            {
+            //                if (txtNewData[k].ToString() == "X")//sinf fail,需要改为fail属性，BIN也需要改
+            //                {
+            //                    tsk.DieMatrix[k].Attribute = DieCategory.FailDie;
+            //                    tsk.DieMatrix[k].Bin = inkBinNo;
+            //                }
+            //            }
+            //        }
+            //    }
+            //}
 
-            tsk.WaferID = WaferID_1;
-            tsk.Save();
+            //tsk.WaferID = WaferID_1;
+            //tsk.Save();
 
-            printTxtTskPair(tsk.LotNo);
+            //printTxtTskPair(tsk.LotNo);
         }
 
         private Tsk ParseTsk(string tskFile)

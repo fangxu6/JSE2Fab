@@ -11,56 +11,37 @@ namespace TSK_MERGE_SINF.Util
 {
     public abstract class IncomingFileToTskTemplate
     {
-        List<string> txt_Name = new List<string>();
-        List<string> tsk_Name = new List<string>();
+        protected List<string> txt_Name = new List<string>();
+        protected List<string> tsk_Name = new List<string>();
 
-        int txtTotal = 0;
-        int txtPass = 0;
-        int txtFail = 0;
-        int tskPass = 0;
-        int tskFail = 0;
-
-
-        List<string> txtData; //原始txt数据
-        List<string> DegtxtData; //旋转角度后的txt数据
-        List<string> txtNewData; //生成的txt数据
+        protected int txtTotal = 0;
+        protected int txtPass = 0;
+        protected int txtFail = 0;
+        protected int fullTxtPass = 0;
+        protected int fullTxtFail = 0;
+        protected List<string> txtData; //原始txt数据
+        //protected List<string> DegtxtData; //旋转角度后的txt数据
+        //protected List<string> txtFullData; //生成的txt数据
         //-----Sinf 头文件----//////
-        string txtDevice;
-        string txtLot;
-        int txtSlot;
-        string txtWaferID;
-        string txtFlat;
-        int txtRowct = 0;   //行数
-        int txtColct = 0;   //列数
+        protected string txtDevice;
+        protected string txtLot;
+        protected int txtSlot;
+        protected string txtWaferID;
+        protected string txtFlat;
+        protected int txtRowct = 0;   //行数
+        protected int txtColct = 0;   //列数
+        protected int fullTxtMark = 0;
 
-        int txtMark = 0;
-        // Methods
-        public void Init()
-        {
-
-        }
-        abstract public void Connect();
-        abstract public void Select();
-        abstract public void Process();
-        abstract public void Disconnect();
+        abstract public void ParseLine(string line);
 
         // The "Template Method"
-        public void Run(string tskFile, string txtFile)
+        public void Run(string tskFile, string txtFile,string inkBinNoStr,string isPassAlignmentMarkDie)
         {
-            Init();
-            Connect();
-            Select();
-            Process();
-            Disconnect();
-        
-
             Tsk tsk = ParseTsk(tskFile);
-
             //get txtData
             LoadTxt(txtFile);
             //TXT图谱转角度
-            GetDegtxtData(tsk, txtData);
-
+            List<string> DegtxtData = GetDegtxtData(tsk, txtData);
             //生成txt图谱数据
             string[,] TxtMap = new string[this.txtColct, this.txtRowct];
             for (int y = 0; y < this.txtRowct; y++)
@@ -89,57 +70,63 @@ namespace TSK_MERGE_SINF.Util
                 xMax = txtColct - 1;
                 yMax = txtRowct - 1;
             }
-            string[,] TxtNewMap = GetNewTxtMap(TxtMap, xMin, yMin, xMax, yMax, tsk.DieMatrix.XMax, tsk.DieMatrix.YMax);
+            //生成完整的TxtMap
+            string[,] TxtFullMap = GetTxtFullMap(TxtMap, xMin, yMin, xMax, yMax, tsk.DieMatrix.XMax, tsk.DieMatrix.YMax);
 
             //生成新的TxtData
-            GetNewTxtData(TxtNewMap, tsk.DieMatrix.XMax, tsk.DieMatrix.YMax);
+            List<string> TxtFullData = GetTxtFullData(TxtFullMap, tsk.DieMatrix.XMax, tsk.DieMatrix.YMax);
             //对位点比对工作
             int countPass = 0;
             int countFail = 0;
             int countMark = 0;
 
-            CountPassAndFail(TxtNewMap, ref countPass, ref countFail, ref countMark);
-            tskPass = countPass;//TODO 这个需要优化
-            tskFail = countFail;
-            txtMark = countMark;
-            for (int y = 0; y < tsk.DieMatrix.YMax; y++)
+            CountPassAndFail(TxtFullMap, ref countPass, ref countFail, ref countMark);
+            fullTxtPass = countPass;
+            fullTxtFail = countFail;
+            fullTxtMark = countMark;
+
+            if (isPassAlignmentMarkDie.Equals("是"))
             {
-                for (int x = 0; x < tsk.DieMatrix.XMax; x++)
+                for (int y = 0; y < tsk.DieMatrix.YMax; y++)
                 {
-                    if (TxtNewMap[x, y].ToString() == "#" && TSKMap[x, y].ToString() != "#")
+                    for (int x = 0; x < tsk.DieMatrix.XMax; x++)
                     {
-                        if (MessageBox.Show("对位点不正确!", "确认", MessageBoxButtons.YesNo) == DialogResult.Yes)
-                        {
-                            Environment.Exit(0);
-                        }
+                        if (TxtFullMap[x, y].ToString() == "#" && TSKMap[x, y].ToString() != "#")
+                            if (MessageBox.Show("对位点不正确!", "确认", MessageBoxButtons.YesNo) == DialogResult.Yes)
+                                Environment.Exit(0);
                     }
+                }
+            }
+            int tskTotalDie = 0;
+            foreach (DieData die in tsk.DieMatrix.Items)
+            {
+                if(die.Attribute == DieCategory.PassDie|| die.Attribute == DieCategory.FailDie|| die.Attribute == DieCategory.NoneDie)
+                {
+                    tskTotalDie++;
                 }
             }
 
             //颗数比对
-            if (this.txtPass + this.txtFail != (tskPass + tskFail))//12979 84  12811 77 13063
+            if ((this.txtPass + this.txtFail != (fullTxtPass + fullTxtFail))|| (this.txtPass + this.txtFail != tskTotalDie))
             {
                 if (MessageBox.Show("总颗数不匹配!", "确认", MessageBoxButtons.YesNo) == DialogResult.Yes)
                 {
-                    //Environment.Exit(0);
+                    Environment.Exit(0);
                 }
             }
 
             //根据SINF生成新的TSK-MAP
-            string WaferID_1 = this.txtWaferID;
-            tsk.FullName = "D:\\MERGE\\" + WaferID_1.TrimEnd('\0');
+            string slotNo = getSlotNo(this.txtWaferID);
+            tsk.FullName = "D:\\MERGE\\" + slotNo + "." + this.txtWaferID.TrimEnd('\0');
 
-            //int inkBinNo = Convert.ToInt32(comboBox1.Items);
-            int inkBinNo = 61;
-            if (!tsk.ExtendFlag && ((Convert.ToInt32(tsk.MapVersion) == 2)))
+            int inkBinNo = Convert.ToInt32(inkBinNoStr);
+            if (!tsk.ExtendFlag)
             {
                 for (int k = 0; k < tsk.Rows * tsk.Cols; k++)
                 {
-                    if (txtNewData[k].ToString() != "." && txtNewData[k].ToString() != "#" && txtNewData[k].ToString() != "0")//sinf fail,需要改为fail属性，BIN也需要改
+                    if (TxtFullData[k].ToString() == "X")//sinf fail,需要改为fail属性，BIN也需要改
                     {
                         tsk.DieMatrix[k].Attribute = DieCategory.FailDie;
-                        char firstChar = txtNewData[k][0];
-                        inkBinNo = ConvertCharToValue(firstChar);
                         tsk.DieMatrix[k].Bin = inkBinNo;
                     }
                 }
@@ -149,7 +136,7 @@ namespace TSK_MERGE_SINF.Util
             {
                 for (int k = 0; k < tsk.Rows * tsk.Cols; k++)
                 {
-                    if (txtNewData[k].ToString() == ".")//Skip Die
+                    if (TxtFullData[k].ToString() == ".")//Skip Die
                     {
                         continue;
                     }
@@ -157,17 +144,15 @@ namespace TSK_MERGE_SINF.Util
                     {
                         if (Convert.ToInt32(tsk.MapVersion) == 2)
                         {
-                            if (txtNewData[k].ToString() != "." && txtNewData[k].ToString() != "#" && txtNewData[k].ToString() != "0")//sinf fail,需要改为fail属性，BIN也需要改
+                            if (TxtFullData[k].ToString() == "X")//sinf fail,需要改为fail属性，BIN也需要改
                             {
                                 tsk.DieMatrix[k].Attribute = DieCategory.FailDie;
-                                char firstChar = txtNewData[k][0];
-                                inkBinNo = ConvertCharToValue(firstChar);
                                 tsk.DieMatrix[k].Bin = inkBinNo;
                             }
                         }
                         else if (Convert.ToInt32(tsk.MapVersion) == 4 || Convert.ToInt32(tsk.MapVersion) == 7)
                         {
-                            if (txtNewData[k].ToString() == "X")//sinf fail,需要改为fail属性，BIN也需要改
+                            if (TxtFullData[k].ToString() == "X")//sinf fail,需要改为fail属性，BIN也需要改
                             {
                                 tsk.DieMatrix[k].Attribute = DieCategory.FailDie;
                                 tsk.DieMatrix[k].Bin = inkBinNo;
@@ -177,7 +162,23 @@ namespace TSK_MERGE_SINF.Util
                 }
             }
 
-            tsk.WaferID = WaferID_1;
+            tsk.PassDie = 0;
+            tsk.FailDie = 0;
+            for (int k = 0; k < tsk.Rows * tsk.Cols; k++)
+            {
+                if (tsk.DieMatrix[k].Attribute == DieCategory.PassDie)
+                {
+                    tsk.PassDie++;
+                }
+                else if (tsk.DieMatrix[k].Attribute == DieCategory.FailDie)
+                {
+                    tsk.FailDie++;
+                }
+            }
+            tsk.TotalDie = tsk.PassDie + tsk.FailDie;
+
+            tsk.LotNo = this.txtLot;
+            tsk.WaferID = this.txtWaferID;
             tsk.Save();
 
             printTxtTskPair(tsk.LotNo);
@@ -217,23 +218,19 @@ namespace TSK_MERGE_SINF.Util
                 }
                 else
                 { break; }
-
             }
 
             if (txtRowct == 0 || txtColct == 0)
-
             {
                 // MessageBox.Show("SINF格式不正确!");
                 if (MessageBox.Show("TXT格式不正确!", "确认", MessageBoxButtons.YesNo) == DialogResult.Yes)
                 {
                     Environment.Exit(0);
                 }
-
             }
             txt_1.Close();
             read.Close();
         }
-
 
 
         static int ConvertCharToValue(char c)
@@ -283,27 +280,29 @@ namespace TSK_MERGE_SINF.Util
             }
         }
 
-        private void GetNewTxtData(string[,] TxtNewMap, int xMax, int yMax)
+        private List<string> GetTxtFullData(string[,] TxtFullMap, int xMax, int yMax)
         {
-            if (this.txtNewData == null)
-            {
-                this.txtNewData = new List<string>();
-            }
-            else
-            {
-                this.txtNewData.Clear();
-            }
+            //if (this.txtFullData == null)
+            //{
+            //    this.txtFullData = new List<string>();
+            //}
+            //else
+            //{
+            //    this.txtFullData.Clear();
+            //}
+            List<string> txtFullData = new List<string>();
 
             for (int y = 0; y < yMax; y++)
             {
                 for (int x = 0; x < xMax; x++)
                 {
-                    txtNewData.Add(TxtNewMap[x, y].ToString());
+                    txtFullData.Add(TxtFullMap[x, y].ToString());
                 }
             }
+            return txtFullData;
         }
 
-        private static string[,] GetNewTxtMap(string[,] TxtMap, int xMin, int yMin, int xMax, int yMax, int xMaxCordinate, int yMaxCordinate)
+        private static string[,] GetTxtFullMap(string[,] TxtMap, int xMin, int yMin, int xMax, int yMax, int xMaxCordinate, int yMaxCordinate)
         {
             string[,] TxtNewMap = new string[xMaxCordinate, yMaxCordinate];
             for (int y = 0; y < yMaxCordinate; y++)
@@ -353,15 +352,12 @@ namespace TSK_MERGE_SINF.Util
             //int row1_1 = tsk.Rows;  //tsk的行和列和常规的反了 size of horizontal  水平方向  x轴方向的最大值
             //int col1_1 = tsk.Cols;  //tsk的行和列和常规的反了 size of verticatl   垂直方向  y轴方向的最大值
             string[,] TSKMap = new string[tsk.DieMatrix.XMax, tsk.DieMatrix.YMax];
-            //74列 78行
-
 
             //生成TSKMap
-            for (int y = 0; y < tsk.DieMatrix.YMax; y++)//83
+            for (int y = 0; y < tsk.DieMatrix.YMax; y++)
             {
-                for (int x = 0; x < tsk.DieMatrix.XMax; x++)//57
+                for (int x = 0; x < tsk.DieMatrix.XMax; x++)
                 {
-
                     switch (tsk.DieMatrix[x, y].Attribute)
                     {
                         case DieCategory.PassDie:
@@ -380,16 +376,17 @@ namespace TSK_MERGE_SINF.Util
             return TSKMap;
         }
 
-        private void GetDegtxtData(Tsk tsk, List<string> txtData)
+        private List<string> GetDegtxtData(Tsk tsk, List<string> txtData)
         {
-            if (this.DegtxtData == null)
-            {
-                this.DegtxtData = new List<string>();
-            }
-            else
-            {
-                this.DegtxtData.Clear();
-            }
+            List<string> DegtxtData = new List<string>();
+            //if (this.DegtxtData == null)
+            //{
+            //    this.DegtxtData = new List<string>();
+            //}
+            //else
+            //{
+            //    this.DegtxtData.Clear();
+            //}
             int count = txtColct * txtRowct;
 
             for (int i = 0; i < count; i++)
@@ -400,7 +397,7 @@ namespace TSK_MERGE_SINF.Util
             if (!String.IsNullOrEmpty(this.txtFlat))
             {
                 //int txtFlat1 = Convert.ToInt32(this.txtFlat);
-                int txtFlat1 = 270;
+                int txtFlat1 = GetFlat(this.txtFlat);
                 int flatDifference = (tsk.FlatDir - txtFlat1 + 360) % 360;
 
                 if (flatDifference == 180)////TXT转180
@@ -487,7 +484,10 @@ namespace TSK_MERGE_SINF.Util
 
                 }
             }
+            return DegtxtData;
         }
+
+        protected abstract int GetFlat(string txtFlat);
 
         private void printTxtTskPair(string LotNo_1)
         {
@@ -504,115 +504,89 @@ namespace TSK_MERGE_SINF.Util
             fwt.Close();
         }
 
-        private static void convertToFailBin(byte[] firstbyte1_1, byte[] thirdbyte1_1, byte[] thirdbyte2_1, int binNo, int k)
-        {
-            firstbyte1_1[k] = Convert.ToByte(firstbyte1_1[k] & 1);
-            firstbyte1_1[k] = Convert.ToByte(firstbyte1_1[k] | 128);//标记成fail
+        //private void ParseLine(string line)
+        //{
+        //    try
+        //    {
+        //        if (line.Contains(':') || line.Contains('='))
+        //        {
+        //            string[] strs = line.Split(new char[] { ':', '=' });
+        //            string head = strs[0].Trim().ToUpper();
+        //            string body = strs[1].Trim();
+        //            if (string.IsNullOrEmpty(body))
+        //            {
+        //                return;
+        //            }
+        //            switch (head)
+        //            {
 
-            thirdbyte1_1[k] = thirdbyte1_1[k];
-            thirdbyte2_1[k] = Convert.ToByte(thirdbyte2_1[k] & 192);
-            thirdbyte2_1[k] = Convert.ToByte(thirdbyte2_1[k] | binNo);
-        }
+        //                case "DEVICE":
+        //                case "DEVICE NAME":
+        //                    this.txtDevice = body;
+        //                    break;
+        //                case "LOT":
+        //                case "LOT NO":
+        //                    this.txtLot = body;
+        //                    break;
+        //                case "SLOT NO":
+        //                    this.txtSlot = Convert.ToInt32(body); ;
+        //                    break;
+        //                case "WAFER":
+        //                case "WAFER ID":
+        //                case "WAFER-ID":
+        //                    this.txtWaferID = body;
+        //                    break;
+        //                case "FNLOC":
+        //                case "FLAT DIR":
+        //                case "FLAT":
+        //                    this.txtFlat = body;
+        //                    break;
+        //                case "ROWCT":
+        //                    this.txtRowct = Convert.ToInt32(body);
+        //                    break;
+        //                case "COLCT":
+        //                    this.txtColct = Convert.ToInt32(body);
+        //                    break;
+        //                case "PASS DIE":
+        //                    this.txtPass = Convert.ToInt32(body);
+        //                    break;
+        //                case "FAIL DIE":
+        //                    this.txtFail = Convert.ToInt32(body);
+        //                    break;
+        //                case "GROSS_DIES":
+        //                case "TOTAL TEST DIE":
+        //                    this.txtTotal = Convert.ToInt32(body);
+        //                    break;
 
-        private static void convertToFailBinWithExtention(byte[] firstbyte1_1, byte[] thirdbyte1_1, byte[] thirdbyte2_1, int binNo, int k,
-            ArrayList arry_1, int ExtentionIndex)
-        {
+        //            }
+        //        }
+        //        else
+        //        {
+        //            this.ParseDies(line);
+        //        }
+        //    }
+        //    catch (Exception ee)
+        //    {
+        //        throw ee;
+        //    }
+        //}
 
-            firstbyte1_1[k] = Convert.ToByte(firstbyte1_1[k] & 1);
-            firstbyte1_1[k] = Convert.ToByte(firstbyte1_1[k] | 128);//标记成fail
-
-            thirdbyte1_1[k] = thirdbyte1_1[k];
-            thirdbyte2_1[k] = Convert.ToByte(thirdbyte2_1[k] & 192);
-            thirdbyte2_1[k] = Convert.ToByte(thirdbyte2_1[k] | binNo);
-
-            arry_1[ExtentionIndex] = Convert.ToByte(Convert.ToByte(arry_1[ExtentionIndex]) & 0);
-            arry_1[ExtentionIndex] = Convert.ToByte(Convert.ToByte(arry_1[ExtentionIndex]) | binNo);
-        }
-
-        private void ParseLine(string line)
-        {
-            try
-            {
-                //TODO 头信息
-                if (line.Contains(':') || line.Contains('='))
-                {
-                    string[] strs = line.Split(new char[] { ':', '=' });
-                    string head = strs[0].Trim().ToUpper();
-                    string body = strs[1].Trim();
-                    if (string.IsNullOrEmpty(body))
-                    {
-                        return;
-                    }
-                    switch (head)
-                    {
-
-                        case "DEVICE":
-                        case "DEVICE NAME":
-                            this.txtDevice = body;
-                            break;
-                        case "LOT":
-                        case "LOT NO":
-                            this.txtLot = body;
-                            break;
-                        case "SLOT NO":
-                            this.txtSlot = Convert.ToInt32(body); ;
-                            break;
-                        case "WAFER":
-                        case "WAFER ID":
-                        case "WAFER-ID":
-                            this.txtWaferID = body;
-                            break;
-                        case "FNLOC":
-                        case "FLAT DIR":
-                        case "FLAT":
-                            this.txtFlat = body;
-                            break;
-                        case "ROWCT":
-                            this.txtRowct = Convert.ToInt32(body);
-                            break;
-                        case "COLCT":
-                            this.txtColct = Convert.ToInt32(body);
-                            break;
-                        case "PASS DIE":
-                            this.txtPass = Convert.ToInt32(body);
-                            break;
-                        case "FAIL DIE":
-                            this.txtFail = Convert.ToInt32(body);
-                            break;
-                        case "GROSS_DIES":
-                        case "TOTAL TEST DIE":
-                            this.txtTotal = Convert.ToInt32(body);
-                            break;
-
-                    }
-                }
-                else
-                {
-                    this.ParseDies(line);
-                }
-            }
-            catch (Exception ee)
-            {
-                throw ee;
-            }
-        }
-
-        private void ParseDies(string s)
-        {
-            PasrseDieWithDeviceGeneral(s);
-            //PasrseDieWithDeviceWTM2100COfZhiCun(s);
-            //TODO null报错
-            //if (this.txtDevice.Contains("IML7972"))
-            //{
-            //PasrseDieWithDeviceIML7972(s);
-            //} else if (this.txtDevice.Contains("UPM7231"))
-            //{
-            //    PasrseDieWithDeviceUPM7231(s);
-            //} else
-            //{
-            //    PasrseDieWithDeviceUPM6700(s);
-            //}
-        }
+        abstract protected void ParseDies(string s);
+        //{
+        //    //PasrseDieWithDeviceGeneral(s);
+        //    PasrseDieWithDeviceWTM2100COfZhiCun(s);
+        //    //TODO null报错
+        //    //if (this.txtDevice.Contains("IML7972"))
+        //    //{
+        //    //PasrseDieWithDeviceIML7972(s);
+        //    //} else if (this.txtDevice.Contains("UPM7231"))
+        //    //{
+        //    //    PasrseDieWithDeviceUPM7231(s);
+        //    //} else
+        //    //{
+        //    //    PasrseDieWithDeviceUPM6700(s);
+        //    //}
+        //}
 
         private void PasrseDieWithDeviceWTM2100COfZhiCun(string s)
         {
@@ -646,7 +620,6 @@ namespace TSK_MERGE_SINF.Util
                     i = i + 3;
                 }
             }
-            Console.WriteLine("txtRowct:" + txtData.Count);
         }
         private void PasrseDieWithDeviceIML7972(string s)
         {
@@ -774,19 +747,12 @@ namespace TSK_MERGE_SINF.Util
                 }
             }
         }
-
-        private void Reverse(ref byte[] target)
+        private string getSlotNo(string txtWaferID)
         {
-            int n1 = 0, n2 = target.Length - 1;
-            byte temp;
-            while (n1 < n2)
-            {
-                temp = target[n1];
-                target[n1] = target[n2];
-                target[n2] = temp;
-                n1++;
-                n2--;
-            }
+            //F9N984-09F5根据-获取-后面的2位，
+            string[] str = txtWaferID.Split('-');
+            //str[1].Substring(0, 2) 3位，第一位补0
+            return "0" + str[1].Substring(0, 2);
         }
     }
 }
