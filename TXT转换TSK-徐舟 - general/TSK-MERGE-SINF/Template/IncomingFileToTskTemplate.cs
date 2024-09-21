@@ -1,23 +1,15 @@
-﻿using System;
-using System.IO;
-using System.Xml;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Text;
-using System.Diagnostics;
-using System.Windows.Forms;
-using System.Reflection;
+﻿using DataToExcel;
+using System;
 using System.Collections;
+using System.Collections.Generic;
+using System.IO;
 using System.Linq;
-using System.Drawing.Drawing2D;
-using DataToExcel;
-using System.Threading.Tasks;
+using System.Text;
+using System.Windows.Forms;
 
-namespace TSK_MERGE_SINF
+namespace TSK_MERGE_SINF.Util
 {
-    public partial class Form1 : Form
+    public abstract class IncomingFileToTskTemplate
     {
         List<string> txt_Name = new List<string>();
         List<string> tsk_Name = new List<string>();
@@ -42,103 +34,25 @@ namespace TSK_MERGE_SINF
         int txtColct = 0;   //列数
 
         int txtMark = 0;
-
-        public Form1()
+        // Methods
+        public void Init()
         {
-            InitializeComponent();
-            comboBox1.SelectedItem = "61";
+
         }
+        abstract public void Connect();
+        abstract public void Select();
+        abstract public void Process();
+        abstract public void Disconnect();
 
-        private void buttonLoadTxt_Click(object sender, EventArgs e)
+        // The "Template Method"
+        public void Run(string tskFile, string txtFile)
         {
-            try
-            {
-                this.LoadTxt();
-            }
-            catch (Exception exception)
-            {
-                MessageBox.Show(exception.Message);
-            }
-        }
-
-        /// <summary>
-        /// 加载txt文件
-        /// </summary>
-        private void LoadTxt()
-        {
-            txt_Name.Clear();
-            FolderBrowserDialog dialog = new FolderBrowserDialog();
-            if (dialog.ShowDialog() == DialogResult.OK)
-            {
-                this.textBox2.Text = dialog.SelectedPath;
-                DirectoryInfo TheFolder = new DirectoryInfo(this.textBox2.Text);
-
-                foreach (FileInfo str in TheFolder.GetFiles("*", SearchOption.AllDirectories))
-                {
-                    txt_Name.Add(str.FullName);
-                }
-            }
-        }
-
-        private void buttonLoadTsk_Click(object sender, EventArgs e)
-        {
-            try
-            {
-                this.LoadTSK();
-            }
-            catch (Exception exception)
-            {
-                MessageBox.Show(exception.Message);
-            }
-        }
-
-        /// <summary>
-        /// 加载tsk文件
-        /// </summary>
-        private void LoadTSK()
-        {
-            tsk_Name.Clear();
-            FolderBrowserDialog dialog = new FolderBrowserDialog();
-            if (dialog.ShowDialog() == DialogResult.OK)
-            {
-                this.textBox1.Text = dialog.SelectedPath;
-                DirectoryInfo TheFolder = new DirectoryInfo(this.textBox1.Text);
-
-                foreach (FileInfo str in TheFolder.GetFiles("*", SearchOption.AllDirectories))
-                {
-                    tsk_Name.Add(str.FullName);
-                }
-            }
-        }
-
-        private void button3_Click(object sender, EventArgs e)
-        {
-            if (this.textBox2.Text == "")
-            {
-                MessageBox.Show("请选择txt图谱");
-            }
-
-            if (this.textBox1.Text == "")
-            {
-                MessageBox.Show("请选择TSK图谱");
-            }
-
-            for (int i = 0; i < txt_Name.Count; i++)
-            {
-                string txtFile = txt_Name[i];
-                string tskFile = tsk_Name[0];
-                Txt2Tsk(txtFile, tskFile);
-            }
-            if (MessageBox.Show("转换成功，是否打开?", "确定", MessageBoxButtons.YesNo) == DialogResult.Yes)
-            {
-                Process.Start("D:\\MERGE\\");
-            }
-        }
-
-        private void Txt2Tsk(string txtFile, string tskFile)
-        {
-            txtRowct = 0;
-            txtColct = 0;
+            Init();
+            Connect();
+            Select();
+            Process();
+            Disconnect();
+        
 
             Tsk tsk = ParseTsk(tskFile);
 
@@ -215,7 +129,8 @@ namespace TSK_MERGE_SINF
             string WaferID_1 = this.txtWaferID;
             tsk.FullName = "D:\\MERGE\\" + WaferID_1.TrimEnd('\0');
 
-            int inkBinNo = Convert.ToInt32(comboBox1.Items);
+            //int inkBinNo = Convert.ToInt32(comboBox1.Items);
+            int inkBinNo = 61;
             if (!tsk.ExtendFlag && ((Convert.ToInt32(tsk.MapVersion) == 2)))
             {
                 for (int k = 0; k < tsk.Rows * tsk.Cols; k++)
