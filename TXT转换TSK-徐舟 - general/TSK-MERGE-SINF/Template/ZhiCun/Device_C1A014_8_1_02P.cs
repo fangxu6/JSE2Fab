@@ -7,9 +7,12 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 
-namespace TSK_MERGE_SINF.Util
+namespace TSK_MERGE_SINF.Template
 {
-    public class ZhiCunFileToTskImp : IncomingFileToTskTemplate
+    /// <summary>
+    /// 这个名字不对，后面需要更正
+    /// </summary>
+    public class Device_C1A014_8_1_02P : IncomingFileToTskTemplate
     {
         public override void ParseLine(string line)
         {

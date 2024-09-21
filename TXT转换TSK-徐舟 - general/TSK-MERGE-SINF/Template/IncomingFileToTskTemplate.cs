@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 
-namespace TSK_MERGE_SINF.Util
+namespace TSK_MERGE_SINF.Template
 {
     public abstract class IncomingFileToTskTemplate
     {
@@ -35,9 +35,8 @@ namespace TSK_MERGE_SINF.Util
         abstract public void ParseLine(string line);
 
         // The "Template Method"
-        public void Run(string tskFile, string txtFile,string inkBinNoStr,string isPassAlignmentMarkDie)
+        public void Run(Tsk tsk, string txtFile,string inkBinNoStr,string isPassAlignmentMarkDie)
         {
-            Tsk tsk = ParseTsk(tskFile);
             //get txtData
             LoadTxt(txtFile);
             //TXT图谱转角度

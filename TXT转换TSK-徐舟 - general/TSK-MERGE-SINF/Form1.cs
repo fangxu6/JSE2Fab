@@ -14,7 +14,8 @@ using System.Linq;
 using System.Drawing.Drawing2D;
 using DataToExcel;
 using System.Threading.Tasks;
-using TSK_MERGE_SINF.Util;
+using TSK_MERGE_SINF.Template;
+using TSK_MERGE_SINF.Template;
 
 namespace TSK_MERGE_SINF
 {
@@ -139,8 +140,9 @@ namespace TSK_MERGE_SINF
 
         private void Txt2Tsk(string txtFile, string tskFile)
         {
-            ZhiCunFileToTskImp zhiCunFileToTskImp = new ZhiCunFileToTskImp();
-            zhiCunFileToTskImp.Run(tskFile, txtFile, comboBox1.SelectedItem.ToString(), comboBox2.SelectedItem.ToString());
+            Tsk tsk = ParseTsk(tskFile);
+            IncomingFileToTskTemplate incomingFilePattern = DeviceFactory.GetDeviceFromTsk(tsk.Device);
+            incomingFilePattern.Run(tsk, txtFile, comboBox1.SelectedItem.ToString(), comboBox2.SelectedItem.ToString());
 
             //Tsk tsk = ParseTsk(tskFile);
 
