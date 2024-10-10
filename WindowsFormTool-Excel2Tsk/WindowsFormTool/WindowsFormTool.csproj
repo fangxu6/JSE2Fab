@@ -7,7 +7,7 @@
     <ProjectGuid>{C5662C8D-8EA0-4C94-BAA0-45D5DABB36E3}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <RootNamespace>WindowsFormTool</RootNamespace>
-    <AssemblyName>ExcelToTsk</AssemblyName>
+    <AssemblyName>Excel恢复tsk和TSK合并</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>

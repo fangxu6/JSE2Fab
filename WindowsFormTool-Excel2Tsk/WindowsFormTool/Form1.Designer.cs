@@ -209,9 +209,10 @@
             // 
             // button5
             // 
+            this.button5.Dock = System.Windows.Forms.DockStyle.Fill;
             this.button5.Location = new System.Drawing.Point(784, 64);
             this.button5.Name = "button5";
-            this.button5.Size = new System.Drawing.Size(268, 55);
+            this.button5.Size = new System.Drawing.Size(271, 55);
             this.button5.TabIndex = 13;
             this.button5.Text = "浏览";
             this.button5.UseVisualStyleBackColor = true;
@@ -219,9 +220,10 @@
             // 
             // button3
             // 
+            this.button3.Dock = System.Windows.Forms.DockStyle.Fill;
             this.button3.Location = new System.Drawing.Point(784, 3);
             this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(268, 55);
+            this.button3.Size = new System.Drawing.Size(271, 55);
             this.button3.TabIndex = 1;
             this.button3.Text = "浏览";
             this.button3.UseVisualStyleBackColor = true;
