@@ -63,20 +63,51 @@ namespace DataToExcel
 
         private void button1_Click(object sender, EventArgs e)
         {
-            ToMapping();
+            if(comboBox1.SelectedIndex == 0)
+                ToMapping();
+            else if (comboBox1.SelectedIndex == 1)
+                MergeTsk();
         }
 
-        private bool ToMapping()
+        private void MergeTsk()
+        {
+            if (string.IsNullOrWhiteSpace(ExcelFilePath))
+            {
+                MessageBox.Show("请先选择 TSK初始图谱文件路径", "错误提醒", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            else if (string.IsNullOrWhiteSpace(TSKFilePath))
+            {
+                MessageBox.Show("请先选择 待合并TSK图谱文件路径", "错误提醒", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            UpdateRichTextBox("开始合并TSK图谱\n");
+            UpdateRichTextBox("开始解析TSK原始图谱\n");
+            Tsk originalTsk = LoadTsk(ExcelFilePath);
+            UpdateRichTextBox("解析初始TSK空图谱结束\n");
+            UpdateRichTextBox("开始解析TSK原始图谱\n");
+            Tsk mergeTsk = LoadTsk(TSKFilePath);
+            UpdateRichTextBox("解析待合并TSK图谱结束\n");
+            //TSK比对，以防不能合并
+            if (originalTsk.Rows != mergeTsk.Rows || originalTsk.Cols != mergeTsk.Cols)
+            {
+                MessageBox.Show("TSK图谱尺寸不一致，无法合并", "错误提醒", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+            UpdateRichTextBox("开始合并TSK图谱\n");
+            string newTskFilePath = @"D:\New-Tsk\" + Path.GetFileName(TSKFilePath);
+            UpdateRichTextBox("生成图谱路径" + newTskFilePath + "\n");
+
+            mergeTsk.Merge(originalTsk,newTskFilePath);
+        }
+
+        private void ToMapping()
         {
             if (string.IsNullOrWhiteSpace(ExcelFilePath))
             {
                 MessageBox.Show("请先选择 Excel文件路径", "错误提醒", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return false;
             }
             else if (string.IsNullOrWhiteSpace(TSKFilePath))
             {
                 MessageBox.Show("请先选择 TSK初始图谱文件路径", "错误提醒", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return false;
             }
             UpdateRichTextBox("开始恢复TSK图谱\n");
             DataTable table = MiniExcel.QueryAsDataTable(ExcelFilePath, useHeaderRow: false);
@@ -116,7 +147,7 @@ namespace DataToExcel
             {
                 this.progressBar1.Value++;
 
-                var die = tsk.DieMatrix[k];
+                DieData die = tsk.DieMatrix[k];
                 if (binNoMap.TryGetValue((die.X, die.Y), out int binNo))
                 {
                     die.Bin = binNo;
@@ -148,8 +179,6 @@ namespace DataToExcel
             {
                 Process.Start(Path.GetDirectoryName(newTskFilePath));
             }
-
-            return true;
         }
         private void Reverse(ref byte[] target)
         {
@@ -189,6 +218,27 @@ namespace DataToExcel
             tsk.Read();
             //this.LotNo = tsk.LotNo.Trim();
             return tsk;
+        }
+
+        private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            // 根据 ComboBox 的选择更改 Button 的文本
+            switch (comboBox1.SelectedIndex)
+            {
+                case 0:
+                    button6.Text = "XLSL文件路径";
+                    button2.Text = "TSK空图谱文件路径";
+                    button4.Text = "说明：\r\nxlsx或者csv文件的开始三列分别是x坐标、y坐标和binNo\r\n把对应数据的文件x坐标、y坐标和binNo分别黏贴到对应列\r\n\r\n";
+                    break;
+                case 1:
+                    button6.Text = "待合并TSK 1（模板）";
+                    button2.Text = "待合并TSK 2";
+                    button4.Text = "说明：\r\ntsk和tsk合并\r\n";
+                    break;
+                default:
+                    button6.Text = "未定义的功能";
+                    break;
+            }
         }
     }
 

@@ -11,6 +11,7 @@ namespace DataToExcel
     using System.Text;
     using System.Collections;
     using System.Reflection;
+    using System.Threading.Tasks;
 
     public class Tsk : MappingBase
     {
@@ -1140,7 +1141,35 @@ namespace DataToExcel
             if (!(map is Tsk))
                 throw new Exception("Tsk 类型文件只能和 Tsk 类型文件合并。");
 
-            return null;
+            for (int i = 0; i < this.Rows*this.Cols; i++)
+            {
+                DieData die = map.DieMatrix[i];
+                DieData mergeDie = this.DieMatrix[i];
+                if (die.Attribute == DieCategory.FailDie)
+                {
+                    mergeDie.Attribute = DieCategory.FailDie;
+                    mergeDie.Bin = die.Bin;
+                }
+            }
+
+            this.PassDie = 0;
+            this.FailDie = 0;
+            for (int k = 0; k < this.Rows * this.Cols; k++)
+            {
+                if (this.DieMatrix[k].Attribute == DieCategory.PassDie)
+                {
+                    this.PassDie++;
+                }
+                else if (this.DieMatrix[k].Attribute == DieCategory.FailDie)
+                {
+                    this.FailDie++;
+                }
+            }
+            this.TotalDie = this.PassDie + this.FailDie;
+
+            this.FullName = newfile;
+            this.Save();
+            return this;
         }
     }
 }
