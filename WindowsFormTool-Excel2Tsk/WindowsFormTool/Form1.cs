@@ -97,6 +97,10 @@ namespace DataToExcel
             UpdateRichTextBox("生成图谱路径" + newTskFilePath + "\n");
 
             mergeTsk.Merge(originalTsk,newTskFilePath);
+            if (MessageBox.Show("TSK新图谱生成，是否打开所在文件夹?", "confirm", MessageBoxButtons.YesNo) == DialogResult.Yes)
+            {
+                Process.Start(Path.GetDirectoryName(newTskFilePath));
+            }
         }
 
         private void ToMapping()
