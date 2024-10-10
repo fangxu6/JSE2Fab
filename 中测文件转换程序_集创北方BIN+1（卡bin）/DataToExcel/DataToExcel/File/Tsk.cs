@@ -571,7 +571,7 @@ namespace DataToExcel
                     break; //可以注释
                 }
 
-                while(this._reader.BaseStream.Position < this._reader.BaseStream.Length)
+                while (this._reader.BaseStream.Position < this._reader.BaseStream.Length)
                 {
                     this.ExtendFlag2 = true;
                     //继续读取余下的数据并保存到list中
@@ -1140,7 +1140,35 @@ namespace DataToExcel
             if (!(map is Tsk))
                 throw new Exception("Tsk 类型文件只能和 Tsk 类型文件合并。");
 
-            return null;
+            for (int i = 0; i < this.Rows * this.Cols; i++)
+            {
+                DieData die = map.DieMatrix[i];
+                DieData mergeDie = this.DieMatrix[i];
+                if (die.Attribute == DieCategory.FailDie)
+                {
+                    mergeDie.Attribute = DieCategory.FailDie;
+                    mergeDie.Bin = die.Bin;
+                }
+            }
+
+            this.PassDie = 0;
+            this.FailDie = 0;
+            for (int k = 0; k < this.Rows * this.Cols; k++)
+            {
+                if (this.DieMatrix[k].Attribute == DieCategory.PassDie)
+                {
+                    this.PassDie++;
+                }
+                else if (this.DieMatrix[k].Attribute == DieCategory.FailDie)
+                {
+                    this.FailDie++;
+                }
+            }
+            this.TotalDie = this.PassDie + this.FailDie;
+
+            this.FullName = newfile;
+            this.Save();
+            return this;
         }
     }
 }
