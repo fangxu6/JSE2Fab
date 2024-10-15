@@ -1,21 +1,10 @@
-﻿using System;
-using System.IO;
-using System.Xml;
+﻿using System.IO;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Text;
 using System.Diagnostics;
 using System.Windows.Forms;
-using System.Reflection;
-using System.Collections;
-using System.Linq;
-using System.Drawing.Drawing2D;
 using DataToExcel;
-using System.Threading.Tasks;
 using TSK_MERGE_SINF.Template;
-using TSK_MERGE_SINF.Template;
+using System;
 
 namespace TSK_MERGE_SINF
 {
@@ -130,6 +119,8 @@ namespace TSK_MERGE_SINF
             {
                 string txtFile = txt_Name[i];
                 string tskFile = tsk_Name[0];
+                if (txt_Name.Count==tsk_Name.Count)
+                    tskFile = tsk_Name[i];
                 Txt2Tsk(txtFile, tskFile);
             }
             if (MessageBox.Show("转换成功，是否打开?", "确定", MessageBoxButtons.YesNo) == DialogResult.Yes)
@@ -142,6 +133,8 @@ namespace TSK_MERGE_SINF
         {
             Tsk tsk = ParseTsk(tskFile);
             IncomingFileToTskTemplate incomingFilePattern = DeviceFactory.GetDeviceFromTsk(tsk.Device);
+            incomingFilePattern.Txt_Name = txt_Name;
+            incomingFilePattern.Tsk_Name = tsk_Name;
             incomingFilePattern.Run(tsk, txtFile, comboBox1.SelectedItem.ToString(), comboBox2.SelectedItem.ToString());
         }
 

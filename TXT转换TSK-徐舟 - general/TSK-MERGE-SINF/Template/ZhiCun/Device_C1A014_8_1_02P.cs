@@ -67,7 +67,6 @@ namespace TSK_MERGE_SINF.Template
                         case "TOTAL TEST DIE":
                             this.txtTotal = Convert.ToInt32(body);
                             break;
-
                     }
                 }
                 else

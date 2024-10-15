@@ -11,8 +11,8 @@ namespace TSK_MERGE_SINF.Template
 {
     public abstract class IncomingFileToTskTemplate
     {
-        protected List<string> txt_Name = new List<string>();
-        protected List<string> tsk_Name = new List<string>();
+        private List<string> txt_Name = new List<string>();
+        private List<string> tsk_Name = new List<string>();
 
         protected int txtTotal = 0;
         protected int txtPass = 0;
@@ -32,13 +32,29 @@ namespace TSK_MERGE_SINF.Template
         protected int txtColct = 0;   //列数
         protected int fullTxtMark = 0;
 
+        public List<string> Txt_Name { get => txt_Name; set => txt_Name = value; }
+        public List<string> Tsk_Name { get => tsk_Name; set => tsk_Name = value; }
+
         abstract public void ParseLine(string line);
 
         // The "Template Method"
-        public void Run(Tsk tsk, string txtFile,string inkBinNoStr,string isPassAlignmentMarkDie)
+        public void Run(Tsk tsk, string txtFile, string inkBinNoStr, string isPassAlignmentMarkDie)
         {
             //get txtData
             LoadTxt(txtFile);
+
+            //waferID比对
+            if (Txt_Name.Count == Tsk_Name.Count)
+            {
+                if (tsk.WaferID != this.txtWaferID)
+                {
+                    if (MessageBox.Show("WaferID不匹配!", "确认", MessageBoxButtons.YesNo) == DialogResult.Yes)
+                    {
+                        Environment.Exit(0);
+                    }
+                }
+            }
+
             //TXT图谱转角度
             List<string> DegtxtData = GetDegtxtData(tsk, txtData);
             //生成txt图谱数据
@@ -194,6 +210,8 @@ namespace TSK_MERGE_SINF.Template
         {
             this.txtPass = 0;
             this.txtFail = 0;
+            this.txtRowct = 0;
+            this.txtColct = 0;
             FileStream txt_1;
 
             txt_1 = new FileStream(txtFile, FileMode.Open, FileAccess.Read);
@@ -469,10 +487,8 @@ namespace TSK_MERGE_SINF.Template
                     x = txtColct;
                     txtColct = txtRowct;
                     txtRowct = x;
-
                 }
-
-                else if (flatDifference == 0)////TXT不转角度
+                else //TXT不转角度
                 {
 
                     for (int i = 0; i < count; i++)
@@ -483,15 +499,25 @@ namespace TSK_MERGE_SINF.Template
 
                 }
             }
+            else //TXT不转角度
+            {
+
+                for (int i = 0; i < count; i++)
+                {
+
+                    DegtxtData[i] = txtData[i];
+                }
+
+            }
             return DegtxtData;
         }
 
         protected abstract int GetFlat(string txtFlat);
 
-        private void printTxtTskPair(string LotNo_1)
+        private void printTxtTskPair(string lotNo)
         {
             ////////////////////////////////输出TXT//////////////////////////////////
-            FileStream fwt = new FileStream("D:\\MERGE\\" + LotNo_1 + "_txt_with_tsk" + ".txt", FileMode.Create);
+            FileStream fwt = new FileStream("D:\\MERGE\\" + lotNo + "_txt_with_tsk" + ".txt", FileMode.Create);
             StreamWriter swt = new StreamWriter(fwt);
             for (int ii = 0; ii < tsk_Name.Count; ii++)
             {

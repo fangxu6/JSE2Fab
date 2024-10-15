@@ -1016,9 +1016,13 @@ namespace DataToExcel
                 if ((bool)this._properties["ExtendFlag2"])
                 {
                     //this._properties["ExtendList"]转byte[]
-                    byte[] extendList = (byte[])this._properties["ExtendList"];
+                    ArrayList extendList = (ArrayList)this._properties["ExtendList"];
+                    foreach (byte extendByte in extendList)
+                    {
+                        this._writer.WriteByte(extendByte);
+                    }
                     //写入文件
-                    this._writer.Write(extendList, 0, extendList.Length);
+                    //this._writer.Write(extendList, 0, extendList.Length);
                 }
             }
             catch (Exception ee)

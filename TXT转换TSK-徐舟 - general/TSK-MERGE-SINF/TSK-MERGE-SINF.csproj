@@ -66,6 +66,7 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="PubClass.cs" />
+    <Compile Include="Template\ZhiCun\Device_C8N003-12-46-00P.cs" />
     <Compile Include="Template\ZhiCun\Device_C1A014_8_1_02P.cs" />
     <Compile Include="Util\CMDTskToTxt.cs" />
     <Compile Include="Util\CmdTxt.cs" />
