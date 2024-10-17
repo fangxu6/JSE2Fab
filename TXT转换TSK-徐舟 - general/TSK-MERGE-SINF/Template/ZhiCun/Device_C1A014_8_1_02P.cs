@@ -44,7 +44,10 @@ namespace TSK_MERGE_SINF.Template
                         case "WAFER":
                         case "WAFER ID":
                         case "WAFER-ID":
-                            this.txtWaferID = body;
+                            //F9N984-09F5根据-获取-后面的2位，
+                            string[] str = body.Split('-');
+                            //str[1].Substring(0, 2) 3位，第一位补0
+                            this.txtWaferID = str[0] + "-" + str[1].Substring(0, 2);
                             break;
                         case "FNLOC":
                         case "FLAT DIR":
