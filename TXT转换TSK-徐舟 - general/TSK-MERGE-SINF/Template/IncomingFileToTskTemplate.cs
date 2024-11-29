@@ -44,16 +44,16 @@ namespace TSK_MERGE_SINF.Template
             LoadTxt(txtFile);
 
             //waferID比对
-            if (Txt_Name.Count == Tsk_Name.Count)
-            {
-                if (tsk.WaferID != this.txtWaferID)
-                {
-                    if (MessageBox.Show("WaferID不匹配!", "确认", MessageBoxButtons.YesNo) == DialogResult.Yes)
-                    {
-                        Environment.Exit(0);
-                    }
-                }
-            }
+            //if (Txt_Name.Count == Tsk_Name.Count)
+            //{
+            //    if (tsk.WaferID != this.txtWaferID)
+            //    {
+            //        if (MessageBox.Show("WaferID不匹配!", "确认", MessageBoxButtons.YesNo) == DialogResult.Yes)
+            //        {
+            //            Environment.Exit(0);
+            //        }
+            //    }
+            //}
 
             //TXT图谱转角度
             List<string> DegtxtData = GetDegtxtData(tsk, txtData);
