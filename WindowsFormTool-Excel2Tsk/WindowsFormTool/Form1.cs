@@ -1,4 +1,5 @@
-﻿using System;
+﻿////using System;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -9,6 +10,7 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using MiniExcelLibs;
@@ -20,53 +22,80 @@ namespace DataToExcel
     {
         public string ExcelFilePath;
         public string TSKFilePath;
+
+        private List<string> firstFileList;
+        private List<string> secondFileList;
+
         public Form1()
         {
             InitializeComponent();
         }
 
-        private void button3_Click(object sender, EventArgs e)
+        /// <summary>
+        /// 加载第一个文件
+        /// 1. Excel文件
+        /// 2. 待合并的TSK文件
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void loadFirstFile_Click(object sender, EventArgs e)
         {
-            using (OpenFileDialog FileDialog = new OpenFileDialog())
+            firstFileList = new List<string>();
+            FolderBrowserDialog dialog = new FolderBrowserDialog();
+            if (dialog.ShowDialog() == DialogResult.OK)
             {
-                FileDialog.Title = "选择 Excel 文件";
-                FileDialog.RestoreDirectory = true; // 记住上次打开的目录
+                DirectoryInfo TheFolder = new DirectoryInfo(dialog.SelectedPath);
 
-                // 显示文件浏览对话框，并获取用户选择
-                DialogResult result = FileDialog.ShowDialog();
-
-                if (result == DialogResult.OK)
+                foreach (FileInfo str in TheFolder.GetFiles("*", SearchOption.AllDirectories))
                 {
-                    ExcelFilePath = FileDialog.FileName;
-                    button6.Text = ExcelFilePath;
+                    firstFileList.Add(str.FullName);
                 }
+                button6.Text = dialog.SelectedPath;
             }
         }
 
-        private void button5_Click(object sender, EventArgs e)
+        /// <summary>
+        /// 加载第二个文件
+        /// 1. TSK文件
+        /// 2. 待合并到的TSK文件
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void loadSecondFile_Click(object sender, EventArgs e)
         {
-            using (OpenFileDialog FileDialog = new OpenFileDialog())
+            secondFileList = new List<string>();
+            FolderBrowserDialog dialog = new FolderBrowserDialog();
+            if (dialog.ShowDialog() == DialogResult.OK)
             {
-                FileDialog.Title = "选择 TSK 空图谱文件";
-                FileDialog.RestoreDirectory = true; // 记住上次打开的目录
+                DirectoryInfo TheFolder = new DirectoryInfo(dialog.SelectedPath);
 
-                // 显示文件浏览对话框，并获取用户选择
-                DialogResult result = FileDialog.ShowDialog();
-
-                if (result == DialogResult.OK)
+                foreach (FileInfo str in TheFolder.GetFiles("*", SearchOption.AllDirectories))
                 {
-                    TSKFilePath = FileDialog.FileName;
-                    button2.Text = TSKFilePath;
+                    secondFileList.Add(str.FullName);
                 }
+                button2.Text = dialog.SelectedPath;
             }
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
-            if(comboBox1.SelectedIndex == 0)
+
+            if (comboBox1.SelectedIndex == 0)
                 ToMapping();
             else if (comboBox1.SelectedIndex == 1)
-                MergeTsk();
+            {
+                for (int i = 0; i < firstFileList.Capacity; i++)
+                {
+                    ExcelFilePath = firstFileList[i];
+                    TSKFilePath = secondFileList[i];
+                    MergeTsk();
+                }
+            }
+            if (MessageBox.Show("TSK新图谱生成，是否打开所在文件夹?", "confirm", MessageBoxButtons.YesNo) == DialogResult.Yes)
+            {
+                string newTskFilePath = @"D:\New-Tsk\" + Path.GetFileName(TSKFilePath);//TODO 两个地方都写了
+                Process.Start(Path.GetDirectoryName(newTskFilePath));
+            }
         }
 
         private void MergeTsk()
@@ -92,15 +121,21 @@ namespace DataToExcel
                 MessageBox.Show("TSK图谱尺寸不一致，无法合并", "错误提醒", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
+
+            //originalTsk.LotNo替换CP1或者CP2或者CP3为空格
+            string originalLotNo = Regex.Replace(originalTsk.LotNo, "CP[1-3]", "").Trim();
+            string mergeLotNo = Regex.Replace(mergeTsk.LotNo, "CP[1-3]", "").Trim();
+            if (originalLotNo != mergeLotNo || originalTsk.SlotNo != mergeTsk.SlotNo)
+            {
+                MessageBox.Show("TSK图谱WaferID不一致，无法合并", "错误提醒", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
             UpdateRichTextBox("开始合并TSK图谱\n");
             string newTskFilePath = @"D:\New-Tsk\" + Path.GetFileName(TSKFilePath);
             UpdateRichTextBox("生成图谱路径" + newTskFilePath + "\n");
 
-            mergeTsk.Merge(originalTsk,newTskFilePath);
-            if (MessageBox.Show("TSK新图谱生成，是否打开所在文件夹?", "confirm", MessageBoxButtons.YesNo) == DialogResult.Yes)
-            {
-                Process.Start(Path.GetDirectoryName(newTskFilePath));
-            }
+            mergeTsk.Merge(originalTsk, newTskFilePath);
+
         }
 
         private void ToMapping()
@@ -215,7 +250,7 @@ namespace DataToExcel
             richTextBox1.Text += message;
             Application.DoEvents();
         }
-        
+
         private Tsk LoadTsk(string tskFile)
         {
             Tsk tsk = new Tsk(tskFile);
@@ -236,14 +271,15 @@ namespace DataToExcel
                     break;
                 case 1:
                     button6.Text = "待合并TSK 1（模板）";
-                    button2.Text = "待合并TSK 2";
-                    button4.Text = "说明：\r\ntsk和tsk合并\r\n";
+                    button2.Text = "待合并到TSK 2";
+                    button4.Text = "说明：\r\n将tsk1的fail合并到tsk2\r\n";
                     break;
                 default:
                     button6.Text = "未定义的功能";
                     break;
             }
         }
+
     }
 
 }

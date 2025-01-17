@@ -1,8 +1,8 @@
-
+ï»¿
 /*
- * ×÷Õß£ºsky
- * Ê±¼ä£º2008-01-09
- * ×÷ÓÃ£ºÓÃÓÚÃèÊö Mapping ÖĞµÄ Tsk ÎÄ¼ş¸ñÊ½
+ * ä½œè€…ï¼šsky
+ * æ—¶é—´ï¼š2008-01-09
+ * ä½œç”¨ï¼šç”¨äºæè¿° Mapping ä¸­çš„ Tsk æ–‡ä»¶æ ¼å¼
  */
 
 namespace DataToExcel
@@ -69,7 +69,7 @@ namespace DataToExcel
             set { this._properties["MapVersion"] = value; }
         }
 
-        // ÓÃÓÚ±êÊ¶ÊÇ·ñÓĞÀ©Õ¹Êı¾İ À©Õ¹Í·ĞÅÏ¢
+        // ç”¨äºæ ‡è¯†æ˜¯å¦æœ‰æ‰©å±•æ•°æ® æ‰©å±•å¤´ä¿¡æ¯
         public bool ExtendHeadFlag
         {
             get { return (bool)this._properties["ExtendHeadFlag"]; }
@@ -209,7 +209,7 @@ namespace DataToExcel
             this.ExtendList = new ArrayList();
         }
 
-        // ´Ó mapping ÎÄ¼şÍêÕûÎÄ¼şÃûÖĞ½âÎö³öÎÄ¼şÃû
+        // ä» mapping æ–‡ä»¶å®Œæ•´æ–‡ä»¶åä¸­è§£æå‡ºæ–‡ä»¶å
         protected override string GetFileName(string str)
         {
             try
@@ -287,7 +287,7 @@ namespace DataToExcel
             this._keys.Add("MaxCategories");
             this._keys.Add("Reserved3");
 
-            // ÓÃÓÚ±êÊ¶ÊÇ·ñÓĞÀ©Õ¹Êı¾İ
+            // ç”¨äºæ ‡è¯†æ˜¯å¦æœ‰æ‰©å±•æ•°æ®
             this._keys.Add("ExtendHeadFlag");
             this._keys.Add("ExtendFlag");
             this._keys.Add("ExtensionHead_20");
@@ -297,7 +297,7 @@ namespace DataToExcel
             this._keys.Add("ExtensionHead_fail");
             this._keys.Add("ExtensionHead_44");
             this._keys.Add("ExtensionHead_64");
-            // ÓÃÓÚ±êÊ¶ÊÇ·ñÓĞ¶îÍâÀ©Õ¹Êı¾İ£¬Ö»ÓÃÓÚ±£´æ£¬²»×öĞŞ¸Ä
+            // ç”¨äºæ ‡è¯†æ˜¯å¦æœ‰é¢å¤–æ‰©å±•æ•°æ®ï¼Œåªç”¨äºä¿å­˜ï¼Œä¸åšä¿®æ”¹
             this._keys.Add("ExtendFlag2");
             this._keys.Add("ExtendList");
 
@@ -379,7 +379,7 @@ namespace DataToExcel
         {
             try
             {
-                // ´ò¿ª¶ÁÈ¡Á÷
+                // æ‰“å¼€è¯»å–æµ
                 this.OpenReader();
 
                 this.Operator = this.ReadToString(20);
@@ -392,8 +392,8 @@ namespace DataToExcel
                 this.MachineType = this.ReadToByte();
                 this.MapVersion = this.ReadToByte();
 
-                int rows = this.ReadToInt16();// ¼ÇÂ¼ÁĞÊı xÖáµÄ×î´óÖµ
-                int cols = this.ReadToInt16();// ¼ÇÂ¼ĞĞÊı yÖáµÄ×î´óÖµ
+                int rows = this.ReadToInt16();// è®°å½•åˆ—æ•° xè½´çš„æœ€å¤§å€¼
+                int cols = this.ReadToInt16();// è®°å½•è¡Œæ•° yè½´çš„æœ€å¤§å€¼
                 this.Rows = rows;
                 this.Cols = cols;
 
@@ -407,9 +407,9 @@ namespace DataToExcel
                 this.CassetteNo = this.ReadToInt16();
                 this.SlotNo = this.ReadToInt16();
 
-                // X coordinates increase direction   XCoordinates 1 leftforward ¸º, 2 rightforward Õı
+                // X coordinates increase direction   XCoordinates 1 leftforward è´Ÿ, 2 rightforward æ­£
                 this._properties["XCoordinates"] = this.ReadToByte();
-                // Y coordinates increase direction   YCoordinates 1 forward Õı, 2 backforward ¸º
+                // Y coordinates increase direction   YCoordinates 1 forward æ­£, 2 backforward è´Ÿ
                 this._properties["YCoordinates"] = this.ReadToByte();
                 // Reference dir setting procedures
                 this._properties["RefeDir"] = this.ReadToByte();
@@ -473,7 +473,7 @@ namespace DataToExcel
                 this.PassDie = this.ReadToInt16();
                 this.FailDie = this.ReadToInt16();
 
-                // ¼ÇÂ¼ die ²âÊÔÊı¾İÆğÊ¼Ö¸Õë
+                // è®°å½• die æµ‹è¯•æ•°æ®èµ·å§‹æŒ‡é’ˆ
                 int dieSP = this.ReadToInt32();
 
                 // Number of line category data
@@ -489,7 +489,7 @@ namespace DataToExcel
                 // Do not use,reserved
                 this._properties["Reserved3"] = this.ReadToInt16();
 
-                // ÉèÖÃÁ÷µÄÆğÊ¼Ö¸ÕëÎª die ²âÊÔÊı¾İÆğÊ¼Ö¸Õë
+                // è®¾ç½®æµçš„èµ·å§‹æŒ‡é’ˆä¸º die æµ‹è¯•æ•°æ®èµ·å§‹æŒ‡é’ˆ
                 this._reader.BaseStream.Position = dieSP;
 
                 int total = rows * cols;
@@ -546,7 +546,7 @@ namespace DataToExcel
                                 if (extCategory == 0 || extCategory == 1)
                                 {
                                     Console.WriteLine("error");
-                                    continue;//Ö»Òªbin²»ÊÇ³¬¹ı64µÄ£¬¿ÉÒÔÌø¹ı
+                                    continue;//åªè¦binä¸æ˜¯è¶…è¿‡64çš„ï¼Œå¯ä»¥è·³è¿‡
                                 }
                             }
 
@@ -555,7 +555,7 @@ namespace DataToExcel
                                 if (extCategory != 1)
                                 {
                                     Console.WriteLine("error");
-                                    continue;//Ö»Òªbin²»ÊÇ³¬¹ı64µÄ£¬¿ÉÒÔÌø¹ı
+                                    continue;//åªè¦binä¸æ˜¯è¶…è¿‡64çš„ï¼Œå¯ä»¥è·³è¿‡
                                 }
                             }
                             this.DieMatrix[k].Bin = extCategory;
@@ -569,13 +569,13 @@ namespace DataToExcel
                         //    }
                         //}
                     }
-                    break; //¿ÉÒÔ×¢ÊÍ
+                    break; //å¯ä»¥æ³¨é‡Š
                 }
 
                 while (this._reader.BaseStream.Position < this._reader.BaseStream.Length)
                 {
                     this.ExtendFlag2 = true;
-                    //¼ÌĞø¶ÁÈ¡ÓàÏÂµÄÊı¾İ²¢±£´æµ½listÖĞ
+                    //ç»§ç»­è¯»å–ä½™ä¸‹çš„æ•°æ®å¹¶ä¿å­˜åˆ°listä¸­
                     ExtendList.Add(this._reader.ReadByte());
                 }
             }
@@ -585,7 +585,7 @@ namespace DataToExcel
             }
             finally
             {
-                // ¹Ø±Õ¶ÁÈ¡Á÷
+                // å…³é—­è¯»å–æµ
                 this.CloseReader();
             }
         }
@@ -722,14 +722,14 @@ namespace DataToExcel
                     break;
             }
 
-            ////Ô­À´¼ÆËãxºÍy×ø±êµÄ·½·¨
+            ////åŸæ¥è®¡ç®—xå’Œyåæ ‡çš„æ–¹æ³•
             //die.X = s4 == 0 ? f6 : f6 * (-1);
             //die.Y = s5 == 0 ? s7 : s7 * (-1);
-            // X coordinates increase direction   XCoordinates 1 leftforward ¸º, 2 rightforward Õı
+            // X coordinates increase direction   XCoordinates 1 leftforward è´Ÿ, 2 rightforward æ­£
             die.X = Convert.ToInt32(this._properties["FirstDirX"]) +
                 (Convert.ToInt32(this._properties["XCoordinates"]).Equals(2) ? index % this.Rows : -index % this.Rows);
 
-            // Y coordinates increase direction   YCoordinates 1 forward Õı, 2 backforward ¸º
+            // Y coordinates increase direction   YCoordinates 1 forward æ­£, 2 backforward è´Ÿ
             die.Y = Convert.ToInt32(this._properties["FirstDirY"]) +
                 (Convert.ToInt32(this._properties["YCoordinates"]).Equals(1) ? index / this.Rows : -index / this.Rows);
 
@@ -737,7 +737,7 @@ namespace DataToExcel
         }
 
         /// <summary>
-        /// ½«Êı¾İ±£´æÎª tma ÎÄ¼ş
+        /// å°†æ•°æ®ä¿å­˜ä¸º tma æ–‡ä»¶
         /// </summary>
         public override void Save()
         {
@@ -745,7 +745,7 @@ namespace DataToExcel
             {
                 byte[] buf;
 
-                // ´ò¿ª»ò´´½¨ÎÄ¼ş
+                // æ‰“å¼€æˆ–åˆ›å»ºæ–‡ä»¶
                 this.OpenWriter();
 
                 string str = string.Format("{0,-20:G}", this.Operator);
@@ -941,7 +941,7 @@ namespace DataToExcel
                 this.Reverse(ref buf);
                 this._writer.Write(buf, 0, 2);
 
-                // ¼ÇÂ¼ die ²âÊÔÊı¾İÆğÊ¼Ö¸Õë
+                // è®°å½• die æµ‹è¯•æ•°æ®èµ·å§‹æŒ‡é’ˆ
                 buf = BitConverter.GetBytes(236);
                 this.Reverse(ref buf);
                 this._writer.Write(buf, 0, 4);
@@ -1016,10 +1016,11 @@ namespace DataToExcel
                 }
                 if ((bool)this._properties["ExtendFlag2"])
                 {
-                    //this._properties["ExtendList"]×ªbyte[]
-                    byte[] extendList = (byte[])this._properties["ExtendList"];
-                    //Ğ´ÈëÎÄ¼ş
-                    this._writer.Write(extendList, 0, extendList.Length);
+                    ArrayList extendList = (ArrayList)this._properties["ExtendList"];
+                    foreach (byte extendByte in extendList)
+                    {
+                        this._writer.WriteByte(extendByte);
+                    }
                 }
             }
             catch (Exception ee)
@@ -1123,7 +1124,7 @@ namespace DataToExcel
 
 
         /// <summary>
-        /// ÅĞ¶Ï mapping ÎÄ¼şµÄ die ¾ØÕóÖĞµÄÒ»¸ö die ÊÇ·ñÎª¿Õ die
+        /// åˆ¤æ–­ mapping æ–‡ä»¶çš„ die çŸ©é˜µä¸­çš„ä¸€ä¸ª die æ˜¯å¦ä¸ºç©º die
         /// </summary>
         /// <param name="die"></param>
         /// <returns></returns>
@@ -1135,11 +1136,11 @@ namespace DataToExcel
                 return false;
         }
 
-        // ºÏ²¢ Tsk ÎÄ¼ş
+        // åˆå¹¶ Tsk æ–‡ä»¶
         public override IMappingFile Merge(IMappingFile map, string newfile)
         {
             if (!(map is Tsk))
-                throw new Exception("Tsk ÀàĞÍÎÄ¼şÖ»ÄÜºÍ Tsk ÀàĞÍÎÄ¼şºÏ²¢¡£");
+                throw new Exception("Tsk ç±»å‹æ–‡ä»¶åªèƒ½å’Œ Tsk ç±»å‹æ–‡ä»¶åˆå¹¶ã€‚");
 
             for (int i = 0; i < this.Rows*this.Cols; i++)
             {
