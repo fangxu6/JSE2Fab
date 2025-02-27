@@ -12,7 +12,6 @@ namespace DataToExcel
     using System.Xml;
     using System.Drawing;
     using System.Collections;
-    using System.Reflection;
     using System.Windows.Forms;
 
     public class ConstDefine

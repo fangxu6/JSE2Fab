@@ -70,9 +70,18 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="PubClass.cs" />
+    <Compile Include="TskUtil\strategy\ExcelMapToTskProcessor.cs" />
+    <Compile Include="TskUtil\TskFileHelper.cs" />
+    <Compile Include="TskUtil\strategy\ExcelToTskProcessor.cs" />
+    <Compile Include="TskUtil\strategy\ITskProcessor.cs" />
+    <Compile Include="TskUtil\TskDataProcessor.cs" />
+    <Compile Include="TskUtil\TskFileLoader.cs" />
+    <Compile Include="TskUtil\strategy\TskMergeProcessor.cs" />
+    <Compile Include="TskUtil\TskSavePathConfig.cs" />
     <Compile Include="Util\CMDTskToTxt.cs" />
     <Compile Include="Util\CmdTxt.cs" />
     <Compile Include="Util\Define.cs" />
+    <Compile Include="TskUtil\TskProcessor.cs" />
     <Compile Include="Util\UtilFunction.cs" />
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
@@ -115,5 +124,6 @@
   <ItemGroup>
     <Content Include="MiniExcel.dll" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
