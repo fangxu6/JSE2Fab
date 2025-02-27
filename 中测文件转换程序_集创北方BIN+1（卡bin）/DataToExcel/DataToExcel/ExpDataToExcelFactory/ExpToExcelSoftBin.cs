@@ -61,6 +61,7 @@ namespace DataToExcel.ExpDataToExcelFactory
             {
                 cmdtxt.DeasilRotate(defatultRotate());
                 cmdtxt.FlatDir += defatultRotate();
+                cmdtxt.FlatDir = cmdtxt.FlatDir % 360;
             }
 
             // 保存文件

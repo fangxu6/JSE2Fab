@@ -89,6 +89,7 @@
     <Compile Include="AllMapMerge.Designer.cs">
       <DependentUpon>AllMapMerge.cs</DependentUpon>
     </Compile>
+    <Compile Include="ExpDataToExcelFactory\ChipOne\Device_CGD001_12_16_01P.cs" />
     <Compile Include="ExpDataToExcelFactory\ChipOne\Device_7972ZC-8-2-L01.cs" />
     <Compile Include="ExpDataToExcelFactory\kiwiinst\Device_CAMAROB-8-8-00P.cs" />
     <Compile Include="ExpDataToExcelFactory\kiwiinst\Device_BiYI.cs" />

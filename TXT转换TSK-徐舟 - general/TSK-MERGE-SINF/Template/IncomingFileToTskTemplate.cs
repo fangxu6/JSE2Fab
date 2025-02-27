@@ -192,6 +192,11 @@ namespace TSK_MERGE_SINF.Template
             }
             tsk.TotalDie = tsk.PassDie + tsk.FailDie;
 
+            if (tsk.FailDie != txtFail)
+            {
+                throw Exception e;
+            }
+
             tsk.LotNo = this.txtLot;
             tsk.WaferID = this.txtWaferID;
             tsk.Save();
