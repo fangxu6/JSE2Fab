@@ -38,6 +38,8 @@ namespace DataToExcel.ExpDataToExcelFactory
                     int yMin = Int32.MaxValue;
                     int xMax = Int32.MinValue;
                     int yMax = Int32.MinValue;
+                    int siteMin = Int32.MaxValue;
+                    int siteMax = Int32.MinValue;
                     for (int y = 0; y < cmd.DieMatrix.YMax; y++)
                     {
                         for (int x = 0; x < cmd.DieMatrix.XMax; x++)
@@ -46,8 +48,15 @@ namespace DataToExcel.ExpDataToExcelFactory
                             switch (cmd.DieMatrix[x, y].Attribute)
                             {
                                 case DieCategory.PassDie:
-                                case DieCategory.NoneDie:
                                 case DieCategory.FailDie:
+                                    if (siteMax < cmd.DieMatrix[x, y].Site) { siteMax = cmd.DieMatrix[x, y].Site; }
+                                    if (siteMin > cmd.DieMatrix[x, y].Site) { siteMin = cmd.DieMatrix[x, y].Site; }
+                                    if (xMin > x) { xMin = x; }
+                                    if (yMin > y) { yMin = y; }
+                                    if (yMax < y) { yMax = y; }
+                                    if (xMax < x) { xMax = x; }
+                                    break;
+                                case DieCategory.NoneDie:
                                 case DieCategory.SkipDie2:
                                     if (xMin > x) { xMin = x; }
                                     if (yMin > y) { yMin = y; }
@@ -59,6 +68,8 @@ namespace DataToExcel.ExpDataToExcelFactory
                     }
 
                     int[] binCount = new int[64];
+                    int[] sitePassCount = new int[siteMax - siteMin + 1];
+                    int[] siteFailCount = new int[siteMax - siteMin + 1];
                     for (int i = 0; i < 64; i++)
                     {
                         binCount[i] = 0;
@@ -75,6 +86,7 @@ namespace DataToExcel.ExpDataToExcelFactory
                                     {
                                         int xxx = cmd.DieMatrix[x, y].Bin;
                                         cmd.WriteString(string.Format("{0,1:G}", "1"));
+                                        sitePassCount[cmd.DieMatrix[x, y].Site - siteMin]++;
                                         break;
                                     }
                                 case DieCategory.MarkDie:
@@ -98,6 +110,7 @@ namespace DataToExcel.ExpDataToExcelFactory
                                     }
                                 case DieCategory.FailDie:
                                     {
+                                        siteFailCount[cmd.DieMatrix[x, y].Site - siteMin]++;
                                         if (cmd.DieMatrix[x, y].Bin < 10)
                                         {
                                             cmd.WriteString(string.Format("{0,1:G}", cmd.DieMatrix[x, y].Bin));
@@ -490,6 +503,18 @@ namespace DataToExcel.ExpDataToExcelFactory
                     cmd.WriteString("fail die :" + cmd.FailDie + cmd.Enter);
                     cmd.WriteString("total die:" + cmd.TotalDie + cmd.Enter);
 
+                    for (int siteIndex = 0; siteIndex <= (siteMax - siteMin); siteIndex++)
+                    {
+                        cmd.WriteString("site " + string.Format("{0,3}{1,6}{2,6}{3,8}",
+                                            siteIndex, 
+                                            sitePassCount[siteIndex],
+                                            siteFailCount[siteIndex],
+                                            Math.Round(
+                                                (double)(sitePassCount[siteIndex]) /
+                                                ((double)(sitePassCount[siteIndex] + siteFailCount[siteIndex])), 4)
+                                                .ToString("0.00%")) +
+                                        cmd.Enter);
+                    }
 
                 }
                 catch (Exception exception)

@@ -371,6 +371,8 @@ namespace DataToExcel
              * First word
              */
             byte[] buffer = this._reader.ReadBytes(2);
+            int f7 = buffer[0];
+            int f8 = buffer[1];
 
             // needle mark inspection result(added jan/23'96)(not handled)
             int f5 = (buffer[0] >> 1) & 0x1;
@@ -381,20 +383,23 @@ namespace DataToExcel
             // marking
             int f2 = (buffer[0] >> 5) & 0x1;
             // die test result
-            int f1 = (buffer[0] >> 6) & 0x3;
+            int dieTestResult = (buffer[0] >> 6) & 0x3;
 
             // die coordinator values * (0 to 511)
             buffer[0] = (byte)(buffer[0] & 0x1);
             this.Reverse(ref buffer);
             int f6 = BitConverter.ToInt16(buffer, 0);
 
+
             /*
              * Second word
              */
             buffer = this._reader.ReadBytes(2);
+            int s8 = buffer[0];
+            int s9 = buffer[1];
 
             // Dummy data(excerpt warfer)
-            int s6 = (buffer[0] >> 1) & 0x1;
+            int s6 = (buffer[0] >> 1) & 0x1;//Dummy Data (except wafer) 1 skip 0 test die
             // code bit of coordinator value x
             int s5 = (buffer[0] >> 2) & 0x1;
             // code bit of coordinator value y
@@ -404,17 +409,21 @@ namespace DataToExcel
             // needle marking inspection execution die selection
             int s2 = (buffer[0] >> 5) & 0x1;
             // die property
-            int s1 = (buffer[0] >> 6) & 0x3;
+            int dieProperty = (buffer[0] >> 6) & 0x3;
 
             // die coordinator value Y
             buffer[0] = (byte)(buffer[0] & 0x1);
             this.Reverse(ref buffer);
             int s7 = BitConverter.ToInt16(buffer, 0);
 
+
+
             /*
              * Third word
              */
             buffer = this._reader.ReadBytes(2);
+            int t8 = buffer[0];
+            int t9 = buffer[1];
 
             // test execution site no.(0 to 63)
             int t3 = buffer[0] & 0x3f;
@@ -426,17 +435,19 @@ namespace DataToExcel
             // According to user special,8-bit area may be used.
             int t6 = buffer[1];
             // category data (0 to 63)
-            int t5 = buffer[1] & 0x3f;
+            int binNum = buffer[1] & 0x3f;
+            int t7 = buffer[0];
+
             // block area judgement function
             int t4 = (buffer[0] >> 6) & 0x3;
 
             DieData die = new DieData();
 
-            switch (s1)
+            switch (dieProperty)
             {
                 case 0:
-                    //  die.Attribute = DieCategory.SkipDie;
-                    //  break;
+                    // die.Attribute = DieCategory.SkipDie;
+                    // break;
                     if (s6 == 1)
                     {
                         die.Attribute = DieCategory.SkipDie;
@@ -450,19 +461,30 @@ namespace DataToExcel
                     break;
 
                 case 1:
-                    switch (f1)
+                    switch (dieTestResult)
                     {
                         case 0:
                             die.Attribute = DieCategory.NoneDie;
                             break;
                         case 1:
+                            //die.Attribute = DieCategory.PassDie;
                             die.Attribute = DieCategory.PassDie;
-                            die.Bin = t5;
+                            die.Bin = binNum;
+                            die.Site = t3;
+                            if (binNum != 1)
+                            {
+                                Console.WriteLine("error");
+                            }
                             break;
                         case 2:
                         case 3:
                             die.Attribute = DieCategory.FailDie;
-                            die.Bin = t5;
+                            die.Bin = binNum;
+                            die.Site = t3;
+                            if (binNum == 0 || binNum == 1)
+                            {
+                                Console.WriteLine("error");
+                            }
                             break;
                         default:
                             die.Attribute = DieCategory.Unknow;
@@ -477,8 +499,16 @@ namespace DataToExcel
                     break;
             }
 
+            ////原来计算x和y坐标的方法
             die.X = s4 == 0 ? f6 : f6 * (-1);
             die.Y = s5 == 0 ? s7 : s7 * (-1);
+            //// X coordinates increase direction   XCoordinates 1 leftforward 负, 2 rightforward 正
+            //die.X = Convert.ToInt32(this._properties["FirstDirX"]) +
+            //    (Convert.ToInt32(this._properties["XCoordinates"]).Equals(2) ? index % this.Rows : -index % this.Rows);
+
+            //// Y coordinates increase direction   YCoordinates 1 forward 正, 2 backforward 负
+            //die.Y = Convert.ToInt32(this._properties["FirstDirY"]) +
+            //    (Convert.ToInt32(this._properties["YCoordinates"]).Equals(1) ? index / this.Rows : -index / this.Rows);
 
             return die;
         }

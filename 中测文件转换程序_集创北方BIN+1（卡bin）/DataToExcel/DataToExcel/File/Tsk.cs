@@ -94,9 +94,6 @@ namespace DataToExcel
             set { this._properties["ExtendList"] = value; }
         }
 
-
-
-
         public int Rows
         {
             get { return (int)this._properties["Rows"]; }
@@ -558,6 +555,7 @@ namespace DataToExcel
                                 }
                             }
                             this.DieMatrix[k].Bin = extCategory;
+                            this.DieMatrix[k].Site = extSite;
                         }
                         //Debug
                         //if (die.Attribute == DieCategory.FailDie || die.Attribute == DieCategory.PassDie)
@@ -694,6 +692,7 @@ namespace DataToExcel
                             //die.Attribute = DieCategory.PassDie;
                             die.Attribute = DieCategory.PassDie;
                             die.Bin = binNum;
+                            die.Site = t3;
                             if (binNum != 1)
                             {
                                 Console.WriteLine("error");
@@ -703,6 +702,7 @@ namespace DataToExcel
                         case 3:
                             die.Attribute = DieCategory.FailDie;
                             die.Bin = binNum;
+                            die.Site = t3;
                             if (binNum == 0 || binNum == 1)
                             {
                                 Console.WriteLine("error");

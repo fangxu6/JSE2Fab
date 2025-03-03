@@ -1,4 +1,3 @@
-
 /*
  * 作者：sky
  * 时间：2008-01-09
@@ -62,6 +61,7 @@ namespace DataToExcel
         private int _bin = -1;
         private int _x = 0;
         private int _y = 0;
+        private int _site = -1;
 
         // Methods
         public DieData Clone()
@@ -71,6 +71,7 @@ namespace DataToExcel
             data._bin = this._bin;
             data._x = this._x;
             data._y = this._y;
+            data._site = this._site;
             return data;
         }
 
@@ -80,11 +81,14 @@ namespace DataToExcel
             {
                 return false;
             }
+
             DieData data = (DieData)o;
-            if ((((this._attribute != data._attribute) || (this._bin != data._bin)) || (this._x != data._x)) || (this._y != data._y))
+            if ((((this._attribute != data._attribute) || (this._bin != data._bin)) || (this._x != data._x)) ||
+                (this._y != data._y))
             {
                 return false;
             }
+
             return true;
         }
 
@@ -101,36 +105,43 @@ namespace DataToExcel
                 data.Attribute = DieCategory.PassDie;
                 return data;
             }
+
             if ((item1.Attribute == DieCategory.MarkDie) || (item2.Attribute == DieCategory.MarkDie))
             {
                 data.Attribute = DieCategory.MarkDie;
                 return data;
             }
+
             if ((item1.Attribute == DieCategory.NoneDie) || (item2.Attribute == DieCategory.NoneDie))
             {
                 data.Attribute = DieCategory.NoneDie;
                 return data;
             }
+
             if ((item1.Attribute == DieCategory.FailDie) || (item2.Attribute == DieCategory.FailDie))
             {
                 data.Attribute = DieCategory.FailDie;
                 return data;
             }
+
             if ((item1.Attribute == DieCategory.Unknow) || (item2.Attribute == DieCategory.Unknow))
             {
                 data.Attribute = DieCategory.Unknow;
                 return data;
             }
+
             if ((item1.Attribute == DieCategory.SkipDie) || (item2.Attribute == DieCategory.SkipDie))
             {
                 data.Attribute = DieCategory.SkipDie;
                 return data;
             }
+
             if ((item1.Attribute == DieCategory.SkipDie2) || (item2.Attribute == DieCategory.SkipDie2))
             {
                 data.Attribute = DieCategory.SkipDie2;
                 return data;
             }
+
             data.Attribute = DieCategory.Unknow;
             return data;
         }
@@ -143,6 +154,7 @@ namespace DataToExcel
             {
                 return (obj3 == null);
             }
+
             return item1.Equals(item2);
         }
 
@@ -154,59 +166,41 @@ namespace DataToExcel
             {
                 return (obj3 != null);
             }
+
             return !item1.Equals(item2);
         }
 
         // Properties
         public DieCategory Attribute
         {
-            get
-            {
-                return this._attribute;
-            }
-            set
-            {
-                this._attribute = value;
-            }
+            get { return this._attribute; }
+            set { this._attribute = value; }
         }
 
         public int Bin
         {
-            get
-            {
-                return this._bin;
-            }
-            set
-            {
-                this._bin = value;
-            }
+            get { return this._bin; }
+            set { this._bin = value; }
         }
 
         public int X
         {
-            get
-            {
-                return this._x;
-            }
-            set
-            {
-                this._x = value;
-            }
+            get { return this._x; }
+            set { this._x = value; }
         }
 
         public int Y
         {
-            get
-            {
-                return this._y;
-            }
-            set
-            {
-                this._y = value;
-            }
+            get { return this._y; }
+            set { this._y = value; }
+        }
+
+        public int Site
+        {
+            get { return this._site; }
+            set { this._site = value; }
         }
     }
-
 
 
     /*
@@ -241,10 +235,7 @@ namespace DataToExcel
 
         public DieData this[int index]
         {
-            get
-            {
-                return (DieData)this._items[index];
-            }
+            get { return (DieData)this._items[index]; }
         }
 
         public DieData this[int x, int y]
@@ -769,10 +760,12 @@ namespace DataToExcel
                 {
                     die.Bin -= 1;
                 }
+
                 if (die.Attribute.Equals(DieCategory.FailDie))
                 {
                     die.Bin -= 1;
                 }
+
                 items._items.Add(die.Clone());
             }
 
@@ -813,7 +806,6 @@ namespace DataToExcel
 
             this.Paint(g, xsize, ysize, colors, isprint);
         }
-
 
 
         // 绘制 die 矩阵
@@ -878,31 +870,37 @@ namespace DataToExcel
                                 case DieCategory.SkipDie:
                                     goto Label_010E;
                             }
+
                             goto Label_0144;
                         }
+
                         if (attribute != DieCategory.NoneDie)
                         {
                             if (attribute == DieCategory.MarkDie)
                             {
                                 goto Label_0120;
                             }
+
                             goto Label_0144;
                         }
+
                         objArray[num4, num3] = "N";
                         goto Label_0156;
-                    Label_010E:
+                        Label_010E:
                         objArray[num4, num3] = "";
                         goto Label_0156;
-                    Label_0120:
+                        Label_0120:
                         objArray[num4, num3] = "M";
                         goto Label_0156;
-                    Label_0144:
+                        Label_0144:
                         objArray[num4, num3] = "?";
-                    Label_0156:
+                        Label_0156:
                         num4++;
                     }
+
                     num3++;
                 }
+
                 //if (xMax <= 0x100)
                 if (xMax <= 0x300)
                 {
@@ -914,8 +912,10 @@ namespace DataToExcel
                         {
                             if (objArray[num4, num3].ToString() == "S")
                             {
-                                sheet.get_Range(sheet.Cells[num4 + 1, num3 + 1], sheet.Cells[num4 + 1, num3 + 1]).Interior.ColorIndex = 7;
+                                sheet.get_Range(sheet.Cells[num4 + 1, num3 + 1], sheet.Cells[num4 + 1, num3 + 1])
+                                    .Interior.ColorIndex = 7;
                             }
+
                             num3++;
                         }
                     }
@@ -937,14 +937,18 @@ namespace DataToExcel
                                     objArray2[i, k] = objArray[i, k + (num3 * 0x100)];
                                 }
                             }
-                            sheet.get_Range(sheet.Cells[1 + ((num3 * yMax) + (num3 * num6)), 1], sheet.Cells[yMax + ((num3 * yMax) + (num3 * num6)), 0x100]).Value2 = objArray2;
+
+                            sheet.get_Range(sheet.Cells[1 + ((num3 * yMax) + (num3 * num6)), 1],
+                                sheet.Cells[yMax + ((num3 * yMax) + (num3 * num6)), 0x100]).Value2 = objArray2;
                             for (int j = 0; j < yMax; j++)
                             {
                                 for (int m = 0; m < 0x100; m++)
                                 {
                                     if (objArray2[j, m].ToString() == "S")
                                     {
-                                        sheet.get_Range(sheet.Cells[(j + 1) + ((num3 * yMax) + (num3 * num6)), m + 1], sheet.Cells[(j + 1) + ((num3 * yMax) + (num3 * num6)), m + 1]).Interior.ColorIndex = 7;
+                                        sheet.get_Range(sheet.Cells[(j + 1) + ((num3 * yMax) + (num3 * num6)), m + 1],
+                                                sheet.Cells[(j + 1) + ((num3 * yMax) + (num3 * num6)), m + 1]).Interior
+                                            .ColorIndex = 7;
                                     }
                                 }
                             }
@@ -959,14 +963,20 @@ namespace DataToExcel
                                     objArray2[n, num12] = objArray[n, num12 + (num3 * 0x100)];
                                 }
                             }
-                            sheet.get_Range(sheet.Cells[1 + ((num3 * yMax) + (num3 * num6)), 1], sheet.Cells[yMax + ((num3 * yMax) + (num3 * num6)), xMax - (num3 * 0x100)]).Value2 = objArray2;
+
+                            sheet.get_Range(sheet.Cells[1 + ((num3 * yMax) + (num3 * num6)), 1],
+                                    sheet.Cells[yMax + ((num3 * yMax) + (num3 * num6)), xMax - (num3 * 0x100)]).Value2 =
+                                objArray2;
                             for (int num13 = 0; num13 < yMax; num13++)
                             {
                                 for (int num14 = 0; num14 < (xMax - (num3 * 0x100)); num14++)
                                 {
                                     if (objArray2[num13, num14].ToString() == "S")
                                     {
-                                        sheet.get_Range(sheet.Cells[(num13 + 1) + ((num3 * yMax) + (num3 * num6)), num14 + 1], sheet.Cells[(num13 + 1) + ((num3 * yMax) + (num3 * num6)), num14 + 1]).Interior.ColorIndex = 7;
+                                        sheet.get_Range(
+                                                sheet.Cells[(num13 + 1) + ((num3 * yMax) + (num3 * num6)), num14 + 1],
+                                                sheet.Cells[(num13 + 1) + ((num3 * yMax) + (num3 * num6)), num14 + 1])
+                                            .Interior.ColorIndex = 7;
                                     }
                                 }
                             }
@@ -975,7 +985,6 @@ namespace DataToExcel
                 }
             }
         }
-
 
 
         // 绘制 die 矩阵
@@ -1107,16 +1116,16 @@ namespace DataToExcel
 
         public enum OffsetDir
         {
-            X = 0,  // X 方向位移
-            Y       // Y 方向位移
+            X = 0, // X 方向位移
+            Y // Y 方向位移
         }
 
         public enum ExpandDir
         {
             Left = 0, // 向左扩展
-            Right,  // 向右扩展
-            Up,     // 向上扩展
-            Down    // 向下扩展
+            Right, // 向右扩展
+            Up, // 向上扩展
+            Down // 向下扩展
         }
     }
 
@@ -1154,22 +1163,26 @@ namespace DataToExcel
                 {
                     throw new Exception("未找到格式转换字段映射配置文件 FieldMapping.xml。");
                 }
+
                 XmlDocument document = new XmlDocument();
                 document.Load(path);
                 XmlNode documentElement = document.DocumentElement;
                 XmlNode node2 = null;
                 foreach (XmlNode node3 in documentElement.ChildNodes)
                 {
-                    if ((node3.Attributes["from"].InnerText.ToLower() == from.ToLower()) && (node3.Attributes["to"].InnerText.ToLower() == to.ToLower()))
+                    if ((node3.Attributes["from"].InnerText.ToLower() == from.ToLower()) &&
+                        (node3.Attributes["to"].InnerText.ToLower() == to.ToLower()))
                     {
                         node2 = node3;
                         break;
                     }
                 }
+
                 if (node2 == null)
                 {
                     throw new Exception("配置文件中未找到 " + from + " 格式到 " + to + " 格式的转换字段映射配置信息。");
                 }
+
                 try
                 {
                     this._rotate = int.Parse(node2.Attributes["rotate"].InnerText);
@@ -1178,6 +1191,7 @@ namespace DataToExcel
                 {
                     this._rotate = 0;
                 }
+
                 try
                 {
                     this._notchAppoint = int.Parse(node2.Attributes["notchappoint"].InnerText);
@@ -1186,6 +1200,7 @@ namespace DataToExcel
                 {
                     this._notchAppoint = -1;
                 }
+
                 try
                 {
                     this._trimDir = node2.Attributes["trimdir"].InnerText;
@@ -1194,9 +1209,11 @@ namespace DataToExcel
                 {
                     this._trimDir = "";
                 }
+
                 foreach (XmlNode node3 in node2.ChildNodes)
                 {
-                    this._fields.Add(new ConvertField(node3.Attributes["from"].InnerText, node3.Attributes["to"].InnerText));
+                    this._fields.Add(new ConvertField(node3.Attributes["from"].InnerText,
+                        node3.Attributes["to"].InnerText));
                 }
             }
             catch (Exception exception)
@@ -1208,50 +1225,32 @@ namespace DataToExcel
         // Properties
         public ConvertFieldList Fields
         {
-            get
-            {
-                return this._fields;
-            }
+            get { return this._fields; }
         }
 
         public string From
         {
-            get
-            {
-                return this._from;
-            }
+            get { return this._from; }
         }
 
         public int NotchAppoint
         {
-            get
-            {
-                return this._notchAppoint;
-            }
+            get { return this._notchAppoint; }
         }
 
         public int Rotate
         {
-            get
-            {
-                return this._rotate;
-            }
+            get { return this._rotate; }
         }
 
         public string To
         {
-            get
-            {
-                return this._to;
-            }
+            get { return this._to; }
         }
 
         public string TrimDir
         {
-            get
-            {
-                return this._trimDir;
-            }
+            get { return this._trimDir; }
         }
 
         // Nested Types
@@ -1271,18 +1270,12 @@ namespace DataToExcel
             // Properties
             public string From
             {
-                get
-                {
-                    return this._from;
-                }
+                get { return this._from; }
             }
 
             public string To
             {
-                get
-                {
-                    return this._to;
-                }
+                get { return this._to; }
             }
         }
 
@@ -1291,17 +1284,9 @@ namespace DataToExcel
             // Properties
             public new ConvertConfig.ConvertField this[int index]
             {
-                get
-                {
-                    return (ConvertConfig.ConvertField)base[index];
-                }
-                set
-                {
-                    base[index] = value;
-                }
+                get { return (ConvertConfig.ConvertField)base[index]; }
+                set { base[index] = value; }
             }
         }
     }
-
-
 }
