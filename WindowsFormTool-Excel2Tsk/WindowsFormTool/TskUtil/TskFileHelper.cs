@@ -80,12 +80,12 @@ namespace WindowsFormTool.TskUtil
 
             // 验证Excel文件格式
             string excelExtension = Path.GetExtension(excelPath).ToLower();
-            if (excelExtension != ".xlsx" && excelExtension != ".xls" && excelExtension != ".csv")
-            {
-                MessageBox.Show("请选择有效的Excel文件 (.xlsx, .xls, .csv)", "错误提醒", MessageBoxButtons.OK,
-                    MessageBoxIcon.Error);
-                return false;
-            }
+            //if (excelExtension != ".xlsx" && excelExtension != ".xls" && excelExtension != ".csv")
+            //{
+            //    MessageBox.Show("请选择有效的Excel文件 (.xlsx, .xls, .csv)", "错误提醒", MessageBoxButtons.OK,
+            //        MessageBoxIcon.Error);
+            //    return false;
+            //}
 
             // 确保输出目录存在
             try

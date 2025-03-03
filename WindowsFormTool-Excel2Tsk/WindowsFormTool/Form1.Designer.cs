@@ -27,8 +27,8 @@ namespace DataToExcel
         #region Windows 窗体设计器生成的代码
 
         /// <summary>
-        /// 设计器支持所需的方法 - 不要修改
-        /// 使用代码编辑器修改此方法的内容。
+        /// Required method for Designer support - do not modify
+        /// the contents of this method with the code editor.
         /// </summary>
         private void InitializeComponent()
         {
@@ -43,7 +43,6 @@ namespace DataToExcel
             this.button6 = new System.Windows.Forms.Button();
             this.panel11 = new System.Windows.Forms.Panel();
             this.button7 = new System.Windows.Forms.Button();
-            this.progressBar1 = new System.Windows.Forms.ProgressBar();
             this.button5 = new System.Windows.Forms.Button();
             this.button3 = new System.Windows.Forms.Button();
             this.panel1 = new System.Windows.Forms.Panel();
@@ -56,8 +55,9 @@ namespace DataToExcel
             this.button8 = new System.Windows.Forms.Button();
             this.SaveFileTo = new System.Windows.Forms.Button();
             this.panel6 = new System.Windows.Forms.Panel();
-            this.panel8 = new System.Windows.Forms.Panel();
             this.button9 = new System.Windows.Forms.Button();
+            this.panel8 = new System.Windows.Forms.Panel();
+            this.progressBar1 = new System.Windows.Forms.ProgressBar();
             this.tableLayoutPanel1.SuspendLayout();
             this.panel2.SuspendLayout();
             this.panel14.SuspendLayout();
@@ -214,15 +214,6 @@ namespace DataToExcel
             this.button7.UseCompatibleTextRendering = true;
             this.button7.UseVisualStyleBackColor = true;
             // 
-            // progressBar1
-            // 
-            this.progressBar1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.progressBar1.Location = new System.Drawing.Point(0, 0);
-            this.progressBar1.Name = "progressBar1";
-            this.progressBar1.Size = new System.Drawing.Size(918, 56);
-            this.progressBar1.Step = 17;
-            this.progressBar1.TabIndex = 0;
-            // 
             // button5
             // 
             this.button5.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -293,10 +284,7 @@ namespace DataToExcel
             // 
             this.comboBox1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Items.AddRange(new object[] {
-            "Excel恢复TSK",
-            "TSK和TSK合并",
-            "Excel图谱合并TSK"});
+            this.comboBox1.Items.AddRange(new object[] { "Excel恢复TSK", "TSK和TSK合并", "Excel图谱合并TSK" });
             this.comboBox1.Location = new System.Drawing.Point(0, 0);
             this.comboBox1.Name = "comboBox1";
             this.comboBox1.Size = new System.Drawing.Size(295, 26);
@@ -360,16 +348,6 @@ namespace DataToExcel
             this.panel6.Size = new System.Drawing.Size(255, 56);
             this.panel6.TabIndex = 18;
             // 
-            // panel8
-            // 
-            this.tableLayoutPanel1.SetColumnSpan(this.panel8, 3);
-            this.panel8.Controls.Add(this.progressBar1);
-            this.panel8.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel8.Location = new System.Drawing.Point(264, 652);
-            this.panel8.Name = "panel8";
-            this.panel8.Size = new System.Drawing.Size(918, 56);
-            this.panel8.TabIndex = 19;
-            // 
             // button9
             // 
             this.button9.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -381,6 +359,25 @@ namespace DataToExcel
             this.button9.Text = "进度：";
             this.button9.UseCompatibleTextRendering = true;
             this.button9.UseVisualStyleBackColor = true;
+            // 
+            // panel8
+            // 
+            this.tableLayoutPanel1.SetColumnSpan(this.panel8, 3);
+            this.panel8.Controls.Add(this.progressBar1);
+            this.panel8.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panel8.Location = new System.Drawing.Point(264, 652);
+            this.panel8.Name = "panel8";
+            this.panel8.Size = new System.Drawing.Size(918, 56);
+            this.panel8.TabIndex = 19;
+            // 
+            // progressBar1
+            // 
+            this.progressBar1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.progressBar1.Location = new System.Drawing.Point(0, 0);
+            this.progressBar1.Name = "progressBar1";
+            this.progressBar1.Size = new System.Drawing.Size(918, 56);
+            this.progressBar1.Step = 17;
+            this.progressBar1.TabIndex = 0;
             // 
             // Form1
             // 
@@ -403,7 +400,6 @@ namespace DataToExcel
             this.panel6.ResumeLayout(false);
             this.panel8.ResumeLayout(false);
             this.ResumeLayout(false);
-
         }
 
         #endregion
@@ -422,16 +418,16 @@ namespace DataToExcel
         private Button button1;
         private Panel panel11;
         private Button button7;
-        private ProgressBar progressBar1;
+        private System.Windows.Forms.ProgressBar progressBar1;
         private TableLayoutPanel tableLayoutPanel2;
         private Panel panel3;
-        private ComboBox comboBox1;
+        private System.Windows.Forms.ComboBox comboBox1;
         private Panel panel4;
         private Button SaveFileTo;
         private TableLayoutPanel tableLayoutPanel3;
         private Button button8;
         private Panel panel6;
-        private Panel panel8;
+        private System.Windows.Forms.Panel panel8;
         private Button button9;
     }
 }
