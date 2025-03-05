@@ -1,0 +1,26 @@
+{
+  "HEADER": {
+    "SERVICE_ID": "CPGetSplitLotInfo",
+    "FAC_ID": "JSE",
+    "SOURCE_SUBJECT": "XJ.TMS.DEV.DataEx.API",
+    "TARGET_SUBJECT": "XJ.CIM.DEV.MES.WIP.jyr",
+    "REPLY_SUBJECT": "dcc86a02-16f6-4fc7-9cb9-00f1c8ffa10b",
+    "REPLY_TYPE": "Manual",
+    "REPLY_QUEUE_NAME": "XJ.MES.API.REPLY",
+    "LANGUAGE": "CN",
+    "SYSTEM_ID": "MES",
+    "SYSTEM_VERSION": "1.0.0",
+    "IP_ADDRESS": "192.168.3.62",
+    "SESSION_ID": "04c35a4f-0bb1-48b3-aa4e-1e946c01a769",
+    "TXN_ID": "202309081647549983736",
+    "EVENT_USER": "lyb",
+    "EVENT_MSG": ""
+  },
+  "BODY": {
+    "LOT_ID": "JSE20230907001"
+  },
+  "RETURN": {
+    "RETURN_CODE": null,
+    "RETURN_MSG": null
+  }
+}

@@ -1,0 +1,35 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<RabbitMQ>
+	<MES>
+		<HostName>192.168.82.208</HostName>
+		<Port>5672</Port>
+		<UserName>admin</UserName>
+		<Password>admin</Password>
+
+		<!--<HostName>localhost</HostName>
+		<Port>5672</Port>
+		<UserName>guest</UserName>
+		<Password>guest</Password>-->
+		<X_MESSAGE_TTL>30</X_MESSAGE_TTL>
+		<VirtualHost>/</VirtualHost>
+		<!--<ExchangeName>XJ.MES.DEV.DataEx.API</ExchangeName>-->
+		<ExchangeName>XJ.CIM.DEV.MES.WIP.jyr</ExchangeName>
+		<ReplyToName>XJ.TMS.API.REPLY</ReplyToName>
+	</MES>
+	<TMS>
+		<HostName>192.168.82.208</HostName>
+		<Port>5672</Port>
+		<UserName>admin</UserName>
+		<Password>admin</Password>
+		<X_MESSAGE_TTL>30</X_MESSAGE_TTL>
+		<!--<HostName>localhost</HostName>
+		<Port>5672</Port>
+		<UserName>guest</UserName>
+		<Password>guest</Password>-->
+
+		<VirtualHost>/</VirtualHost>
+		<ExchangeName>XJ.CIM.DEV.TMS.SERVER</ExchangeName>
+		<ReplyToName>XJ.MES.API.REPLY</ReplyToName>
+	</TMS>
+</RabbitMQ>
+

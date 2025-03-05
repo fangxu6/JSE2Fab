@@ -1,0 +1,103 @@
+{
+  "HEADER": {
+    "SERVICE_ID": "CPINDataReceive",
+    "FAC_ID": "JSE",
+    "SOURCE_SUBJECT": "XJ.CIM.DEV.MES.WIP.lyb",
+    "TARGET_SUBJECT": "XJ.TMS.DEV.DataEx.API",
+    "REPLY_SUBJECT": "dcc86a02-16f6-4fc7-9cb9-00f1c8ffa10b",
+    "REPLY_TYPE": "Manual",
+    "REPLY_QUEUE_NAME": "RQ_S_toTMSRequester_4106dd06-507a-4593-9251-d97cea3c6f24",
+    "LANGUAGE": "CN",
+    "SYSTEM_ID": "MES",
+    "SYSTEM_VERSION": "1.0.0",
+    "IP_ADDRESS": "192.168.3.62",
+    "SESSION_ID": "04c35a4f-0bb1-48b3-aa4e-1e946c01a769",
+    "TXN_ID": "202309081647549983736",
+    "EVENT_USER": "lyb",
+    "EVENT_MSG": ""
+  },
+  "BODY": {
+    "CARD_ID": "JSE20230908003",
+    "OPER_ID": "CP1",
+    "TEST_FLAG": "",
+    "EVENT_USER": "lyb",
+    "EVENT_USER_NAME": "",
+    "MAIN_EQP": "A05",
+    "AUXILIARY_EQP_ID": "93380020001047",
+    "DEVICE_NAME": "2012WRA-12-16-00",
+    "TEST_PROGRAM_NAME": "46I02HJA",
+    "TEST_PROGRAM_VER": "",
+    "PROBE_CARD": "",
+    "DUT": "321",
+    "PRODUCT": "MS0071ZD",
+    "WAFER_LIST": [
+      {
+        "WAFER_ID": "XM_LOT_001-17"
+      },
+      {
+        "WAFER_ID": "XM_LOT_001-18"
+      }
+    ],
+    "WAFER_DIE_QTY": "10000",
+    "TEST_ITEM_LIST": [
+      {
+        "PROC_RULE_ID": "2703",
+        "PRP_ID": "MS0071ZD",
+        "FLOW_ID": "MS0071ZD-0001",
+        "OPER_ID": "CP1",
+        "TEST_ITEM_NAME": "1111",
+        "DIE_QTY": 111,
+        "VALUE_GAP": 111.0,
+        "CENTER_VALUE": 11.0,
+        "CENTER_VALUE_GAP": 11.0,
+        "FAC_ID": "JSE",
+        "EDIT_STATE": "Editable",
+        "EDIT_TIME": "20230821170858960",
+        "EDIT_USER": "gyq",
+        "EVENT": "Create",
+        "EVENT_KEY": "20230821170858960929",
+        "EVENT_TIME": "20230821170858960",
+        "EVENT_USER": "gyq",
+        "EVENT_MSG": null,
+        "CREATE_TIME": "20230821170858960",
+        "CREATE_USER": "gyq"
+      },
+      {
+        "PROC_RULE_ID": "2703",
+        "PRP_ID": "MS0071ZD",
+        "FLOW_ID": "MS0071ZD-0001",
+        "OPER_ID": "CP1",
+        "TEST_ITEM_NAME": "qw",
+        "DIE_QTY": 123,
+        "VALUE_GAP": 123.0,
+        "CENTER_VALUE": 213.0,
+        "CENTER_VALUE_GAP": 123.0,
+        "FAC_ID": "JSE",
+        "EDIT_STATE": "Editable",
+        "EDIT_TIME": "20230823175224143",
+        "EDIT_USER": "lmq",
+        "EVENT": "Create",
+        "EVENT_KEY": "20230823175224143792",
+        "EVENT_TIME": "20230823175224143",
+        "EVENT_USER": "lmq",
+        "EVENT_MSG": null,
+        "CREATE_TIME": "20230823175224143",
+        "CREATE_USER": "lmq"
+      }
+    ],
+    "PRE_ACTION": {
+      "SERVICE_ID": null,
+      "SENDER_ID": null,
+      "PARAMS": {}
+    },
+    "POST_ACTION": {
+      "SERVICE_ID": null,
+      "SENDER_ID": null,
+      "PARAMS": {}
+    }
+  },
+  "RETURN": {
+    "RETURN_CODE": null,
+    "RETURN_MSG": null
+  }
+}
