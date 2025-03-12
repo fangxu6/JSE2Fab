@@ -194,7 +194,7 @@ namespace TSK_MERGE_SINF.Template
 
             if (tsk.FailDie != txtFail)
             {
-                throw Exception e;
+                throw new Exception("FailDie count mismatch. tsk.FailDie: " + tsk.FailDie + ", txtFail: " + txtFail);
             }
 
             tsk.LotNo = this.txtLot;
