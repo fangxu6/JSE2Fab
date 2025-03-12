@@ -62,7 +62,7 @@ namespace WindowsFormTool.TskUtil
         private void ProcessTskData(Tsk tsk, DataTable table, ProgressBar progressBar)
         {
             var processor = new TskDataProcessor(progressBar);
-            processor.ProcessFromExcelMap(tsk, table);
+            processor.ProcessFromExcelData(tsk, table);
         }
 
         private void SaveTskFile(Tsk tsk, string newTskFilePath)
