@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <RabbitMQ>
 	<MES>
-		<HostName>192.168.82.208</HostName>
+		<HostName>127.0.0.1</HostName>
 		<Port>5672</Port>
 		<UserName>admin</UserName>
 		<Password>admin</Password>
@@ -13,11 +13,11 @@
 		<X_MESSAGE_TTL>30</X_MESSAGE_TTL>
 		<VirtualHost>/</VirtualHost>
 		<!--<ExchangeName>XJ.MES.DEV.DataEx.API</ExchangeName>-->
-		<ExchangeName>XJ.CIM.DEV.MES.WIP.jyr</ExchangeName>
+		<ExchangeName>XJ.CIM.DEV.MES.WIP.fangxu</ExchangeName>
 		<ReplyToName>XJ.TMS.API.REPLY</ReplyToName>
 	</MES>
 	<TMS>
-		<HostName>192.168.82.208</HostName>
+		<HostName>127.0.0.1</HostName>
 		<Port>5672</Port>
 		<UserName>admin</UserName>
 		<Password>admin</Password>
