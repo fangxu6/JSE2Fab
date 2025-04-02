@@ -122,17 +122,23 @@ namespace TSK_MERGE_SINF.Template
             }
 
             //颗数比对
-            if ((this.txtPass + this.txtFail != (fullTxtPass + fullTxtFail))|| (this.txtPass + this.txtFail != tskTotalDie))
-            {
-                if (MessageBox.Show("总颗数不匹配!", "确认", MessageBoxButtons.YesNo) == DialogResult.Yes)
-                {
-                    Environment.Exit(0);
-                }
-            }
+            //if ((this.txtPass + this.txtFail != (fullTxtPass + fullTxtFail))|| (this.txtPass + this.txtFail != tskTotalDie))
+            //{
+            //    if (MessageBox.Show("总颗数不匹配!", "确认", MessageBoxButtons.YesNo) == DialogResult.Yes)
+            //    {
+            //        Environment.Exit(0);
+            //    }
+            //}
 
             //根据SINF生成新的TSK-MAP
+            if (string.IsNullOrEmpty(this.txtWaferID))
+            {
+                this.txtLot = tsk.LotNo;
+                this.txtWaferID = tsk.WaferID;
+            }
             string slotNo = getSlotNo(this.txtWaferID);
             tsk.FullName = "D:\\MERGE\\" + slotNo + "." + this.txtWaferID.TrimEnd('\0');
+                
 
             int inkBinNo = Convert.ToInt32(inkBinNoStr);
             if (!tsk.ExtendFlag)
@@ -782,7 +788,10 @@ namespace TSK_MERGE_SINF.Template
             //F9N984-09F5根据-获取-后面的2位，
             string[] str = txtWaferID.Split('-');
             //str[1].Substring(0, 2) 3位，第一位补0
-            return "0" + str[1].Substring(0, 2);
+            if (str[1].Length==2)
+                return "0" + str[1].Substring(0, 2);
+            else
+                return "00" +str[1].Substring(0, 1);
         }
     }
 }

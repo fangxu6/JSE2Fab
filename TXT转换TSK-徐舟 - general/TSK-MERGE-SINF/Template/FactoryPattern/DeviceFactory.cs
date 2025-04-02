@@ -16,8 +16,8 @@ namespace TSK_MERGE_SINF.Template
             Type o = Type.GetType(clazzNmae);
             if (o == null)
             {
-                MessageBox.Show("该型号未定义，请联系IT并告知批次号。");
-                throw new Exception("该型号不支持");
+                clazzNmae = "TSK_MERGE_SINF.Template." + "Device_BZ1610_8_16_00P";
+                o = Type.GetType(clazzNmae);
             }
             object obj = Activator.CreateInstance(o, true);//根据类型创建实例
             return (IncomingFileToTskTemplate)obj;

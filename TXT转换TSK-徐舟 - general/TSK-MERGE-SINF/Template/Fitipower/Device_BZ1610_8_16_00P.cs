@@ -10,7 +10,8 @@ using System.Windows.Forms;
 namespace TSK_MERGE_SINF.Template
 {
     /// <summary>
-    /// 这个名字不对，后面需要更正
+    /// 天钰转抽测图谱，以TSK为准
+    /// txt文件需要只保留最小的圈
     /// </summary>
     public class Device_BZ1610_8_16_00P : IncomingFileToTskTemplate
     {
@@ -60,22 +61,6 @@ namespace TSK_MERGE_SINF.Template
                 }
                 i = i + 1;
             }
-        }
-
-        //判断所在行是否是图谱数据
-        private bool IsPictureLine(string str)
-        {
-            if (str == null || str.Length == 0)
-            {
-                return false;
-            }
-            if (str.Length > 100)//Magic Number
-            {
-                return true;
-            }
-
-
-            return false;
         }
     }
 }
