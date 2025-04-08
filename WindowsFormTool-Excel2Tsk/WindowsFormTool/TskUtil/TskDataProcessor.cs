@@ -123,7 +123,7 @@ public class TskDataProcessor
                 DieData die = tsk.DieMatrix[i * tsk.Rows + j];
 
                 // 处理特殊情况：字符"0"
-                if (cellValue == "0")
+                if (cellValue == "0" && (die.Attribute.Equals(DieCategory.FailDie) || die.Attribute.Equals(DieCategory.PassDie)))
                 {
                     die.Bin = 61;
                     die.Attribute = DieCategory.FailDie;

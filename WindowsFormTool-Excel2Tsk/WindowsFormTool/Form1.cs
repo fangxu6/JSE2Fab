@@ -171,7 +171,9 @@ namespace DataToExcel
         //更新RichTextBox
         private void UpdateRichTextBox(string message)
         {
-            richTextBox1.Text += message;
+            richTextBox1.AppendText(message);
+            richTextBox1.SelectionStart = richTextBox1.Text.Length;
+            richTextBox1.ScrollToCaret();;
             Application.DoEvents();
         }
 

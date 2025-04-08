@@ -284,7 +284,10 @@ namespace DataToExcel
             // 
             this.comboBox1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Items.AddRange(new object[] { "Excel恢复TSK", "TSK和TSK合并", "Excel图谱合并TSK" });
+            this.comboBox1.Items.AddRange(new object[] {
+            "Excel恢复TSK",
+            "TSK和TSK合并",
+            "Excel图谱合并TSK"});
             this.comboBox1.Location = new System.Drawing.Point(0, 0);
             this.comboBox1.Name = "comboBox1";
             this.comboBox1.Size = new System.Drawing.Size(295, 26);
@@ -400,6 +403,7 @@ namespace DataToExcel
             this.panel6.ResumeLayout(false);
             this.panel8.ResumeLayout(false);
             this.ResumeLayout(false);
+
         }
 
         #endregion
