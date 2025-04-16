@@ -10,15 +10,17 @@ using System.Windows.Forms;
 namespace TSK_MERGE_SINF.Template
 {
     /// <summary>
-    /// 这个名字不对，后面需要更正
+    /// 因为TXT上面缺少批次、片号等信息，所以以TSK为准
     /// </summary>
-    public class Device_CPS5352_8_4_CP1 : IncomingFileToTskTemplate
+    public class Device_General : IncomingFileToTskTemplate
     {
         public override void ParseLine(string line)
         {
             try
             {
-                if (line.Contains(':') || line.Contains('='))
+                if (IsMapLine(line))
+                    this.ParseDies(line);
+                else if (line.Contains(':') || line.Contains('='))
                 {
                     string[] strs = line.Split(new char[] { ':', '=' });
                     string head = strs[0].Trim().ToUpper();
@@ -72,10 +74,6 @@ namespace TSK_MERGE_SINF.Template
                             break;
                     }
                 }
-                else
-                {
-                    this.ParseDies(line);
-                }
             }
             catch (Exception ee)
             {
@@ -90,36 +88,47 @@ namespace TSK_MERGE_SINF.Template
 
         protected override void ParseDies(string s)
         {
-            if (s.Contains("|"))
+            string newLine = s;
+            //按照tab分割
+            TxtColCount = newLine.Length;
+            TxtRowCount++;
+            for (int i = 0; i < newLine.Length;)
             {
-                string newLine = s.Substring(s.IndexOf("|") + 1);
-                TxtColCount = newLine.Length / 3;
-                TxtRowCount++;
-                for (int i = 0; i < newLine.Length;)
+                string binNo = newLine.Substring(i, 1);
+                if (binNo.Equals("."))
                 {
-
-                    string binNo = newLine.Substring(i + 2, 1);
-                    if (binNo.Equals("."))
-                    {
-                        txtData.Add(".");
-                    }
-                    else if (binNo.Equals("P"))
-                    {
-                        txtData.Add("0");
-                        this.TxtPass++;
-                    }
-                    else if (binNo.Equals("M"))//对位点比较
-                    {
-                        txtData.Add("#");
-                    }
-                    else
-                    {
-                        txtData.Add("X");
-                        this.TxtFail++;
-                    }
-                    i = i + 3;
+                    txtData.Add(".");
                 }
+                else if (binNo.Equals("1"))
+                {
+                    txtData.Add("0");
+                    this.TxtPass++;
+                }
+                else if (binNo.Equals("M"))//对位点比较
+                {
+                    txtData.Add("#");
+                }
+                else
+                {
+                    txtData.Add("X");
+                    this.TxtFail++;
+                }
+                i = i + 1;
             }
+        }
+
+        //判断所在行是否是图谱数据
+        private bool IsMapLine(string str)
+        {
+            if (str == null || str.Length == 0)
+            {
+                return false;
+            }
+            if (str.Length > 50)//Magic Number
+            {
+                return true;
+            }
+            return false;
         }
     }
 }

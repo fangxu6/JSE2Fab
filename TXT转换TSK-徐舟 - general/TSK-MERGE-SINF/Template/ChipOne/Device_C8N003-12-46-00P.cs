@@ -18,20 +18,18 @@ namespace TSK_MERGE_SINF.Template
         {
             try
             {
-                //..LOT ID : NKP265000...........................................................................................................................................WAFER ID : 02................................................................................................................................................................................................................................................................................
-                //从上面的字符串中获取LOT ID和WAFER ID
                 if (line.Contains("LOT ID"))
                 {
-                    this.txtLot = line.Substring(line.IndexOf("LOT ID") + 6 + 3, 25).Trim();
-                    this.txtLot = this.txtLot.Replace(".", "");
+                    this.TxtLot = line.Substring(line.IndexOf("LOT ID") + 6 + 3, 25).Trim();
+                    this.TxtLot = this.TxtLot.Replace(".", "");
                 }
                 if (line.Contains("WAFER ID"))
                 {
-                    this.txtWaferID = this.txtLot + "-" + line.Substring(line.IndexOf("WAFER ID") + 8 + 3, 2).Trim();
+                    this.TxtWaferId = this.TxtLot + "-" + line.Substring(line.IndexOf("WAFER ID") + 8 + 3, 2).Trim();
                 }
 
                 this.ParseDies(line);
-                this.txtFlat = "180";
+                this.TxtFlat = "180";
             }
             catch (Exception ee)
             {
@@ -41,7 +39,7 @@ namespace TSK_MERGE_SINF.Template
 
         protected override int GetFlat(string txtFlat)
         {
-            return Convert.ToInt32(this.txtFlat);
+            return Convert.ToInt32(this.TxtFlat);
         }
 
         protected override void ParseDies(string s)
@@ -53,8 +51,8 @@ namespace TSK_MERGE_SINF.Template
                 newLine = newLine.Replace(".1", "1");
                 //把.X替换成X
                 newLine = newLine.Replace(".X", "X");
-                txtColct = newLine.Length;
-                txtRowct++;
+                TxtColCount = newLine.Length;
+                TxtRowCount++;
                 for (int i = 0; i < newLine.Length; i++)
                 {
                     string binNo = newLine.Substring(i, 1);
@@ -73,12 +71,12 @@ namespace TSK_MERGE_SINF.Template
                     else if (binNo.Equals("1"))
                     {
                         txtData.Add("0");
-                        this.txtPass++;
+                        this.TxtPass++;
                     }
                     else
                     {
                         txtData.Add("X");
-                        this.txtFail++;
+                        this.TxtFail++;
                     }
                 }
             }

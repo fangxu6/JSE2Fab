@@ -9,9 +9,12 @@ namespace TSK_MERGE_SINF.Template
 {
     public class DeviceFactory
     {
-        public static IncomingFileToTskTemplate GetDeviceFromTsk(String name)
+        public static IncomingFileToTskTemplate GetDeviceFromTsk(String name, string isGeneral)
         {
-            //后期if else改为反射 //命名空间.类型名,程序集
+            if (isGeneral.Equals("是"))
+            {
+                return new Device_General();
+            }
             String clazzNmae = "TSK_MERGE_SINF.Template." + "Device_" + name.Replace("-", "_");
             Type o = Type.GetType(clazzNmae);
             if (o == null)

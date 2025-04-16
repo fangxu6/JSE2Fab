@@ -47,6 +47,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Template\ChipOne\Device_CGD001_12_16_01P.cs" />
+    <Compile Include="Template\Device_General.cs" />
     <Compile Include="Template\FactoryPattern\DeviceFactory.cs" />
     <Compile Include="File\ConverterBase.cs" />
     <Compile Include="File\Dat.cs" />

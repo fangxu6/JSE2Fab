@@ -29,15 +29,15 @@ namespace TSK_MERGE_SINF.Template
 
         protected override int GetFlat(string txtFlat)
         {
-            return Convert.ToInt32(this.txtFlat);
+            return Convert.ToInt32(this.TxtFlat);
         }
 
         protected override void ParseDies(string s)
         {
             string newLine = s;
             //按照tab分割
-            txtColct = newLine.Length;
-            txtRowct++;
+            TxtColCount = newLine.Length;
+            TxtRowCount++;
             for (int i = 0; i < newLine.Length;)
             {
                 string binNo = newLine.Substring(i, 1);
@@ -48,7 +48,7 @@ namespace TSK_MERGE_SINF.Template
                 else if (binNo.Equals("1"))
                 {
                     txtData.Add("0");
-                    this.txtPass++;
+                    this.TxtPass++;
                 }
                 else if (binNo.Equals("M"))//对位点比较
                 {
@@ -57,7 +57,7 @@ namespace TSK_MERGE_SINF.Template
                 else
                 {
                     txtData.Add("X");
-                    this.txtFail++;
+                    this.TxtFail++;
                 }
                 i = i + 1;
             }
