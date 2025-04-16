@@ -204,7 +204,7 @@
             "62",
             "63",
             "64"});
-            this.inkBinNoBox.Location = new System.Drawing.Point(154, 248);
+            this.inkBinNoBox.Location = new System.Drawing.Point(154, 244);
             this.inkBinNoBox.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.inkBinNoBox.Name = "inkBinNoBox";
             this.inkBinNoBox.Size = new System.Drawing.Size(131, 26);
@@ -216,7 +216,7 @@
             this.markDieCompareBox.Items.AddRange(new object[] {
             "是",
             "否"});
-            this.markDieCompareBox.Location = new System.Drawing.Point(154, 317);
+            this.markDieCompareBox.Location = new System.Drawing.Point(154, 313);
             this.markDieCompareBox.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.markDieCompareBox.Name = "markDieCompareBox";
             this.markDieCompareBox.Size = new System.Drawing.Size(131, 26);
@@ -238,7 +238,7 @@
             this.generalDeviceBox.Items.AddRange(new object[] {
             "是",
             "否"});
-            this.generalDeviceBox.Location = new System.Drawing.Point(523, 248);
+            this.generalDeviceBox.Location = new System.Drawing.Point(523, 244);
             this.generalDeviceBox.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.generalDeviceBox.Name = "generalDeviceBox";
             this.generalDeviceBox.Size = new System.Drawing.Size(131, 26);
@@ -260,8 +260,8 @@
             this.richTextBox1.Name = "richTextBox1";
             this.richTextBox1.Size = new System.Drawing.Size(304, 351);
             this.richTextBox1.TabIndex = 14;
-            this.richTextBox1.Text = "说明：\nTXT缺少头信息，是的话以TSK为准；否的话以TXT为准；\nink bin no将TSK中对应的TXT fail bin ink为指定bin；\n对位点比较" +
-    "建议开启，以防合错图；\n比较WaferID TXT和TSK中WaferID一致才合图。";
+            this.richTextBox1.Text = "说明：\nink bin no将TSK中对应的TXT fail bin ink为指定bin；\nTXT缺少头信息，选是以TSK为准，否以TXT为准；\n对位点比较建议开" +
+    "启，以防合错图，TXT没有对位点选否；\n比较WaferID，选是TXT和TSK中WaferID一致才合图，否不需要一致也会合图。";
             // 
             // waferIDCompareBox
             // 
@@ -269,7 +269,7 @@
             this.waferIDCompareBox.Items.AddRange(new object[] {
             "是",
             "否"});
-            this.waferIDCompareBox.Location = new System.Drawing.Point(523, 317);
+            this.waferIDCompareBox.Location = new System.Drawing.Point(523, 313);
             this.waferIDCompareBox.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.waferIDCompareBox.Name = "waferIDCompareBox";
             this.waferIDCompareBox.Size = new System.Drawing.Size(131, 26);
