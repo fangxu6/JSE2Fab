@@ -27,7 +27,7 @@ namespace WindowsFormTool.TskUtil
         {
             if (excelFiles == null || tskFiles == null || excelFiles.Count != tskFiles.Count)
             {
-                MessageBox.Show("文件列表无效或数量不匹配", "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(@"文件列表无效或数量不匹配", "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
 

@@ -25,7 +25,7 @@ namespace WindowsFormTool.TskUtil
         {
             if (firstFiles == null || secondFiles == null || firstFiles.Count != secondFiles.Count)
             {
-                MessageBox.Show("文件列表无效或数量不匹配", "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(@"文件列表无效或数量不匹配", "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
 
@@ -67,7 +67,7 @@ namespace WindowsFormTool.TskUtil
         {
             if (originalTsk.Rows != mergeTsk.Rows || originalTsk.Cols != mergeTsk.Cols)
             {
-                MessageBox.Show("TSK图谱尺寸不一致，无法合并", "错误提醒", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(@"TSK图谱尺寸不一致，无法合并", "错误提醒", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return false;
             }
 
@@ -76,7 +76,7 @@ namespace WindowsFormTool.TskUtil
 
             if (originalLotNo != mergeLotNo || originalTsk.SlotNo != mergeTsk.SlotNo)
             {
-                MessageBox.Show("TSK图谱WaferID不一致，无法合并", "错误提醒", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(@"TSK图谱WaferID不一致，无法合并", "错误提醒", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return false;
             }
             return true;

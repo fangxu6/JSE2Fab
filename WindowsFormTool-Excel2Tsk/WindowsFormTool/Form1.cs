@@ -136,19 +136,19 @@ namespace DataToExcel
                         break;
 
                     default:
-                        MessageBox.Show("未选择处理方式", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        MessageBox.Show(@"未选择处理方式", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                         return;
                 }
 
                 // 处理完成后询问是否打开文件夹
-                if (MessageBox.Show("TSK新图谱生成，是否打开所在文件夹?", "confirm", MessageBoxButtons.YesNo) == DialogResult.Yes)
+                if (MessageBox.Show(@"TSK新图谱生成，是否打开所在文件夹?", "confirm", MessageBoxButtons.YesNo) == DialogResult.Yes)
                 {
                     Process.Start(newTskPath);
                 }
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"处理过程中出错：{ex.Message}", "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show($@"处理过程中出错：{ex.Message}", "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 UpdateRichTextBox($"错误：{ex.Message}\n");
             }
         }

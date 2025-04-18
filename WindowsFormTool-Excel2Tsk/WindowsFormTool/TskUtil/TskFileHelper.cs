@@ -42,7 +42,8 @@ namespace WindowsFormTool.TskUtil
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show($"设置保存路径失败: {ex.Message}\n使用默认路径: {DEFAULT_PATH}",
+                    MessageBox.Show($@"设置保存路径失败: {ex.Message}
+使用默认路径: {DEFAULT_PATH}",
                         "错误", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     _savePath = DEFAULT_PATH;
                 }
@@ -55,26 +56,26 @@ namespace WindowsFormTool.TskUtil
             // 检查文件路径是否为空
             if (string.IsNullOrWhiteSpace(excelPath))
             {
-                MessageBox.Show("请选择Excel文件", "错误提醒", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(@"请选择Excel文件", "错误提醒", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return false;
             }
 
             if (string.IsNullOrWhiteSpace(tskPath))
             {
-                MessageBox.Show("请选择TSK文件", "错误提醒", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(@"请选择TSK文件", "错误提醒", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return false;
             }
 
             // 检查文件是否存在
             if (!File.Exists(excelPath))
             {
-                MessageBox.Show($"Excel文件不存在: {excelPath}", "错误提醒", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show($@"Excel文件不存在: {excelPath}", "错误提醒", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return false;
             }
 
             if (!File.Exists(tskPath))
             {
-                MessageBox.Show($"TSK文件不存在: {tskPath}", "错误提醒", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show($@"TSK文件不存在: {tskPath}", "错误提醒", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return false;
             }
 
@@ -94,7 +95,7 @@ namespace WindowsFormTool.TskUtil
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"创建输出目录失败: {ex.Message}", "错误提醒", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show($@"创建输出目录失败: {ex.Message}", "错误提醒", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return false;
             }
 
@@ -111,12 +112,12 @@ namespace WindowsFormTool.TskUtil
             }
             catch (IOException)
             {
-                MessageBox.Show("无法访问文件，文件可能被其他程序占用", "错误提醒", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(@"无法访问文件，文件可能被其他程序占用", "错误提醒", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return false;
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"文件访问错误: {ex.Message}", "错误提醒", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show($@"文件访问错误: {ex.Message}", "错误提醒", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return false;
             }
 
@@ -150,7 +151,7 @@ namespace WindowsFormTool.TskUtil
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"创建目录失败: {ex.Message}", "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show($@"创建目录失败: {ex.Message}", "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return @"D:\New-Tsk\"; // 返回默认路径
             }
 

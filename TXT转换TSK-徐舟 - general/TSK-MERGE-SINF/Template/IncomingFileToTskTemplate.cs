@@ -438,8 +438,8 @@ namespace TSK_MERGE_SINF.Template
             if (!String.IsNullOrEmpty(this.TxtFlat))
             {
                 //int txtFlat1 = Convert.ToInt32(this.TxtFlat);
-                int txtFlat1 = GetFlat(this.TxtFlat);
-                int flatDifference = (tsk.FlatDir - txtFlat1 + 360) % 360;
+                int flat = GetFlat(this.TxtFlat);
+                int flatDifference = (tsk.FlatDir - flat + 360) % 360;
 
                 if (flatDifference == 180)////TXT转180
                 {
