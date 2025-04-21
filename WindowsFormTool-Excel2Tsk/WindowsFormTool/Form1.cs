@@ -153,21 +153,6 @@ namespace DataToExcel
             }
         }
 
-        private void Reverse(ref byte[] target)
-        {
-            int n1 = 0, n2 = target.Length - 1;
-            byte temp;
-            while (n1 < n2)
-            {
-                temp = target[n1];
-                target[n1] = target[n2];
-                target[n2] = temp;
-
-                n1++;
-                n2--;
-            }
-        }
-        
         //更新RichTextBox
         private void UpdateRichTextBox(string message)
         {

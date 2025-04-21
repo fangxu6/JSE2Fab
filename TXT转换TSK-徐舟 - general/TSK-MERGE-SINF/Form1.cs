@@ -10,8 +10,8 @@ namespace TSK_MERGE_SINF
 {
     public partial class Form1 : Form
     {
-        private readonly List<string> _txtName = new List<string>();
-        private readonly List<string> _tskName = new List<string>();
+        private readonly List<string> _txtNameList = new List<string>();
+        private readonly List<string> _tskNameList = new List<string>();
 
         public Form1()
         {
@@ -39,7 +39,7 @@ namespace TSK_MERGE_SINF
         /// </summary>
         private void LoadTxt()
         {
-            _txtName.Clear();
+            _txtNameList.Clear();
             FolderBrowserDialog dialog = new FolderBrowserDialog();
             if (dialog.ShowDialog() == DialogResult.OK)
             {
@@ -48,7 +48,7 @@ namespace TSK_MERGE_SINF
 
                 foreach (FileInfo str in TheFolder.GetFiles("*", SearchOption.AllDirectories))
                 {
-                    _txtName.Add(str.FullName);
+                    _txtNameList.Add(str.FullName);
                 }
             }
         }
@@ -70,7 +70,7 @@ namespace TSK_MERGE_SINF
         /// </summary>
         private void LoadTsk()
         {
-            _tskName.Clear();
+            _tskNameList.Clear();
             FolderBrowserDialog dialog = new FolderBrowserDialog();
             if (dialog.ShowDialog() == DialogResult.OK)
             {
@@ -79,7 +79,7 @@ namespace TSK_MERGE_SINF
 
                 foreach (FileInfo str in theFolder.GetFiles("*", SearchOption.AllDirectories))
                 {
-                    _tskName.Add(str.FullName);
+                    _tskNameList.Add(str.FullName);
                 }
             }
         }
@@ -96,12 +96,12 @@ namespace TSK_MERGE_SINF
                 MessageBox.Show("请选择TSK图谱");
             }
 
-            for (int i = 0; i < _txtName.Count; i++)
+            for (int i = 0; i < _txtNameList.Count; i++)
             {
-                string txtFile = _txtName[i];
-                string tskFile = _tskName[0];
-                if (_txtName.Count==_tskName.Count)
-                    tskFile = _tskName[i];
+                string txtFile = _txtNameList[i];
+                string tskFile = _tskNameList[0];
+                if (_txtNameList.Count==_tskNameList.Count)
+                    tskFile = _tskNameList[i];
                 Txt2Tsk(txtFile, tskFile);
             }
             if (MessageBox.Show("转换成功，是否打开?", "确定", MessageBoxButtons.YesNo) == DialogResult.Yes)
@@ -114,9 +114,9 @@ namespace TSK_MERGE_SINF
         {
             Tsk tsk = ParseTsk(tskFile);
             IncomingFileToTskTemplate incomingFilePattern = DeviceFactory.GetDeviceFromTsk(tsk.Device, generalDeviceBox.SelectedItem.ToString());
-            incomingFilePattern.TxtName = _txtName;
-            incomingFilePattern.TskName = _tskName;
-            incomingFilePattern.Run(tsk, txtFile, inkBinNoBox.SelectedItem.ToString(), markDieCompareBox.SelectedItem.ToString(),waferIDCompareBox.SelectedItem.ToString());
+            incomingFilePattern.TxtName = _txtNameList;
+            incomingFilePattern.TskName = _tskNameList;
+            incomingFilePattern.Run(tsk, txtFile, tskFile,inkBinNoBox.SelectedItem.ToString(), markDieCompareBox.SelectedItem.ToString(),waferIDCompareBox.SelectedItem.ToString());
         }
 
         private Tsk ParseTsk(string tskFile)

@@ -50,45 +50,45 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(39, 170);
-            this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label1.Location = new System.Drawing.Point(52, 227);
+            this.label1.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(80, 18);
+            this.label1.Size = new System.Drawing.Size(106, 24);
             this.label1.TabIndex = 0;
             this.label1.Text = "TSK-MAP:";
             // 
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(39, 94);
-            this.label2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label2.Location = new System.Drawing.Point(52, 125);
+            this.label2.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(80, 18);
+            this.label2.Size = new System.Drawing.Size(106, 24);
             this.label2.TabIndex = 1;
             this.label2.Text = "TXT-MAP:";
             // 
             // textBox1
             // 
-            this.textBox1.Location = new System.Drawing.Point(128, 170);
-            this.textBox1.Margin = new System.Windows.Forms.Padding(4);
+            this.textBox1.Location = new System.Drawing.Point(171, 227);
+            this.textBox1.Margin = new System.Windows.Forms.Padding(5);
             this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(379, 28);
+            this.textBox1.Size = new System.Drawing.Size(504, 35);
             this.textBox1.TabIndex = 2;
             // 
             // textBox2
             // 
-            this.textBox2.Location = new System.Drawing.Point(128, 94);
-            this.textBox2.Margin = new System.Windows.Forms.Padding(4);
+            this.textBox2.Location = new System.Drawing.Point(171, 125);
+            this.textBox2.Margin = new System.Windows.Forms.Padding(5);
             this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(379, 28);
+            this.textBox2.Size = new System.Drawing.Size(504, 35);
             this.textBox2.TabIndex = 3;
             // 
             // button_loadTsk
             // 
-            this.button_loadTsk.Location = new System.Drawing.Point(550, 170);
-            this.button_loadTsk.Margin = new System.Windows.Forms.Padding(4);
+            this.button_loadTsk.Location = new System.Drawing.Point(733, 227);
+            this.button_loadTsk.Margin = new System.Windows.Forms.Padding(5);
             this.button_loadTsk.Name = "button_loadTsk";
-            this.button_loadTsk.Size = new System.Drawing.Size(112, 34);
+            this.button_loadTsk.Size = new System.Drawing.Size(149, 45);
             this.button_loadTsk.TabIndex = 4;
             this.button_loadTsk.Text = "Load TSK";
             this.button_loadTsk.UseVisualStyleBackColor = true;
@@ -96,10 +96,10 @@
             // 
             // button_loadTxt
             // 
-            this.button_loadTxt.Location = new System.Drawing.Point(550, 94);
-            this.button_loadTxt.Margin = new System.Windows.Forms.Padding(4);
+            this.button_loadTxt.Location = new System.Drawing.Point(733, 125);
+            this.button_loadTxt.Margin = new System.Windows.Forms.Padding(5);
             this.button_loadTxt.Name = "button_loadTxt";
-            this.button_loadTxt.Size = new System.Drawing.Size(112, 34);
+            this.button_loadTxt.Size = new System.Drawing.Size(149, 45);
             this.button_loadTxt.TabIndex = 5;
             this.button_loadTxt.Text = "Load Txt";
             this.button_loadTxt.UseVisualStyleBackColor = true;
@@ -107,10 +107,10 @@
             // 
             // txtAndTskMapMergeButton
             // 
-            this.txtAndTskMapMergeButton.Location = new System.Drawing.Point(280, 374);
-            this.txtAndTskMapMergeButton.Margin = new System.Windows.Forms.Padding(4);
+            this.txtAndTskMapMergeButton.Location = new System.Drawing.Point(373, 499);
+            this.txtAndTskMapMergeButton.Margin = new System.Windows.Forms.Padding(5);
             this.txtAndTskMapMergeButton.Name = "txtAndTskMapMergeButton";
-            this.txtAndTskMapMergeButton.Size = new System.Drawing.Size(286, 86);
+            this.txtAndTskMapMergeButton.Size = new System.Drawing.Size(381, 115);
             this.txtAndTskMapMergeButton.TabIndex = 6;
             this.txtAndTskMapMergeButton.Text = "开始转换";
             this.txtAndTskMapMergeButton.UseVisualStyleBackColor = true;
@@ -119,25 +119,26 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(99, 32);
-            this.label3.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label3.Location = new System.Drawing.Point(132, 43);
+            this.label3.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(440, 18);
+            this.label3.Size = new System.Drawing.Size(598, 24);
             this.label3.TabIndex = 7;
-            this.label3.Text = "TSK模板需要全PASS，且TXT图谱行列数一致，图谱一致";
+            this.label3.Text = "TXT和TSK需要数量一致，否则TSK会选择第一个作为模版";
             // 
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(39, 248);
-            this.label4.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label4.Location = new System.Drawing.Point(52, 331);
+            this.label4.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(107, 18);
+            this.label4.Size = new System.Drawing.Size(142, 24);
             this.label4.TabIndex = 8;
             this.label4.Text = "ink bin no:";
             // 
             // inkBinNoBox
             // 
+            this.inkBinNoBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.inkBinNoBox.FormattingEnabled = true;
             this.inkBinNoBox.Items.AddRange(new object[] {
             "1",
@@ -204,92 +205,96 @@
             "62",
             "63",
             "64"});
-            this.inkBinNoBox.Location = new System.Drawing.Point(154, 244);
-            this.inkBinNoBox.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.inkBinNoBox.Location = new System.Drawing.Point(205, 325);
+            this.inkBinNoBox.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.inkBinNoBox.Name = "inkBinNoBox";
-            this.inkBinNoBox.Size = new System.Drawing.Size(131, 26);
+            this.inkBinNoBox.Size = new System.Drawing.Size(173, 32);
             this.inkBinNoBox.TabIndex = 9;
             // 
             // markDieCompareBox
             // 
+            this.markDieCompareBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.markDieCompareBox.FormattingEnabled = true;
             this.markDieCompareBox.Items.AddRange(new object[] {
             "是",
             "否"});
-            this.markDieCompareBox.Location = new System.Drawing.Point(154, 313);
-            this.markDieCompareBox.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.markDieCompareBox.Location = new System.Drawing.Point(205, 417);
+            this.markDieCompareBox.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.markDieCompareBox.Name = "markDieCompareBox";
-            this.markDieCompareBox.Size = new System.Drawing.Size(131, 26);
+            this.markDieCompareBox.Size = new System.Drawing.Size(173, 32);
             this.markDieCompareBox.TabIndex = 11;
             // 
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(39, 317);
-            this.label5.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label5.Location = new System.Drawing.Point(52, 423);
+            this.label5.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(107, 18);
+            this.label5.Size = new System.Drawing.Size(142, 24);
             this.label5.TabIndex = 10;
             this.label5.Text = "对位点比较:";
             // 
             // generalDeviceBox
             // 
+            this.generalDeviceBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.generalDeviceBox.FormattingEnabled = true;
             this.generalDeviceBox.Items.AddRange(new object[] {
             "是",
             "否"});
-            this.generalDeviceBox.Location = new System.Drawing.Point(523, 244);
-            this.generalDeviceBox.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.generalDeviceBox.Location = new System.Drawing.Point(697, 325);
+            this.generalDeviceBox.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.generalDeviceBox.Name = "generalDeviceBox";
-            this.generalDeviceBox.Size = new System.Drawing.Size(131, 26);
+            this.generalDeviceBox.Size = new System.Drawing.Size(173, 32);
             this.generalDeviceBox.TabIndex = 13;
             // 
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(391, 248);
-            this.label6.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label6.Location = new System.Drawing.Point(521, 331);
+            this.label6.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
             this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(116, 18);
+            this.label6.Size = new System.Drawing.Size(154, 24);
             this.label6.TabIndex = 12;
             this.label6.Text = "TXT缺少信息:";
             // 
             // richTextBox1
             // 
-            this.richTextBox1.Location = new System.Drawing.Point(712, 94);
+            this.richTextBox1.Location = new System.Drawing.Point(949, 125);
+            this.richTextBox1.Margin = new System.Windows.Forms.Padding(4);
             this.richTextBox1.Name = "richTextBox1";
-            this.richTextBox1.Size = new System.Drawing.Size(304, 351);
+            this.richTextBox1.Size = new System.Drawing.Size(404, 467);
             this.richTextBox1.TabIndex = 14;
             this.richTextBox1.Text = "说明：\nink bin no将TSK中对应的TXT fail bin ink为指定bin；\nTXT缺少头信息，选是以TSK为准，否以TXT为准；\n对位点比较建议开" +
     "启，以防合错图，TXT没有对位点选否；\n比较WaferID，选是TXT和TSK中WaferID一致才合图，否不需要一致也会合图。";
             // 
             // waferIDCompareBox
             // 
+            this.waferIDCompareBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.waferIDCompareBox.FormattingEnabled = true;
             this.waferIDCompareBox.Items.AddRange(new object[] {
             "是",
             "否"});
-            this.waferIDCompareBox.Location = new System.Drawing.Point(523, 313);
-            this.waferIDCompareBox.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.waferIDCompareBox.Location = new System.Drawing.Point(697, 417);
+            this.waferIDCompareBox.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.waferIDCompareBox.Name = "waferIDCompareBox";
-            this.waferIDCompareBox.Size = new System.Drawing.Size(131, 26);
+            this.waferIDCompareBox.Size = new System.Drawing.Size(173, 32);
             this.waferIDCompareBox.TabIndex = 16;
             // 
             // label7
             // 
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(391, 317);
-            this.label7.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label7.Location = new System.Drawing.Point(521, 423);
+            this.label7.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
             this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(116, 18);
+            this.label7.Size = new System.Drawing.Size(154, 24);
             this.label7.TabIndex = 15;
             this.label7.Text = "比较WaferID:";
             // 
             // Form1
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 18F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 24F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1028, 530);
+            this.ClientSize = new System.Drawing.Size(1371, 707);
             this.Controls.Add(this.waferIDCompareBox);
             this.Controls.Add(this.label7);
             this.Controls.Add(this.richTextBox1);
@@ -307,9 +312,9 @@
             this.Controls.Add(this.textBox1);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
-            this.Margin = new System.Windows.Forms.Padding(4);
+            this.Margin = new System.Windows.Forms.Padding(5);
             this.Name = "Form1";
-            this.Text = "TXT-TO-TSK-Daniel_2022.11.28";
+            this.Text = "TXT-TO-TSK";
             this.ResumeLayout(false);
             this.PerformLayout();
 

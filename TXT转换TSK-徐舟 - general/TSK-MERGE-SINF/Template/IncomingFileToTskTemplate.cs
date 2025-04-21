@@ -38,7 +38,7 @@ namespace TSK_MERGE_SINF.Template
         public abstract void ParseLine(string line);
 
         // The "Template Method"
-        public void Run(Tsk tsk, string txtFile, string inkBinNoStr, string isPassAlignmentMarkDie, string isWaferIdCompare)
+        public void Run(Tsk tsk, string txtFile, string tskFile, string inkBinNoStr, string isPassAlignmentMarkDie, string isWaferIdCompare)
         {
             //get txtData
             LoadTxt(txtFile);
@@ -208,7 +208,7 @@ namespace TSK_MERGE_SINF.Template
             tsk.WaferID = this.TxtWaferId;
             tsk.Save();
 
-            printTxtTskPair(tsk.LotNo);
+            PrintTxtTskPair(tsk.LotNo, txtFile, tskFile);
         }
 
         private void LoadTxt(string txtFile)
@@ -250,23 +250,6 @@ namespace TSK_MERGE_SINF.Template
             }
             txt1.Close();
             read.Close();
-        }
-
-
-        static int ConvertCharToValue(char c)
-        {
-            if (c >= 'A' && c <= 'Z')
-            {
-                return c - 'A' + 10;
-            }
-            else if (c >= 'a' && c <= 'z')
-            {
-                return c - 'a' + 10 + 26;
-            }
-            else
-            {
-                return c - '0';
-            }
         }
 
         /// <summary>
@@ -538,264 +521,19 @@ namespace TSK_MERGE_SINF.Template
 
         protected abstract int GetFlat(string txtFlat);
 
-        private void printTxtTskPair(string lotNo)
+        private void PrintTxtTskPair(string lotNo, string txtFile, string tskFile)
         {
             ////////////////////////////////输出TXT//////////////////////////////////
-            FileStream fwt = new FileStream("D:\\MERGE\\" + lotNo + "_txt_with_tsk" + ".txt", FileMode.Create);
+            FileStream fwt = new FileStream("D:\\MERGE\\" + lotNo + "_txt_with_tsk" + ".txt", FileMode.Append);
             StreamWriter swt = new StreamWriter(fwt);
-            for (int ii = 0; ii < _tskName.Count; ii++)
-            {
-                swt.WriteLine(_txtName[ii] + " " + _tskName[ii]);
-            }
-            swt.WriteLine();
+            swt.WriteLine(txtFile + " " + tskFile);
 
             swt.Close();
             fwt.Close();
         }
 
-        //private void ParseLine(string line)
-        //{
-        //    try
-        //    {
-        //        if (line.Contains(':') || line.Contains('='))
-        //        {
-        //            string[] strs = line.Split(new char[] { ':', '=' });
-        //            string head = strs[0].Trim().ToUpper();
-        //            string body = strs[1].Trim();
-        //            if (string.IsNullOrEmpty(body))
-        //            {
-        //                return;
-        //            }
-        //            switch (head)
-        //            {
-
-        //                case "DEVICE":
-        //                case "DEVICE NAME":
-        //                    this.TxtDevice = body;
-        //                    break;
-        //                case "LOT":
-        //                case "LOT NO":
-        //                    this.TxtLot = body;
-        //                    break;
-        //                case "SLOT NO":
-        //                    this.TxtSlot = Convert.ToInt32(body); ;
-        //                    break;
-        //                case "WAFER":
-        //                case "WAFER ID":
-        //                case "WAFER-ID":
-        //                    this.TxtWaferId = body;
-        //                    break;
-        //                case "FNLOC":
-        //                case "FLAT DIR":
-        //                case "FLAT":
-        //                    this.TxtFlat = body;
-        //                    break;
-        //                case "ROWCT":
-        //                    this.TxtRowCount = Convert.ToInt32(body);
-        //                    break;
-        //                case "COLCT":
-        //                    this.TxtColCount = Convert.ToInt32(body);
-        //                    break;
-        //                case "PASS DIE":
-        //                    this.TxtPass = Convert.ToInt32(body);
-        //                    break;
-        //                case "FAIL DIE":
-        //                    this.TxtFail = Convert.ToInt32(body);
-        //                    break;
-        //                case "GROSS_DIES":
-        //                case "TOTAL TEST DIE":
-        //                    this.TxtTotal = Convert.ToInt32(body);
-        //                    break;
-
-        //            }
-        //        }
-        //        else
-        //        {
-        //            this.ParseDies(line);
-        //        }
-        //    }
-        //    catch (Exception ee)
-        //    {
-        //        throw ee;
-        //    }
-        //}
-
         protected abstract void ParseDies(string s);
-        //{
-        //    //PasrseDieWithDeviceGeneral(s);
-        //    PasrseDieWithDeviceWTM2100COfZhiCun(s);
-        //    //TODO null报错
-        //    //if (this.TxtDevice.Contains("IML7972"))
-        //    //{
-        //    //PasrseDieWithDeviceIML7972(s);
-        //    //} else if (this.TxtDevice.Contains("UPM7231"))
-        //    //{
-        //    //    PasrseDieWithDeviceUPM7231(s);
-        //    //} else
-        //    //{
-        //    //    PasrseDieWithDeviceUPM6700(s);
-        //    //}
-        //}
 
-        private void PasrseDieWithDeviceWTM2100COfZhiCun(string s)
-        {
-            if (s.Contains("|"))
-            {
-                string newLine = s.Substring(s.IndexOf("|") + 1);
-                TxtColCount = newLine.Length / 3;
-                TxtRowCount++;
-                for (int i = 0; i < newLine.Length;)
-                {
-
-                    string binNo = newLine.Substring(i + 2, 1);
-                    if (binNo.Equals("."))
-                    {
-                        txtData.Add(".");
-                    }
-                    else if (binNo.Equals("P"))
-                    {
-                        txtData.Add("0");
-                        this.TxtPass++;
-                    }
-                    else if (binNo.Equals("M"))//对位点比较
-                    {
-                        txtData.Add("#");
-                    }
-                    else
-                    {
-                        txtData.Add("X");
-                        this.TxtFail++;
-                    }
-                    i = i + 3;
-                }
-            }
-        }
-        private void PasrseDieWithDeviceIML7972(string s)
-        {
-            if (s.StartsWith(".") || s.StartsWith("S") || s.StartsWith("#"))
-            {
-                string newLine = s;
-                TxtColCount = newLine.Length;
-                TxtRowCount++;
-                for (int i = 0; i < newLine.Length; i++)
-                {
-                    string binNo = newLine.Substring(i, 1);
-                    if (binNo.Equals("."))
-                    {
-                        txtData.Add(".");
-                    }
-                    else if (binNo.Equals("S"))
-                    {
-                        txtData.Add(".");
-                    }
-                    else if (binNo.Equals("#"))
-                    {
-                        txtData.Add(".");
-                    }
-                    else if (binNo.Equals("1"))
-                    {
-                        txtData.Add("0");
-                        this.TxtPass++;
-                    }
-                    else
-                    {
-                        txtData.Add("X");
-                        this.TxtFail++;
-                    }
-                }
-            }
-        }
-
-        //笑脸Device_General
-        private void PasrseDieWithDeviceGeneral(string s)
-        {
-            if (s.StartsWith(".") || s.StartsWith("1") || s.StartsWith("S") || s.StartsWith("#"))
-            {
-                string newLine = s;
-                TxtColCount = newLine.Length;
-                TxtRowCount++;
-                for (int i = 0; i < newLine.Length; i++)
-                {
-                    string binNo = newLine.Substring(i, 1);
-                    if (binNo.Equals("."))
-                    {
-                        txtData.Add(".");
-                    }
-                    else if (binNo.Equals("#"))//对位点比较
-                    {
-                        txtData.Add("#");
-                    }
-                    else if (binNo.Equals("1"))
-                    {
-                        txtData.Add("0");
-                        this.TxtPass++;
-                    }
-                    else
-                    {
-                        txtData.Add(binNo);
-                        this.TxtFail++;
-                    }
-                }
-            }
-        }
-        private void PasrseDieWithDeviceUPM7231(string s)
-        {
-            if (s.StartsWith("RowData"))
-            {
-                string newLine = s.Substring(s.IndexOf("RowData") + 7 + 1);
-                for (int i = 0; i < newLine.Length;)
-                {
-                    string binNo = newLine.Substring(i, 2);
-                    if (binNo.StartsWith("_"))
-                    {
-                        txtData.Add(".");
-                    }
-                    else if (binNo.Equals("00"))
-                    {
-                        txtData.Add("0");
-                        this.TxtPass++;
-                    }
-                    else if (binNo.Equals("@@"))//对位点比较
-                    {
-                        txtData.Add("#");
-                    }
-                    else
-                    {
-                        txtData.Add("X");
-                        this.TxtFail++;
-                    }
-                    i = i + 3;
-                }
-            }
-        }
-        private void PasrseDieWithDeviceUPM6700(string s)
-        {
-            //还缺少对位点
-            if (s.StartsWith("RowData"))
-            {
-                string newLine = s.Substring(s.IndexOf("RowData") + 7 + 1);
-                for (int i = 0; i < newLine.Length;)
-                {
-                    string binNo = newLine.Substring(i, 3);
-                    if (binNo.StartsWith("_"))
-                    {
-                        txtData.Add(".");
-                    }
-                    else if (binNo.Equals("000"))
-                    {
-                        txtData.Add("0");
-                        this.TxtPass++;
-                    }
-                    else
-                    {
-                        txtData.Add("X");
-                        this.TxtFail++;
-
-                    }
-                    i = i + 4;
-                }
-            }
-        }
         private string getSlotNo(string txtWaferID)
         {
             //F9N984-09F5根据-获取-后面的2位，
