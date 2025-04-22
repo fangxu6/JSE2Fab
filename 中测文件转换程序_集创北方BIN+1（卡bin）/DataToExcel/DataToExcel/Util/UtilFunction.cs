@@ -7,9 +7,7 @@
 
 namespace DataToExcel
 {
-    using System;
     using System.IO;
-    using DataToExcel;
 
     public class UtilFunction
     {

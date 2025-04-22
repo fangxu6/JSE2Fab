@@ -7,9 +7,6 @@
 
 namespace DataToExcel
 {
-    using System;
-    using System.Collections;
-    using DataToExcel;
     using DataToExcel.ExpDataToExcelFactory;
 
     public class CMDTskToTxt : ConverterBase

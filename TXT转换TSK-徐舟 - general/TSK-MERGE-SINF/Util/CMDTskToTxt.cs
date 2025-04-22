@@ -7,10 +7,6 @@
 
 namespace DataToExcel
 {
-    using System;
-    using System.Collections;
-    using DataToExcel;
-
     public class CMDTskToTxt : ConverterBase
     {
         public override void Convert(string tskfile, string txtfile)

@@ -11,7 +11,6 @@ namespace DataToExcel
     using System.Xml;
     using System.Drawing;
     using System.Collections;
-    using System.Reflection;
     using System.Windows.Forms;
 
     public class ConstDefine
@@ -886,15 +885,15 @@ namespace DataToExcel
 
                         objArray[num4, num3] = "N";
                         goto Label_0156;
-                        Label_010E:
+                    Label_010E:
                         objArray[num4, num3] = "";
                         goto Label_0156;
-                        Label_0120:
+                    Label_0120:
                         objArray[num4, num3] = "M";
                         goto Label_0156;
-                        Label_0144:
+                    Label_0144:
                         objArray[num4, num3] = "?";
-                        Label_0156:
+                    Label_0156:
                         num4++;
                     }
 

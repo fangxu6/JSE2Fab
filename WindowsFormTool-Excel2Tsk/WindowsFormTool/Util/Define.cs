@@ -60,6 +60,7 @@ namespace DataToExcel
         private int _bin = -1;
         private int _x = 0;
         private int _y = 0;
+        private int _site = -1;
 
         // Methods
         public DieData Clone()
@@ -69,6 +70,7 @@ namespace DataToExcel
             data._bin = this._bin;
             data._x = this._x;
             data._y = this._y;
+            data._site = this._site;
             return data;
         }
 
@@ -202,6 +204,12 @@ namespace DataToExcel
             {
                 this._y = value;
             }
+        }
+
+        public int Site
+        {
+            get { return this._site; }
+            set { this._site = value; }
         }
     }
 

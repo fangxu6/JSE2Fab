@@ -94,9 +94,6 @@ namespace DataToExcel
             set { this._properties["ExtendList"] = value; }
         }
 
-
-
-
         public int Rows
         {
             get { return (int)this._properties["Rows"]; }
@@ -278,6 +275,8 @@ namespace DataToExcel
             this._keys.Add("TotalDie");
             this._keys.Add("PassDie");
             this._keys.Add("FailDie");
+
+            this._keys.Add("DieStartPosition");
 
             this._keys.Add("LineCategoryNo");
             this._keys.Add("LineCategoryAddr");
@@ -473,7 +472,8 @@ namespace DataToExcel
                 this.FailDie = this.ReadToInt16();
 
                 // 记录 die 测试数据起始指针
-                int dieSP = this.ReadToInt32();
+                int dieStartPosition = this.ReadToInt32();
+                this._properties["DieStartPosition"] = dieStartPosition;
 
                 // Number of line category data
                 this._properties["LineCategoryNo"] = this.ReadToInt32();
@@ -489,7 +489,7 @@ namespace DataToExcel
                 this._properties["Reserved3"] = this.ReadToInt16();
 
                 // 设置流的起始指针为 die 测试数据起始指针
-                this._reader.BaseStream.Position = dieSP;
+                this._reader.BaseStream.Position = dieStartPosition;
 
                 int total = rows * cols;
                 ArrayList arry = new ArrayList();
@@ -558,6 +558,7 @@ namespace DataToExcel
                                 }
                             }
                             this.DieMatrix[k].Bin = extCategory;
+                            this.DieMatrix[k].Site = extSite;
                         }
                         //Debug
                         //if (die.Attribute == DieCategory.FailDie || die.Attribute == DieCategory.PassDie)
@@ -694,6 +695,7 @@ namespace DataToExcel
                             //die.Attribute = DieCategory.PassDie;
                             die.Attribute = DieCategory.PassDie;
                             die.Bin = binNum;
+                            die.Site = t3;
                             if (binNum != 1)
                             {
                                 Console.WriteLine("error");
@@ -703,6 +705,7 @@ namespace DataToExcel
                         case 3:
                             die.Attribute = DieCategory.FailDie;
                             die.Bin = binNum;
+                            die.Site = t3;
                             if (binNum == 0 || binNum == 1)
                             {
                                 Console.WriteLine("error");
@@ -941,7 +944,7 @@ namespace DataToExcel
                 this._writer.Write(buf, 0, 2);
 
                 // 记录 die 测试数据起始指针
-                buf = BitConverter.GetBytes(236);
+                buf = BitConverter.GetBytes((int)this._properties["DieStartPosition"]);
                 this.Reverse(ref buf);
                 this._writer.Write(buf, 0, 4);
 
@@ -954,8 +957,7 @@ namespace DataToExcel
                 this.Reverse(ref buf);
                 this._writer.Write(buf, 0, 4);
                 // Map file configuration
-                //buf = BitConverter.GetBytes((short)this._properties["Configuration"]);
-                buf = BitConverter.GetBytes((short)0);
+                buf = BitConverter.GetBytes((short)this._properties["Configuration"]);
                 this.Reverse(ref buf);
                 this._writer.Write(buf, 0, 2);
                 // Max. multi site
@@ -1141,7 +1143,35 @@ namespace DataToExcel
             if (!(map is Tsk))
                 throw new Exception("Tsk 类型文件只能和 Tsk 类型文件合并。");
 
-            return null;
+            for (int i = 0; i < this.Rows * this.Cols; i++)
+            {
+                DieData die = map.DieMatrix[i];
+                DieData mergeDie = this.DieMatrix[i];
+                if (die.Attribute == DieCategory.FailDie)
+                {
+                    mergeDie.Attribute = DieCategory.FailDie;
+                    mergeDie.Bin = die.Bin;
+                }
+            }
+
+            this.PassDie = 0;
+            this.FailDie = 0;
+            for (int k = 0; k < this.Rows * this.Cols; k++)
+            {
+                if (this.DieMatrix[k].Attribute == DieCategory.PassDie)
+                {
+                    this.PassDie++;
+                }
+                else if (this.DieMatrix[k].Attribute == DieCategory.FailDie)
+                {
+                    this.FailDie++;
+                }
+            }
+            this.TotalDie = this.PassDie + this.FailDie;
+
+            this.FullName = newfile;
+            this.Save();
+            return this;
         }
     }
 }
