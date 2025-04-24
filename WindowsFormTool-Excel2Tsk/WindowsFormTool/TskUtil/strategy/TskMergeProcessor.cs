@@ -67,7 +67,7 @@ namespace WindowsFormTool.TskUtil
         {
             if (originalTsk.Rows != mergeTsk.Rows || originalTsk.Cols != mergeTsk.Cols)
             {
-                MessageBox.Show(@"TSK图谱尺寸不一致，无法合并", "错误提醒", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(@"TSK图谱行列数不一致，无法合并", "错误提醒", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return false;
             }
 
