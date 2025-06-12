@@ -534,15 +534,20 @@ namespace TSK_MERGE_SINF.Template
 
         protected abstract void ParseDies(string s);
 
+        // todo  :要考虑各种去情况
         private string getSlotNo(string txtWaferID)
         {
-            //F9N984-09F5根据-获取-后面的2位，
-            string[] str = txtWaferID.Split('-');
-            //str[1].Substring(0, 2) 3位，第一位补0
-            if (str[1].Length==2)
-                return "0" + str[1].Substring(0, 2);
+            string slotNo = "";
+            //01
+            if (!txtWaferID.Contains("-"))
+                slotNo = txtWaferID;
             else
-                return "00" +str[1].Substring(0, 1);
+                slotNo = txtWaferID.Split('-')[1];
+            //str[1].Substring(0, 2) 3位，第一位补0
+            if (slotNo.Length==2)
+                return "0" + slotNo.Substring(0, 2);
+            else
+                return "00" + slotNo.Substring(0, 1);
         }
     }
 }
