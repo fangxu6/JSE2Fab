@@ -1,8 +1,8 @@
-
+ï»¿
 /*
- * ×÷Õß£ºsky
- * Ê±¼ä£º2008-01-09
- * ×÷ÓÃ£º¹«¹²³£Á¿¶¨Òå
+ * ä½œè€…ï¼šsky
+ * æ—¶é—´ï¼š2008-01-09
+ * ä½œç”¨ï¼šå…¬å…±å¸¸é‡å®šä¹‰
  */
 
 namespace DataToExcel
@@ -26,7 +26,7 @@ namespace DataToExcel
     }
 
     /*
-     * Ã¶¾Ù¾§Á£ÖÖÀà
+     * æšä¸¾æ™¶ç²’ç§ç±»
      */
     public enum DieCategory : short
     {
@@ -43,7 +43,7 @@ namespace DataToExcel
     }
 
     /*
-     * ²âÊÔ½á¹ûÃ¶¾Ù
+     * æµ‹è¯•ç»“æœæšä¸¾
      */
     public enum TestResult
     {
@@ -52,7 +52,7 @@ namespace DataToExcel
     }
 
     /*
-     * Die ÃèÊö
+     * Die æè¿°
      */
     public class DieData
     {
@@ -125,7 +125,7 @@ namespace DataToExcel
                     item2.Attribute == DieCategory.NoneDie))
             {
                 data.Attribute = DieCategory.FailDie;
-                data.Bin = 63;//Ö¸¶¨bin
+                data.Bin = 63;//æŒ‡å®šbin
                 return data;
             }
 
@@ -216,12 +216,12 @@ namespace DataToExcel
 
 
     /*
-     * Die ¾ØÕó·½Ê½´æ´¢
+     * Die çŸ©é˜µæ–¹å¼å­˜å‚¨
      */
     public class DieMatrix
     {
-        private int _xmax; // X Öá×î´ó×ø±êÖµ£­ÁĞÊı
-        private int _ymax; // Y Öá×î´ó×ø±êÖµ£­ĞĞÊı
+        private int _xmax; // X è½´æœ€å¤§åæ ‡å€¼ï¼åˆ—æ•°
+        private int _ymax; // Y è½´æœ€å¤§åæ ‡å€¼ï¼è¡Œæ•°
 
         private ArrayList _items;
 
@@ -258,27 +258,27 @@ namespace DataToExcel
             get
             {
                 if (x >= this._xmax)
-                    throw new Exception("ĞĞË÷Òı³¬³ö×î´ó·¶Î§¡£");
+                    throw new Exception("è¡Œç´¢å¼•è¶…å‡ºæœ€å¤§èŒƒå›´ã€‚");
 
                 if (y >= this._ymax)
-                    throw new Exception("ÁĞË÷Òı³¬³ö×î´ó·¶Î§¡£");
+                    throw new Exception("åˆ—ç´¢å¼•è¶…å‡ºæœ€å¤§èŒƒå›´ã€‚");
 
                 return (DieData)this._items[y * this._xmax + x];
             }
             set
             {
                 if (x >= this._xmax)
-                    throw new Exception("ĞĞË÷Òı³¬³ö×î´ó·¶Î§¡£");
+                    throw new Exception("è¡Œç´¢å¼•è¶…å‡ºæœ€å¤§èŒƒå›´ã€‚");
 
                 if (y >= this._ymax)
-                    throw new Exception("ÁĞË÷Òı³¬³ö×î´ó·¶Î§¡£");
+                    throw new Exception("åˆ—ç´¢å¼•è¶…å‡ºæœ€å¤§èŒƒå›´ã€‚");
 
                 this._items[y * this._xmax + x] = value;
             }
         }
 
         /// <summary>
-        /// ¹¹Ôìº¯Êı
+        /// æ„é€ å‡½æ•°
         /// </summary>
         private DieMatrix()
         {
@@ -289,7 +289,7 @@ namespace DataToExcel
         }
 
         /// <summary>
-        /// ¹¹Ôìº¯Êı
+        /// æ„é€ å‡½æ•°
         /// </summary>
         public DieMatrix(int xmax, int ymax)
         {
@@ -309,7 +309,7 @@ namespace DataToExcel
         }
 
         /// <summary>
-        /// ¹¹Ôìº¯Êı
+        /// æ„é€ å‡½æ•°
         /// </summary>
         public DieMatrix(IList dies, int xmax, int ymax)
         {
@@ -329,9 +329,9 @@ namespace DataToExcel
         }
 
         /// <summary>
-        /// Ë³Ê±ÕëĞı×ª¾ØÕó
+        /// é¡ºæ—¶é’ˆæ—‹è½¬çŸ©é˜µ
         /// </summary>
-        /// <param name="degree">Ğı×ªµÄ½Ç¶È</param>
+        /// <param name="degree">æ—‹è½¬çš„è§’åº¦</param>
         public void DeasilRotate(int degree)
         {
             switch (degree)
@@ -349,11 +349,11 @@ namespace DataToExcel
                     this.R180();
                     break;
                 default:
-                    throw new Exception("¾ØÕó²»Ö§³Ö " + degree + " ¶ÈµÄĞı×ª¡£");
+                    throw new Exception("çŸ©é˜µä¸æ”¯æŒ " + degree + " åº¦çš„æ—‹è½¬ã€‚");
             }
         }
 
-        // Ë³Ê±ÕëĞı×ª 90 ¶È
+        // é¡ºæ—¶é’ˆæ—‹è½¬ 90 åº¦
         private void R90()
         {
             int x = -1, y = -1, xr = -1, yr = -1, count = this._items.Count;
@@ -361,7 +361,7 @@ namespace DataToExcel
 
             for (int i = 0; i < count; i++)
             {
-                // ¼ÆËã x,y ×ø±ê
+                // è®¡ç®— x,y åæ ‡
                 x = i % this._xmax;
                 y = i / this._xmax;
 
@@ -371,7 +371,7 @@ namespace DataToExcel
                 dies[yr * this._ymax + xr] = (DieData)this._items[i];
             }
 
-            // ½»»»ĞĞÊıÓëÁĞÊı
+            // äº¤æ¢è¡Œæ•°ä¸åˆ—æ•°
             x = this._xmax;
             this._xmax = this._ymax;
             this._ymax = x;
@@ -379,7 +379,7 @@ namespace DataToExcel
             this._items = ArrayList.Adapter(dies);
         }
 
-        // Ë³Ê±ÕëĞı×ª 270 ¶È£¬»òÄæÊ±ÕëĞı×ª 90 ¶È
+        // é¡ºæ—¶é’ˆæ—‹è½¬ 270 åº¦ï¼Œæˆ–é€†æ—¶é’ˆæ—‹è½¬ 90 åº¦
         private void R270()
         {
             int x = -1, y = -1, xr = -1, yr = -1, count = this._items.Count;
@@ -387,7 +387,7 @@ namespace DataToExcel
 
             for (int i = 0; i < count; i++)
             {
-                // ¼ÆËã x,y ×ø±ê
+                // è®¡ç®— x,y åæ ‡
                 x = i % this._xmax;
                 y = i / this._xmax;
 
@@ -397,7 +397,7 @@ namespace DataToExcel
                 dies[yr * this._ymax + xr] = (DieData)this._items[i];
             }
 
-            // ½»»»ĞĞÊıÓëÁĞÊı
+            // äº¤æ¢è¡Œæ•°ä¸åˆ—æ•°
             x = this._xmax;
             this._xmax = this._ymax;
             this._ymax = x;
@@ -405,7 +405,7 @@ namespace DataToExcel
             this._items = ArrayList.Adapter(dies);
         }
 
-        // Ğı×ª 180 ¶È
+        // æ—‹è½¬ 180 åº¦
         private void R180()
         {
             int x = -1, y = -1, xr = -1, yr = -1, count = this._items.Count;
@@ -415,7 +415,7 @@ namespace DataToExcel
             {
                 try
                 {
-                    // ¼ÆËã x,y ×ø±ê
+                    // è®¡ç®— x,y åæ ‡
                     x = i % this._xmax;
                     y = i / this._xmax;
 
@@ -434,7 +434,7 @@ namespace DataToExcel
         }
 
         /// <summary>
-        /// ¾ØÕóÆ½ÒÆ²Ù×÷
+        /// çŸ©é˜µå¹³ç§»æ“ä½œ
         /// </summary>
         public void Offset(OffsetDir dir, int qty)
         {
@@ -445,7 +445,7 @@ namespace DataToExcel
         }
 
         /// <summary>
-        /// X ·½ÏòÉÏµÄ¾ØÕóÆ«ÒÆ£¬¿Õ³öµÄÎ»ÖÃÒÔ¿Õ Die Êı¾İÌî³ä
+        /// X æ–¹å‘ä¸Šçš„çŸ©é˜µåç§»ï¼Œç©ºå‡ºçš„ä½ç½®ä»¥ç©º Die æ•°æ®å¡«å……
         /// </summary>
         private void OffsetX(int qty)
         {
@@ -453,11 +453,11 @@ namespace DataToExcel
                 return;
 
             if (Math.Abs(qty) >= this._xmax)
-                throw new Exception("X ·½ÏòÎ»ÒÆµÄ³¤¶È±ØĞëĞ¡ÓÚ¾ØÕó³¤¶È¡£");
+                throw new Exception("X æ–¹å‘ä½ç§»çš„é•¿åº¦å¿…é¡»å°äºçŸ©é˜µé•¿åº¦ã€‚");
 
             if (qty > 0)
             {
-                // ½»»»Öµ
+                // äº¤æ¢å€¼
                 for (int i = this._xmax - 1; i >= qty; i--)
                 {
                     for (int j = 0; j < this._ymax; j++)
@@ -467,7 +467,7 @@ namespace DataToExcel
                     }
                 }
 
-                // ¿Õ´¦²¹¿Õ die Êı¾İ
+                // ç©ºå¤„è¡¥ç©º die æ•°æ®
                 for (int i = 0; i < qty; i++)
                 {
                     for (int j = 0; j < this._ymax; j++)
@@ -478,18 +478,18 @@ namespace DataToExcel
             }
             else if (qty < 0)
             {
-                // ½»»»Öµ
-                for (int i = 0; i < this._xmax - qty; i++)
+                // äº¤æ¢å€¼
+                for (int i = 0; i < this._xmax + qty; i++)
                 {
                     for (int j = 0; j < this._ymax; j++)
                     {
-                        this[i, j].Attribute = this[i + qty, j].Attribute;
-                        this[i, j].Bin = this[i + qty, j].Bin;
+                        this[i, j].Attribute = this[i - qty, j].Attribute;
+                        this[i, j].Bin = this[i - qty, j].Bin;
                     }
                 }
 
-                // ¿Õ´¦²¹¿Õ die Êı¾İ
-                for (int i = qty; i < this._xmax; i++)
+                // ç©ºå¤„è¡¥ç©º die æ•°æ®
+                for (int i = this._xmax + qty; i < this._xmax; i++)
                 {
                     for (int j = 0; j < this._ymax; j++)
                     {
@@ -500,7 +500,7 @@ namespace DataToExcel
         }
 
         /// <summary>
-        /// Y ·½ÏòÉÏµÄ¾ØÕóÆ«ÒÆ£¬¿Õ³öµÄÎ»ÖÃÒÔ¿Õ Die Êı¾İÌî³ä
+        /// Y æ–¹å‘ä¸Šçš„çŸ©é˜µåç§»ï¼Œç©ºå‡ºçš„ä½ç½®ä»¥ç©º Die æ•°æ®å¡«å……
         /// </summary>
         private void OffsetY(int qty)
         {
@@ -508,11 +508,11 @@ namespace DataToExcel
                 return;
 
             if (Math.Abs(qty) >= this._ymax)
-                throw new Exception("y ·½ÏòÎ»ÒÆµÄ³¤¶È±ØĞëĞ¡ÓÚ¾ØÕó¿í¶È¡£");
+                throw new Exception("y æ–¹å‘ä½ç§»çš„é•¿åº¦å¿…é¡»å°äºçŸ©é˜µå®½åº¦ã€‚");
 
             if (qty > 0)
             {
-                // ½»»»Öµ
+                // äº¤æ¢å€¼
                 for (int i = this._ymax - 1; i >= qty; i--)
                 {
                     for (int j = 0; j < this._xmax; j++)
@@ -522,7 +522,7 @@ namespace DataToExcel
                     }
                 }
 
-                // ¿Õ´¦²¹¿Õ die Êı¾İ
+                // ç©ºå¤„è¡¥ç©º die æ•°æ®
                 for (int i = 0; i < qty; i++)
                 {
                     for (int j = 0; j < this._xmax; j++)
@@ -533,18 +533,18 @@ namespace DataToExcel
             }
             else if (qty < 0)
             {
-                // ½»»»Öµ
-                for (int i = 0; i < this._ymax - qty; i++)
+                // äº¤æ¢å€¼
+                for (int i = 0; i < this._ymax + qty; i++)
                 {
                     for (int j = 0; j < this._xmax; j++)
                     {
-                        this[j, i].Attribute = this[j, i + qty].Attribute;
-                        this[j, i].Bin = this[j, i + qty].Bin;
+                        this[j, i].Attribute = this[j, i - qty].Attribute;
+                        this[j, i].Bin = this[j, i - qty].Bin;
                     }
                 }
 
-                // ¿Õ´¦²¹¿Õ die Êı¾İ
-                for (int i = qty; i < this._ymax; i++)
+                // ç©ºå¤„è¡¥ç©º die æ•°æ®
+                for (int i = this._ymax + qty; i < this._ymax; i++)
                 {
                     for (int j = 0; j < this._xmax; j++)
                     {
@@ -555,23 +555,23 @@ namespace DataToExcel
         }
 
         /// <summary>
-        /// À©Õ¹¾ØÕóÇøÓò
+        /// æ‰©å±•çŸ©é˜µåŒºåŸŸ
         /// </summary>
-        /// <param name="dir">À©Õ¹·½Ïò£ºÉÏ¡¢ÏÂ¡¢×ó¡¢ÓÒ</param>
-        /// <param name="qty">À©Õ¹ÊıÁ¿</param>
+        /// <param name="dir">æ‰©å±•æ–¹å‘ï¼šä¸Šã€ä¸‹ã€å·¦ã€å³</param>
+        /// <param name="qty">æ‰©å±•æ•°é‡</param>
         public void Expand(ExpandDir dir, int qty)
         {
             if (qty <= 0)
-                throw new Exception("¾ØÕóÀ©Õ¹µÄÇøÓò±ØĞë´óÓÚ0¡£");
+                throw new Exception("çŸ©é˜µæ‰©å±•çš„åŒºåŸŸå¿…é¡»å¤§äº0ã€‚");
 
             if (Math.Abs(qty) >= this._xmax || Math.Abs(qty) >= this._ymax)
-                throw new Exception("¾ØÕóÀ©Õ¹µÄÇøÓò±ØĞëĞ¡ÓÚ¾ØÕóĞĞÁĞÊı¡£");
+                throw new Exception("çŸ©é˜µæ‰©å±•çš„åŒºåŸŸå¿…é¡»å°äºçŸ©é˜µè¡Œåˆ—æ•°ã€‚");
 
-            // ±£ÁôÔ­Ê¼Êı¾İ
+            // ä¿ç•™åŸå§‹æ•°æ®
             int x = this._xmax, xi = 0;
             int y = this._ymax, yi = 0;
 
-            // ÇóÀ©Õ¹ºóµÄĞĞÊı¡¢ÁĞÊı¼°ÓÃÓÚ¸´ÖÆÊı¾İµÄÎ»ÒÆ²î
+            // æ±‚æ‰©å±•åçš„è¡Œæ•°ã€åˆ—æ•°åŠç”¨äºå¤åˆ¶æ•°æ®çš„ä½ç§»å·®
             switch (dir)
             {
                 case ExpandDir.Left:
@@ -593,7 +593,7 @@ namespace DataToExcel
             int count = x * y;
             ArrayList arr = new ArrayList();
 
-            // ²åÈë¿Õ die Êı¾İ
+            // æ’å…¥ç©º die æ•°æ®
             for (int i = 0; i < count; i++)
             {
                 DieData d = new DieData();
@@ -601,7 +601,7 @@ namespace DataToExcel
                 arr.Add(d);
             }
 
-            // ½«Ô­¾ØÕóÊı¾İ¸´ÖÆµ½ĞÂ¾ØÕóÖĞ
+            // å°†åŸçŸ©é˜µæ•°æ®å¤åˆ¶åˆ°æ–°çŸ©é˜µä¸­
             for (int i = 0; i < this._ymax; i++)
             {
                 for (int j = 0; j < this._xmax; j++)
@@ -616,23 +616,23 @@ namespace DataToExcel
         }
 
         /// <summary>
-        /// ÊÕËõ¾ØÕóÇøÓò
+        /// æ”¶ç¼©çŸ©é˜µåŒºåŸŸ
         /// </summary>
-        /// <param name="dir">ÊÕËõ·½Ïò£ºÉÏ¡¢ÏÂ¡¢×ó¡¢ÓÒ</param>
-        /// <param name="qty">ÊÕËõÊıÁ¿</param>
+        /// <param name="dir">æ”¶ç¼©æ–¹å‘ï¼šä¸Šã€ä¸‹ã€å·¦ã€å³</param>
+        /// <param name="qty">æ”¶ç¼©æ•°é‡</param>
         public void Collapse(ExpandDir dir, int qty)
         {
             if (qty <= 0)
-                throw new Exception("¾ØÕóÀ©Õ¹µÄÇøÓò±ØĞë´óÓÚ0¡£");
+                throw new Exception("çŸ©é˜µæ‰©å±•çš„åŒºåŸŸå¿…é¡»å¤§äº0ã€‚");
 
             if (Math.Abs(qty) >= this._xmax || Math.Abs(qty) >= this._ymax)
-                throw new Exception("¾ØÕóÀ©Õ¹µÄÇøÓò±ØĞëĞ¡ÓÚ¾ØÕóĞĞÁĞÊı¡£");
+                throw new Exception("çŸ©é˜µæ‰©å±•çš„åŒºåŸŸå¿…é¡»å°äºçŸ©é˜µè¡Œåˆ—æ•°ã€‚");
 
-            // ±£ÁôÔ­Ê¼Êı¾İ
+            // ä¿ç•™åŸå§‹æ•°æ®
             int x = this._xmax, xi = 0;
             int y = this._ymax, yi = 0;
 
-            // ÇóÀ©Õ¹ºóµÄĞĞÊı¡¢ÁĞÊı¼°ÓÃÓÚ¸´ÖÆÊı¾İµÄÎ»ÒÆ²î
+            // æ±‚æ‰©å±•åçš„è¡Œæ•°ã€åˆ—æ•°åŠç”¨äºå¤åˆ¶æ•°æ®çš„ä½ç§»å·®
             switch (dir)
             {
                 case ExpandDir.Left:
@@ -654,7 +654,7 @@ namespace DataToExcel
             int count = x * y;
             ArrayList arr = new ArrayList();
 
-            // ²åÈë¿Õ die Êı¾İ
+            // æ’å…¥ç©º die æ•°æ®
             for (int i = 0; i < count; i++)
             {
                 DieData d = new DieData();
@@ -662,7 +662,7 @@ namespace DataToExcel
                 arr.Add(d);
             }
 
-            // ½«Ô­¾ØÕóÊı¾İ¸´ÖÆµ½ĞÂ¾ØÕóÖĞ
+            // å°†åŸçŸ©é˜µæ•°æ®å¤åˆ¶åˆ°æ–°çŸ©é˜µä¸­
             for (int i = 0; i < y; i++)
             {
                 for (int j = 0; j < x; j++)
@@ -677,7 +677,7 @@ namespace DataToExcel
         }
 
         /// <summary>
-        /// ÅĞ¶ÏÁ½¸öÊµÀıÊÇ·ñÏàµÈ
+        /// åˆ¤æ–­ä¸¤ä¸ªå®ä¾‹æ˜¯å¦ç›¸ç­‰
         /// </summary>
         public override bool Equals(object o)
         {
@@ -727,16 +727,16 @@ namespace DataToExcel
             return !item1.Equals(item2);
         }
 
-        // ÔËËã·ûÖØÔØ£¬×÷ÓÃÎªÁ½¸ö¾ØÕóµÄÖØµşÏà¼ÓÔËËã
+        // è¿ç®—ç¬¦é‡è½½ï¼Œä½œç”¨ä¸ºä¸¤ä¸ªçŸ©é˜µçš„é‡å ç›¸åŠ è¿ç®—
         public static DieMatrix operator +(DieMatrix items1, DieMatrix items2)
         {
             int count = items1.Count;
 
             if (count != items2.Count)
-                throw new Exception("²Ù×÷ÊıÔªËØ¸öÊı²»ÏàÍ¬£¬ÎŞ·¨Ö´ĞĞ¼Ó·¨ÔËËã¡£");
+                throw new Exception("æ“ä½œæ•°å…ƒç´ ä¸ªæ•°ä¸ç›¸åŒï¼Œæ— æ³•æ‰§è¡ŒåŠ æ³•è¿ç®—ã€‚");
 
             if ((items1._xmax != items2._xmax) || (items1._ymax != items2._ymax))
-                throw new Exception("¾ØÕóµÄĞĞÁĞÊı²»Æ¥Åä£¬ÎŞ·¨Ö´ĞĞ¼Ó·¨ÔËËã¡£");
+                throw new Exception("çŸ©é˜µçš„è¡Œåˆ—æ•°ä¸åŒ¹é…ï¼Œæ— æ³•æ‰§è¡ŒåŠ æ³•è¿ç®—ã€‚");
 
             DieData[] dies = new DieData[count];
 
@@ -749,7 +749,7 @@ namespace DataToExcel
         }
 
         /// <summary>
-        /// ¿ËÂ¡¸±±¾
+        /// å…‹éš†å‰¯æœ¬
         /// </summary>
         public DieMatrix Clone()
         {
@@ -783,7 +783,7 @@ namespace DataToExcel
             return text;
         }
 
-        // »æÖÆ die ¾ØÕó
+        // ç»˜åˆ¶ die çŸ©é˜µ
         public void Paint(Graphics g, float xsize, float ysize, bool isprint)
         {
             Hashtable colors = new Hashtable();
@@ -803,11 +803,11 @@ namespace DataToExcel
 
 
 
-        // »æÖÆ die ¾ØÕó
+        // ç»˜åˆ¶ die çŸ©é˜µ
         
 
 
-        // »æÖÆ die ¾ØÕó
+        // ç»˜åˆ¶ die çŸ©é˜µ
         public void Paint(Graphics g, float width, float height, Hashtable colors, bool isprint)
         {
             SolidBrush lineBrush = new SolidBrush(Color.FromArgb(89, 87, 87));
@@ -833,12 +833,12 @@ namespace DataToExcel
 
             float margin = 0;
 
-            // ±³¾°
+            // èƒŒæ™¯
             g.FillRectangle(lineBrush, margin, margin, cols * xspace + 5, rows * yspace + 10);
 
             RectangleF rect = new RectangleF(0, 0, xspace - 1, yspace - 1);
 
-            // ÉÏÉ«
+            // ä¸Šè‰²
             for (int i = 0; i < this.YMax; i++)
             {
                 rect.Y += yspace;
@@ -852,7 +852,7 @@ namespace DataToExcel
             }
         }
 
-        // »æÖÆ die ¾ØÕó
+        // ç»˜åˆ¶ die çŸ©é˜µ
         public void Paint(Graphics g, RectangleF bounds, bool isprint)
         {
             Hashtable colors = new Hashtable();
@@ -870,7 +870,7 @@ namespace DataToExcel
             this.Paint(g, bounds, colors, isprint);
         }
 
-        // »æÖÆ die ¾ØÕó
+        // ç»˜åˆ¶ die çŸ©é˜µ
         public void Paint(Graphics g, RectangleF bounds, Hashtable colors, bool isprint)
         {
             SolidBrush lineBrush = new SolidBrush(Color.FromArgb(89, 87, 87));
@@ -888,12 +888,12 @@ namespace DataToExcel
 
             float margin = 0;
 
-            // ±³¾°
+            // èƒŒæ™¯
             g.FillRectangle(lineBrush, margin, margin, cols * xspace + 5, rows * yspace + 10);
 
             RectangleF rect = new RectangleF(0, 0, xspace - 1, yspace - 1);
 
-            // ÉÏÉ«
+            // ä¸Šè‰²
             for (int i = 0; i < this.YMax; i++)
             {
                 rect.Y += yspace;
@@ -907,7 +907,7 @@ namespace DataToExcel
             }
         }
 
-        // Í³¼Æ¾ØÕóÖĞ·ûºÏÖ¸¶¨ÊôĞÔµÄ die µÄ¸öÊı
+        // ç»Ÿè®¡çŸ©é˜µä¸­ç¬¦åˆæŒ‡å®šå±æ€§çš„ die çš„ä¸ªæ•°
         public int DieAttributeStat(DieCategory attr)
         {
             int count = 0;
@@ -923,21 +923,21 @@ namespace DataToExcel
 
         public enum OffsetDir
         {
-            X = 0,  // X ·½ÏòÎ»ÒÆ
-            Y       // Y ·½ÏòÎ»ÒÆ
+            X = 0,  // X æ–¹å‘ä½ç§»
+            Y       // Y æ–¹å‘ä½ç§»
         }
 
         public enum ExpandDir
         {
-            Left = 0, // Ïò×óÀ©Õ¹
-            Right,  // ÏòÓÒÀ©Õ¹
-            Up,     // ÏòÉÏÀ©Õ¹
-            Down    // ÏòÏÂÀ©Õ¹
+            Left = 0, // å‘å·¦æ‰©å±•
+            Right,  // å‘å³æ‰©å±•
+            Up,     // å‘ä¸Šæ‰©å±•
+            Down    // å‘ä¸‹æ‰©å±•
         }
     }
 
     /*
-     * ¸ñÊ½×ª»»ÅäÖÃ
+     * æ ¼å¼è½¬æ¢é…ç½®
      */
     public class ConvertConfig
     {
@@ -968,7 +968,7 @@ namespace DataToExcel
                 string path = Application.StartupPath + @"\FieldMapping_TI.xml";
                 if (!File.Exists(path))
                 {
-                    throw new Exception("Î´ÕÒµ½¸ñÊ½×ª»»×Ö¶ÎÓ³ÉäÅäÖÃÎÄ¼ş FieldMapping.xml¡£");
+                    throw new Exception("æœªæ‰¾åˆ°æ ¼å¼è½¬æ¢å­—æ®µæ˜ å°„é…ç½®æ–‡ä»¶ FieldMapping.xmlã€‚");
                 }
                 XmlDocument document = new XmlDocument();
                 document.Load(path);
@@ -984,7 +984,7 @@ namespace DataToExcel
                 }
                 if (node2 == null)
                 {
-                    throw new Exception("ÅäÖÃÎÄ¼şÖĞÎ´ÕÒµ½ " + from + " ¸ñÊ½µ½ " + to + " ¸ñÊ½µÄ×ª»»×Ö¶ÎÓ³ÉäÅäÖÃĞÅÏ¢¡£");
+                    throw new Exception("é…ç½®æ–‡ä»¶ä¸­æœªæ‰¾åˆ° " + from + " æ ¼å¼åˆ° " + to + " æ ¼å¼çš„è½¬æ¢å­—æ®µæ˜ å°„é…ç½®ä¿¡æ¯ã€‚");
                 }
                 try
                 {
