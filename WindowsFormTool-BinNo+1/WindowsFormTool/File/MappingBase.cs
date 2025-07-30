@@ -1,8 +1,8 @@
-
+ï»¿
 /*
- * ×÷Õß£ºsky
- * ÈÕ¼ä£º2008-01-09
- * ×÷ÓÃ£ºMapping File »ùÀà
+ * ä½œè€…ï¼šsky
+ * æ—¥é—´ï¼š2008-01-09
+ * ä½œç”¨ï¼šMapping File åŸºç±»
  */
 
 namespace DataToExcel
@@ -14,28 +14,27 @@ namespace DataToExcel
 
     public abstract class MappingBase : IMappingFile
     {
-        protected readonly string Enter = new string((char)13, 1) + new string((char)10, 1);
+        public readonly string Enter = new string((char)13, 1) + new string((char)10, 1);
 
-        protected string _fileType;     // mapping ÎÄ¼şÀàĞÍ
-        protected string _path;         // mapping ÎÄ¼şÂ·¾¶
-        protected string _fileName;     // mapping ÎÄ¼şÃû
-        protected string _fullName;     // mapping ÎÄ¼şÍêÕûÃû³Æ
+        protected string _fileType;     // mapping æ–‡ä»¶ç±»å‹
+        protected string _path;         // mapping æ–‡ä»¶è·¯å¾„
+        protected string _fileName;     // mapping æ–‡ä»¶å
+        protected string _fullName;     // mapping æ–‡ä»¶å®Œæ•´åç§°
 
-        protected Stream _inputStream;  // ÓÉÁ÷À´´´½¨ mapping ÎÄ¼ş¶ÔÏóÊ±µÄÊäÈëÁ÷¶ÔÏó
-        protected BinaryReader _reader; // ÓÃÓÚ¶Á mapping ÎÄ¼şµÄÁ÷¶ÔÏó
-        protected FileStream _writer;   // ÓÃÓÚĞ´ mapping ÎÄ¼şµÄÁ÷¶ÔÏó
+        protected Stream _inputStream;  // ç”±æµæ¥åˆ›å»º mapping æ–‡ä»¶å¯¹è±¡æ—¶çš„è¾“å…¥æµå¯¹è±¡
+        protected BinaryReader _reader; // ç”¨äºè¯» mapping æ–‡ä»¶çš„æµå¯¹è±¡
+        protected FileStream _writer;   // ç”¨äºå†™ mapping æ–‡ä»¶çš„æµå¯¹è±¡
 
-        //protected int _rows = -1;       // ĞĞÊı
-        //protected int _cols = -1;       // ÁĞÊı
-        protected DieMatrix _dieMatrix; // die Êı¾İ¾ØÕó
+        //protected int _rows = -1;       // è¡Œæ•°
+        //protected int _cols = -1;       // åˆ—æ•°
+        protected DieMatrix _dieMatrix; // die æ•°æ®çŸ©é˜µ
 
-        protected ArrayList _keys;      // mapping ÊôĞÔÃû³Æ
-        protected Hashtable _properties;// mapping ÊôĞÔ
-
+        protected ArrayList _keys;      // mapping å±æ€§åç§°
+        protected Hashtable _properties;// mapping å±æ€§
 
         private object _tag;
 
-        protected readonly DateTime EmpDate = new DateTime(1900, 1, 1);// ¿ÕÈÕÆÚÊ±¼ä
+        protected readonly DateTime EmpDate = new DateTime(1900, 1, 1);// ç©ºæ—¥æœŸæ—¶é—´
 
         public virtual string WaferID
         {
@@ -95,7 +94,7 @@ namespace DataToExcel
             get { return this._fileType; }
         }
 
-        // »ñÈ¡ºÍÉèÖÃ die ¶ÔÏóÁĞ±í
+        // è·å–å’Œè®¾ç½® die å¯¹è±¡åˆ—è¡¨
         public DieMatrix DieMatrix
         {
             get { return this._dieMatrix; }
@@ -158,28 +157,28 @@ namespace DataToExcel
             this.InitialProperties();
         }
 
-        // ´Ó mapping ÎÄ¼şÍêÕûÎÄ¼şÃûÖĞ½âÎö³öÎÄ¼şÃû
+        // ä» mapping æ–‡ä»¶å®Œæ•´æ–‡ä»¶åä¸­è§£æå‡ºæ–‡ä»¶å
         protected virtual string GetFileName(string str)
         {
             return str.Substring(str.LastIndexOf('\\') + 1);
         }
 
-        // ³õÊ¼»¯ mapping ÊôĞÔÁĞ±í
+        // åˆå§‹åŒ– mapping å±æ€§åˆ—è¡¨
         protected abstract void InitialProperties();
 
-        // ¶ÁÈ¡ mapping ÎÄ¼ş
+        // è¯»å– mapping æ–‡ä»¶
         public abstract void Read();
 
-        // ±£´æ mapping ÎÄ¼ş
+        // ä¿å­˜ mapping æ–‡ä»¶
         public abstract void Save();
 
-        // ºÏ²¢ mapping ÎÄ¼ş
+        // åˆå¹¶ mapping æ–‡ä»¶
         public abstract IMappingFile Merge(IMappingFile map, string newfile);
 
-        // ÅĞ¶ÏÒ»¸ö die ÊÇ·ñÎª¿Õ die
+        // åˆ¤æ–­ä¸€ä¸ª die æ˜¯å¦ä¸ºç©º die
         public abstract bool IsEmptyDie(DieData die);
 
-        // Ğı×ªÖ¸¶¨½Ç¶È
+        // æ—‹è½¬æŒ‡å®šè§’åº¦
         public virtual void DeasilRotate(int degree)
         {
             try
@@ -196,12 +195,12 @@ namespace DataToExcel
             }
         }
 
-        // ´ò¿ªÎÄ¼şÁ÷£¬×¼±¸¶ÁÈ¡
+        // æ‰“å¼€æ–‡ä»¶æµï¼Œå‡†å¤‡è¯»å–
         protected void OpenReader()
         {
             try
             {
-                // Èç¹ûÁ÷¶ÔÏó²»Îª¿Õ£¬Ôò´ÓÁ÷¶ÔÏó´´½¨¶ÁÈ¡¶ÔÏó£¬¼´´ÓÁ÷¶ÔÏóÀ´´´½¨ mapping ÎÄ¼ş
+                // å¦‚æœæµå¯¹è±¡ä¸ä¸ºç©ºï¼Œåˆ™ä»æµå¯¹è±¡åˆ›å»ºè¯»å–å¯¹è±¡ï¼Œå³ä»æµå¯¹è±¡æ¥åˆ›å»º mapping æ–‡ä»¶
                 if (this._inputStream != null)
                 {
                     this._reader = new BinaryReader(this._inputStream);
@@ -223,7 +222,7 @@ namespace DataToExcel
             }
         }
 
-        // ¹Ø±ÕÎÄ¼şÁ÷
+        // å…³é—­æ–‡ä»¶æµ
         protected void CloseReader()
         {
             try
@@ -237,8 +236,8 @@ namespace DataToExcel
             }
         }
 
-        // ´ò¿ªÎÄ¼şÁ÷£¬×¼±¸Ğ´ÎÄ¼ş
-        protected void OpenWriter()
+        // æ‰“å¼€æ–‡ä»¶æµï¼Œå‡†å¤‡å†™æ–‡ä»¶
+        public void OpenWriter()
         {
             try
             {
@@ -254,8 +253,8 @@ namespace DataToExcel
             }
         }
 
-        // ¹Ø±ÕÎÄ¼şÁ÷£¬Í£Ö¹Ğ´Èë
-        protected void CloseWriter()
+        // å…³é—­æ–‡ä»¶æµï¼Œåœæ­¢å†™å…¥
+        public void CloseWriter()
         {
             try
             {
@@ -268,7 +267,7 @@ namespace DataToExcel
             }
         }
 
-        // ´ÓÎÄ¼şÖĞ¶ÁÈ¡Ò»ĞĞ
+        // ä»æ–‡ä»¶ä¸­è¯»å–ä¸€è¡Œ
         protected virtual string ReadLine()
         {
             long sp = this._reader.BaseStream.Position;
@@ -304,14 +303,14 @@ namespace DataToExcel
             }
         }
 
-        // ´ÓÎÄ¼şÁ÷ÖĞ¶ÁÈ¡×Ö·û´®
+        // ä»æ–‡ä»¶æµä¸­è¯»å–å­—ç¬¦ä¸²
         protected virtual string ReadToString(int length)
         {
             byte[] buffer = this._reader.ReadBytes(length);
             return Encoding.ASCII.GetString(buffer).Trim();
         }
 
-        // ´ÓÎÄ¼şÁ÷ÖĞ¶ÁÈ¡×Ö·û´®
+        // ä»æ–‡ä»¶æµä¸­è¯»å–å­—ç¬¦ä¸²
         protected virtual string ReadToString(int sp, int length)
         {
             this._reader.BaseStream.Position = sp;
@@ -320,7 +319,7 @@ namespace DataToExcel
             return Encoding.ASCII.GetString(buffer).Trim();
         }
 
-        // ´ÓÎÄ¼şÖĞ¶ÁÈ¡×Ö·û
+        // ä»æ–‡ä»¶ä¸­è¯»å–å­—ç¬¦
         protected virtual byte ReadToByte()
         {
             byte buffer = this._reader.ReadByte();
@@ -334,7 +333,7 @@ namespace DataToExcel
         }
 
 
-        // ¶ÁÈ¡ÈÕÆÚ
+        // è¯»å–æ—¥æœŸ
         protected virtual DateTime ReadToDate()
         {
             int year, month, day, hour, min;
@@ -351,54 +350,54 @@ namespace DataToExcel
             return new DateTime(year, month, day, hour, min, 0);
         }
 
-        // ´ÓÎÄ¼şÖĞ¶ÁÈ¡ÕûÊı
+        // ä»æ–‡ä»¶ä¸­è¯»å–æ•´æ•°
         protected virtual short ReadToInt16()
         {
 
             byte[] buffer = this._reader.ReadBytes(2);
 
-            // ·´×ª×Ö½ÚË³Ğò
+            // åè½¬å­—èŠ‚é¡ºåº
             this.Reverse(ref buffer);
 
             return BitConverter.ToInt16(buffer, 0);
         }
 
-        // ´ÓÎÄ¼şÖĞ¶ÁÈ¡ÕûÊı
+        // ä»æ–‡ä»¶ä¸­è¯»å–æ•´æ•°
         protected virtual short ReadToInt16(int sp)
         {
             this._reader.BaseStream.Position = sp;
             byte[] buffer = this._reader.ReadBytes(2);
 
-            // ·´×ª×Ö½ÚË³Ğò
+            // åè½¬å­—èŠ‚é¡ºåº
             this.Reverse(ref buffer);
 
             return BitConverter.ToInt16(buffer, 0);
         }
 
-        // ´ÓÎÄ¼şÖĞ¶ÁÈ¡ÕûÊı
+        // ä»æ–‡ä»¶ä¸­è¯»å–æ•´æ•°
         protected virtual int ReadToInt32()
         {
             byte[] buffer = this._reader.ReadBytes(4);
 
-            // ·´×ª×Ö½ÚË³Ğò
+            // åè½¬å­—èŠ‚é¡ºåº
             this.Reverse(ref buffer);
 
             return BitConverter.ToInt32(buffer, 0);
         }
 
-        // ´ÓÎÄ¼şÖĞ¶ÁÈ¡ÕûÊı
+        // ä»æ–‡ä»¶ä¸­è¯»å–æ•´æ•°
         protected virtual int ReadToInt32(int sp)
         {
             this._reader.BaseStream.Position = sp;
             byte[] buffer = this._reader.ReadBytes(4);
 
-            // ·´×ª×Ö½ÚË³Ğò
+            // åè½¬å­—èŠ‚é¡ºåº
             this.Reverse(ref buffer);
 
             return BitConverter.ToInt32(buffer, 0);
         }
 
-        // ·´×ª×Ö½ÚË³Ğò
+        // åè½¬å­—èŠ‚é¡ºåº
         protected virtual void Reverse(ref byte[] target)
         {
             int n1 = 0, n2 = target.Length - 1;
@@ -414,8 +413,8 @@ namespace DataToExcel
             }
         }
 
-        // ÏòÎÄ¼şÖĞĞ´ÈëÒ»¸ö×Ö·û´®
-        protected virtual void WriteString(string str)
+        // å‘æ–‡ä»¶ä¸­å†™å…¥ä¸€ä¸ªå­—ç¬¦ä¸²
+        public virtual void WriteString(string str)
         {
             if (!this._writer.CanWrite)
                 throw new Exception(this._path + this._fileName + " can't be writen.");
@@ -428,11 +427,11 @@ namespace DataToExcel
             return null;
         }
 
-        // ÏòÊôĞÔÁĞ±íÖĞÌí¼ÓĞÂÊôĞÔ
+        // å‘å±æ€§åˆ—è¡¨ä¸­æ·»åŠ æ–°å±æ€§
         public void AddProperity(string key, object val)
         {
             if (this._keys == null || this._properties == null)
-                throw new Exception("ÊôĞÔÁĞ±íÎ´±»´´½¨¡£");
+                throw new Exception("å±æ€§åˆ—è¡¨æœªè¢«åˆ›å»ºã€‚");
 
             if (this._keys.Contains(key))
             {
