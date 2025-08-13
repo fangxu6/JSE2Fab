@@ -69,6 +69,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="PubClass.cs" />
     <Compile Include="Template\Fitipower\Device_BZ1610_8_16_00P.cs" />
+    <Compile Include="Template\others\Device_R2406_8_8_CP3.cs" />
     <Compile Include="Template\others\Device_32C274_8_14_00P.cs" />
     <Compile Include="Template\ZhiCun\Device_CPS5352_8_4_CP1.cs" />
     <Compile Include="Template\ChipOne\Device_C8N003-12-46-00P.cs" />

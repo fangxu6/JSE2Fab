@@ -114,7 +114,7 @@ namespace TSK_MERGE_SINF
         {
             Tsk tsk = ParseTsk(tskFile);
             IncomingFileToTskTemplate incomingFilePattern = DeviceFactory.GetDeviceFromTsk(tsk.Device, generalDeviceBox.SelectedItem.ToString());
-            incomingFilePattern.TxtName = _txtNameList;
+            incomingFilePattern.TxtName = _txtNameList; 
             incomingFilePattern.TskName = _tskNameList;
             incomingFilePattern.Run(tsk, txtFile, tskFile,inkBinNoBox.SelectedItem.ToString(), markDieCompareBox.SelectedItem.ToString(),waferIDCompareBox.SelectedItem.ToString());
         }
