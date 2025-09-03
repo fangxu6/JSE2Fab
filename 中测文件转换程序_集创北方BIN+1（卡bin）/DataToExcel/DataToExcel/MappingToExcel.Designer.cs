@@ -130,19 +130,19 @@
             this.loadFileMenuItem,
             this.clearFileMenuItem});
             this.contextMenuStrip1.Name = "contextMenuStrip1";
-            this.contextMenuStrip1.Size = new System.Drawing.Size(160, 64);
+            this.contextMenuStrip1.Size = new System.Drawing.Size(193, 80);
             // 
             // loadFileMenuItem
             // 
             this.loadFileMenuItem.Name = "loadFileMenuItem";
-            this.loadFileMenuItem.Size = new System.Drawing.Size(159, 30);
+            this.loadFileMenuItem.Size = new System.Drawing.Size(192, 38);
             this.loadFileMenuItem.Text = "Load File";
             this.loadFileMenuItem.Click += new System.EventHandler(this.loadFileToolStripMenuItem_Click);
             // 
             // clearFileMenuItem
             // 
             this.clearFileMenuItem.Name = "clearFileMenuItem";
-            this.clearFileMenuItem.Size = new System.Drawing.Size(159, 30);
+            this.clearFileMenuItem.Size = new System.Drawing.Size(192, 38);
             this.clearFileMenuItem.Text = "Clear File";
             this.clearFileMenuItem.Click += new System.EventHandler(this.clearFileMenuItem_Click);
             // 
@@ -176,7 +176,7 @@
             this.FieldListBox1.FormattingEnabled = true;
             this.FieldListBox1.Location = new System.Drawing.Point(491, 12);
             this.FieldListBox1.Name = "FieldListBox1";
-            this.FieldListBox1.Size = new System.Drawing.Size(103, 252);
+            this.FieldListBox1.Size = new System.Drawing.Size(103, 226);
             this.FieldListBox1.TabIndex = 4;
             this.FieldListBox1.Visible = false;
             // 
@@ -257,7 +257,7 @@
             this.label1.AutoSize = true;
             this.label1.Location = new System.Drawing.Point(3, 6);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(116, 18);
+            this.label1.Size = new System.Drawing.Size(154, 24);
             this.label1.TabIndex = 5;
             this.label1.Text = "Target Path:";
             // 
@@ -266,7 +266,7 @@
             this.textBox1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.textBox1.Location = new System.Drawing.Point(86, 4);
             this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(444, 28);
+            this.textBox1.Size = new System.Drawing.Size(444, 35);
             this.textBox1.TabIndex = 10;
             this.textBox1.Leave += new System.EventHandler(this.textBox1_Leave);
             // 
@@ -286,7 +286,7 @@
             this.button4.Name = "button4";
             this.button4.Size = new System.Drawing.Size(97, 29);
             this.button4.TabIndex = 4;
-            this.button4.Text = "ExportToTxt";
+            this.button4.Text = "ExportToTmb";
             this.button4.UseVisualStyleBackColor = true;
             this.button4.Click += new System.EventHandler(this.button4_Click);
             // 
@@ -301,7 +301,7 @@
             this.图谱合并ToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(723, 32);
+            this.menuStrip1.Size = new System.Drawing.Size(723, 39);
             this.menuStrip1.TabIndex = 7;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -312,14 +312,14 @@
             this.loadFileToolStripMenuItem,
             this.clearListToolStripMenuItem});
             this.文件ToolStripMenuItem.Name = "文件ToolStripMenuItem";
-            this.文件ToolStripMenuItem.Size = new System.Drawing.Size(78, 28);
+            this.文件ToolStripMenuItem.Size = new System.Drawing.Size(102, 35);
             this.文件ToolStripMenuItem.Text = "File(&F)";
             // 
             // setPathToolStripMenuItem
             // 
             this.setPathToolStripMenuItem.Name = "setPathToolStripMenuItem";
             this.setPathToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.S)));
-            this.setPathToolStripMenuItem.Size = new System.Drawing.Size(254, 34);
+            this.setPathToolStripMenuItem.Size = new System.Drawing.Size(338, 44);
             this.setPathToolStripMenuItem.Text = "Set Path";
             this.setPathToolStripMenuItem.Click += new System.EventHandler(this.button5_Click);
             // 
@@ -327,7 +327,7 @@
             // 
             this.loadFileToolStripMenuItem.Name = "loadFileToolStripMenuItem";
             this.loadFileToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.L)));
-            this.loadFileToolStripMenuItem.Size = new System.Drawing.Size(254, 34);
+            this.loadFileToolStripMenuItem.Size = new System.Drawing.Size(338, 44);
             this.loadFileToolStripMenuItem.Text = "Load File";
             this.loadFileToolStripMenuItem.Click += new System.EventHandler(this.loadFileToolStripMenuItem_Click);
             // 
@@ -335,7 +335,7 @@
             // 
             this.clearListToolStripMenuItem.Name = "clearListToolStripMenuItem";
             this.clearListToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.C)));
-            this.clearListToolStripMenuItem.Size = new System.Drawing.Size(254, 34);
+            this.clearListToolStripMenuItem.Size = new System.Drawing.Size(338, 44);
             this.clearListToolStripMenuItem.Text = "Clear List";
             this.clearListToolStripMenuItem.Click += new System.EventHandler(this.clearFileMenuItem_Click);
             // 
@@ -346,14 +346,14 @@
             this.expToTxtToolStripMenuItem,
             this.expToTmaToolStripMenuItem});
             this.导出ToolStripMenuItem.Name = "导出ToolStripMenuItem";
-            this.导出ToolStripMenuItem.Size = new System.Drawing.Size(104, 28);
+            this.导出ToolStripMenuItem.Size = new System.Drawing.Size(136, 35);
             this.导出ToolStripMenuItem.Text = "Export(&E)";
             // 
             // expToExcelToolStripMenuItem
             // 
             this.expToExcelToolStripMenuItem.Name = "expToExcelToolStripMenuItem";
             this.expToExcelToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.C)));
-            this.expToExcelToolStripMenuItem.Size = new System.Drawing.Size(271, 34);
+            this.expToExcelToolStripMenuItem.Size = new System.Drawing.Size(361, 44);
             this.expToExcelToolStripMenuItem.Text = "ExpToExcel";
             this.expToExcelToolStripMenuItem.Click += new System.EventHandler(this.button1_Click);
             // 
@@ -361,7 +361,7 @@
             // 
             this.expToTxtToolStripMenuItem.Name = "expToTxtToolStripMenuItem";
             this.expToTxtToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.X)));
-            this.expToTxtToolStripMenuItem.Size = new System.Drawing.Size(271, 34);
+            this.expToTxtToolStripMenuItem.Size = new System.Drawing.Size(361, 44);
             this.expToTxtToolStripMenuItem.Text = "ExpToTxt";
             this.expToTxtToolStripMenuItem.Click += new System.EventHandler(this.button4_Click);
             // 
@@ -369,7 +369,7 @@
             // 
             this.expToTmaToolStripMenuItem.Name = "expToTmaToolStripMenuItem";
             this.expToTmaToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.M)));
-            this.expToTmaToolStripMenuItem.Size = new System.Drawing.Size(271, 34);
+            this.expToTmaToolStripMenuItem.Size = new System.Drawing.Size(361, 44);
             this.expToTmaToolStripMenuItem.Text = "ExpToTma";
             this.expToTmaToolStripMenuItem.Click += new System.EventHandler(this.button6_Click);
             // 
@@ -378,14 +378,14 @@
             this.aboutToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.aboutToolStripMenuItem1});
             this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
-            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(93, 28);
+            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(123, 35);
             this.aboutToolStripMenuItem.Text = "Help(&H)";
             // 
             // aboutToolStripMenuItem1
             // 
             this.aboutToolStripMenuItem1.Name = "aboutToolStripMenuItem1";
             this.aboutToolStripMenuItem1.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.A)));
-            this.aboutToolStripMenuItem1.Size = new System.Drawing.Size(231, 34);
+            this.aboutToolStripMenuItem1.Size = new System.Drawing.Size(307, 44);
             this.aboutToolStripMenuItem1.Text = "About";
             this.aboutToolStripMenuItem1.Click += new System.EventHandler(this.aboutToolStripMenuItem1_Click);
             // 
@@ -394,13 +394,13 @@
             this.图谱合并ToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.sINF合并TSKToolStripMenuItem});
             this.图谱合并ToolStripMenuItem.Name = "图谱合并ToolStripMenuItem";
-            this.图谱合并ToolStripMenuItem.Size = new System.Drawing.Size(98, 28);
+            this.图谱合并ToolStripMenuItem.Size = new System.Drawing.Size(130, 35);
             this.图谱合并ToolStripMenuItem.Text = "图谱合并";
             // 
             // sINF合并TSKToolStripMenuItem
             // 
             this.sINF合并TSKToolStripMenuItem.Name = "sINF合并TSKToolStripMenuItem";
-            this.sINF合并TSKToolStripMenuItem.Size = new System.Drawing.Size(217, 34);
+            this.sINF合并TSKToolStripMenuItem.Size = new System.Drawing.Size(292, 44);
             this.sINF合并TSKToolStripMenuItem.Text = "SINF合并TSK";
             this.sINF合并TSKToolStripMenuItem.Click += new System.EventHandler(this.sINF合并TSKToolStripMenuItem_Click);
             // 
@@ -414,9 +414,9 @@
             this.groupBox3.Controls.Add(this.button3);
             this.groupBox3.Controls.Add(this.button1);
             this.groupBox3.Dock = System.Windows.Forms.DockStyle.Right;
-            this.groupBox3.Location = new System.Drawing.Point(607, 32);
+            this.groupBox3.Location = new System.Drawing.Point(607, 39);
             this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(116, 373);
+            this.groupBox3.Size = new System.Drawing.Size(116, 366);
             this.groupBox3.TabIndex = 8;
             this.groupBox3.TabStop = false;
             // 

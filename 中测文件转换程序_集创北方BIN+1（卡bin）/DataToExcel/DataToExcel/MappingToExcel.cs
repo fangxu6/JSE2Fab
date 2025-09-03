@@ -95,13 +95,13 @@ namespace DataToExcel
                 CmdTxt.InitTotal();
                 for (num2 = 0; num2 <= (count - 1); num2++)
                 {
-                    new CMDTskToTxt().Convert(this.lsvItems.Items[num2].SubItems[1].Text.Trim(), this.textBox1.Text + @"\TxtOutFile\" + this.LotNo + @"\" + this.lsvItems.Items[num2].Text.Trim() + ".txt");
+                    new CMDTskToTxt().Convert(this.lsvItems.Items[num2].SubItems[1].Text.Trim(), this.textBox1.Text + @"\TxtOutFile\" + this.LotNo + @"\" + this.lsvItems.Items[num2].Text.Trim() + ".tmb");
                     this.progressBar1.Value++;
                 }
 
 
 
-                if (MessageBox.Show("Export TXT File Success!Would you like to open it?", "confirm", MessageBoxButtons.YesNo) == DialogResult.Yes)
+                if (MessageBox.Show("Export TMB File Success!Would you like to open it?", "confirm", MessageBoxButtons.YesNo) == DialogResult.Yes)
                 {
                     Process.Start(this.textBox1.Text + @"\TxtOutFile\" + this.LotNo + @"\");
                 }

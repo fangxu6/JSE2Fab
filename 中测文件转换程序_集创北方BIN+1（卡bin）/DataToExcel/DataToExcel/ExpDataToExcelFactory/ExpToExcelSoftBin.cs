@@ -14,7 +14,7 @@ namespace DataToExcel.ExpDataToExcelFactory
         public static string _TotalYield = "";
         public abstract void expToExcel(Excel.Worksheet worksheet);
 
-        public void SaveToTxt(Dat source, string txtfile)
+        public void SaveToTxt(Tsk source, string txtfile)
         {
             // 创建新文件
             CmdTxt cmdtxt = new CmdTxt(txtfile);
