@@ -163,6 +163,12 @@ namespace TSK_MERGE_SINF.Template
             {
                 for (int k = 0; k < tsk.Rows * tsk.Cols; k++)
                 {
+                    //如果tsk对应位置是skip2 die或者mark die,则不改
+                    if (tsk.DieMatrix[k].Attribute == DieCategory.SkipDie2 || tsk.DieMatrix[k].Attribute == DieCategory.MarkDie || tsk.DieMatrix[k].Attribute == DieCategory.SkipDie)
+                    {
+                        continue;
+                    }
+
                     if (txtFullData[k].ToString() == ".")//Skip Die
                     {
                         continue;
@@ -173,6 +179,7 @@ namespace TSK_MERGE_SINF.Template
                         {
                             if (txtFullData[k].ToString() == "X")//sinf fail,需要改为fail属性，BIN也需要改
                             {
+                                
                                 tsk.DieMatrix[k].Attribute = DieCategory.FailDie;
                                 tsk.DieMatrix[k].Bin = inkBinNo;
                             }
