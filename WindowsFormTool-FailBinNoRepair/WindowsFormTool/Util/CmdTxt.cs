@@ -9,9 +9,6 @@
 namespace DataToExcel
 {
     using System;
-    using System.Drawing;
-    using System.Collections;
-    using DataToExcel;
     using System.IO;
 
     public class CmdTxt : MappingBase
@@ -98,14 +95,6 @@ namespace DataToExcel
                        
                         for (int m = 0; m < base.DieMatrix.XMax; m++)
                         {
-                            /*----old txt//////////////////////////////////
-                            if (base.DieMatrix[m, k].Attribute == DieCategory.FailDie)
-                            {
-                                die.CountDie(base.DieMatrix[m, k].Bin);
-                            }
-                            this.WriteString(UtilFunction.DieCategoryCaption(base.DieMatrix[m, k].Attribute) + " ");
-                        }
-                              */
 
                             switch (base.DieMatrix[m, k].Attribute)
                             {

@@ -14,7 +14,7 @@ namespace DataToExcel
 
     public abstract class MappingBase : IMappingFile
     {
-        protected readonly string Enter = new string((char)13, 1) + new string((char)10, 1);
+        public readonly string Enter = new string((char)13, 1) + new string((char)10, 1);
 
         protected string _fileType;     // mapping 文件类型
         protected string _path;         // mapping 文件路径
@@ -31,7 +31,6 @@ namespace DataToExcel
 
         protected ArrayList _keys;      // mapping 属性名称
         protected Hashtable _properties;// mapping 属性
-
 
         private object _tag;
 
@@ -238,7 +237,7 @@ namespace DataToExcel
         }
 
         // 打开文件流，准备写文件
-        protected void OpenWriter()
+        public void OpenWriter()
         {
             try
             {
@@ -255,7 +254,7 @@ namespace DataToExcel
         }
 
         // 关闭文件流，停止写入
-        protected void CloseWriter()
+        public void CloseWriter()
         {
             try
             {
@@ -415,7 +414,7 @@ namespace DataToExcel
         }
 
         // 向文件中写入一个字符串
-        protected virtual void WriteString(string str)
+        public virtual void WriteString(string str)
         {
             if (!this._writer.CanWrite)
                 throw new Exception(this._path + this._fileName + " can't be writen.");

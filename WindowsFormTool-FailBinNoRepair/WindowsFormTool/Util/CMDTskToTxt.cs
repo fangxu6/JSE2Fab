@@ -1,8 +1,8 @@
-
+ï»¿
 /*
- * ×÷Õß£ºsky
- * Ê±¼ä£º2008-06-25
- * ×÷ÓÃ£ºCMD ÒªÇó£¬½« tsk ¸ñÊ½×ª»»³É txt ¸ñÊ½
+ * ä½œè€…ï¼šsky
+ * æ—¶é—´ï¼š2008-06-25
+ * ä½œç”¨ï¼šCMD è¦æ±‚ï¼Œå°† tsk æ ¼å¼è½¬æ¢æˆ txt æ ¼å¼
  */
 
 namespace DataToExcel
@@ -15,24 +15,24 @@ namespace DataToExcel
     {
         public override void Convert(string tskfile, string txtfile)
         {
-            // ¶ÁÈ¡À´Ô´ÎÄ¼ş
+            // è¯»å–æ¥æºæ–‡ä»¶
             Dat source = new Dat(tskfile);  //zjf 2008.09.03
             //IMappingFile source = new Dat(tskfile);
             source.Read();
 
-            // ¼ÓÔØ×ª»»ÅäÖÃ
+            // åŠ è½½è½¬æ¢é…ç½®
             ConvertConfig convertConfig = new ConvertConfig("tsk", "cmdtxt");
 
-            // ´´½¨ĞÂÎÄ¼ş
+            // åˆ›å»ºæ–°æ–‡ä»¶
             CmdTxt cmdtxt = new CmdTxt(txtfile);
 
-            // ¶ÁÈ¡Ó³Éä×Ö¶ÎÖµ
+            // è¯»å–æ˜ å°„å­—æ®µå€¼
             foreach (ConvertConfig.ConvertField f in convertConfig.Fields)
             {
                 cmdtxt.Properties[f.To] = source.Properties[f.From];
             }
 
-            // µ¼Èë die ÁĞ±í
+            // å¯¼å…¥ die åˆ—è¡¨
             cmdtxt.DieMatrix = source.DieMatrix.Clone();
             cmdtxt.RowCount = cmdtxt.DieMatrix.YMax;
             cmdtxt.ColCount = cmdtxt.DieMatrix.XMax;
@@ -54,7 +54,7 @@ namespace DataToExcel
             cmdtxt.FlatDir = source.FlatDir;
             //end
 
-            // ÖØĞÂ¼ÆËãÍ³¼ÆÊı¾İ
+            // é‡æ–°è®¡ç®—ç»Ÿè®¡æ•°æ®
             cmdtxt.PassDie = 0;
             cmdtxt.FailDie = 0;
 
@@ -66,33 +66,33 @@ namespace DataToExcel
                     cmdtxt.PassDie += 1;
             }
 
-            // Ğı×ª½Ç¶È
+            // æ—‹è½¬è§’åº¦
             cmdtxt.DeasilRotate(convertConfig.Rotate);
 
-            // ±£´æÎÄ¼ş
+            // ä¿å­˜æ–‡ä»¶
             cmdtxt.Save();
         }
 
         public override IMappingFile Convert(IMappingFile source)
         {
-            // ¼ÓÔØ×ª»»ÅäÖÃ
+            // åŠ è½½è½¬æ¢é…ç½®
             ConvertConfig convertConfig = new ConvertConfig("tsk", "cmdtxt");
 
-            // ´´½¨ĞÂÎÄ¼ş
+            // åˆ›å»ºæ–°æ–‡ä»¶
             CmdTxt cmdtxt = new CmdTxt(source.FileName);
 
-            // ¶ÁÈ¡Ó³Éä×Ö¶ÎÖµ
+            // è¯»å–æ˜ å°„å­—æ®µå€¼
             foreach (ConvertConfig.ConvertField f in convertConfig.Fields)
             {
                 cmdtxt.Properties[f.To] = source.Properties[f.From];
             }
 
-            // µ¼Èë die ÁĞ±í
+            // å¯¼å…¥ die åˆ—è¡¨
             cmdtxt.DieMatrix = source.DieMatrix.Clone();
             cmdtxt.RowCount = cmdtxt.DieMatrix.YMax;
             cmdtxt.ColCount = cmdtxt.DieMatrix.XMax;
 
-            // Ğı×ª½Ç¶È
+            // æ—‹è½¬è§’åº¦
             cmdtxt.DeasilRotate(convertConfig.Rotate);
 
             return cmdtxt;
