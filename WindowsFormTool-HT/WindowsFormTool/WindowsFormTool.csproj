@@ -73,6 +73,7 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="PubClass.cs" />
+    <Compile Include="Tests\InkRuleTests.cs" />
     <Compile Include="TskUtil\InkRules\CrossPatternInkRule.cs" />
     <Compile Include="TskUtil\InkRules\IInkRule.cs" />
     <Compile Include="TskUtil\InkRules\InkRuleManager.cs" />
