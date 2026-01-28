@@ -743,8 +743,18 @@ namespace DataToExcel
         /// </summary>
         public override void Save()
         {
+            Save(this.FullName);
+        }
+
+        /// <summary>
+        /// 将数据保存为 tsk 文件到指定路径
+        /// </summary>
+        /// <param name="filePath">保存路径</param>
+        public void Save(string filePath)
+        {
             try
             {
+                this.FullName = filePath;
                 byte[] buf;
 
                 // 打开或创建文件

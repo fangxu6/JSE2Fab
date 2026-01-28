@@ -220,7 +220,6 @@ namespace DataToExcel
             this.button5.TabIndex = 13;
             this.button5.Text = "浏览";
             this.button5.UseVisualStyleBackColor = true;
-            this.button5.Click += new System.EventHandler(this.loadSecondFile_Click);
             // 
             // button3
             // 
@@ -231,7 +230,6 @@ namespace DataToExcel
             this.button3.TabIndex = 1;
             this.button3.Text = "浏览";
             this.button3.UseVisualStyleBackColor = true;
-            this.button3.Click += new System.EventHandler(this.loadFirstFile_Click);
             // 
             // panel1
             // 
