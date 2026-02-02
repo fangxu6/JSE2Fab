@@ -16,9 +16,64 @@ namespace DataToExcel
         private List<string> secondFileList;
         private string _inkTskPath; // INK功能使用的TSK文件路径
 
+        // 当前“选择TSK”按钮实际执行的动作（避免反复 +=/-= Click）
+        private Action _selectPrimaryAction;
+
+        private enum Mode
+        {
+            Merge = 0,
+            Ink = 1
+        }
+
+        private sealed class ModeUi
+        {
+            public string PrimaryLabelText;
+            public string SecondaryLabelText;
+            public string DescriptionText;
+            public string PrimaryBrowseText;
+            public string SecondaryBrowseText;
+            public bool SecondaryBrowseEnabled;
+            public string StartButtonText;
+            public Action<Form1> SelectPrimaryAction;
+        }
+
+        private readonly Dictionary<int, ModeUi> _modeUiMap;
+
         public Form1()
         {
             InitializeComponent();
+
+            // 统一绑定一次 Click，后续通过切换 _selectPrimaryAction 来改变行为
+            button6.Click += SelectPrimary_Click;
+            button3.Click += SelectPrimary_Click;
+            button5.Click += SelectSecondary_Click;
+
+            _modeUiMap = new Dictionary<int, ModeUi>
+            {
+                [(int)Mode.Merge] = new ModeUi
+                {
+                    PrimaryLabelText = "选择TSK 1（模板）",
+                    SecondaryLabelText = "选择TSK 2（目标）",
+                    DescriptionText = "说明：\r\n将TSK 1中的Fail合并到TSK 2\r\n",
+                    PrimaryBrowseText = "选择TSK 1",
+                    SecondaryBrowseText = "选择TSK 2",
+                    SecondaryBrowseEnabled = true,
+                    StartButtonText = "开始合并",
+                    SelectPrimaryAction = f => f.SelectFolderAsFirstGroup()
+                },
+                [(int)Mode.Ink] = new ModeUi
+                {
+                    PrimaryLabelText = "选择TSK文件",
+                    SecondaryLabelText = "已选：-",
+                    DescriptionText = "说明：\r\n选择TSK文件后，点击开始进行INK处理\r\n",
+                    PrimaryBrowseText = "选择TSK",
+                    SecondaryBrowseText = "-",
+                    SecondaryBrowseEnabled = false,
+                    StartButtonText = "开始INK",
+                    SelectPrimaryAction = f => f.SelectSingleTskForInk()
+                }
+            };
+
             comboBox1.SelectedIndex = 0; // 默认选择第一个选项
         }
 
@@ -131,61 +186,90 @@ namespace DataToExcel
 
         private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
-            switch (comboBox1.SelectedIndex)
+            ApplyMode(comboBox1.SelectedIndex);
+        }
+
+        private void ApplyMode(int selectedIndex)
+        {
+            ModeUi ui;
+            if (!_modeUiMap.TryGetValue(selectedIndex, out ui))
             {
-                case 0: // TSK合并
-                    button6.Text = "选择TSK 1（模板）";
-                    button2.Text = "选择TSK 2（目标）";
-                    button4.Text = "说明：\r\n将TSK 1中的Fail合并到TSK 2\r\n";
-                    button3.Text = "选择TSK 1";
-                    button5.Text = "选择TSK 2";
-                    button6.Click -= button6_Click_INK;
-                    button6.Click -= button6_Click;
-                    button6.Click += button6_Click;
-                    button3.Click -= button6_Click_INK;
-                    button3.Click -= button6_Click;
-                    button3.Click += button6_Click;
-                    button5.Click -= button5_Click;
-                    button5.Click += button5_Click;
-                    button1.Text = "开始合并";
-                    break;
-                case 1: // INK规则
-                    button6.Text = "选择TSK文件";
-                    button2.Text = "已选：-";
-                    button4.Text = "说明：\r\n选择TSK文件后，点击开始进行INK处理\r\n";
-                    button3.Text = "选择TSK";
-                    button5.Text = "-";
-                    button6.Click -= button6_Click;
-                    button6.Click -= button6_Click_INK;
-                    button6.Click += button6_Click_INK;
-                    button3.Click -= button6_Click;
-                    button3.Click -= button6_Click_INK;
-                    button3.Click += button6_Click_INK;
-                    button5.Text = "-";
-                    button1.Text = "开始INK";
-                    break;
-                default:
-                    button6.Text = "请选择功能";
-                    button2.Text = "请选择功能";
-                    button4.Text = "说明：\r\n请从下拉菜单选择功能\r\n";
-                    break;
+                // fallback
+                button6.Text = "请选择功能";
+                button2.Text = "请选择功能";
+                button4.Text = "说明：\r\n请从下拉菜单选择功能\r\n";
+                button3.Text = "浏览";
+                button5.Text = "浏览";
+                button5.Enabled = false;
+                button1.Text = "开始";
+                _selectPrimaryAction = null;
+                return;
+            }
+
+            button6.Text = ui.PrimaryLabelText;
+            button2.Text = ui.SecondaryLabelText;
+            button4.Text = ui.DescriptionText;
+
+            button3.Text = ui.PrimaryBrowseText;
+            button5.Text = ui.SecondaryBrowseText;
+            button5.Enabled = ui.SecondaryBrowseEnabled;
+
+            button1.Text = ui.StartButtonText;
+
+            _selectPrimaryAction = ui.SelectPrimaryAction == null ? (Action)null : (() => ui.SelectPrimaryAction(this));
+        }
+
+        private void SelectPrimary_Click(object sender, EventArgs e)
+        {
+            var action = _selectPrimaryAction;
+            if (action != null)
+            {
+                action();
+            }
+        }
+
+        private void SelectSecondary_Click(object sender, EventArgs e)
+        {
+            // 只有合并模式需要 second group；Ink 模式下 button5.Enabled=false 不会触发
+            button5_Click(sender, e);
+        }
+
+        private void SelectFolderAsFirstGroup()
+        {
+            _inkTskPath = null; // 切换到文件夹选择时清掉单文件选择
+            button6_Click(this, EventArgs.Empty);
+        }
+
+        /// <summary>
+        /// 加载TSK文件（用于INK功能）——重命名为更语义化的方法，避免在模式切换里频繁绑/解绑 Click
+        /// </summary>
+        private void SelectSingleTskForInk()
+        {
+            using (var dialog = new OpenFileDialog())
+            {
+                dialog.Filter = "所有文件|*.*";
+
+                if (dialog.ShowDialog() != DialogResult.OK)
+                {
+                    return;
+                }
+
+                _inkTskPath = dialog.FileName;
+
+                // 只在这里更新与“已选文件”相关的 UI，避免模式切换里堆积 Text 赋值
+                button6.Text = Path.GetFileName(_inkTskPath);
+                button2.Text = "已选：1个";
+
+                UpdateRichTextBox($"已加载TSK文件：{_inkTskPath}\n");
             }
         }
 
         /// <summary>
-        /// 加载TSK文件（用于INK功能）
+        /// 保留原事件方法签名（如果别处有引用），内部转调到新实现。
         /// </summary>
         private void button6_Click_INK(object sender, EventArgs e)
         {
-            OpenFileDialog dialog = new OpenFileDialog();
-            dialog.Filter = "TSK文件|*.tsk|所有文件|*.*";
-            if (dialog.ShowDialog() == DialogResult.OK)
-            {
-                _inkTskPath = dialog.FileName;
-                button6.Text = Path.GetFileName(_inkTskPath);
-                button2.Text = "已选：1个";
-                UpdateRichTextBox($"已加载TSK文件：{_inkTskPath}\n");
-            }
+            SelectSingleTskForInk();
         }
     }
 }
