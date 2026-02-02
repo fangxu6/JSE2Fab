@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
@@ -15,11 +15,11 @@ namespace DataToExcel
         static void Main(string[] args)
         {
             // 命令行参数：--test 运行单元测试
-            if (args.Length > 0 && args[0] == "--test")
-            {
-                RunTests();
-                return;
-            }
+            // if (args.Length > 0 && args[0] == "--test")
+            // {
+            //     RunTests();
+            //     return;
+            // }
 
             // 防止重复运行
             Process currentProcess = Process.GetCurrentProcess();

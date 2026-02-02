@@ -12,7 +12,8 @@ public class TskProcessor
     {
         _processors = new Dictionary<int, ITskProcessor>
         {
-            { 1, new TskMergeProcessor() }
+            { 0, new TskMergeProcessor() },  // Case 0: TSK合并
+            { 1, new TskInkProcessor() }      // Case 1: INK规则
         };
     }
 
@@ -23,6 +24,10 @@ public class TskProcessor
         {
             processor.ProcessSingle(firstFile, secondFile, updateStatus, progressBar);
         }
+        else
+        {
+            throw new NotSupportedException($"操作类型 {operationType} 不支持");
+        }
     }
 
     public void ProcessBatch(List<string> firstFiles, List<string> secondFiles, int operationType,
@@ -32,8 +37,9 @@ public class TskProcessor
         {
             processor.ProcessBatch(firstFiles, secondFiles, updateStatus, progressBar);
         }
+        else
+        {
+            throw new NotSupportedException($"操作类型 {operationType} 不支持");
+        }
     }
-
-    
-
 }
