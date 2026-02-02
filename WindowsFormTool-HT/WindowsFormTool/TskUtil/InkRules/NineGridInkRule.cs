@@ -7,14 +7,14 @@ namespace WindowsFormTool.TskUtil.InkRules
 {
     /// <summary>
     /// 九宫格规则
-    /// 检测3x3区域内存在Fail Die时，将周围Pass Die标记为Fail
+        /// 检测3x3区域内全部为Fail Die时，将周围Pass Die标记为Fail
     /// 支持1-3圈迭代处理
     /// </summary>
     public class NineGridInkRule : IInkRule
     {
         public const string RULE_ID = "nine_grid_ink";
         public const string RULE_NAME = "九宫格";
-        public const string DESCRIPTION = "检测3x3区域内的Fail Die，将周围Pass Die标记为Fail，支持1-3圈迭代";
+        public const string DESCRIPTION = "检测3x3区域内全部为Fail Die，将周围Pass Die标记为Fail，支持1-3圈迭代";
 
         private static readonly Dictionary<string, object> DefaultParameters = new Dictionary<string, object>
         {
@@ -123,6 +123,9 @@ namespace WindowsFormTool.TskUtil.InkRules
                 int ringCount = 0;
                 foreach (var coord in ringDies)
                 {
+                    if (!IsInBounds(matrix, coord.Item1, coord.Item2))
+                        continue;
+
                     var die = matrix[coord.Item1, coord.Item2];
 
                     // 跳过已经被INK的Die
@@ -162,53 +165,26 @@ namespace WindowsFormTool.TskUtil.InkRules
         {
             var result = new List<Tuple<int, int>>();
 
-            // 扩展邻域范围：第N圈对应 (2N+1) x (2N+1) 区域
-            int gridSize = 2 * ring + 1;
-            int halfSize = ring;
-
             for (int x = 0; x < matrix.XMax; x++)
             {
                 for (int y = 0; y < matrix.YMax; y++)
                 {
-                    var centerDie = matrix[x, y];
+                    // 检测中心3x3区域是否全Fail
+                    var gridDies = GetGridDies(matrix, x, y, 1);
+                    bool isFullFailGrid = gridDies.Count > 0 && gridDies.All(d => d.Attribute == DieCategory.FailDie);
+                    // bool isFullFailGrid = gridDies.Count > 0 && gridDies.All(d => d.Attribute != DieCategory.PassDie);
 
-                    // 只处理Pass Die (Bin = 1)
-                    if (centerDie.Bin != 1)
+                    if (!isFullFailGrid)
                         continue;
 
-                    // 获取 (2N+1) x (2N+1) 区域内所有的Die
-                    var gridDies = GetGridDies(matrix, x, y, halfSize);
-
-                    // 检查区域内是否存在Fail Die（Bin != 1）
-                    bool hasFailInGrid = gridDies.Any(d => d.Bin != 1);
-
-                    if (hasFailInGrid)
+                    // 第N圈：围绕3x3区域向外扩展N圈
+                    var edgeCoords = GetEdgeCoords(matrix, x, y, 1 + ring);
+                    foreach (var coord in edgeCoords)
                     {
-                        // 检查中心Die周围一圈的Pass Die（用于第1圈）
-                        // 对于多圈，扩展到 (2N+1) 区域的边缘
-                        if (ring == 1)
+                        var die = matrix[coord.Item1, coord.Item2];
+                        if (die.Attribute == DieCategory.PassDie && !result.Contains(coord))
                         {
-                            // 第1圈：检查3x3区域周围的8颗Die
-                            var surroundingDies = GetSurroundingDies(matrix, x, y, 1);
-                            foreach (var neighbor in surroundingDies)
-                            {
-                                if (neighbor.Bin == 1 && !result.Contains(Tuple.Create(neighbor.X, neighbor.Y)))
-                                {
-                                    result.Add(Tuple.Create(neighbor.X, neighbor.Y));
-                                }
-                            }
-                        }
-                        else
-                        {
-                            // 第N圈：检查 (2N+1) 区域边缘的Die
-                            var edgeDies = GetEdgeDies(matrix, x, y, halfSize);
-                            foreach (var die in edgeDies)
-                            {
-                                if (die.Bin == 1 && !result.Contains(Tuple.Create(die.X, die.Y)))
-                                {
-                                    result.Add(Tuple.Create(die.X, die.Y));
-                                }
-                            }
+                            result.Add(coord);
                         }
                     }
                 }
@@ -241,16 +217,16 @@ namespace WindowsFormTool.TskUtil.InkRules
         /// <summary>
         /// 获取指定中心点周围指定圈数的边缘Die
         /// </summary>
-        private List<DataToExcel.DieData> GetEdgeDies(DieMatrix matrix, int centerX, int centerY, int halfSize)
+        private List<Tuple<int, int>> GetEdgeCoords(DieMatrix matrix, int centerX, int centerY, int halfSize)
         {
-            var dies = new List<DataToExcel.DieData>();
+            var coords = new List<Tuple<int, int>>();
 
             // 上边缘
             for (int x = centerX - halfSize; x <= centerX + halfSize; x++)
             {
                 int y = centerY - halfSize;
                 if (x >= 0 && x < matrix.XMax && y >= 0 && y < matrix.YMax)
-                    dies.Add(matrix[x, y]);
+                    coords.Add(Tuple.Create(x, y));
             }
 
             // 下边缘
@@ -258,7 +234,7 @@ namespace WindowsFormTool.TskUtil.InkRules
             {
                 int y = centerY + halfSize;
                 if (x >= 0 && x < matrix.XMax && y >= 0 && y < matrix.YMax)
-                    dies.Add(matrix[x, y]);
+                    coords.Add(Tuple.Create(x, y));
             }
 
             // 左边缘（排除上下角落）
@@ -266,7 +242,7 @@ namespace WindowsFormTool.TskUtil.InkRules
             {
                 int x = centerX - halfSize;
                 if (x >= 0 && x < matrix.XMax && y >= 0 && y < matrix.YMax)
-                    dies.Add(matrix[x, y]);
+                    coords.Add(Tuple.Create(x, y));
             }
 
             // 右边缘（排除上下角落）
@@ -274,35 +250,15 @@ namespace WindowsFormTool.TskUtil.InkRules
             {
                 int x = centerX + halfSize;
                 if (x >= 0 && x < matrix.XMax && y >= 0 && y < matrix.YMax)
-                    dies.Add(matrix[x, y]);
+                    coords.Add(Tuple.Create(x, y));
             }
 
-            return dies;
+            return coords;
         }
 
-        /// <summary>
-        /// 获取中心点周围指定半径的邻域Die
-        /// </summary>
-        private List<DataToExcel.DieData> GetSurroundingDies(DieMatrix matrix, int centerX, int centerY, int radius)
+        private bool IsInBounds(DieMatrix matrix, int x, int y)
         {
-            var dies = new List<DataToExcel.DieData>();
-
-            for (int x = centerX - radius; x <= centerX + radius; x++)
-            {
-                for (int y = centerY - radius; y <= centerY + radius; y++)
-                {
-                    // 跳过中心点本身
-                    if (x == centerX && y == centerY)
-                        continue;
-
-                    if (x >= 0 && x < matrix.XMax && y >= 0 && y < matrix.YMax)
-                    {
-                        dies.Add(matrix[x, y]);
-                    }
-                }
-            }
-
-            return dies;
+            return x >= 0 && x < matrix.XMax && y >= 0 && y < matrix.YMax;
         }
     }
 }

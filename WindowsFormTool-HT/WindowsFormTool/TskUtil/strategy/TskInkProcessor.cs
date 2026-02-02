@@ -82,9 +82,7 @@ namespace WindowsFormTool.TskUtil
                             updateStatus($"耗时：{result.ElapsedMilliseconds}ms\n");
 
                             // 询问是否保存
-                            if (MessageBox.Show($@"INK处理完成，共INK {result.TotalInkedCount} 颗Die。
-
-是否保存修改后的TSK文件？", "完成", MessageBoxButtons.YesNo) == DialogResult.Yes)
+                            if (MessageBox.Show($@"INK处理完成，共INK {result.TotalInkedCount} 颗Die。是否保存修改后的TSK文件？", "完成", MessageBoxButtons.YesNo) == DialogResult.Yes)
                             {
                                 SaveInkedTsk(tsk, updateStatus);
                             }
