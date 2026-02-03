@@ -162,11 +162,11 @@ namespace DataToExcel
                         return;
                 }
 
-                // 处理完成后询问是否打开文件夹
-                if (MessageBox.Show(@"TSK新图谱生成，是否打开所在文件夹?", "confirm", MessageBoxButtons.YesNo) == DialogResult.Yes)
-                {
-                    Process.Start(newTskPath);
-                }
+                // // 处理完成后询问是否打开文件夹
+                // if (MessageBox.Show(@"TSK新图谱生成，是否打开所在文件夹?", "confirm", MessageBoxButtons.YesNo) == DialogResult.Yes)
+                // {
+                //     Process.Start(newTskPath);
+                // }
             }
             catch (Exception ex)
             {

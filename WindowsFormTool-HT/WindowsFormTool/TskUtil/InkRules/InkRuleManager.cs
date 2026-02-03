@@ -49,6 +49,18 @@ namespace WindowsFormTool.TskUtil.InkRules
 
             // 注册九宫格规则
             Register(new NineGridInkRule());
+
+            // 注册被Fail包围的Pass规则
+            Register(new EnclosedPassInkRule());
+
+            // 注册线状Fail扩散规则
+            Register(new LineBlobInkRule());
+
+            // 注册团簇Fail扩散规则
+            Register(new ClusteredFailInkRule());
+
+            // 注册GDBC九宫格阈值规则
+            Register(new GdbcNineGridThresholdInkRule());
         }
 
         /// <summary>

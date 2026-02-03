@@ -14,6 +14,12 @@ namespace WindowsFormTool.Forms
         private NumericUpDown ringsNumeric;
         private Label ringsLabel;
         private Label targetBinLabel;
+        private Label minLineLengthLabel;
+        private NumericUpDown minLineLengthNumeric;
+        private Label minClusterSizeLabel;
+        private NumericUpDown minClusterSizeNumeric;
+        private Label thresholdLabel;
+        private NumericUpDown thresholdNumeric;
         private GroupBox modeGroupBox;
         private RadioButton mode1RadioButton;
         private RadioButton mode2RadioButton;
@@ -111,6 +117,59 @@ namespace WindowsFormTool.Forms
             ringsNumeric.Visible = false;
             this.Controls.Add(ringsNumeric);
 
+            // 最小线长
+            minLineLengthLabel = new Label();
+            minLineLengthLabel.Text = "最小线长：";
+            minLineLengthLabel.Location = new Point(20, 90);
+            minLineLengthLabel.Size = new Size(80, 20);
+            minLineLengthLabel.Visible = false;
+            this.Controls.Add(minLineLengthLabel);
+
+            minLineLengthNumeric = new NumericUpDown();
+            minLineLengthNumeric.Location = new Point(110, 88);
+            minLineLengthNumeric.Size = new Size(80, 23);
+            minLineLengthNumeric.Minimum = 6;
+            minLineLengthNumeric.Maximum = 999;
+            minLineLengthNumeric.Value = 6;
+            minLineLengthNumeric.Visible = false;
+            this.Controls.Add(minLineLengthNumeric);
+
+            // 最小团簇数
+            minClusterSizeLabel = new Label();
+            minClusterSizeLabel.Text = "最小团簇数：";
+            minClusterSizeLabel.Location = new Point(20, 115);
+            minClusterSizeLabel.Size = new Size(90, 20);
+            minClusterSizeLabel.Visible = false;
+            this.Controls.Add(minClusterSizeLabel);
+
+            minClusterSizeNumeric = new NumericUpDown();
+            minClusterSizeNumeric.Location = new Point(110, 113);
+            minClusterSizeNumeric.Size = new Size(80, 23);
+            minClusterSizeNumeric.Minimum = 10;
+            minClusterSizeNumeric.Maximum = 9999;
+            minClusterSizeNumeric.Value = 10;
+            minClusterSizeNumeric.Visible = false;
+            this.Controls.Add(minClusterSizeNumeric);
+
+            // 阈值
+            thresholdLabel = new Label();
+            thresholdLabel.Text = "Fail阈值：";
+            thresholdLabel.Location = new Point(20, 140);
+            thresholdLabel.Size = new Size(80, 20);
+            thresholdLabel.Visible = false;
+            this.Controls.Add(thresholdLabel);
+
+            thresholdNumeric = new NumericUpDown();
+            thresholdNumeric.Location = new Point(110, 138);
+            thresholdNumeric.Size = new Size(80, 23);
+            thresholdNumeric.Minimum = 0;
+            thresholdNumeric.Maximum = 1;
+            thresholdNumeric.DecimalPlaces = 2;
+            thresholdNumeric.Increment = 0.05M;
+            thresholdNumeric.Value = 0.5M;
+            thresholdNumeric.Visible = false;
+            this.Controls.Add(thresholdNumeric);
+
             // 预览区域
             previewRichTextBox = new RichTextBox();
             previewRichTextBox.Location = new Point(20, 175);
@@ -178,6 +237,12 @@ namespace WindowsFormTool.Forms
                     modeGroupBox.Visible = true;
                     ringsLabel.Visible = false;
                     ringsNumeric.Visible = false;
+                    minLineLengthLabel.Visible = false;
+                    minLineLengthNumeric.Visible = false;
+                    minClusterSizeLabel.Visible = false;
+                    minClusterSizeNumeric.Visible = false;
+                    thresholdLabel.Visible = false;
+                    thresholdNumeric.Visible = false;
 
                     // 设置默认模式
                     mode1RadioButton.Checked = true;
@@ -187,9 +252,72 @@ namespace WindowsFormTool.Forms
                     modeGroupBox.Visible = false;
                     ringsLabel.Visible = true;
                     ringsNumeric.Visible = true;
+                    minLineLengthLabel.Visible = false;
+                    minLineLengthNumeric.Visible = false;
+                    minClusterSizeLabel.Visible = false;
+                    minClusterSizeNumeric.Visible = false;
+                    thresholdLabel.Visible = false;
+                    thresholdNumeric.Visible = false;
 
                     if (_currentParameters.ContainsKey("rings"))
                         ringsNumeric.Value = (int)_currentParameters["rings"];
+                }
+                else if (_selectedRule.RuleId == LineBlobInkRule.RULE_ID)
+                {
+                    modeGroupBox.Visible = false;
+                    ringsLabel.Visible = false;
+                    ringsNumeric.Visible = false;
+                    minLineLengthLabel.Visible = true;
+                    minLineLengthNumeric.Visible = true;
+                    minClusterSizeLabel.Visible = false;
+                    minClusterSizeNumeric.Visible = false;
+                    thresholdLabel.Visible = false;
+                    thresholdNumeric.Visible = false;
+
+                    if (_currentParameters.ContainsKey(InkRuleParameters.MinLineLength))
+                        minLineLengthNumeric.Value = (int)_currentParameters[InkRuleParameters.MinLineLength];
+                }
+                else if (_selectedRule.RuleId == ClusteredFailInkRule.RULE_ID)
+                {
+                    modeGroupBox.Visible = false;
+                    ringsLabel.Visible = false;
+                    ringsNumeric.Visible = false;
+                    minLineLengthLabel.Visible = false;
+                    minLineLengthNumeric.Visible = false;
+                    minClusterSizeLabel.Visible = true;
+                    minClusterSizeNumeric.Visible = true;
+                    thresholdLabel.Visible = false;
+                    thresholdNumeric.Visible = false;
+
+                    if (_currentParameters.ContainsKey(InkRuleParameters.MinClusterSize))
+                        minClusterSizeNumeric.Value = (int)_currentParameters[InkRuleParameters.MinClusterSize];
+                }
+                else if (_selectedRule.RuleId == GdbcNineGridThresholdInkRule.RULE_ID)
+                {
+                    modeGroupBox.Visible = false;
+                    ringsLabel.Visible = false;
+                    ringsNumeric.Visible = false;
+                    minLineLengthLabel.Visible = false;
+                    minLineLengthNumeric.Visible = false;
+                    minClusterSizeLabel.Visible = false;
+                    minClusterSizeNumeric.Visible = false;
+                    thresholdLabel.Visible = true;
+                    thresholdNumeric.Visible = true;
+
+                    if (_currentParameters.ContainsKey(InkRuleParameters.Threshold))
+                        thresholdNumeric.Value = Convert.ToDecimal(_currentParameters[InkRuleParameters.Threshold]);
+                }
+                else
+                {
+                    modeGroupBox.Visible = false;
+                    ringsLabel.Visible = false;
+                    ringsNumeric.Visible = false;
+                    minLineLengthLabel.Visible = false;
+                    minLineLengthNumeric.Visible = false;
+                    minClusterSizeLabel.Visible = false;
+                    minClusterSizeNumeric.Visible = false;
+                    thresholdLabel.Visible = false;
+                    thresholdNumeric.Visible = false;
                 }
 
                 if (_currentParameters.ContainsKey("targetBinNo"))
@@ -230,6 +358,18 @@ namespace WindowsFormTool.Forms
             else if (_selectedRule.RuleId == NineGridInkRule.RULE_ID)
             {
                 parameters["rings"] = (int)ringsNumeric.Value;
+            }
+            else if (_selectedRule.RuleId == LineBlobInkRule.RULE_ID)
+            {
+                parameters[InkRuleParameters.MinLineLength] = (int)minLineLengthNumeric.Value;
+            }
+            else if (_selectedRule.RuleId == ClusteredFailInkRule.RULE_ID)
+            {
+                parameters[InkRuleParameters.MinClusterSize] = (int)minClusterSizeNumeric.Value;
+            }
+            else if (_selectedRule.RuleId == GdbcNineGridThresholdInkRule.RULE_ID)
+            {
+                parameters[InkRuleParameters.Threshold] = (double)thresholdNumeric.Value;
             }
 
             return parameters;

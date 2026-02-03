@@ -7,7 +7,7 @@
     <ProjectGuid>{C5662C8D-8EA0-4C94-BAA0-45D5DABB36E3}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <RootNamespace>WindowsFormTool</RootNamespace>
-    <AssemblyName>Excel恢复tsk和TSK合并</AssemblyName>
+    <AssemblyName>HT_INK</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
@@ -75,9 +75,15 @@
     <Compile Include="PubClass.cs" />
     <Compile Include="Tests\InkRuleTests.cs" />
     <Compile Include="TskUtil\InkRules\CrossPatternInkRule.cs" />
+    <Compile Include="TskUtil\InkRules\ClusteredFailInkRule.cs" />
+    <Compile Include="TskUtil\InkRules\EnclosedPassInkRule.cs" />
+    <Compile Include="TskUtil\InkRules\GdbcNineGridThresholdInkRule.cs" />
     <Compile Include="TskUtil\InkRules\IInkRule.cs" />
     <Compile Include="TskUtil\InkRules\InkRuleManager.cs" />
+    <Compile Include="TskUtil\InkRules\InkRuleParameters.cs" />
     <Compile Include="TskUtil\InkRules\InkRuleResult.cs" />
+    <Compile Include="TskUtil\InkRules\InkRuleSampleTests.cs" />
+    <Compile Include="TskUtil\InkRules\LineBlobInkRule.cs" />
     <Compile Include="TskUtil\InkRules\NineGridInkRule.cs" />
     <Compile Include="TskUtil\strategy\TskInkProcessor.cs" />
     <Compile Include="TskUtil\TskFileHelper.cs" />
