@@ -42,12 +42,24 @@ namespace DataToExcel
         {
             Console.WriteLine("=== TSK INK 功能单元测试 ===\n");
 
-            var tests = new Tests.InkRuleTests();
-            tests.RunAllTests();
+            var inkTests = new Tests.InkRuleTests();
+            inkTests.RunAllTests();
 
-            Console.WriteLine($"\n总计: {tests.PassedTests} 通过, {tests.FailedTests} 失败");
-            Console.WriteLine("按任意键退出...");
-            Console.ReadKey();
+            Console.WriteLine();
+
+            var stackedTests = new Tests.StackedWafersTests();
+            stackedTests.RunAllTests();
+
+            var passed = inkTests.PassedTests + stackedTests.PassedTests;
+            var failed = inkTests.FailedTests + stackedTests.FailedTests;
+            var skipped = inkTests.SkippedTests + stackedTests.SkippedTests;
+
+            Console.WriteLine($"\n总计: {passed} 通过, {failed} 失败, {skipped} 跳过");
+            if (Environment.UserInteractive && !Console.IsInputRedirected)
+            {
+                Console.WriteLine("按任意键退出...");
+                Console.ReadKey();
+            }
         }
     }
 }

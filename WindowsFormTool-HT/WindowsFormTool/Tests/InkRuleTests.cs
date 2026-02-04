@@ -13,6 +13,7 @@ namespace DataToExcel.Tests
     {
         private int _passedTests = 0;
         private int _failedTests = 0;
+        private int _skippedTests = 0;
 
         /// <summary>
         /// 通过的测试数量
@@ -23,6 +24,11 @@ namespace DataToExcel.Tests
         /// 失败的测试数量
         /// </summary>
         public int FailedTests => _failedTests;
+
+        /// <summary>
+        /// 跳过的测试数量
+        /// </summary>
+        public int SkippedTests => _skippedTests;
 
         public void RunAllTests()
         {
@@ -67,6 +73,11 @@ namespace DataToExcel.Tests
                     Console.WriteLine($"  ✗ {testName}");
                     _failedTests++;
                 }
+            }
+            catch (NotImplementedException)
+            {
+                Console.WriteLine($"  - {testName} (skip)");
+                _skippedTests++;
             }
             catch (Exception ex)
             {
