@@ -11,7 +11,7 @@ namespace WindowsFormTool.TskUtil.InkRules
     {
         public const string RULE_ID = "enclosed_pass_ink";
         public const string RULE_NAME = "被Fail包围的Pass";
-        public const string DESCRIPTION = "识别被Fail包围的Pass岛状区域并标记为Fail";
+        public const string DESCRIPTION = "识别被Fail/Mark/Skip2包围的Pass岛状区域并标记为Fail";
 
         private static readonly Dictionary<string, object> DefaultParameters = new Dictionary<string, object>
         {
@@ -49,29 +49,9 @@ namespace WindowsFormTool.TskUtil.InkRules
             if (!ValidateParameters(parameters))
                 throw new ArgumentException("参数验证失败");
 
-            var result = new List<Tuple<int, int>>();
-            var visited = new bool[matrix.XMax, matrix.YMax];
-
-            for (int x = 0; x < matrix.XMax; x++)
-            {
-                for (int y = 0; y < matrix.YMax; y++)
-                {
-                    if (visited[x, y])
-                        continue;
-
-                    var die = matrix[x, y];
-                    if (!IsPassDie(die))
-                        continue;
-
-                    var region = new List<Tuple<int, int>>();
-                    bool touchesBoundary = FloodFillPassRegion(matrix, x, y, visited, region);
-
-                    if (!touchesBoundary)
-                        result.AddRange(region);
-                }
-            }
-
-            return result;
+            var enclosedRegions = GetEnclosedPassRegions(matrix);
+            var inkingRegions = ExcludeLargestRegion(enclosedRegions);
+            return FlattenRegions(inkingRegions);
         }
 
         public InkRuleResult Apply(DieMatrix matrix, Dictionary<string, object> parameters)
@@ -93,7 +73,10 @@ namespace WindowsFormTool.TskUtil.InkRules
             int targetBinNo = (int)parameters[InkRuleParameters.TargetBinNo];
             var stopwatch = System.Diagnostics.Stopwatch.StartNew();
 
-            var inkingDies = Preview(matrix, parameters);
+            var enclosedRegions = GetEnclosedPassRegions(matrix);
+            var inkingRegions = ExcludeLargestRegion(enclosedRegions);
+            var inkingDies = FlattenRegions(inkingRegions);
+
             foreach (var coord in inkingDies)
             {
                 var die = matrix[coord.Item1, coord.Item2];
@@ -115,99 +98,173 @@ namespace WindowsFormTool.TskUtil.InkRules
             return result;
         }
 
-        private bool FloodFillPassRegion(DieMatrix matrix, int startX, int startY, bool[,] visited,
-            List<Tuple<int, int>> region)
+        private List<PassRegionInfo> GetEnclosedPassRegions(DieMatrix matrix)
         {
-            bool touchesBoundary = false;
-            var queue = new Queue<Tuple<int, int>>();
-            queue.Enqueue(Tuple.Create(startX, startY));
-            visited[startX, startY] = true;
+            var regions = GetPassRegions(matrix);
+            var enclosed = new List<PassRegionInfo>();
 
-            while (queue.Count > 0)
+            foreach (var region in regions)
             {
-                var coord = queue.Dequeue();
-                int x = coord.Item1;
-                int y = coord.Item2;
-
-                region.Add(coord);
-
-                // 检查是否接触到真正的wafer边界（忽略Mark区域）
-                if (IsTouchingRealBoundary(matrix, x, y))
-                    touchesBoundary = true;
-
-                TryVisitNeighbor(matrix, x - 1, y, visited, queue);
-                TryVisitNeighbor(matrix, x + 1, y, visited, queue);
-                TryVisitNeighbor(matrix, x, y - 1, visited, queue);
-                TryVisitNeighbor(matrix, x, y + 1, visited, queue);
-            }
-
-            return touchesBoundary;
-        }
-
-        /// <summary>
-        /// 检查指定位置是否接触到真正的wafer边界（穿过Mark区域检测）
-        /// </summary>
-        private bool IsTouchingRealBoundary(DieMatrix matrix, int x, int y)
-        {
-            // 检查四个方向，如果任一方向穿过Mark后到达边界或null，则认为接触边界
-            return IsBoundaryInDirection(matrix, x, y, -1, 0) ||  // 左
-                   IsBoundaryInDirection(matrix, x, y, 1, 0) ||   // 右
-                   IsBoundaryInDirection(matrix, x, y, 0, -1) ||  // 上
-                   IsBoundaryInDirection(matrix, x, y, 0, 1);     // 下
-        }
-
-        /// <summary>
-        /// 检查指定方向是否到达真正的边界（穿过Mark区域）
-        /// </summary>
-        private bool IsBoundaryInDirection(DieMatrix matrix, int x, int y, int dx, int dy)
-        {
-            int currentX = x + dx;
-            int currentY = y + dy;
-
-            // 沿着指定方向前进，穿过Mark区域
-            while (currentX >= 0 && currentX < matrix.XMax && 
-                   currentY >= 0 && currentY < matrix.YMax)
-            {
-                var die = matrix[currentX, currentY];
-                
-                // 如果遇到null，说明到达边界
-                if (die == null)
-                    return true;
-
-                // 如果遇到Mark，继续前进穿过它
-                if (die.Attribute == DieCategory.MarkDie || die.Attribute == DieCategory.SkipDie2)
-                {
-                    currentX += dx;
-                    currentY += dy;
+                if (region.ReachesBoundary)
                     continue;
-                }
 
-                // 如果遇到Pass或Fail，说明没有到达边界
-                return false;
+                if (region.BoundaryHasOther)
+                    continue;
+
+                enclosed.Add(region);
             }
 
-            // 超出矩阵范围，说明到达边界
-            return true;
+            return enclosed;
         }
 
-        private void TryVisitNeighbor(DieMatrix matrix, int x, int y, bool[,] visited, Queue<Tuple<int, int>> queue)
+        private List<PassRegionInfo> ExcludeLargestRegion(List<PassRegionInfo> regions)
+        {
+            if (regions.Count <= 1)
+                return regions;
+
+            int maxIndex = 0;
+            int maxSize = regions[0].Cells.Count;
+
+            for (int i = 1; i < regions.Count; i++)
+            {
+                int size = regions[i].Cells.Count;
+                if (size > maxSize)
+                {
+                    maxSize = size;
+                    maxIndex = i;
+                }
+            }
+
+            var filtered = new List<PassRegionInfo>(regions.Count - 1);
+            for (int i = 0; i < regions.Count; i++)
+            {
+                if (i == maxIndex)
+                    continue;
+
+                filtered.Add(regions[i]);
+            }
+
+            return filtered;
+        }
+
+        private List<Tuple<int, int>> FlattenRegions(List<PassRegionInfo> regions)
+        {
+            var result = new List<Tuple<int, int>>();
+
+            foreach (var region in regions)
+            {
+                foreach (var cell in region.Cells)
+                {
+                    result.Add(Tuple.Create(cell.Item1, cell.Item2));
+                }
+            }
+
+            return result;
+        }
+
+        private List<PassRegionInfo> GetPassRegions(DieMatrix matrix)
+        {
+            var regions = new List<PassRegionInfo>();
+            var visited = new bool[matrix.XMax, matrix.YMax];
+
+            for (int x = 0; x < matrix.XMax; x++)
+            {
+                for (int y = 0; y < matrix.YMax; y++)
+                {
+                    if (visited[x, y])
+                        continue;
+
+                    var die = matrix[x, y];
+                    if (!IsPassDie(die))
+                        continue;
+
+                    var region = new PassRegionInfo();
+                    var queue = new Queue<Tuple<int, int>>();
+                    queue.Enqueue(Tuple.Create(x, y));
+
+                    while (queue.Count > 0)
+                    {
+                        var current = queue.Dequeue();
+                        int cx = current.Item1;
+                        int cy = current.Item2;
+
+                        if (visited[cx, cy])
+                            continue;
+
+                        visited[cx, cy] = true;
+                        region.Cells.Add(current);
+
+                        EvaluateNeighbor(matrix, cx - 1, cy, region, queue, visited);
+                        EvaluateNeighbor(matrix, cx + 1, cy, region, queue, visited);
+                        EvaluateNeighbor(matrix, cx, cy - 1, region, queue, visited);
+                        EvaluateNeighbor(matrix, cx, cy + 1, region, queue, visited);
+                    }
+
+                    regions.Add(region);
+                }
+            }
+
+            return regions;
+        }
+
+        private void EvaluateNeighbor(DieMatrix matrix, int x, int y, PassRegionInfo region,
+            Queue<Tuple<int, int>> queue, bool[,] visited)
         {
             if (x < 0 || y < 0 || x >= matrix.XMax || y >= matrix.YMax)
+            {
+                region.ReachesBoundary = true;
                 return;
+            }
+
             if (visited[x, y])
                 return;
 
-            var die = matrix[x, y];
-            if (!IsPassDie(die))
+            var neighbor = matrix[x, y];
+            if (IsPassDie(neighbor))
+            {
+                queue.Enqueue(Tuple.Create(x, y));
                 return;
+            }
 
-            visited[x, y] = true;
-            queue.Enqueue(Tuple.Create(x, y));
+            if (IsFailDie(neighbor))
+            {
+                region.BoundaryHasFail = true;
+            }
+            else if (IsMarkOrSkip2(neighbor))
+            {
+                region.BoundaryHasMark = true;
+            }
+            else
+            {
+                region.BoundaryHasOther = true;
+            }
+        }
+
+        private bool IsFailDie(DieData die)
+        {
+            return die != null && die.Attribute == DieCategory.FailDie;
+        }
+
+        private bool IsMarkOrSkip2(DieData die)
+        {
+            return die != null &&
+                   (die.Attribute == DieCategory.MarkDie ||
+                    die.Attribute == DieCategory.SkipDie2);
         }
 
         private bool IsPassDie(DieData die)
         {
             return die != null && die.Attribute == DieCategory.PassDie;
         }
+
+        private class PassRegionInfo
+        {
+            public List<Tuple<int, int>> Cells { get; } = new List<Tuple<int, int>>();
+            public bool ReachesBoundary { get; set; }
+            public bool BoundaryHasFail { get; set; }
+            public bool BoundaryHasMark { get; set; }
+            public bool BoundaryHasOther { get; set; }
+        }
+
     }
 }

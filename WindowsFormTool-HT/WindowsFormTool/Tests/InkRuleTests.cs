@@ -49,6 +49,12 @@ namespace DataToExcel.Tests
             RunTest("九宫格: 无Fail - 不应INK", Test_NineGrid_NoFail);
             RunTest("九宫格: 边缘处理", Test_NineGrid_EdgeHandling);
 
+            Console.WriteLine("\n=== 被Fail包围的Pass规则测试 ===");
+            RunTest("边界全Fail - 应该INK", Test_EnclosedPass_FailEnclosed);
+            RunTest("边界全Mark - 应该INK", Test_EnclosedPass_MarkEnclosed);
+            RunTest("Fail+Mark混合边界 - 应该INK", Test_EnclosedPass_MixedFailMark);
+            RunTest("多个包围区域 - 排除最大区域", Test_EnclosedPass_ExcludeLargestRegion);
+
             Console.WriteLine("\n=== InkRuleManager测试 ===");
             RunTest("Manager: 获取所有规则", Test_InkRuleManager_GetAllRules);
             RunTest("Manager: 参数验证", Test_InkRuleManager_ValidateParameters);
@@ -272,6 +278,103 @@ namespace DataToExcel.Tests
 
             var result = rule.Apply(matrix, parameters);
             return result.Success && result.TotalInkedCount == 0;
+        }
+
+        #endregion
+
+        #region 被Fail包围的Pass规则测试
+
+        private bool Test_EnclosedPass_FailEnclosed()
+        {
+            var matrix = CreateMatrix(3, 3);
+
+            // 四邻全Fail
+            SetDieBin(matrix, 1, 0, 2);
+            SetDieBin(matrix, 0, 1, 2);
+            SetDieBin(matrix, 2, 1, 2);
+            SetDieBin(matrix, 1, 2, 2);
+
+            var rule = new EnclosedPassInkRule();
+            var parameters = new Dictionary<string, object>
+            {
+                { "targetBinNo", 63 }
+            };
+
+            var result = rule.Apply(matrix, parameters);
+            return result.Success && result.TotalInkedCount == 1 &&
+                   matrix[1, 1].Bin == 63;
+        }
+
+        private bool Test_EnclosedPass_MarkEnclosed()
+        {
+            var matrix = CreateMatrix(3, 3);
+
+            // 四邻全Mark（无Fail）
+            SetDieAttribute(matrix, 1, 0, DieCategory.MarkDie);
+            SetDieAttribute(matrix, 0, 1, DieCategory.MarkDie);
+            SetDieAttribute(matrix, 2, 1, DieCategory.MarkDie);
+            SetDieAttribute(matrix, 1, 2, DieCategory.MarkDie);
+
+            var rule = new EnclosedPassInkRule();
+            var parameters = new Dictionary<string, object>
+            {
+                { "targetBinNo", 63 }
+            };
+
+            var result = rule.Apply(matrix, parameters);
+            return result.Success && result.TotalInkedCount == 1 &&
+                   matrix[1, 1].Bin == 63 &&
+                   matrix[1, 1].Attribute == DieCategory.FailDie;
+        }
+
+        private bool Test_EnclosedPass_MixedFailMark()
+        {
+            var matrix = CreateMatrix(3, 3);
+
+            // 四邻Fail/Mark混合
+            SetDieBin(matrix, 1, 0, 2);
+            SetDieAttribute(matrix, 0, 1, DieCategory.MarkDie);
+            SetDieBin(matrix, 2, 1, 2);
+            SetDieAttribute(matrix, 1, 2, DieCategory.MarkDie);
+
+            var rule = new EnclosedPassInkRule();
+            var parameters = new Dictionary<string, object>
+            {
+                { "targetBinNo", 63 }
+            };
+
+            var result = rule.Apply(matrix, parameters);
+            return result.Success && result.TotalInkedCount == 1 &&
+                   matrix[1, 1].Bin == 63;
+        }
+
+        private bool Test_EnclosedPass_ExcludeLargestRegion()
+        {
+            var matrix = CreateMatrix(5, 5);
+
+            for (int x = 0; x < 5; x++)
+            {
+                for (int y = 0; y < 5; y++)
+                {
+                    SetDieBin(matrix, x, y, 2);
+                }
+            }
+
+            SetDieBin(matrix, 1, 1, 1);
+            SetDieBin(matrix, 3, 1, 1);
+            SetDieBin(matrix, 3, 2, 1);
+
+            var rule = new EnclosedPassInkRule();
+            var parameters = new Dictionary<string, object>
+            {
+                { "targetBinNo", 63 }
+            };
+
+            var result = rule.Apply(matrix, parameters);
+            return result.Success && result.TotalInkedCount == 1 &&
+                   matrix[1, 1].Bin == 63 &&
+                   matrix[3, 1].Bin == 1 &&
+                   matrix[3, 2].Bin == 1;
         }
 
         #endregion
