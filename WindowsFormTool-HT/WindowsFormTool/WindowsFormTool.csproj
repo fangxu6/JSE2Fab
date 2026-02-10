@@ -88,6 +88,7 @@
     <Compile Include="TskUtil\InkRules\InkRuleResult.cs" />
     <Compile Include="TskUtil\InkRules\InkRuleSampleTests.cs" />
     <Compile Include="TskUtil\InkRules\LineBlobInkRule.cs" />
+    <Compile Include="TskUtil\InkRules\NewCrossPatternInkRule.cs" />
     <Compile Include="TskUtil\InkRules\NineGridInkRule.cs" />
     <Compile Include="TskUtil\StackedWafers\StackedWafersCalculator.cs" />
     <Compile Include="TskUtil\strategy\TskInkProcessor.cs" />

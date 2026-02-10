@@ -47,6 +47,9 @@ namespace WindowsFormTool.TskUtil.InkRules
             // 注册十字围点规则
             Register(new CrossPatternInkRule());
 
+            // 注册新十字围点规则
+            Register(new NewCrossPatternInkRule());
+
             // 注册九宫格规则
             Register(new NineGridInkRule());
 

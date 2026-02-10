@@ -35,6 +35,19 @@
 - 目标Bin号：输入1-255之间的整数（默认63）
 - 模式选择：勾选使用的模式（可多选）
 
+### 新十字围点规则
+
+检测一排连续Pass Die在水平或垂直方向被Fail/Mark/Skip2包围时，将该排Pass Die标记为指定Bin号。
+
+**判定要点：**
+- Pass/Fail 判定基于 DieCategory（PassDie/FailDie）
+- 一排Pass长度至少为2（可水平或垂直）
+- 该排的外侧与上下（或左右）邻域均为Fail/Mark/Skip2
+- 任一需要的邻域缺失（边缘）时不触发
+
+**参数配置：**
+- 目标Bin号：输入1-255之间的整数（默认63）
+
 ### 九宫格规则
 
 检测3×3区域内的Fail Die，将周围的Pass Die标记为指定Bin号。
@@ -151,11 +164,11 @@ INK处理完成：共INK 15 颗Die（Bin 1→63: 15颗）
 
 ### Q1: 边缘的Die会被INK吗？
 
-**不会。** 边缘Die由于缺少部分邻域，无法满足"四邻域均为Fail"的条件，因此不会触发任何INK规则。
+**不会。** 边缘Die由于缺少部分邻域，无法满足包围条件，因此不会触发十字围点或新十字围点规则。
 
 ### Q2: Mark Die会被INK吗？
 
-**不会。** Mark Die本身不是Pass Die（Bin ≠ 1），不会被选为INK目标。但Mark Die会参与包围判断。
+**不会。** Mark/Skip2 Die本身不是Pass Die，不会被选为INK目标。但Mark/Skip2 Die会参与包围判断。
 
 ### Q3: 如何撤销INK操作？
 

@@ -42,6 +42,11 @@ namespace DataToExcel.Tests
             RunTest("模式2: 4颗Mark - 不应该INK", Test_CrossPattern_Mode2_FourMarks);
             RunTest("模式2: 无Mark - 不应该INK", Test_CrossPattern_Mode2_NoMark);
 
+            Console.WriteLine("\n=== 新十字围点规则测试 ===");
+            RunTest("水平一排Pass被包围 - 应该INK", Test_NewCrossPattern_HorizontalEnclosed);
+            RunTest("垂直一排Pass被包围 - 应该INK", Test_NewCrossPattern_VerticalEnclosed);
+            RunTest("边缘一排Pass不触发", Test_NewCrossPattern_EdgeLine);
+
             Console.WriteLine("\n=== 九宫格规则测试 ===");
             RunTest("九宫格: 1圈 - 检测到Fail", Test_NineGrid_OneRing);
             RunTest("九宫格: 2圈 - 迭代处理", Test_NineGrid_TwoRings);
@@ -282,6 +287,111 @@ namespace DataToExcel.Tests
 
         #endregion
 
+        #region 新十字围点规则测试
+
+        private bool Test_NewCrossPattern_HorizontalEnclosed()
+        {
+            var matrix = CreateMatrix(5, 5);
+
+            for (int x = 0; x < 5; x++)
+            {
+                for (int y = 0; y < 5; y++)
+                {
+                    SetDieBin(matrix, x, y, 2);
+                }
+            }
+
+            SetDieBin(matrix, 1, 2, 1);
+            SetDieBin(matrix, 2, 2, 1);
+            SetDieBin(matrix, 3, 2, 1);
+
+            SetDieAttribute(matrix, 1, 1, DieCategory.MarkDie);
+            SetDieAttribute(matrix, 2, 1, DieCategory.SkipDie2);
+            SetDieAttribute(matrix, 2, 3, DieCategory.MarkDie);
+            SetDieAttribute(matrix, 3, 3, DieCategory.SkipDie2);
+            SetDieAttribute(matrix, 0, 2, DieCategory.MarkDie);
+            SetDieAttribute(matrix, 4, 2, DieCategory.SkipDie2);
+
+            var rule = new NewCrossPatternInkRule();
+            var parameters = new Dictionary<string, object>
+            {
+                { "targetBinNo", 63 }
+            };
+
+            var result = rule.Apply(matrix, parameters);
+            return result.Success && result.TotalInkedCount == 3 &&
+                   matrix[1, 2].Bin == 63 &&
+                   matrix[2, 2].Bin == 63 &&
+                   matrix[3, 2].Bin == 63;
+        }
+
+        private bool Test_NewCrossPattern_VerticalEnclosed()
+        {
+            var matrix = CreateMatrix(5, 5);
+
+            for (int x = 0; x < 5; x++)
+            {
+                for (int y = 0; y < 5; y++)
+                {
+                    SetDieBin(matrix, x, y, 2);
+                }
+            }
+
+            SetDieBin(matrix, 2, 1, 1);
+            SetDieBin(matrix, 2, 2, 1);
+            SetDieBin(matrix, 2, 3, 1);
+
+            SetDieAttribute(matrix, 1, 1, DieCategory.MarkDie);
+            SetDieAttribute(matrix, 1, 2, DieCategory.SkipDie2);
+            SetDieAttribute(matrix, 3, 2, DieCategory.MarkDie);
+            SetDieAttribute(matrix, 3, 3, DieCategory.SkipDie2);
+            SetDieAttribute(matrix, 2, 0, DieCategory.MarkDie);
+            SetDieAttribute(matrix, 2, 4, DieCategory.SkipDie2);
+
+            var rule = new NewCrossPatternInkRule();
+            var parameters = new Dictionary<string, object>
+            {
+                { "targetBinNo", 63 }
+            };
+
+            var result = rule.Apply(matrix, parameters);
+            return result.Success && result.TotalInkedCount == 3 &&
+                   matrix[2, 1].Bin == 63 &&
+                   matrix[2, 2].Bin == 63 &&
+                   matrix[2, 3].Bin == 63;
+        }
+
+        private bool Test_NewCrossPattern_EdgeLine()
+        {
+            var matrix = CreateMatrix(5, 5);
+
+            for (int x = 0; x < 5; x++)
+            {
+                for (int y = 0; y < 5; y++)
+                {
+                    SetDieBin(matrix, x, y, 2);
+                }
+            }
+
+            SetDieBin(matrix, 1, 0, 1);
+            SetDieBin(matrix, 2, 0, 1);
+            SetDieBin(matrix, 3, 0, 1);
+
+            var rule = new NewCrossPatternInkRule();
+            var parameters = new Dictionary<string, object>
+            {
+                { "targetBinNo", 63 }
+            };
+
+            var result = rule.Apply(matrix, parameters);
+            return result.Success && result.TotalInkedCount == 0 &&
+                   matrix[1, 0].Bin == 1 &&
+                   matrix[2, 0].Bin == 1 &&
+                   matrix[3, 0].Bin == 1;
+        }
+
+        #endregion
+
         #region 被Fail包围的Pass规则测试
 
         private bool Test_EnclosedPass_FailEnclosed()
@@ -495,7 +605,8 @@ namespace DataToExcel.Tests
 
             return rules.Count >= 2 &&
                    rules.Any(r => r.RuleId == CrossPatternInkRule.RULE_ID) &&
-                   rules.Any(r => r.RuleId == NineGridInkRule.RULE_ID);
+                   rules.Any(r => r.RuleId == NineGridInkRule.RULE_ID) &&
+                   rules.Any(r => r.RuleId == NewCrossPatternInkRule.RULE_ID);
         }
 
         private bool Test_InkRuleManager_ValidateParameters()
