@@ -8,7 +8,7 @@ namespace DataToExcel
     public class Tma : MappingBase
     {
         private ArrayList _diesBuffer;
-        // ±£´æ reference die ÔÚÏßĞÔ±íÖĞµÄÖ¸Õë
+        // ä¿å­˜ reference die åœ¨çº¿æ€§è¡¨ä¸­çš„æŒ‡é’ˆ
         private int _refDiePoint;
 
         public override string DeviceName
@@ -199,7 +199,7 @@ namespace DataToExcel
         {
             try
             {
-                // ´ò¿ª¶ÁÈ¡Á÷
+                // æ‰“å¼€è¯»å–æµ
                 this.OpenReader();
 
                 if (this._diesBuffer == null)
@@ -221,9 +221,9 @@ namespace DataToExcel
                 }
 
                 /*
-                 * ¶ÁÈ¡Ô­Ê¼ tma ÎÄ¼şÊ±ĞèÒªÖ´ĞĞ´Ë´úÂë ?
+                 * è¯»å–åŸå§‹ tma æ–‡ä»¶æ—¶éœ€è¦æ‰§è¡Œæ­¤ä»£ç  ?
                  * 
-                // tma ×îºó²¹Ò»¸ö null die
+                // tma æœ€åè¡¥ä¸€ä¸ª null die
                 DieData die = new DieData();
                 die.Attribute = DieCategory.NoneDie;
                 this._diesBuffer.Add(die);
@@ -239,7 +239,7 @@ namespace DataToExcel
             }
             finally
             {
-                // ¹Ø±Õ¶ÁÈ¡Á÷
+                // å…³é—­è¯»å–æµ
                 this.CloseReader();
             }
         }
@@ -248,7 +248,7 @@ namespace DataToExcel
         {
             try
             {
-                // ´ò¿ª¶ÁÈ¡Á÷
+                // æ‰“å¼€è¯»å–æµ
                 this.OpenReader();
 
                 if (this._diesBuffer == null)
@@ -279,12 +279,12 @@ namespace DataToExcel
             }
             finally
             {
-                // ¹Ø±Õ¶ÁÈ¡Á÷
+                // å…³é—­è¯»å–æµ
                 this.CloseReader();
             }
         }
 
-        // °´ĞĞ½âÎöÎÄ¼şÄÚÈİ
+        // æŒ‰è¡Œè§£ææ–‡ä»¶å†…å®¹
         private void Parse(string line)
         {
             try
@@ -347,7 +347,7 @@ namespace DataToExcel
                 {
                     this.ParseDies(line.Split(new char[] { '|' })[1]);
 
-                    // ´Ó reference die ÔÚÏßĞÔ±íÖ¸ÕëÖµ¼ÆËã refX ºÍ refY Öµ
+                    // ä» reference die åœ¨çº¿æ€§è¡¨æŒ‡é’ˆå€¼è®¡ç®— refX å’Œ refY å€¼
                     if (this._refDiePoint != -1)
                     {
                         this.Refpx = this._refDiePoint % this.ColCount + 1;
@@ -361,14 +361,14 @@ namespace DataToExcel
             }
         }
 
-        // ½âÎöÃ¿ĞĞ die Êı¾İ
+        // è§£ææ¯è¡Œ die æ•°æ®
         private void ParseDies(string s)
         {
             string[] dies = s.Split(new char[] { ' ' });
 
             this.RowCount += 1;
 
-            // Çå³ıÓÃÓÚ·Ö¸ôµÄ¿Õ¸ô
+            // æ¸…é™¤ç”¨äºåˆ†éš”çš„ç©ºéš”
             ArrayList arr = new ArrayList();
             foreach (string str in dies)
             {
@@ -402,12 +402,12 @@ namespace DataToExcel
                         break;
                     case "Y":
                         die.Attribute = DieCategory.TIRefPass;
-                        // ¼ÇÂ¼ reference die ÔÚÏßĞÔ±íÖĞµÄÖ¸Õë
+                        // è®°å½• reference die åœ¨çº¿æ€§è¡¨ä¸­çš„æŒ‡é’ˆ
                         this._refDiePoint = this._diesBuffer.Count;
                         break;
                     case "N":
                         die.Attribute = DieCategory.TIRefFail;
-                        // ¼ÇÂ¼ reference die ÔÚÏßĞÔ±íÖĞµÄÖ¸Õë
+                        // è®°å½• reference die åœ¨çº¿æ€§è¡¨ä¸­çš„æŒ‡é’ˆ
                         this._refDiePoint = this._diesBuffer.Count;
                         break;
                     default:
@@ -419,24 +419,24 @@ namespace DataToExcel
             }
         }
 
-        // ´Ó tma ÎÄ¼şÖĞµÄÈÕÆÚ¸ñÊ½ÖĞ½âÎö³öÊ±¼ä¶ÔÏó
+        // ä» tma æ–‡ä»¶ä¸­çš„æ—¥æœŸæ ¼å¼ä¸­è§£æå‡ºæ—¶é—´å¯¹è±¡
         private DateTime ReadDate(string txt)
         {
             try
             {
                 string str = "20";
 
-                // Äê
+                // å¹´
                 str += txt.Substring(0, 2) + "-";
-                // ÔÂ
+                // æœˆ
                 str += txt.Substring(2, 2) + "-";
-                // ÈÕ
+                // æ—¥
                 str += txt.Substring(4, 2) + " ";
-                // Ê±
+                // æ—¶
                 str += txt.Substring(6, 2) + ":";
-                // ·Ö
+                // åˆ†
                 str += txt.Substring(8, 2) + ":";
-                // Ãë
+                // ç§’
                 str += "00";
 
                 return DateTime.Parse(str);
@@ -448,16 +448,16 @@ namespace DataToExcel
         }
 
         /// <summary>
-        /// ½«Êı¾İ±£´æÎª tma ÎÄ¼ş
+        /// å°†æ•°æ®ä¿å­˜ä¸º tma æ–‡ä»¶
         /// </summary>
         public override void Save()
         {
             try
             {
-                // ´ò¿ª»ò´´½¨ÎÄ¼ş
+                // æ‰“å¼€æˆ–åˆ›å»ºæ–‡ä»¶
                 this.OpenWriter();
 
-                // Ğ´Èë×ø±êĞÅÏ¢
+                // å†™å…¥åæ ‡ä¿¡æ¯
                 this.WriteString("   ");
                
                 string formatStr1 = "", formatStr2 = "", empty = "";
@@ -499,7 +499,7 @@ namespace DataToExcel
                     this.WriteString("+-+");
                 }
 
-                // Ğ´Èë Die Êı¾İ
+                // å†™å…¥ Die æ•°æ®
                 for (int y = 0; y < this.DieMatrix.YMax; y++)
                 {
                     this.WriteString(Enter);
@@ -512,7 +512,7 @@ namespace DataToExcel
                     }
                 }
 
-                // Ğ´Èë»ù±¾ĞÅÏ¢
+                // å†™å…¥åŸºæœ¬ä¿¡æ¯
                 this.WriteString(Enter);
                 this.WriteString(Enter);
                 this.WriteString(Enter);
@@ -569,18 +569,18 @@ namespace DataToExcel
             return str.Substring(0, str.Length - 1);
         }
 
-        // ºÏ²¢ tma ÎÄ¼ş
+        // åˆå¹¶ tma æ–‡ä»¶
         public override IMappingFile Merge(IMappingFile map, string newfile)
         {
             if (!(map is Tma))
-                throw new Exception("tma ÀàĞÍÎÄ¼şÖ»ÄÜºÍ tma ÀàĞÍÎÄ¼şºÏ²¢¡£");
+                throw new Exception("tma ç±»å‹æ–‡ä»¶åªèƒ½å’Œ tma ç±»å‹æ–‡ä»¶åˆå¹¶ã€‚");
 
             Tma tma = new Tma(newfile);
 
-            // ºÏ²¢ die ¾ØÕó
+            // åˆå¹¶ die çŸ©é˜µ
             tma._dieMatrix = this._dieMatrix + map.DieMatrix;
 
-            // ºÏ²¢»ù±¾ĞÅÏ¢
+            // åˆå¹¶åŸºæœ¬ä¿¡æ¯
 
             if (this.DeviceName != "")
                 tma.DeviceName = this.DeviceName;
@@ -638,7 +638,7 @@ namespace DataToExcel
                 tma.UnloadTime = (DateTime)map.Properties["UnloadTime"];
 
 
-            // ÖØĞÂ¼ÆËãÍ³¼ÆÊı¾İ
+            // é‡æ–°è®¡ç®—ç»Ÿè®¡æ•°æ®
             tma.TotalDie = 0;
             tma.PassDie = 0;
             tma.FailDie = 0;
@@ -656,7 +656,7 @@ namespace DataToExcel
             tma.Yield = (decimal)tma.PassDie / (decimal)tma.TotalDie;
          
 
-            // ´´½¨´òÓ¡Îå¸ö¶ÔÎ»µã
+            // åˆ›å»ºæ‰“å°äº”ä¸ªå¯¹ä½ç‚¹
             tma.Marking = tma.CreatePCP();
 
             return tma;
@@ -668,7 +668,7 @@ namespace DataToExcel
             Point[] points = new Point[5];
             int ptop = 0, pleft = 1, pcenter = 2, pright = 3, pbottom = 4;
 
-            // ÖĞĞÄµã
+            // ä¸­å¿ƒç‚¹
             int x = this._dieMatrix.XMax / 2;
             int y = this._dieMatrix.YMax / 2;
 
@@ -691,7 +691,7 @@ namespace DataToExcel
                 {
                     if (this.DieMatrix[x + i * p.X, y + i * p.Y].Attribute == DieCategory.PassDie)
                     {
-                        // ÕÒµ½
+                        // æ‰¾åˆ°
                         points[pcenter].X = x + i * p.X;
                         points[pcenter].Y = y + i * p.Y;
                         goto top;
@@ -699,11 +699,11 @@ namespace DataToExcel
                 }
             }
 
-            // ÕÒ²»µ½
+            // æ‰¾ä¸åˆ°
             points[pcenter].X = -1;
             points[pcenter].Y = -1;
 
-            // ÉÏ
+            // ä¸Š
         top:
             ps = new Point[] {  
                 new Point(0, 1) , 
@@ -725,33 +725,33 @@ namespace DataToExcel
                 {
                     if (this.DieMatrix[x + i * p.X, y + i * p.Y].Attribute == DieCategory.PassDie)
                     {
-                        // ÕÒµ½
+                        // æ‰¾åˆ°
                         points[ptop].X = x + i * p.X;
                         points[ptop].Y = y + i * p.Y;
 
                         if (i1 <= 2)
                         {
                             i1 += 1;
-                            // ÕÒµ½µÚÒ»¸ö£¬¼ÌĞøÕÒ
+                            // æ‰¾åˆ°ç¬¬ä¸€ä¸ªï¼Œç»§ç»­æ‰¾
                             break;
                         }
                         else
                         {
-                            // ÕÒµ½µÚ¶ş¸öµã
+                            // æ‰¾åˆ°ç¬¬äºŒä¸ªç‚¹
                             goto left;
                         }
                     }
                 }
             }
 
-            // ÕÒ²»µ½
+            // æ‰¾ä¸åˆ°
             if (i1 <= 0)
             {
                 points[ptop].X = -1;
                 points[ptop].Y = -1;
             }
 
-            // ×ó
+            // å·¦
         left:
             ps = new Point[] { 
                 new Point(1, 0), 
@@ -771,33 +771,33 @@ namespace DataToExcel
                 {
                     if (this.DieMatrix[x + i * p.X, y + i * p.Y].Attribute == DieCategory.PassDie)
                     {
-                        // ÕÒµ½
+                        // æ‰¾åˆ°
                         points[pleft].X = x + i * p.X;
                         points[pleft].Y = y + i * p.Y;
 
                         if (i1 <= 2)
                         {
                             i1 += 1;
-                            // ÕÒµ½µÚÒ»¸ö£¬¼ÌĞøÕÒ
+                            // æ‰¾åˆ°ç¬¬ä¸€ä¸ªï¼Œç»§ç»­æ‰¾
                             break;
                         }
                         else
                         {
-                            // ÕÒµ½µÚ¶ş¸öµã
+                            // æ‰¾åˆ°ç¬¬äºŒä¸ªç‚¹
                             goto right;
                         }
                     }
                 }
             }
 
-            // ÕÒ²»µ½
+            // æ‰¾ä¸åˆ°
             if (i1 <= 0)
             {
                 points[pleft].X = -1;
                 points[pleft].Y = -1;
             }
 
-            // ÓÒ
+            // å³
         right:
             ps = new Point[] { 
                 new Point(-1, 0), 
@@ -817,26 +817,26 @@ namespace DataToExcel
                 {
                     if (this.DieMatrix[x + i * p.X, y + i * p.Y].Attribute == DieCategory.PassDie)
                     {
-                        // ÕÒµ½
+                        // æ‰¾åˆ°
                         points[pright].X = x + i * p.X;
                         points[pright].Y = y + i * p.Y;
 
                         if (i1 <= 2)
                         {
                             i1 += 1;
-                            // ÕÒµ½µÚÒ»¸ö£¬¼ÌĞøÕÒ
+                            // æ‰¾åˆ°ç¬¬ä¸€ä¸ªï¼Œç»§ç»­æ‰¾
                             break;
                         }
                         else
                         {
-                            // ÕÒµ½µÚ¶ş¸öµã
+                            // æ‰¾åˆ°ç¬¬äºŒä¸ªç‚¹
                             goto bottom;
                         }
                     }
                 }
             }
 
-            // ÕÒ²»µ½
+            // æ‰¾ä¸åˆ°
             if (i1 <= 0)
             {
                 points[pright].X = -1;
@@ -844,7 +844,7 @@ namespace DataToExcel
             }
 
 
-            // ÏÂ
+            // ä¸‹
         bottom:
             ps = new Point[] { 
                 new Point(0, -1), 
@@ -864,26 +864,26 @@ namespace DataToExcel
                 {
                     if (this.DieMatrix[x + i * p.X, y + i * p.Y].Attribute == DieCategory.PassDie)
                     {
-                        // ÕÒµ½
+                        // æ‰¾åˆ°
                         points[pbottom].X = x + i * p.X;
                         points[pbottom].Y = y + i * p.Y;
 
                         if (i1 <= 2)
                         {
                             i1 += 1;
-                            // ÕÒµ½µÚÒ»¸ö£¬¼ÌĞøÕÒ
+                            // æ‰¾åˆ°ç¬¬ä¸€ä¸ªï¼Œç»§ç»­æ‰¾
                             break;
                         }
                         else
                         {
-                            // ÕÒµ½µÚ¶ş¸öµã
+                            // æ‰¾åˆ°ç¬¬äºŒä¸ªç‚¹
                             goto exit;
                         }
                     }
                 }
             }
 
-            // ÕÒ²»µ½
+            // æ‰¾ä¸åˆ°
             if (i1 <= 0)
             {
                 points[pbottom].X = -1;
@@ -895,7 +895,7 @@ namespace DataToExcel
         }
 
         /// <summary>
-        /// ÅĞ¶Ï mapping ÎÄ¼şµÄ die ¾ØÕóÖĞµÄÒ»¸ö die ÊÇ·ñÎª¿Õ die
+        /// åˆ¤æ–­ mapping æ–‡ä»¶çš„ die çŸ©é˜µä¸­çš„ä¸€ä¸ª die æ˜¯å¦ä¸ºç©º die
         /// </summary>
         /// <param name="die"></param>
         /// <returns></returns>

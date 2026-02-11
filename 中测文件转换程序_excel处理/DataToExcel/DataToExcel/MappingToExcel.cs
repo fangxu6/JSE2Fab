@@ -97,7 +97,7 @@ namespace DataToExcel
                     new CMDTskToTxt().Convert(this.lsvItems.Items[num2].SubItems[1].Text.Trim(), this.textBox1.Text + @"\TxtOutFile\" + this.LotNo + @"\" + this.lsvItems.Items[num2].Text.Trim() + ".txt");
                     this.progressBar1.Value++;
                 }
-                string path = this.textBox1.Text + @"\TxtOutFile\" + this.LotNo + @"\Total.txt"; //Ω®¡¢µƒTotal.txt
+                string path = this.textBox1.Text + @"\TxtOutFile\" + this.LotNo + @"\Total.txt"; //Âª∫Á´ãÁöÑTotal.txt
                 if (File.Exists(path))
                 {
                     writer = File.AppendText(path);
@@ -203,36 +203,36 @@ namespace DataToExcel
 
                 for (num2 = 0; num2 <= (count - 1); num2++)
                 {
-                    // ¿¥‘¥ tsk Œƒº˛
+                    // Êù•Ê∫ê tsk Êñá‰ª∂
                     source = this.lsvItems.Items[num2].SubItems[1].Text.Trim();
 
-                    // Ωÿ»°Œƒº˛√˚
+                    // Êà™ÂèñÊñá‰ª∂Âêç
                     string str = source.Substring(source.LastIndexOf(@"\") + 1).Substring(1).Replace(".", "");
 
-                    // ÷¥––Œƒº˛∏Ò Ω◊™ªª
+                    // ÊâßË°åÊñá‰ª∂Ê†ºÂºèËΩ¨Êç¢
                     converter.Convert(source, outpath + @"\" + str + "_1.tma");
 
-                    // ∂¡»°¿¥‘¥Œƒº˛
+                    // ËØªÂèñÊù•Ê∫êÊñá‰ª∂
                     tma = new Tma(outpath + @"\" + str + "_1.tma");
                     tma.Read();
 
-                    // »•ø’∞◊––∫Õø’∞◊¡–
+                    // ÂéªÁ©∫ÁôΩË°åÂíåÁ©∫ÁôΩÂàó
                     this.Trim(tma);
 
-                    // ∆Ω±ﬂœÚœ¬
+                    // Âπ≥ËæπÂêë‰∏ã
                     tma.DeasilRotate(180 - Int32.Parse(tma.FlatDir));
                     tma.FlatDir = "180";
 
-                    // –¥∆Ω±ﬂ±Íº«
+                    // ÂÜôÂπ≥ËæπÊ†áËÆ∞
                     this.MarkNouch(tma);
 
-                    // ππΩ®Œƒº˛√˚£¨±£¥Ê
+                    // ÊûÑÂª∫Êñá‰ª∂ÂêçÔºå‰øùÂ≠ò
                     tma.FileName = str + ".tma";
                     tma.Save();
 
                     File.Delete(outpath + @"\" + str + "_1.tma");
 
-                    // –ﬁ∏ƒΩ¯∂»Ãı
+                    // ‰øÆÊîπËøõÂ∫¶Êù°
                     this.progressBar1.Value++;
                 }
 
@@ -302,23 +302,23 @@ namespace DataToExcel
             }
         }
 
-        // »•≥˝ø’∞◊––ªÚø’∞◊¡–
+        // ÂéªÈô§Á©∫ÁôΩË°åÊàñÁ©∫ÁôΩÂàó
         private void Trim(IMappingFile mapping)
         {
-            // »•≥˝Õº∆◊◊Û±ﬂµƒø’∞◊
+            // ÂéªÈô§ÂõæË∞±Â∑¶ËæπÁöÑÁ©∫ÁôΩ
             this.TrimL(mapping);
 
-            // »•≥˝Õº∆◊…œ±ﬂµƒø’∞◊
+            // ÂéªÈô§ÂõæË∞±‰∏äËæπÁöÑÁ©∫ÁôΩ
             this.TrimU(mapping);
 
-            // »•≥˝Õº∆◊”“±ﬂµƒø’∞◊
+            // ÂéªÈô§ÂõæË∞±Âè≥ËæπÁöÑÁ©∫ÁôΩ
             this.TrimR(mapping);
 
-            // »•≥˝Õº∆◊œ¬±ﬂµƒø’∞◊
+            // ÂéªÈô§ÂõæË∞±‰∏ãËæπÁöÑÁ©∫ÁôΩ
             this.TrimD(mapping);
         }
 
-        // ªÒ»° mapping æÿ’Û◊Û≤‡ø’∞◊––
+        // Ëé∑Âèñ mapping Áü©ÈòµÂ∑¶‰æßÁ©∫ÁôΩË°å
         private int TrimL(IMappingFile mapping)
         {
             int cnt = 0;
@@ -343,7 +343,7 @@ namespace DataToExcel
             return cnt;
         }
 
-        // ªÒ»° mapping æÿ’Û”“≤‡ø’∞◊––
+        // Ëé∑Âèñ mapping Áü©ÈòµÂè≥‰æßÁ©∫ÁôΩË°å
         private int TrimR(IMappingFile mapping)
         {
             int cnt = 0;
@@ -371,7 +371,7 @@ namespace DataToExcel
             return cnt;
         }
 
-        // ªÒ»° mapping æÿ’Û…œ∑Ωø’∞◊––
+        // Ëé∑Âèñ mapping Áü©Èòµ‰∏äÊñπÁ©∫ÁôΩË°å
         private int TrimU(IMappingFile mapping)
         {
             int cnt = 0;
@@ -396,7 +396,7 @@ namespace DataToExcel
             return cnt;
         }
 
-        // ªÒ»° mapping æÿ’Ûœ¬∑Ωø’∞◊––
+        // Ëé∑Âèñ mapping Áü©Èòµ‰∏ãÊñπÁ©∫ÁôΩË°å
         private int TrimD(IMappingFile mapping)
         {
             int cnt = 0;
@@ -424,7 +424,7 @@ namespace DataToExcel
             return cnt;
         }
 
-        // –¥∆Ω±ﬂ±Íº«
+        // ÂÜôÂπ≥ËæπÊ†áËÆ∞
         private void MarkNouch(IMappingFile map)
         {
             DieMatrix matrix = map.DieMatrix;
@@ -442,7 +442,7 @@ namespace DataToExcel
             }
         }
 
-        // ≈–∂œ «∑ÒŒ™ø’ die
+        // Âà§Êñ≠ÊòØÂê¶‰∏∫Á©∫ die
         private bool IsEmptyDie(DieData die)
         {
             bool r = false;
@@ -505,8 +505,8 @@ namespace DataToExcel
             excel.Rename("Sheet1", this.lsvItems.Items[0].Text.Trim());
 
             int num3 = this.FieldListBox1.CheckedItems.Count;
-            object[] objArray = new object[num3];//Total –≈œ¢
-            object[] objArray4 = new object[num3];//∆Ωæ˘÷µ–≈œ¢
+            object[] objArray = new object[num3];//Total ‰ø°ÊÅØ
+            object[] objArray4 = new object[num3];//Âπ≥ÂùáÂÄº‰ø°ÊÅØ
 
             int flag11 = 0;
 
@@ -517,7 +517,7 @@ namespace DataToExcel
                 sheet.Columns.ColumnWidth = 3.25;
                 sheet.Rows.RowHeight = (22.5 * this._currFile.DieMatrix.XMax) / ((double)this._currFile.DieMatrix.YMax);
                 this.WriteSheet(sheet);
-                Excel.Worksheet worksheet2 = (Excel.Worksheet)workbook.Sheets["Õ≥º∆–≈œ¢"];
+                Excel.Worksheet worksheet2 = (Excel.Worksheet)workbook.Sheets["ÁªüËÆ°‰ø°ÊÅØ"];
 
                 object[,] aryTP = (object[,])(sheet.get_Range("A1:IV500", Missing.Value).Value2);
                 sheet = null;
@@ -536,8 +536,8 @@ namespace DataToExcel
                 rngnum.Value2 = count.ToString() + " pcs";
 
 
-                object[] objArray2 = new object[num3];//Õ∑–≈œ¢Œƒº˛
-                object[] objArray3 = new object[num3];//√ø∆¨Wafer–≈œ¢
+                object[] objArray2 = new object[num3];//Â§¥‰ø°ÊÅØÊñá‰ª∂
+                object[] objArray3 = new object[num3];//ÊØèÁâáWafer‰ø°ÊÅØ
                 Device = ((Tsk)this._currFile).Device;
 
                 for (int i = 0; i <= (num3 - 1); i++)
@@ -620,7 +620,7 @@ namespace DataToExcel
                             objArray3[i] = Math.Round((double)(Convert.ToDouble(objArray3[i - 2]) / ((double)Convert.ToInt32(objArray3[i - 3]))), 4).ToString("0.00%");
                             if (objArray3[i].ToString() == "100.00%")
                             {
-                                MessageBox.Show("TSK¡º¬ 100%,«ÎºÏ≤ÈÕº∆◊ «∑Ò”–Œ Ã‚");
+                                MessageBox.Show("TSKËâØÁéá100%,ËØ∑Ê£ÄÊü•ÂõæË∞±ÊòØÂê¶ÊúâÈóÆÈ¢ò");
 
                             }
                             goto Label_0531;
@@ -694,7 +694,7 @@ namespace DataToExcel
                                 if (objArray3[i] != null)
                                 {
                                     objArray[i] = ((int)objArray[i]) + ((int)objArray3[i]);
-                                    //////////////////////////////////‘ˆº”∞Ÿ∑÷±»////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+                                    //////////////////////////////////Â¢ûÂä†ÁôæÂàÜÊØî////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
                                     objArray3[i] = objArray3[i].ToString() + " (" + Math.Round((double)(Convert.ToDouble(objArray3[i]) / ((double)this._currFile.DieMatrix.DieAttributeStat(DieCategory.TIRefFail | DieCategory.TIRefPass | DieCategory.FailDie | DieCategory.PassDie))), 4).ToString("0.00%") + ")";
 
                                 }
@@ -730,7 +730,7 @@ namespace DataToExcel
                     continue;
                 Label_076F:
                     objArray[i] = objArray3[i];
-                    //////////////////////////////////‘ˆº”∞Ÿ∑÷±»////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+                    //////////////////////////////////Â¢ûÂä†ÁôæÂàÜÊØî////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
                     objArray3[i] = objArray3[i].ToString() + " (" + Math.Round((double)(Convert.ToDouble(objArray3[i]) / ((double)this._currFile.DieMatrix.DieAttributeStat(DieCategory.TIRefFail | DieCategory.TIRefPass | DieCategory.FailDie | DieCategory.PassDie))), 4).ToString("0.00%") + ")";
                     continue;
                 Label_077E:
@@ -739,7 +739,7 @@ namespace DataToExcel
                     {
                         str = str.Substring(str.LastIndexOf(" ")).Trim();
                         objArray3[i] = ToCountDie._ToCountDie[int.Parse(str)];
-                        /////////Œ™0‘Úœ‘ æŒ™0-2017.12.4/////////////////////////////////
+                        /////////‰∏∫0ÂàôÊòæÁ§∫‰∏∫0-2017.12.4/////////////////////////////////
                         if (objArray3[i] == null)
                         {
                             objArray3[i] = 0;
@@ -757,7 +757,7 @@ namespace DataToExcel
                         {
                             objArray[i] = ToCountDie._ToCountDie[int.Parse(str)];
 
-                            /////////////////////Œ™0‘Úœ‘ æŒ™0////////////////////////////////
+                            /////////////////////‰∏∫0ÂàôÊòæÁ§∫‰∏∫0////////////////////////////////
                             if (objArray[i] == null)
                             {
                                 objArray[i] = 0;
@@ -765,7 +765,7 @@ namespace DataToExcel
                         }
 
 
-                        ////////////////////////////////‘ˆº”∞Ÿ∑÷±»///////////////////////////
+                        ////////////////////////////////Â¢ûÂä†ÁôæÂàÜÊØî///////////////////////////
                         if (objArray3[i] != null)
                         {
                             objArray3[i] = objArray3[i].ToString() + " (" + Math.Round((double)(Convert.ToDouble(objArray3[i]) / ((double)this._currFile.DieMatrix.DieAttributeStat(DieCategory.TIRefFail | DieCategory.TIRefPass | DieCategory.FailDie | DieCategory.PassDie))), 4).ToString("0.00%") + ")";
@@ -790,7 +790,7 @@ namespace DataToExcel
             }
 
             ////////////////////////////////////////add total and average////////////////////////////////
-            Excel.Worksheet worksheet3 = (Excel.Worksheet)workbook.Sheets["Õ≥º∆–≈œ¢"];
+            Excel.Worksheet worksheet3 = (Excel.Worksheet)workbook.Sheets["ÁªüËÆ°‰ø°ÊÅØ"];
             objArray4[1] = (int)objArray[1] / num2;
             objArray4[2] = (int)objArray[2] / num2;
             objArray4[3] = (int)objArray[3] / num2;
@@ -977,24 +977,24 @@ namespace DataToExcel
             MailMessage message = new MailMessage();
 
             message.From = MessageFrom;
-            message.To.Add(MessageTo);              // ’º˛»À” œ‰µÿ÷∑ø…“‘ «∂‡∏ˆ“‘ µœ÷»∫∑¢
+            message.To.Add(MessageTo);              //Êî∂‰ª∂‰∫∫ÈÇÆÁÆ±Âú∞ÂùÄÂèØ‰ª•ÊòØÂ§ö‰∏™‰ª•ÂÆûÁé∞Áæ§Âèë
             message.Subject = MessageSubject;
             message.Body = MessageBody;
-            message.IsBodyHtml = true;              // «∑ÒŒ™html∏Ò Ω
-            message.Priority = MailPriority.High;   //∑¢ÀÕ” º˛µƒ”≈œ»µ»º∂
+            message.IsBodyHtml = true;              //ÊòØÂê¶‰∏∫htmlÊ†ºÂºè
+            message.Priority = MailPriority.High;   //ÂèëÈÄÅÈÇÆ‰ª∂ÁöÑ‰ºòÂÖàÁ≠âÁ∫ß
 
             SmtpClient sc = new SmtpClient();
-            // sc.Host = "smtp.163.com";    //÷∏∂®∑¢ÀÕ” º˛µƒ∑˛ŒÒ∆˜µÿ÷∑ªÚIP
+            // sc.Host = "smtp.163.com";    //ÊåáÂÆöÂèëÈÄÅÈÇÆ‰ª∂ÁöÑÊúçÂä°Âô®Âú∞ÂùÄÊàñIP
             sc.Host = "mail.jcap.com.cn";
 
-            sc.Port = 25;                           //÷∏∂®∑¢ÀÕ” º˛∂Àø⁄
-            // sc.Credentials = new System.Net.NetworkCredential("676537916@163.com", "852456123"); //÷∏∂®µ«¬º∑˛ŒÒ∆˜µƒ”√ªß√˚∫Õ√‹¬Î
+            sc.Port = 25;                           //ÊåáÂÆöÂèëÈÄÅÈÇÆ‰ª∂Á´ØÂè£
+            // sc.Credentials = new System.Net.NetworkCredential("676537916@163.com", "852456123"); //ÊåáÂÆöÁôªÂΩïÊúçÂä°Âô®ÁöÑÁî®Êà∑ÂêçÂíåÂØÜÁ†Å
 
             sc.Credentials = new System.Net.NetworkCredential("daniel_huang@jcap.com.cn", "123456");
 
             try
             {
-                sc.Send(message);       //∑¢ÀÕ” º˛
+                sc.Send(message);       //ÂèëÈÄÅÈÇÆ‰ª∂
             }
             catch
             {
@@ -1051,8 +1051,8 @@ namespace DataToExcel
             excel.Rename("Sheet1", this.lsvItems.Items[0].Text.Trim());
 
             int num3 = this.FieldListBox1.CheckedItems.Count;
-            object[] objArray = new object[num3];//Total –≈œ¢
-            object[] objArray4 = new object[num3];//∆Ωæ˘÷µ–≈œ¢
+            object[] objArray = new object[num3];//Total ‰ø°ÊÅØ
+            object[] objArray4 = new object[num3];//Âπ≥ÂùáÂÄº‰ø°ÊÅØ
 
             int flag11 = 0;
 
@@ -1063,7 +1063,7 @@ namespace DataToExcel
                 sheet.Columns.ColumnWidth = 3.25;
                 sheet.Rows.RowHeight = (22.5 * this._currFile.DieMatrix.XMax) / ((double)this._currFile.DieMatrix.YMax);
                 this.WriteSheet(sheet);
-                Excel.Worksheet worksheet2 = (Excel.Worksheet)workbook.Sheets["Õ≥º∆–≈œ¢"];
+                Excel.Worksheet worksheet2 = (Excel.Worksheet)workbook.Sheets["ÁªüËÆ°‰ø°ÊÅØ"];
 
                 object[,] aryTP = (object[,])(sheet.get_Range("A1:IV500", Missing.Value).Value2);
                 sheet = null;
@@ -2358,7 +2358,7 @@ namespace DataToExcel
                     rngbin18.Value2 = "Bin18:eFlash_Weak_Erase";
 
                     Excel.Range rngbin19 = (Excel.Range)worksheet2.Cells[7, 25];
-                    rngbin19.Value2 = "Bin19£∫eFlash_Tox_Stress;";
+                    rngbin19.Value2 = "Bin19ÔºöeFlash_Tox_Stress;";
 
                     Excel.Range rngbin20 = (Excel.Range)worksheet2.Cells[7, 26];
                     rngbin20.Value2 = "Bin20:eFlash_Mass_Erase_2;";
@@ -2370,7 +2370,7 @@ namespace DataToExcel
                     rngbin22.Value2 = "Bin22:eFlash_Verify_Diagonal";
 
                     Excel.Range rngbin23 = (Excel.Range)worksheet2.Cells[7, 29];
-                    rngbin23.Value2 = "Bin23£∫eFlash_Mass_Progam_2";
+                    rngbin23.Value2 = "Bin23ÔºöeFlash_Mass_Progam_2";
 
                     Excel.Range rngbin24 = (Excel.Range)worksheet2.Cells[7, 30];
                     rngbin24.Value2 = "Bin24:eFlash_Page_Erase";
@@ -2966,7 +2966,7 @@ namespace DataToExcel
                     rngbin18.Value2 = "CP2_Bin18: OS";
 
                     Excel.Range rngbin19 = (Excel.Range)worksheet2.Cells[7, 25];
-                    rngbin19.Value2 = "CP2_Bin19£∫ ;";
+                    rngbin19.Value2 = "CP2_Bin19Ôºö ;";
 
                     Excel.Range rngbin20 = (Excel.Range)worksheet2.Cells[7, 26];
                     rngbin20.Value2 = "CP2_Bin20: ;";
@@ -3038,7 +3038,7 @@ namespace DataToExcel
                     rngbin18.Value2 = "CP2_Bin18: ";
 
                     Excel.Range rngbin19 = (Excel.Range)worksheet2.Cells[7, 25];
-                    rngbin19.Value2 = "CP2_Bin19£∫ ;";
+                    rngbin19.Value2 = "CP2_Bin19Ôºö ;";
 
                     Excel.Range rngbin20 = (Excel.Range)worksheet2.Cells[7, 26];
                     rngbin20.Value2 = "CP2_Bin20: ;";
@@ -3070,8 +3070,8 @@ namespace DataToExcel
 
                 }
 
-                object[] objArray2 = new object[num3];//Õ∑–≈œ¢Œƒº˛
-                object[] objArray3 = new object[num3];//√ø∆¨Wafer–≈œ¢
+                object[] objArray2 = new object[num3];//Â§¥‰ø°ÊÅØÊñá‰ª∂
+                object[] objArray3 = new object[num3];//ÊØèÁâáWafer‰ø°ÊÅØ
                 Device = ((Tsk)this._currFile).Device;
 
                 for (int i = 0; i <= (num3 - 1); i++)
@@ -3154,7 +3154,7 @@ namespace DataToExcel
                             objArray3[i] = Math.Round((double)(Convert.ToDouble(objArray3[i - 2]) / ((double)Convert.ToInt32(objArray3[i - 3]))), 4).ToString("0.00%");
                             if (objArray3[i].ToString() == "100.00%")
                             {
-                                MessageBox.Show("TSK¡º¬ 100%,«ÎºÏ≤ÈÕº∆◊ «∑Ò”–Œ Ã‚");
+                                MessageBox.Show("TSKËâØÁéá100%,ËØ∑Ê£ÄÊü•ÂõæË∞±ÊòØÂê¶ÊúâÈóÆÈ¢ò");
 
                             }
                             goto Label_0531;
@@ -3228,7 +3228,7 @@ namespace DataToExcel
                                 if (objArray3[i] != null)
                                 {
                                     objArray[i] = ((int)objArray[i]) + ((int)objArray3[i]);
-                                    //////////////////////////////////‘ˆº”∞Ÿ∑÷±»////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+                                    //////////////////////////////////Â¢ûÂä†ÁôæÂàÜÊØî////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
                                     //  objArray3[i] = objArray3[i].ToString() + " (" + Math.Round((double)(Convert.ToDouble(objArray3[i]) / ((double)this._currFile.DieMatrix.DieAttributeStat(DieCategory.TIRefFail | DieCategory.TIRefPass | DieCategory.FailDie | DieCategory.PassDie))), 4).ToString("0.00%") + ")";
 
                                 }
@@ -3264,7 +3264,7 @@ namespace DataToExcel
                     continue;
                 Label_076F:
                     objArray[i] = objArray3[i];
-                    //////////////////////////////////‘ˆº”∞Ÿ∑÷±»////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+                    //////////////////////////////////Â¢ûÂä†ÁôæÂàÜÊØî////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
                     // objArray3[i] = objArray3[i].ToString() + " (" + Math.Round((double)(Convert.ToDouble(objArray3[i]) / ((double)this._currFile.DieMatrix.DieAttributeStat(DieCategory.TIRefFail | DieCategory.TIRefPass | DieCategory.FailDie | DieCategory.PassDie))), 4).ToString("0.00%") + ")";
                     continue;
                 Label_077E:
@@ -3273,7 +3273,7 @@ namespace DataToExcel
                     {
                         str = str.Substring(str.LastIndexOf(" ")).Trim();
                         objArray3[i] = ToCountDie._ToCountDie[int.Parse(str)];
-                        /////////Œ™0‘Úœ‘ æŒ™0-2017.12.4/////////////////////////////////
+                        /////////‰∏∫0ÂàôÊòæÁ§∫‰∏∫0-2017.12.4/////////////////////////////////
                         if (objArray3[i] == null)
                         {
                             objArray3[i] = 0;
@@ -3291,7 +3291,7 @@ namespace DataToExcel
                         {
                             objArray[i] = ToCountDie._ToCountDie[int.Parse(str)];
 
-                            /////////////////////Œ™0‘Úœ‘ æŒ™0////////////////////////////////
+                            /////////////////////‰∏∫0ÂàôÊòæÁ§∫‰∏∫0////////////////////////////////
                             if (objArray[i] == null)
                             {
                                 objArray[i] = 0;
@@ -3299,7 +3299,7 @@ namespace DataToExcel
                         }
 
 
-                        ////////////////////////////////‘ˆº”∞Ÿ∑÷±»///////////////////////////
+                        ////////////////////////////////Â¢ûÂä†ÁôæÂàÜÊØî///////////////////////////
                         if (objArray3[i] != null)
                         {
                             //   objArray3[i] = objArray3[i].ToString() + " (" + Math.Round((double)(Convert.ToDouble(objArray3[i]) / ((double)this._currFile.DieMatrix.DieAttributeStat(DieCategory.TIRefFail | DieCategory.TIRefPass | DieCategory.FailDie | DieCategory.PassDie))), 4).ToString("0.00%") + ")";
@@ -3331,7 +3331,7 @@ namespace DataToExcel
                     if (Convert.ToInt32(objArray3[38]) > 17) { worksheet2.get_Range(worksheet2.Cells[(num2 + 1) + 8, 39], worksheet2.Cells[(num2 + 1) + 8, 39]).Interior.ColorIndex = 7; flagbin++; }//bin33
                     if (Convert.ToInt32(objArray3[39]) > 17) { worksheet2.get_Range(worksheet2.Cells[(num2 + 1) + 8, 40], worksheet2.Cells[(num2 + 1) + 8, 40]).Interior.ColorIndex = 7; flagbin++; }//bin34
                     if (Convert.ToInt32(objArray3[40]) > 17) { worksheet2.get_Range(worksheet2.Cells[(num2 + 1) + 8, 41], worksheet2.Cells[(num2 + 1) + 8, 41]).Interior.ColorIndex = 7; flagbin++; }//bin35
-                    if (flagbin > 0) { worksheet2.get_Range(worksheet2.Cells[(num2 + 1) + 8, 1], worksheet2.Cells[(num2 + 1) + 8, 1]).Interior.ColorIndex = 7; MessageBox.Show(objArray3[0].ToString() + "--SBL≥¨±Í,«ÎºÏ≤ÈÕº∆◊ «∑Ò”–Œ Ã‚"); }
+                    if (flagbin > 0) { worksheet2.get_Range(worksheet2.Cells[(num2 + 1) + 8, 1], worksheet2.Cells[(num2 + 1) + 8, 1]).Interior.ColorIndex = 7; MessageBox.Show(objArray3[0].ToString() + "--SBLË∂ÖÊ†á,ËØ∑Ê£ÄÊü•ÂõæË∞±ÊòØÂê¶ÊúâÈóÆÈ¢ò"); }
 
                 }
                 if ((((Tsk)this._currFile).Device == "2053WMA-8-Y16-P1"))
@@ -3339,7 +3339,7 @@ namespace DataToExcel
                     int flagbin = 0;
                     if (Convert.ToInt32(objArray3[26]) > 10) { worksheet2.get_Range(worksheet2.Cells[(num2 + 1) + 8, 27], worksheet2.Cells[(num2 + 1) + 8, 27]).Interior.ColorIndex = 7; flagbin++; }//bin21
 
-                    if (flagbin > 0) { worksheet2.get_Range(worksheet2.Cells[(num2 + 1) + 8, 1], worksheet2.Cells[(num2 + 1) + 8, 1]).Interior.ColorIndex = 7; MessageBox.Show(objArray3[0].ToString() + "--SBL≥¨±Í,«ÎºÏ≤ÈÕº∆◊ «∑Ò”–Œ Ã‚"); }
+                    if (flagbin > 0) { worksheet2.get_Range(worksheet2.Cells[(num2 + 1) + 8, 1], worksheet2.Cells[(num2 + 1) + 8, 1]).Interior.ColorIndex = 7; MessageBox.Show(objArray3[0].ToString() + "--SBLË∂ÖÊ†á,ËØ∑Ê£ÄÊü•ÂõæË∞±ÊòØÂê¶ÊúâÈóÆÈ¢ò"); }
 
                 }
 
@@ -3348,7 +3348,7 @@ namespace DataToExcel
                     int flagbin = 0;
                     if (Convert.ToInt32(objArray3[26]) > 10) { worksheet2.get_Range(worksheet2.Cells[(num2 + 1) + 8, 27], worksheet2.Cells[(num2 + 1) + 8, 27]).Interior.ColorIndex = 7; flagbin++; }//bin21
 
-                    if (flagbin > 0) { worksheet2.get_Range(worksheet2.Cells[(num2 + 1) + 8, 1], worksheet2.Cells[(num2 + 1) + 8, 1]).Interior.ColorIndex = 7; MessageBox.Show(objArray3[0].ToString() + "--SBL≥¨±Í,«ÎºÏ≤ÈÕº∆◊ «∑Ò”–Œ Ã‚"); }
+                    if (flagbin > 0) { worksheet2.get_Range(worksheet2.Cells[(num2 + 1) + 8, 1], worksheet2.Cells[(num2 + 1) + 8, 1]).Interior.ColorIndex = 7; MessageBox.Show(objArray3[0].ToString() + "--SBLË∂ÖÊ†á,ËØ∑Ê£ÄÊü•ÂõæË∞±ÊòØÂê¶ÊúâÈóÆÈ¢ò"); }
 
                 }
 
@@ -3366,7 +3366,7 @@ namespace DataToExcel
                     if (Convert.ToInt32(objArray3[38]) > 17) { worksheet2.get_Range(worksheet2.Cells[(num2 + 1) + 8, 39], worksheet2.Cells[(num2 + 1) + 8, 39]).Interior.ColorIndex = 7; flagbin++; }//bin33
                     if (Convert.ToInt32(objArray3[39]) > 17) { worksheet2.get_Range(worksheet2.Cells[(num2 + 1) + 8, 40], worksheet2.Cells[(num2 + 1) + 8, 40]).Interior.ColorIndex = 7; flagbin++; }//bin34
                     if (Convert.ToInt32(objArray3[40]) > 17) { worksheet2.get_Range(worksheet2.Cells[(num2 + 1) + 8, 41], worksheet2.Cells[(num2 + 1) + 8, 41]).Interior.ColorIndex = 7; flagbin++; }//bin35
-                    if (flagbin > 0) { worksheet2.get_Range(worksheet2.Cells[(num2 + 1) + 8, 1], worksheet2.Cells[(num2 + 1) + 8, 1]).Interior.ColorIndex = 7; MessageBox.Show(objArray3[0].ToString() + "--SBL≥¨±Í,«ÎºÏ≤ÈÕº∆◊ «∑Ò”–Œ Ã‚"); }
+                    if (flagbin > 0) { worksheet2.get_Range(worksheet2.Cells[(num2 + 1) + 8, 1], worksheet2.Cells[(num2 + 1) + 8, 1]).Interior.ColorIndex = 7; MessageBox.Show(objArray3[0].ToString() + "--SBLË∂ÖÊ†á,ËØ∑Ê£ÄÊü•ÂõæË∞±ÊòØÂê¶ÊúâÈóÆÈ¢ò"); }
 
                 }
 
@@ -3397,7 +3397,7 @@ namespace DataToExcel
                     if (Convert.ToInt32(objArray3[48]) > 9) { worksheet2.get_Range(worksheet2.Cells[(num2 + 1) + 8, 49], worksheet2.Cells[(num2 + 1) + 8, 49]).Interior.ColorIndex = 7; flagbin++; }//bin43
                     if (Convert.ToInt32(objArray3[49]) > 9) { worksheet2.get_Range(worksheet2.Cells[(num2 + 1) + 8, 50], worksheet2.Cells[(num2 + 1) + 8, 50]).Interior.ColorIndex = 7; flagbin++; }//bin44
 
-                    if (flagbin > 0) { worksheet2.get_Range(worksheet2.Cells[(num2 + 1) + 8, 1], worksheet2.Cells[(num2 + 1) + 8, 1]).Interior.ColorIndex = 7; MessageBox.Show(objArray3[0].ToString() + "--SBL≥¨±Í,«ÎºÏ≤ÈÕº∆◊ «∑Ò”–Œ Ã‚"); }
+                    if (flagbin > 0) { worksheet2.get_Range(worksheet2.Cells[(num2 + 1) + 8, 1], worksheet2.Cells[(num2 + 1) + 8, 1]).Interior.ColorIndex = 7; MessageBox.Show(objArray3[0].ToString() + "--SBLË∂ÖÊ†á,ËØ∑Ê£ÄÊü•ÂõæË∞±ÊòØÂê¶ÊúâÈóÆÈ¢ò"); }
 
                 }
 
@@ -3406,7 +3406,7 @@ namespace DataToExcel
                     int flagbin = 0;
                     if (Convert.ToInt32(objArray3[27]) > 10) { worksheet2.get_Range(worksheet2.Cells[(num2 + 1) + 8, 28], worksheet2.Cells[(num2 + 1) + 8, 28]).Interior.ColorIndex = 7; flagbin++; }//bin22
 
-                    if (flagbin > 0) { worksheet2.get_Range(worksheet2.Cells[(num2 + 1) + 8, 1], worksheet2.Cells[(num2 + 1) + 8, 1]).Interior.ColorIndex = 7; MessageBox.Show(objArray3[0].ToString() + "--SBL≥¨±Í,«ÎºÏ≤ÈÕº∆◊ «∑Ò”–Œ Ã‚"); }
+                    if (flagbin > 0) { worksheet2.get_Range(worksheet2.Cells[(num2 + 1) + 8, 1], worksheet2.Cells[(num2 + 1) + 8, 1]).Interior.ColorIndex = 7; MessageBox.Show(objArray3[0].ToString() + "--SBLË∂ÖÊ†á,ËØ∑Ê£ÄÊü•ÂõæË∞±ÊòØÂê¶ÊúâÈóÆÈ¢ò"); }
 
                 }
 
@@ -3415,7 +3415,7 @@ namespace DataToExcel
                     int flagbin = 0;
                     if (Convert.ToInt32(objArray3[27]) > 10) { worksheet2.get_Range(worksheet2.Cells[(num2 + 1) + 8, 28], worksheet2.Cells[(num2 + 1) + 8, 28]).Interior.ColorIndex = 7; flagbin++; }//bin22
 
-                    if (flagbin > 0) { worksheet2.get_Range(worksheet2.Cells[(num2 + 1) + 8, 1], worksheet2.Cells[(num2 + 1) + 8, 1]).Interior.ColorIndex = 7; MessageBox.Show(objArray3[0].ToString() + "--SBL≥¨±Í,«ÎºÏ≤ÈÕº∆◊ «∑Ò”–Œ Ã‚"); }
+                    if (flagbin > 0) { worksheet2.get_Range(worksheet2.Cells[(num2 + 1) + 8, 1], worksheet2.Cells[(num2 + 1) + 8, 1]).Interior.ColorIndex = 7; MessageBox.Show(objArray3[0].ToString() + "--SBLË∂ÖÊ†á,ËØ∑Ê£ÄÊü•ÂõæË∞±ÊòØÂê¶ÊúâÈóÆÈ¢ò"); }
 
                 }
 
@@ -3448,7 +3448,7 @@ namespace DataToExcel
 
 
 
-                    if (flagbin > 0) { worksheet2.get_Range(worksheet2.Cells[(num2 + 1) + 8, 1], worksheet2.Cells[(num2 + 1) + 8, 1]).Interior.ColorIndex = 7; MessageBox.Show(objArray3[0].ToString() + "--SBL≥¨±Í,«ÎºÏ≤ÈÕº∆◊ «∑Ò”–Œ Ã‚"); }
+                    if (flagbin > 0) { worksheet2.get_Range(worksheet2.Cells[(num2 + 1) + 8, 1], worksheet2.Cells[(num2 + 1) + 8, 1]).Interior.ColorIndex = 7; MessageBox.Show(objArray3[0].ToString() + "--SBLË∂ÖÊ†á,ËØ∑Ê£ÄÊü•ÂõæË∞±ÊòØÂê¶ÊúâÈóÆÈ¢ò"); }
 
                 }
 
@@ -3460,7 +3460,7 @@ namespace DataToExcel
                     if (Convert.ToInt32(objArray3[25]) > 15) { worksheet2.get_Range(worksheet2.Cells[(num2 + 1) + 8, 26], worksheet2.Cells[(num2 + 1) + 8, 26]).Interior.ColorIndex = 7; flagbin++; }//bin20
                     if (Convert.ToInt32(objArray3[26]) > 15) { worksheet2.get_Range(worksheet2.Cells[(num2 + 1) + 8, 27], worksheet2.Cells[(num2 + 1) + 8, 27]).Interior.ColorIndex = 7; flagbin++; }//bin21
                     if (Convert.ToInt32(objArray3[27]) > 15) { worksheet2.get_Range(worksheet2.Cells[(num2 + 1) + 8, 28], worksheet2.Cells[(num2 + 1) + 8, 28]).Interior.ColorIndex = 7; flagbin++; }//bin22
-                    if (flagbin > 0) { worksheet2.get_Range(worksheet2.Cells[(num2 + 1) + 8, 1], worksheet2.Cells[(num2 + 1) + 8, 1]).Interior.ColorIndex = 7; MessageBox.Show(objArray3[0].ToString() + "--SBL≥¨±Í,«ÎºÏ≤ÈÕº∆◊ «∑Ò”–Œ Ã‚"); }
+                    if (flagbin > 0) { worksheet2.get_Range(worksheet2.Cells[(num2 + 1) + 8, 1], worksheet2.Cells[(num2 + 1) + 8, 1]).Interior.ColorIndex = 7; MessageBox.Show(objArray3[0].ToString() + "--SBLË∂ÖÊ†á,ËØ∑Ê£ÄÊü•ÂõæË∞±ÊòØÂê¶ÊúâÈóÆÈ¢ò"); }
 
                 }
 
@@ -3470,7 +3470,7 @@ namespace DataToExcel
                     if (Convert.ToInt32(objArray3[7]) > 7) { worksheet2.get_Range(worksheet2.Cells[(num2 + 1) + 8, 8], worksheet2.Cells[(num2 + 1) + 8, 8]).Interior.ColorIndex = 7; flagbin++; }//bin2
                     if (Convert.ToInt32(objArray3[17]) > 4) { worksheet2.get_Range(worksheet2.Cells[(num2 + 1) + 8, 18], worksheet2.Cells[(num2 + 1) + 8, 18]).Interior.ColorIndex = 7; flagbin++; }//bin12
                     if (Convert.ToInt32(objArray3[27]) > 4) { worksheet2.get_Range(worksheet2.Cells[(num2 + 1) + 8, 28], worksheet2.Cells[(num2 + 1) + 8, 28]).Interior.ColorIndex = 7; flagbin++; }//bin22
-                    if (flagbin > 0) { worksheet2.get_Range(worksheet2.Cells[(num2 + 1) + 8, 1], worksheet2.Cells[(num2 + 1) + 8, 1]).Interior.ColorIndex = 7; MessageBox.Show(objArray3[0].ToString() + "--SBL≥¨±Í,«ÎºÏ≤ÈÕº∆◊ «∑Ò”–Œ Ã‚"); }
+                    if (flagbin > 0) { worksheet2.get_Range(worksheet2.Cells[(num2 + 1) + 8, 1], worksheet2.Cells[(num2 + 1) + 8, 1]).Interior.ColorIndex = 7; MessageBox.Show(objArray3[0].ToString() + "--SBLË∂ÖÊ†á,ËØ∑Ê£ÄÊü•ÂõæË∞±ÊòØÂê¶ÊúâÈóÆÈ¢ò"); }
 
                 }
 
@@ -3489,7 +3489,7 @@ namespace DataToExcel
             }
 
             ////////////////////////////////////////add total and average////////////////////////////////
-            Excel.Worksheet worksheet3 = (Excel.Worksheet)workbook.Sheets["Õ≥º∆–≈œ¢"];
+            Excel.Worksheet worksheet3 = (Excel.Worksheet)workbook.Sheets["ÁªüËÆ°‰ø°ÊÅØ"];
             objArray4[1] = (int)objArray[1] / num2;
             objArray4[2] = (int)objArray[2] / num2;
             objArray4[3] = (int)objArray[3] / num2;
@@ -3525,7 +3525,7 @@ namespace DataToExcel
 
         }
 
-        private void sINF∫œ≤¢TSKToolStripMenuItem_Click(object sender, EventArgs e)
+        private void sINFÂêàÂπ∂TSKToolStripMenuItem_Click(object sender, EventArgs e)
         {
             new SINF_MERGE_TSK().ShowDialog();
         }
@@ -3578,14 +3578,14 @@ namespace DataToExcel
             count = this.lsvItems.Items.Count;
             for (num2 = 0; num2 <= (count - 1); num2++)
             {
-                string str = this.lsvItems.Items[num2].SubItems[1].Text; //Œƒº˛µƒ¬∑æ∂
-                ///////-------------------------------TSK∂¡»°-------------------------//////
+                string str = this.lsvItems.Items[num2].SubItems[1].Text; //Êñá‰ª∂ÁöÑË∑ØÂæÑ
+                ///////-------------------------------TSKËØªÂèñ-------------------------//////
 
                 FileStream fs_1;
                 fs_1 = new FileStream(str, FileMode.Open);
                 BinaryReader br_1 = new BinaryReader(fs_1);
 
-                ///TSK1Õ∑Œƒº˛-------------------------------------------------------//
+                ///TSK1Â§¥Êñá‰ª∂-------------------------------------------------------//
 
                 //Operator Size 20
                 string Operator_1 = Encoding.ASCII.GetString(br_1.ReadBytes(20)).Trim();
@@ -3703,7 +3703,7 @@ namespace DataToExcel
                 byte[] MCategory_1 = br_1.ReadBytes(2);
                 //Do not use,Reserved4 Size2
                 byte[] Reserved4_1 = br_1.ReadBytes(2);
-                ////////Die –≈œ¢/////////////////////
+                ////////Die ‰ø°ÊÅØ/////////////////////
 
                 int row1_1 = ByteToInt16(ref row_1);
                 int col1_1 = ByteToInt16(ref col_1);
@@ -3802,12 +3802,12 @@ namespace DataToExcel
 
                     }
                 }
-                //------------------------------TSK1ƒ£∞ÂRead Ω· ¯------------------------------//
+                //------------------------------TSK1Ê®°ÊùøRead ÁªìÊùü------------------------------//
             }
 
             MapSheet.get_Range("A1:SR512", Missing.Value).Value2 = aryTP;
 
-            this.ResultFileName = this.textBox1.Text + @"\MapMergeFile\" + this.LotNo + @"\" + this.LotNo + "∂—µ˛" + ".xlsx";
+            this.ResultFileName = this.textBox1.Text + @"\MapMergeFile\" + this.LotNo + @"\" + this.LotNo + "Â†ÜÂè†" + ".xlsx";
             MapSheet.Activate();
             // workbook.SaveAs(this.ResultFileName, Excel.XlFileFormat.xlWorkbookNormal, updateLinks, updateLinks, updateLinks, updateLinks, Excel.XlSaveAsAccessMode.xlNoChange, updateLinks, updateLinks, updateLinks, updateLinks, updateLinks);
             workbook.SaveAs(this.ResultFileName, 51);

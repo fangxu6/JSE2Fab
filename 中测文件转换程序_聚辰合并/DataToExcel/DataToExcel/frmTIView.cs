@@ -12,18 +12,18 @@ namespace DataToExcel
     {
         private IMapingFile _currFile;
 
-        // ππ‘Ï∫Ø ˝
+        // ÊûÑÈÄ†ÂáΩÊï∞
         public frmTIView()
         {
             InitializeComponent();
         }
 
-        // ¥∞ÃÂµ«¬Ω
+        // Á™ó‰ΩìÁôªÈôÜ
         private void frmTIView_Load(object sender, EventArgs e)
         {
             try
             {
-                // º”‘ÿœ¬¿≠øÚ—°œÓ
+                // Âä†ËΩΩ‰∏ãÊãâÊ°ÜÈÄâÈ°π
                 this.cmbFileType.Items.Add("Tiww");
                 this.cmbFileType.Items.Add("Sinf");
                 this.cmbFileType.Items.Add("Tma");
@@ -48,7 +48,7 @@ namespace DataToExcel
             }
         }
 
-        // º”‘ÿ tiww ∏Ò Ω mapping Œƒº˛
+        // Âä†ËΩΩ tiww Ê†ºÂºè mapping Êñá‰ª∂
         private void menuLoad_Click(object sender, EventArgs e)
         {
             try
@@ -61,7 +61,7 @@ namespace DataToExcel
             }
         }
 
-        // º”‘ÿ mapping file
+        // Âä†ËΩΩ mapping file
         private void LoadMappingFile()
         {
             switch (this.cmbFileType.SelectedIndex)
@@ -130,7 +130,7 @@ namespace DataToExcel
             }
         }
 
-        // πÿ±’Œƒº˛
+        // ÂÖ≥Èó≠Êñá‰ª∂
         private void menuClose_Click(object sender, EventArgs e)
         {
             this._currFile = null;
@@ -139,7 +139,7 @@ namespace DataToExcel
             this.lsvItems.Items.Clear();
         }
 
-        // À´ª˜¡–±Ì≤Èø¥œÍœ∏ mapping –≈œ¢
+        // ÂèåÂáªÂàóË°®Êü•ÁúãËØ¶ÁªÜ mapping ‰ø°ÊÅØ
         private void lsvItems_DoubleClick(object sender, EventArgs e)
         {
             try
@@ -178,24 +178,24 @@ namespace DataToExcel
 
             string msg = "\n";
 
-            msg += "           Lot£∫" + ((Sinf)this._currFile).Lot + "\n";
-            msg += "       WaferNo£∫" + ((Sinf)this._currFile).Wafer + "\n";
-            msg += "        Device£∫" + ((Sinf)this._currFile).Device + "\n";
+            msg += "           LotÔºö" + ((Sinf)this._currFile).Lot + "\n";
+            msg += "       WaferNoÔºö" + ((Sinf)this._currFile).Wafer + "\n";
+            msg += "        DeviceÔºö" + ((Sinf)this._currFile).Device + "\n";
             msg += "\n";
-            msg += "         Refpx£∫" + ((Sinf)this._currFile).Refpx + "\n";
-            msg += "         Refpy£∫" + ((Sinf)this._currFile).Refpy + "\n";
+            msg += "         RefpxÔºö" + ((Sinf)this._currFile).Refpx + "\n";
+            msg += "         RefpyÔºö" + ((Sinf)this._currFile).Refpy + "\n";
             msg += "\n";
 
-            msg += "          Cols£∫" + ((Sinf)this._currFile).ColCount + "\n";
-            msg += "          Rows£∫" + ((Sinf)this._currFile).RowCount + "\n";
+            msg += "          ColsÔºö" + ((Sinf)this._currFile).ColCount + "\n";
+            msg += "          RowsÔºö" + ((Sinf)this._currFile).RowCount + "\n";
             msg += "\n";
-            msg += "    Total dies£∫" + this._currFile.DieMatrix.DieAttributeStat(DieCategory.FailDie | DieCategory.MarkDie | DieCategory.PassDie
+            msg += "    Total diesÔºö" + this._currFile.DieMatrix.DieAttributeStat(DieCategory.FailDie | DieCategory.MarkDie | DieCategory.PassDie
                 | DieCategory.SkipDie | DieCategory.TIRefFail | DieCategory.TIRefPass | DieCategory.Unknow).ToString() + "\n";
-            msg += "     Pass dies£∫" + this._currFile.DieMatrix.DieAttributeStat(DieCategory.PassDie | DieCategory.TIRefPass).ToString() + "\n";
-            msg += "     Fail dies£∫" + this._currFile.DieMatrix.DieAttributeStat(DieCategory.FailDie | DieCategory.TIRefFail).ToString() + "\n";
-            msg += "     Mark dies£∫" + this._currFile.DieMatrix.DieAttributeStat(DieCategory.MarkDie).ToString() + "\n";
-            msg += "  SkipDie dies£∫" + this._currFile.DieMatrix.DieAttributeStat(DieCategory.SkipDie).ToString() + "\n";
-            msg += "   Unknow dies£∫" + this._currFile.DieMatrix.DieAttributeStat(DieCategory.Unknow).ToString() + "\n";
+            msg += "     Pass diesÔºö" + this._currFile.DieMatrix.DieAttributeStat(DieCategory.PassDie | DieCategory.TIRefPass).ToString() + "\n";
+            msg += "     Fail diesÔºö" + this._currFile.DieMatrix.DieAttributeStat(DieCategory.FailDie | DieCategory.TIRefFail).ToString() + "\n";
+            msg += "     Mark diesÔºö" + this._currFile.DieMatrix.DieAttributeStat(DieCategory.MarkDie).ToString() + "\n";
+            msg += "  SkipDie diesÔºö" + this._currFile.DieMatrix.DieAttributeStat(DieCategory.SkipDie).ToString() + "\n";
+            msg += "   Unknow diesÔºö" + this._currFile.DieMatrix.DieAttributeStat(DieCategory.Unknow).ToString() + "\n";
 
             this.txtInfo.Text = msg;
 
@@ -212,45 +212,45 @@ namespace DataToExcel
 
             string msg = "\n";
 
-            msg += "           Lot£∫" + ((Tsk)this._currFile).LotNo + "\n";
-            msg += "       WaferID£∫" + ((Tsk)this._currFile).WaferID + "\n";
-            msg += "        Device£∫" + ((Tsk)this._currFile).Device + "\n";
+            msg += "           LotÔºö" + ((Tsk)this._currFile).LotNo + "\n";
+            msg += "       WaferIDÔºö" + ((Tsk)this._currFile).WaferID + "\n";
+            msg += "        DeviceÔºö" + ((Tsk)this._currFile).Device + "\n";
             msg += "\n";
-            msg += "         Refpx£∫" + ((Tsk)this._currFile).Refpx + "\n";
-            msg += "         Refpy£∫" + ((Tsk)this._currFile).Refpy + "\n";
+            msg += "         RefpxÔºö" + ((Tsk)this._currFile).Refpx + "\n";
+            msg += "         RefpyÔºö" + ((Tsk)this._currFile).Refpy + "\n";
             msg += "\n";
-            msg += "    Wafer size£∫" + ((Tsk)this._currFile).WaferSize + "\n";
+            msg += "    Wafer sizeÔºö" + ((Tsk)this._currFile).WaferSize + "\n";
             msg += "\n";
 
-            msg += "          Cols£∫" + this._currFile.DieMatrix.XMax.ToString() + "\n";
-            msg += "          Rows£∫" + this._currFile.DieMatrix.YMax.ToString() + "\n";
+            msg += "          ColsÔºö" + this._currFile.DieMatrix.XMax.ToString() + "\n";
+            msg += "          RowsÔºö" + this._currFile.DieMatrix.YMax.ToString() + "\n";
             msg += "\n";
-            msg += "    Total dies£∫" + this._currFile.DieMatrix.DieAttributeStat(DieCategory.FailDie | DieCategory.MarkDie | DieCategory.PassDie
+            msg += "    Total diesÔºö" + this._currFile.DieMatrix.DieAttributeStat(DieCategory.FailDie | DieCategory.MarkDie | DieCategory.PassDie
                 | DieCategory.SkipDie | DieCategory.TIRefFail | DieCategory.TIRefPass | DieCategory.Unknow).ToString() + "\n";
-            msg += "     Pass dies£∫" + this._currFile.DieMatrix.DieAttributeStat(DieCategory.PassDie | DieCategory.TIRefPass).ToString() + "\n";
-            msg += "     Fail dies£∫" + this._currFile.DieMatrix.DieAttributeStat(DieCategory.FailDie | DieCategory.TIRefFail).ToString() + "\n";
-            msg += "     Mark dies£∫" + this._currFile.DieMatrix.DieAttributeStat(DieCategory.MarkDie).ToString() + "\n";
-            msg += "  SkipDie dies£∫" + this._currFile.DieMatrix.DieAttributeStat(DieCategory.SkipDie).ToString() + "\n";
-            msg += "   Unknow dies£∫" + this._currFile.DieMatrix.DieAttributeStat(DieCategory.Unknow).ToString() + "\n";
+            msg += "     Pass diesÔºö" + this._currFile.DieMatrix.DieAttributeStat(DieCategory.PassDie | DieCategory.TIRefPass).ToString() + "\n";
+            msg += "     Fail diesÔºö" + this._currFile.DieMatrix.DieAttributeStat(DieCategory.FailDie | DieCategory.TIRefFail).ToString() + "\n";
+            msg += "     Mark diesÔºö" + this._currFile.DieMatrix.DieAttributeStat(DieCategory.MarkDie).ToString() + "\n";
+            msg += "  SkipDie diesÔºö" + this._currFile.DieMatrix.DieAttributeStat(DieCategory.SkipDie).ToString() + "\n";
+            msg += "   Unknow diesÔºö" + this._currFile.DieMatrix.DieAttributeStat(DieCategory.Unknow).ToString() + "\n";
 
             this.txtInfo.Text = msg;
 
             this.pnlMapping.Refresh();
         }
 
-        // ÷ÿªÊ mapping Õº
+        // ÈáçÁªò mapping Âõæ
         private void pnlMapping_Paint(object sender, PaintEventArgs e)
         {
             this.Draw(e.Graphics);
         }
 
-        // ∏ƒ±‰≥ﬂ¥Á∫Û÷ÿªÊ
+        // ÊîπÂèòÂ∞∫ÂØ∏ÂêéÈáçÁªò
         private void pnlMapping_Resize(object sender, EventArgs e)
         {
             this.Draw(Graphics.FromHwnd(this.pnlMapping.Handle));
         }
 
-        // ‘⁄ªÊÕº«¯ƒ⁄ªÊ÷∆ mapping Õº
+        // Âú®ÁªòÂõæÂå∫ÂÜÖÁªòÂà∂ mapping Âõæ
         private void Draw(Graphics g)
         {
             if (this._currFile == null)
@@ -259,7 +259,7 @@ namespace DataToExcel
                 this.DrawMatrix(g);
         }
 
-        // ªÊ÷∆ mapping æÿ’Û
+        // ÁªòÂà∂ mapping Áü©Èòµ
         private void DrawMatrix(Graphics g)
         {
             switch (this.cmbFileType.SelectedIndex)
@@ -270,7 +270,7 @@ namespace DataToExcel
                         (float)((decimal)this._currFile.Properties["X_SIZE"]),
                         (float)((decimal)this._currFile.Properties["Y_SIZE"]),  false);
                     break;
-                    // sinf°¢tma°¢tsk
+                    // sinf„ÄÅtma„ÄÅtsk
                 case 1:
                 case 2:
                 case 3:

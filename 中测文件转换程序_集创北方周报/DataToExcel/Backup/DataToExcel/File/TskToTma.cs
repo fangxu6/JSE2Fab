@@ -8,57 +8,57 @@ namespace DataToExcel
     {
         public override void Convert(string datfile, string tmafile)
         {
-            // ¶ÁÈ¡À´Ô´ÎÄ¼ş
+            // è¯»å–æ¥æºæ–‡ä»¶
             IMappingFile source = new Tsk(datfile);
             source.Read();
 
-            // ¼ÓÔØ×ª»»ÅäÖÃ
+            // åŠ è½½è½¬æ¢é…ç½®
             ConvertConfig convertConfig = new ConvertConfig("tsk", "tma");
 
-            // ´´½¨ĞÂÎÄ¼ş
+            // åˆ›å»ºæ–°æ–‡ä»¶
             IMappingFile tma = new Tma(tmafile);
 
-            // ¶ÁÈ¡Ó³Éä×Ö¶ÎÖµ
+            // è¯»å–æ˜ å°„å­—æ®µå€¼
             foreach (ConvertConfig.ConvertField f in convertConfig.Fields)
             {
                 tma.Properties[f.To] = source.Properties[f.From];
             }
 
-            // µ¼Èë die ÁĞ±í
+            // å¯¼å…¥ die åˆ—è¡¨
             tma.DieMatrix = source.DieMatrix.Clone();
 
             tma.Properties["ColCount"] = tma.DieMatrix.XMax;
             tma.Properties["RowCount"] = tma.DieMatrix.YMax;
             tma.Properties["Yield"] = (decimal)((int)tma.Properties["PassDie"] / (int)tma.Properties["TotalDie"]);
 
-            // Ğı×ª½Ç¶È
+            // æ—‹è½¬è§’åº¦
             tma.DeasilRotate(convertConfig.Rotate);
 
-            // ±£´æÎÄ¼ş
+            // ä¿å­˜æ–‡ä»¶
             tma.Save();
         }
 
         public override IMappingFile Convert(IMappingFile source)
         {
-            // ¼ÓÔØ×ª»»ÅäÖÃ
+            // åŠ è½½è½¬æ¢é…ç½®
             ConvertConfig convertConfig = new ConvertConfig("tsk", "tma");
 
-            // ´´½¨ĞÂÎÄ¼ş
+            // åˆ›å»ºæ–°æ–‡ä»¶
             IMappingFile tma = new Tma(source.FileName);
 
-            // ¶ÁÈ¡Ó³Éä×Ö¶ÎÖµ
+            // è¯»å–æ˜ å°„å­—æ®µå€¼
             foreach (ConvertConfig.ConvertField f in convertConfig.Fields)
             {
                 tma.Properties[f.To] = source.Properties[f.From];
             }
 
-            // µ¼Èë die ÁĞ±í
+            // å¯¼å…¥ die åˆ—è¡¨
             tma.DieMatrix = source.DieMatrix.Clone();
             tma.Properties["ColCount"] = tma.DieMatrix.XMax;
             tma.Properties["RowCount"] = tma.DieMatrix.YMax;
             tma.Properties["Yield"] = (decimal)((int)tma.Properties["PassDie"] / (int)tma.Properties["TotalDie"]);
 
-            // Ğı×ª½Ç¶È
+            // æ—‹è½¬è§’åº¦
             tma.DeasilRotate(convertConfig.Rotate);
 
             return tma;
