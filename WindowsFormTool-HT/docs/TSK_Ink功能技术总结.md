@@ -12,7 +12,12 @@ WindowsFormTool-HT/WindowsFormTool/
 │   ├── IInkRule.cs          # INK规则接口
 │   ├── InkRuleResult.cs     # 处理结果类
 │   ├── CrossPatternInkRule.cs  # 十字围点规则
+│   ├── NewCrossPatternInkRule.cs  # 新十字围点规则
 │   ├── NineGridInkRule.cs   # 九宫格规则
+│   ├── EnclosedPassInkRule.cs  # 被Fail包围的Pass规则
+│   ├── LineBlobInkRule.cs    # 线状Fail扩散规则
+│   ├── ClusteredFailInkRule.cs # 团簇Fail扩散规则
+│   ├── GdbcNineGridThresholdInkRule.cs # GDBC九宫格阈值规则
 │   └── InkRuleManager.cs    # 规则管理器
 ├── Forms/
 │   └── InkRuleDialog.cs     # INK规则选择对话框
@@ -66,7 +71,16 @@ public interface IInkRule
 - `targetBinNo`: 目标Bin号（1-255）
 - `mode`: 模式选择（1或2）
 
-### 4. NineGridInkRule 九宫格规则
+### 4. NewCrossPatternInkRule 新十字围点规则
+
+- 检测水平或垂直连续Pass线段，外侧与上下/左右邻域为Fail/Mark/Skip2时触发
+- Pass/Fail 判定基于 `DieData.Attribute` 是否为 `PassDie` / `FailDie`
+- 连续Pass长度至少为2，边缘缺少邻域时不触发
+
+**参数：**
+- `targetBinNo`: 目标Bin号（1-255）
+
+### 5. NineGridInkRule 九宫格规则
 
 - 检测3x3区域内存在Fail Die时，将周围Pass Die标记为Fail
 - 支持1-3圈迭代处理
@@ -75,7 +89,7 @@ public interface IInkRule
 - `targetBinNo`: 目标Bin号（1-255）
 - `rings`: 圈数（1-3）
 
-### 5. InkRuleManager 规则管理器
+### 6. InkRuleManager 规则管理器
 
 单例模式，管理所有可用规则：
 - `Register(IInkRule rule)`: 注册规则
@@ -83,7 +97,7 @@ public interface IInkRule
 - `GetAllRules()`: 获取所有规则
 - `ValidateParameters()`: 验证参数
 
-### 6. DieMatrix INK方法
+### 7. DieMatrix INK方法
 
 ```csharp
 public InkRuleResult ApplyInkRule(IInkRule rule, Dictionary<string, object> parameters)
@@ -176,8 +190,8 @@ case 1:
 ## 注意事项
 
 1. **Bin号范围**: 目标Bin号必须在1-255之间
-2. **边缘Die**: 位于矩阵边缘的Die不会触发任何INK规则
-3. **Mark Die**: Mark Die视为Fail Die参与包围判断
+2. **边缘Die**: 位于矩阵边缘的Die不会触发十字围点/新十字围点规则
+3. **Mark/Skip2 Die**: Mark/Skip2 Die在包围判断中等价于Fail Die
 4. **多圈迭代**: 九宫格规则支持1-3圈迭代，每圈基于上一圈结果
 5. **不可逆**: INK操作直接修改Die状态，保存后不可撤销
 
