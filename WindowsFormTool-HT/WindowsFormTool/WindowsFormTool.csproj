@@ -66,6 +66,9 @@
     <Compile Include="Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\DpatInkDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Forms\InkRuleDialog.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -85,6 +88,7 @@
     <Compile Include="TskUtil\InkRules\InkRuleSampleTests.cs" />
     <Compile Include="TskUtil\InkRules\LineBlobInkRule.cs" />
     <Compile Include="TskUtil\InkRules\NineGridInkRule.cs" />
+    <Compile Include="TskUtil\strategy\TskDpatInkProcessor.cs" />
     <Compile Include="TskUtil\strategy\TskInkProcessor.cs" />
     <Compile Include="TskUtil\TskFileHelper.cs" />
     <Compile Include="TskUtil\strategy\ITskProcessor.cs" />

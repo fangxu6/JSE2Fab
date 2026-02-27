@@ -13,7 +13,8 @@ public class TskProcessor
         _processors = new Dictionary<int, ITskProcessor>
         {
             { 0, new TskMergeProcessor() },  // Case 0: TSK合并
-            { 1, new TskInkProcessor() }      // Case 1: INK规则
+            { 1, new TskInkProcessor() },     // Case 1: INK规则
+            { 2, new TskDpatInkProcessor() }  // Case 2: DPAT INK
         };
     }
 
