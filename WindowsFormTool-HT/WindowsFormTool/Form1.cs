@@ -24,7 +24,7 @@ namespace DataToExcel
         {
             Merge = 0,
             Ink = 1,
-            StackedWafers = 2
+            StackedWafers = 2,
             DpatInk = 3
         }
 
@@ -86,6 +86,18 @@ namespace DataToExcel
                     SecondaryBrowseEnabled = false,
                     StartButtonText = "开始叠片分析",
                     SelectPrimaryAction = f => f.SelectFolderAsStackedLot()
+                },
+                [(int)Mode.DpatInk] = new ModeUi
+                {
+                    PrimaryLabelText = "选择TSK文件（最多25个）",
+                    SecondaryLabelText = "选择CSV文件",
+                    DescriptionText = "说明：\r\n选择TSK与CSV文件后，点击开始进行DPAT INK处理\r\n",
+                    PrimaryBrowseText = "选择TSK",
+                    SecondaryBrowseText = "选择CSV",
+                    SecondaryBrowseEnabled = true,
+                    StartButtonText = "开始DPAT INK",
+                    SelectPrimaryAction = f => f.SelectDpatTskFiles(),
+                    SelectSecondaryAction = f => f.SelectDpatCsvFiles()
                 }
             };
 
@@ -100,18 +112,18 @@ namespace DataToExcel
             firstFileList = new List<string>();
             using (var dialog = new FolderBrowserDialog())
             {
-                if (dialog.ShowDialog() == DialogResult.OK)
-                {
-                    DirectoryInfo TheFolder = new DirectoryInfo(dialog.SelectedPath);
+            if (dialog.ShowDialog() == DialogResult.OK)
+            {
+                DirectoryInfo TheFolder = new DirectoryInfo(dialog.SelectedPath);
 
-                    foreach (FileInfo str in TheFolder.GetFiles("*", SearchOption.AllDirectories))
-                    {
-                        firstFileList.Add(str.FullName);
-                    }
-                    button6.Text = dialog.SelectedPath;
-                    UpdateRichTextBox($"已加载 {firstFileList.Count} 个TSK文件\n");
+                foreach (FileInfo str in TheFolder.GetFiles("*", SearchOption.AllDirectories))
+                {
+                    firstFileList.Add(str.FullName);
                 }
+                button6.Text = dialog.SelectedPath;
+                UpdateRichTextBox($"已加载 {firstFileList.Count} 个TSK文件\n");
             }
+        }
         }
 
         /// <summary>
@@ -122,18 +134,18 @@ namespace DataToExcel
             secondFileList = new List<string>();
             using (var dialog = new FolderBrowserDialog())
             {
-                if (dialog.ShowDialog() == DialogResult.OK)
-                {
-                    DirectoryInfo TheFolder = new DirectoryInfo(dialog.SelectedPath);
+            if (dialog.ShowDialog() == DialogResult.OK)
+            {
+                DirectoryInfo TheFolder = new DirectoryInfo(dialog.SelectedPath);
 
-                    foreach (FileInfo str in TheFolder.GetFiles("*", SearchOption.AllDirectories))
-                    {
-                        secondFileList.Add(str.FullName);
-                    }
-                    button2.Text = dialog.SelectedPath;
-                    UpdateRichTextBox($"已加载目标TSK文件夹：{dialog.SelectedPath}\n");
+                foreach (FileInfo str in TheFolder.GetFiles("*", SearchOption.AllDirectories))
+                {
+                    secondFileList.Add(str.FullName);
                 }
+                button2.Text = dialog.SelectedPath;
+                UpdateRichTextBox($"已加载目标TSK文件夹：{dialog.SelectedPath}\n");
             }
+        }
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -182,7 +194,7 @@ namespace DataToExcel
                             MessageBox.Show(@"请先选择TSK文件夹", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                         }
                         break;
-                    case 2: // DPAT INK
+                    case 3: // DPAT INK
                         if (firstFileList != null && firstFileList.Count > 0 && secondFileList != null && secondFileList.Count > 0)
                         {
                             processor.ProcessBatch(firstFileList, secondFileList, comboBox1.SelectedIndex,

@@ -18,7 +18,7 @@ public class TskProcessor
         {
             { OperationMerge, new TskMergeProcessor() },  // Case 0: TSK合并
             { OperationInk, new TskInkProcessor() },      // Case 1: INK规则
-            { OperationStackedWafers, new TskStackedWafersProcessor() } // Case 2: Stacked Wafers
+            { OperationStackedWafers, new TskStackedWafersProcessor() }, // Case 2: Stacked Wafers
             { Operationdpat, new TskDpatInkProcessor() } // Case 2: Stacked Wafers
         };
     }
