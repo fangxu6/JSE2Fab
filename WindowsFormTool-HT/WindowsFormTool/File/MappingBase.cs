@@ -1,4 +1,3 @@
-
 /*
  * 作者：sky
  * 日间：2008-01-09
@@ -337,13 +336,15 @@ namespace DataToExcel
         // 读取日期
         protected virtual DateTime ReadToDate()
         {
-            int year, month, day, hour, min;
+            int.TryParse(this.ReadToString(2), out int yearPart);
+            int year = 2000 + yearPart;
 
-            year = 2000 + Int32.Parse(this.ReadToString(2));
-            month = Int32.Parse(this.ReadToString(2));
-            day = Int32.Parse(this.ReadToString(2));
-            hour = Int32.Parse(this.ReadToString(2));
-            min = Int32.Parse(this.ReadToString(2));
+            // 月份和日期如果解析失败或是 0，则默认为 1
+            if (!int.TryParse(this.ReadToString(2), out int month) || month == 0) month = 1;
+            if (!int.TryParse(this.ReadToString(2), out int day) || day == 0) day = 1;
+            
+            int.TryParse(this.ReadToString(2), out int hour);
+            int.TryParse(this.ReadToString(2), out int min);
 
             // reserved
             this._reader.ReadBytes(2);
