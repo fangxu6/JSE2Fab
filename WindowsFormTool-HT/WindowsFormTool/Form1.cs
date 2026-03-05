@@ -18,12 +18,14 @@ namespace DataToExcel
 
         // 当前“选择TSK”按钮实际执行的动作（避免反复 +=/-= Click）
         private Action _selectPrimaryAction;
+        private Action _selectSecondaryAction;
 
         private enum Mode
         {
             Merge = 0,
             Ink = 1,
-            StackedWafers = 2
+            StackedWafers = 2,
+            DpatInk = 3
         }
 
         private sealed class ModeUi
@@ -36,6 +38,7 @@ namespace DataToExcel
             public bool SecondaryBrowseEnabled;
             public string StartButtonText;
             public Action<Form1> SelectPrimaryAction;
+            public Action<Form1> SelectSecondaryAction;
         }
 
         private readonly Dictionary<int, ModeUi> _modeUiMap;
@@ -83,6 +86,18 @@ namespace DataToExcel
                     SecondaryBrowseEnabled = false,
                     StartButtonText = "开始叠片分析",
                     SelectPrimaryAction = f => f.SelectFolderAsStackedLot()
+                },
+                [(int)Mode.DpatInk] = new ModeUi
+                {
+                    PrimaryLabelText = "选择TSK文件（最多25个）",
+                    SecondaryLabelText = "选择CSV文件",
+                    DescriptionText = "说明：\r\n选择TSK与CSV文件后，点击开始进行DPAT INK处理\r\n",
+                    PrimaryBrowseText = "选择TSK",
+                    SecondaryBrowseText = "选择CSV",
+                    SecondaryBrowseEnabled = true,
+                    StartButtonText = "开始DPAT INK",
+                    SelectPrimaryAction = f => f.SelectDpatTskFiles(),
+                    SelectSecondaryAction = f => f.SelectDpatCsvFiles()
                 }
             };
 
@@ -97,18 +112,18 @@ namespace DataToExcel
             firstFileList = new List<string>();
             using (var dialog = new FolderBrowserDialog())
             {
-                if (dialog.ShowDialog() == DialogResult.OK)
-                {
-                    DirectoryInfo TheFolder = new DirectoryInfo(dialog.SelectedPath);
+            if (dialog.ShowDialog() == DialogResult.OK)
+            {
+                DirectoryInfo TheFolder = new DirectoryInfo(dialog.SelectedPath);
 
-                    foreach (FileInfo str in TheFolder.GetFiles("*", SearchOption.AllDirectories))
-                    {
-                        firstFileList.Add(str.FullName);
-                    }
-                    button6.Text = dialog.SelectedPath;
-                    UpdateRichTextBox($"已加载 {firstFileList.Count} 个TSK文件\n");
+                foreach (FileInfo str in TheFolder.GetFiles("*", SearchOption.AllDirectories))
+                {
+                    firstFileList.Add(str.FullName);
                 }
+                button6.Text = dialog.SelectedPath;
+                UpdateRichTextBox($"已加载 {firstFileList.Count} 个TSK文件\n");
             }
+        }
         }
 
         /// <summary>
@@ -119,18 +134,18 @@ namespace DataToExcel
             secondFileList = new List<string>();
             using (var dialog = new FolderBrowserDialog())
             {
-                if (dialog.ShowDialog() == DialogResult.OK)
-                {
-                    DirectoryInfo TheFolder = new DirectoryInfo(dialog.SelectedPath);
+            if (dialog.ShowDialog() == DialogResult.OK)
+            {
+                DirectoryInfo TheFolder = new DirectoryInfo(dialog.SelectedPath);
 
-                    foreach (FileInfo str in TheFolder.GetFiles("*", SearchOption.AllDirectories))
-                    {
-                        secondFileList.Add(str.FullName);
-                    }
-                    button2.Text = dialog.SelectedPath;
-                    UpdateRichTextBox($"已加载目标TSK文件夹：{dialog.SelectedPath}\n");
+                foreach (FileInfo str in TheFolder.GetFiles("*", SearchOption.AllDirectories))
+                {
+                    secondFileList.Add(str.FullName);
                 }
+                button2.Text = dialog.SelectedPath;
+                UpdateRichTextBox($"已加载目标TSK文件夹：{dialog.SelectedPath}\n");
             }
+        }
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -179,6 +194,17 @@ namespace DataToExcel
                             MessageBox.Show(@"请先选择TSK文件夹", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                         }
                         break;
+                    case 3: // DPAT INK
+                        if (firstFileList != null && firstFileList.Count > 0 && secondFileList != null && secondFileList.Count > 0)
+                        {
+                            processor.ProcessBatch(firstFileList, secondFileList, comboBox1.SelectedIndex,
+                                UpdateRichTextBox, progressBar1);
+                        }
+                        else
+                        {
+                            MessageBox.Show(@"请先选择TSK文件和CSV文件", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        }
+                        break;
 
                     default:
                         MessageBox.Show(@"未选择处理方式", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
@@ -212,6 +238,7 @@ namespace DataToExcel
             ApplyMode(comboBox1.SelectedIndex);
         }
 
+        // 根据模式切换 UI 文案与按钮行为
         private void ApplyMode(int selectedIndex)
         {
             ModeUi ui;
@@ -226,6 +253,7 @@ namespace DataToExcel
                 button5.Enabled = false;
                 button1.Text = "开始";
                 _selectPrimaryAction = null;
+                _selectSecondaryAction = null;
                 return;
             }
 
@@ -240,6 +268,7 @@ namespace DataToExcel
             button1.Text = ui.StartButtonText;
 
             _selectPrimaryAction = ui.SelectPrimaryAction == null ? (Action)null : (() => ui.SelectPrimaryAction(this));
+            _selectSecondaryAction = ui.SelectSecondaryAction == null ? (Action)null : (() => ui.SelectSecondaryAction(this));
         }
 
         private void SelectPrimary_Click(object sender, EventArgs e)
@@ -253,7 +282,14 @@ namespace DataToExcel
 
         private void SelectSecondary_Click(object sender, EventArgs e)
         {
-            // 只有合并模式需要 second group；Ink 模式下 button5.Enabled=false 不会触发
+            var action = _selectSecondaryAction;
+            if (action != null)
+            {
+                action();
+                return;
+            }
+
+            // fallback: 合并模式需要 second group；Ink 模式下 button5.Enabled=false 不会触发
             button5_Click(sender, e);
         }
 
@@ -308,6 +344,45 @@ namespace DataToExcel
                 button2.Text = "已选：1个";
 
                 UpdateRichTextBox($"已加载TSK文件：{_inkTskPath}\n");
+            }
+        }
+
+        private void SelectDpatTskFiles()
+        {
+            _inkTskPath = null;
+            using (var dialog = new OpenFileDialog())
+            {
+                dialog.Filter = "TSK文件|*.tsk|所有文件|*.*";
+                dialog.Multiselect = true;
+
+                if (dialog.ShowDialog() != DialogResult.OK)
+                    return;
+
+                if (dialog.FileNames.Length > 25)
+                {
+                    MessageBox.Show(@"一次最多选择25个TSK文件", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+
+                firstFileList = new List<string>(dialog.FileNames);
+                button6.Text = $"已选：{firstFileList.Count}个";
+                UpdateRichTextBox($"已加载 {firstFileList.Count} 个TSK文件\n");
+            }
+        }
+
+        private void SelectDpatCsvFiles()
+        {
+            using (var dialog = new OpenFileDialog())
+            {
+                dialog.Filter = "CSV文件|*.csv|所有文件|*.*";
+                dialog.Multiselect = true;
+
+                if (dialog.ShowDialog() != DialogResult.OK)
+                    return;
+
+                secondFileList = new List<string>(dialog.FileNames);
+                button2.Text = $"已选：{secondFileList.Count}个";
+                UpdateRichTextBox($"已加载 {secondFileList.Count} 个CSV文件\n");
             }
         }
 

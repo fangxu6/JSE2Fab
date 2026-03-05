@@ -10,6 +10,7 @@ public class TskProcessor
     private const int OperationMerge = 0;
     private const int OperationInk = 1;
     private const int OperationStackedWafers = 2;
+    private const int Operationdpat = 3;
 
     public TskProcessor()
     {
@@ -17,7 +18,8 @@ public class TskProcessor
         {
             { OperationMerge, new TskMergeProcessor() },  // Case 0: TSK合并
             { OperationInk, new TskInkProcessor() },      // Case 1: INK规则
-            { OperationStackedWafers, new TskStackedWafersProcessor() } // Case 2: Stacked Wafers
+            { OperationStackedWafers, new TskStackedWafersProcessor() }, // Case 2: Stacked Wafers
+            { Operationdpat, new TskDpatInkProcessor() } // Case 2: Stacked Wafers
         };
     }
 
