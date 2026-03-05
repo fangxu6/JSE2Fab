@@ -64,6 +64,9 @@ namespace WindowsFormTool.TskUtil.InkRules
 
             // 注册GDBC九宫格阈值规则
             Register(new GdbcNineGridThresholdInkRule());
+
+            // 注册九宫格围点 (NineGrid Pattern) 规则
+            Register(new NineGridPatternInkRule());
         }
 
         /// <summary>

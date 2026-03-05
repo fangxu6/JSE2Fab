@@ -21,7 +21,35 @@ namespace WindowsFormTool.TskUtil.InkRules
             if (!CheckGdbcThresholdRule())
                 failures.Add("GdbcNineGridThresholdInkRule: expected center pass to be inked.");
 
+            if (!CheckNineGridPatternRule())
+                failures.Add("NineGridPatternInkRule: expected center pass to be inked.");
+
             return failures;
+        }
+
+        private static bool CheckNineGridPatternRule()
+        {
+            // 创建 3x3 矩阵，中心为 Pass，周围全为 Fail
+            var matrix = CreateMatrix(3, 3, DieCategory.FailDie, 2);
+            SetDie(matrix, 1, 1, DieCategory.PassDie, 1);
+
+            var rule = new NineGridPatternInkRule();
+            var parameters = rule.GetDefaultParameters();
+            var result = rule.Preview(matrix, parameters);
+
+            // 验证中心点被识别
+            bool success = ContainsCoord(result, 1, 1);
+
+            // 属性优先验证：即使 Bin 与常规值不一致，也应基于 Attribute 判定 Pass/Fail
+            var attributeFirstMatrix = CreateMatrix(3, 3, DieCategory.FailDie, 1);
+            SetDie(attributeFirstMatrix, 1, 1, DieCategory.PassDie, 2);
+            var attributeFirstResult = rule.Preview(attributeFirstMatrix, parameters);
+            success = success && ContainsCoord(attributeFirstResult, 1, 1);
+
+            // 验证边缘点不触发（即使被包围，但在 3x3 矩阵中边缘点没有 8 个邻居）
+            // 注意：NineGridPatternInkRule.Preview 循环是从 1 到 Max-1，所以边缘点根本不会被检查。
+
+            return success;
         }
 
         private static bool CheckEnclosedPassRule()

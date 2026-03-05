@@ -307,6 +307,19 @@ namespace WindowsFormTool.Forms
                     if (_currentParameters.ContainsKey(InkRuleParameters.Threshold))
                         thresholdNumeric.Value = Convert.ToDecimal(_currentParameters[InkRuleParameters.Threshold]);
                 }
+                else if (_selectedRule.RuleId == NineGridPatternInkRule.RULE_ID)
+                {
+                    // 九宫格围点 (NineGrid Pattern) 仅需目标Bin号，无需额外参数
+                    modeGroupBox.Visible = false;
+                    ringsLabel.Visible = false;
+                    ringsNumeric.Visible = false;
+                    minLineLengthLabel.Visible = false;
+                    minLineLengthNumeric.Visible = false;
+                    minClusterSizeLabel.Visible = false;
+                    minClusterSizeNumeric.Visible = false;
+                    thresholdLabel.Visible = false;
+                    thresholdNumeric.Visible = false;
+                }
                 else
                 {
                     modeGroupBox.Visible = false;

@@ -93,8 +93,9 @@
     <Compile Include="TskUtil\InkRules\LineBlobInkRule.cs" />
     <Compile Include="TskUtil\InkRules\NewCrossPatternInkRule.cs" />
     <Compile Include="TskUtil\InkRules\NineGridInkRule.cs" />
+    <Compile Include="TskUtil\InkRules\NineGridPatternInkRule.cs" />
     <Compile Include="TskUtil\StackedWafers\StackedWafersCalculator.cs" />
-	  <Compile Include="TskUtil\strategy\TskDpatInkProcessor.cs" />
+    <Compile Include="TskUtil\strategy\TskDpatInkProcessor.cs" />
     <Compile Include="TskUtil\strategy\TskInkProcessor.cs" />
     <Compile Include="TskUtil\strategy\TskStackedWafersProcessor.cs" />
     <Compile Include="TskUtil\TskFileHelper.cs" />
