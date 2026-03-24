@@ -66,23 +66,29 @@ namespace WindowsFormTool.TskUtil.InkRules
 
         private static bool CheckLineBlobRule()
         {
-            var matrix = CreateMatrix(8, 3, DieCategory.PassDie, 1);
-            for (int x = 1; x <= 6; x++)
-                SetDie(matrix, x, 1, DieCategory.FailDie, 2);
+            var matrix = CreateMatrix(10, 5, DieCategory.PassDie, 1);
+            for (int x = 2; x <= 7; x++)
+                SetDie(matrix, x, 2, DieCategory.FailDie, 2);
 
             var rule = new LineBlobInkRule();
             var parameters = rule.GetDefaultParameters();
             var result = rule.Preview(matrix, parameters);
+            var multiRingParameters = new Dictionary<string, object>(parameters);
+            multiRingParameters[InkRuleParameters.Rings] = 2;
+            var multiRingResult = rule.Preview(matrix, multiRingParameters);
 
-            return ContainsCoord(result, 1, 0);
+            return parameters.ContainsKey(InkRuleParameters.Rings) &&
+                   (int)parameters[InkRuleParameters.Rings] == 1 &&
+                   ContainsCoord(result, 2, 1) &&
+                   multiRingResult.Count > result.Count;
         }
 
         private static bool CheckClusteredFailRule()
         {
-            var matrix = CreateMatrix(5, 5, DieCategory.PassDie, 1);
-            for (int x = 1; x <= 4; x++)
+            var matrix = CreateMatrix(9, 7, DieCategory.PassDie, 1);
+            for (int x = 3; x <= 6; x++)
             {
-                for (int y = 1; y <= 3; y++)
+                for (int y = 2; y <= 4; y++)
                 {
                     SetDie(matrix, x, y, DieCategory.FailDie, 2);
                 }
@@ -91,8 +97,14 @@ namespace WindowsFormTool.TskUtil.InkRules
             var rule = new ClusteredFailInkRule();
             var parameters = rule.GetDefaultParameters();
             var result = rule.Preview(matrix, parameters);
+            var multiRingParameters = new Dictionary<string, object>(parameters);
+            multiRingParameters[InkRuleParameters.Rings] = 2;
+            var multiRingResult = rule.Preview(matrix, multiRingParameters);
 
-            return ContainsCoord(result, 0, 1);
+            return parameters.ContainsKey(InkRuleParameters.Rings) &&
+                   (int)parameters[InkRuleParameters.Rings] == 1 &&
+                   ContainsCoord(result, 2, 2) &&
+                   multiRingResult.Count > result.Count;
         }
 
         private static bool CheckGdbcThresholdRule()

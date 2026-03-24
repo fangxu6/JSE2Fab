@@ -16,13 +16,14 @@ namespace WindowsFormTool.TskUtil.InkRules
         private static readonly Dictionary<string, object> DefaultParameters = new Dictionary<string, object>
         {
             { InkRuleParameters.TargetBinNo, 63 },
+            { InkRuleParameters.Rings, 1 },
             { InkRuleParameters.MinClusterSize, 10 }
         };
 
         public string RuleId => RULE_ID;
         public string RuleName => RULE_NAME;
         public string Description => DESCRIPTION;
-        public bool SupportsMultiRing => false;
+        public bool SupportsMultiRing => true;
 
         public Dictionary<string, object> GetDefaultParameters()
         {
@@ -39,6 +40,11 @@ namespace WindowsFormTool.TskUtil.InkRules
             if (!(parameters[InkRuleParameters.TargetBinNo] is int targetBinNo) || targetBinNo < 1 || targetBinNo > 255)
                 return false;
 
+            if (!parameters.ContainsKey(InkRuleParameters.Rings))
+                return false;
+            if (!(parameters[InkRuleParameters.Rings] is int rings) || rings < 1 || rings > 3)
+                return false;
+
             if (!parameters.ContainsKey(InkRuleParameters.MinClusterSize))
                 return false;
             if (!(parameters[InkRuleParameters.MinClusterSize] is int minCluster) || minCluster < 10)
@@ -52,7 +58,83 @@ namespace WindowsFormTool.TskUtil.InkRules
             if (!ValidateParameters(parameters))
                 throw new ArgumentException("参数验证失败");
 
+            int targetBinNo = (int)parameters[InkRuleParameters.TargetBinNo];
+            int rings = (int)parameters[InkRuleParameters.Rings];
             int minCluster = (int)parameters[InkRuleParameters.MinClusterSize];
+            var previewMatrix = matrix.Clone();
+            var previewTargets = new List<Tuple<int, int>>();
+            var seenTargets = new HashSet<Tuple<int, int>>();
+
+            for (int ring = 1; ring <= rings; ring++)
+            {
+                var ringTargets = GetInkTargetsForCurrentState(previewMatrix, minCluster);
+                foreach (var coord in ringTargets)
+                {
+                    if (seenTargets.Add(coord))
+                        previewTargets.Add(coord);
+                }
+
+                ApplyTargets(previewMatrix, ringTargets, targetBinNo);
+            }
+
+            return previewTargets;
+        }
+
+        public InkRuleResult Apply(DieMatrix matrix, Dictionary<string, object> parameters)
+        {
+            var result = new InkRuleResult
+            {
+                RuleId = RuleId,
+                RuleName = RuleName,
+                Parameters = parameters
+            };
+
+            if (!ValidateParameters(parameters))
+            {
+                result.Success = false;
+                result.ErrorMessage = "参数验证失败";
+                return result;
+            }
+
+            int targetBinNo = (int)parameters[InkRuleParameters.TargetBinNo];
+            int rings = (int)parameters[InkRuleParameters.Rings];
+            int minCluster = (int)parameters[InkRuleParameters.MinClusterSize];
+            var stopwatch = System.Diagnostics.Stopwatch.StartNew();
+
+            for (int ring = 1; ring <= rings; ring++)
+            {
+                var ringTargets = GetInkTargetsForCurrentState(matrix, minCluster);
+                int ringCount = 0;
+
+                foreach (var coord in ringTargets)
+                {
+                    var die = matrix[coord.Item1, coord.Item2];
+                    if (!IsPassDie(die))
+                        continue;
+
+                    int originalBin = die.Bin;
+                    if (!result.InkedCountByBin.ContainsKey(originalBin))
+                        result.InkedCountByBin[originalBin] = 0;
+                    result.InkedCountByBin[originalBin]++;
+
+                    die.Bin = targetBinNo;
+                    die.Attribute = DieCategory.FailDie;
+                    result.InkedDies.Add(coord);
+                    ringCount++;
+                }
+
+                result.InkedCountByRing[ring] = ringCount;
+            }
+
+            stopwatch.Stop();
+            result.ElapsedMilliseconds = stopwatch.ElapsedMilliseconds;
+            result.TotalInkedCount = result.InkedDies.Count;
+
+            return result;
+        }
+
+        private List<Tuple<int, int>> GetInkTargetsForCurrentState(DieMatrix matrix, int minCluster)
+        {
             var visited = new bool[matrix.XMax, matrix.YMax];
             var inkTargets = new HashSet<Tuple<int, int>>();
 
@@ -88,45 +170,17 @@ namespace WindowsFormTool.TskUtil.InkRules
             return new List<Tuple<int, int>>(inkTargets);
         }
 
-        public InkRuleResult Apply(DieMatrix matrix, Dictionary<string, object> parameters)
+        private void ApplyTargets(DieMatrix matrix, List<Tuple<int, int>> targets, int targetBinNo)
         {
-            var result = new InkRuleResult
-            {
-                RuleId = RuleId,
-                RuleName = RuleName,
-                Parameters = parameters
-            };
-
-            if (!ValidateParameters(parameters))
-            {
-                result.Success = false;
-                result.ErrorMessage = "参数验证失败";
-                return result;
-            }
-
-            int targetBinNo = (int)parameters[InkRuleParameters.TargetBinNo];
-            var stopwatch = System.Diagnostics.Stopwatch.StartNew();
-
-            var inkingDies = Preview(matrix, parameters);
-            foreach (var coord in inkingDies)
+            foreach (var coord in targets)
             {
                 var die = matrix[coord.Item1, coord.Item2];
-                int originalBin = die.Bin;
-
-                if (!result.InkedCountByBin.ContainsKey(originalBin))
-                    result.InkedCountByBin[originalBin] = 0;
-                result.InkedCountByBin[originalBin]++;
+                if (!IsPassDie(die))
+                    continue;
 
                 die.Bin = targetBinNo;
                 die.Attribute = DieCategory.FailDie;
-                result.InkedDies.Add(coord);
             }
-
-            stopwatch.Stop();
-            result.ElapsedMilliseconds = stopwatch.ElapsedMilliseconds;
-            result.TotalInkedCount = result.InkedDies.Count;
-
-            return result;
         }
 
         private void FloodFillFailCluster(DieMatrix matrix, int startX, int startY, bool[,] visited,

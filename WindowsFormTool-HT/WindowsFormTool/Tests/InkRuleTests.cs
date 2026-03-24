@@ -60,6 +60,12 @@ namespace DataToExcel.Tests
             RunTest("Fail+Mark混合边界 - 应该INK", Test_EnclosedPass_MixedFailMark);
             RunTest("多个包围区域 - 排除最大区域", Test_EnclosedPass_ExcludeLargestRegion);
 
+            Console.WriteLine("\n=== 线状/团簇扩散规则测试 ===");
+            RunTest("LineBlob: 默认1圈兼容", Test_LineBlob_DefaultRingCompatibility);
+            RunTest("LineBlob: 2圈迭代扩散", Test_LineBlob_TwoRingsExpand);
+            RunTest("ClusteredFail: 默认1圈兼容", Test_ClusteredFail_DefaultRingCompatibility);
+            RunTest("ClusteredFail: 2圈迭代扩散", Test_ClusteredFail_TwoRingsExpand);
+
             Console.WriteLine("\n=== InkRuleManager测试 ===");
             RunTest("Manager: 获取所有规则", Test_InkRuleManager_GetAllRules);
             RunTest("Manager: 参数验证", Test_InkRuleManager_ValidateParameters);
@@ -489,6 +495,134 @@ namespace DataToExcel.Tests
 
         #endregion
 
+        #region 线状/团簇扩散规则测试
+
+        private bool Test_LineBlob_DefaultRingCompatibility()
+        {
+            var matrixDefault = CreateMatrix(10, 5);
+            var matrixExplicit = CreateMatrix(10, 5);
+            SeedLineBlobScenario(matrixDefault);
+            SeedLineBlobScenario(matrixExplicit);
+
+            var rule = new LineBlobInkRule();
+            var defaultParameters = rule.GetDefaultParameters();
+            var explicitParameters = new Dictionary<string, object>
+            {
+                { InkRuleParameters.TargetBinNo, 63 },
+                { InkRuleParameters.Rings, 1 },
+                { InkRuleParameters.MinLineLength, 6 }
+            };
+
+            var defaultResult = rule.Apply(matrixDefault, defaultParameters);
+            var explicitResult = rule.Apply(matrixExplicit, explicitParameters);
+
+            return defaultParameters.ContainsKey(InkRuleParameters.Rings) &&
+                   (int)defaultParameters[InkRuleParameters.Rings] == 1 &&
+                   defaultResult.Success &&
+                   explicitResult.Success &&
+                   defaultResult.TotalInkedCount == explicitResult.TotalInkedCount &&
+                   defaultResult.InkedCountByRing.ContainsKey(1) &&
+                   explicitResult.InkedCountByRing.ContainsKey(1) &&
+                   defaultResult.InkedCountByRing[1] == explicitResult.InkedCountByRing[1] &&
+                   matrixDefault[2, 1].Bin == 63 &&
+                   matrixExplicit[2, 1].Bin == 63;
+        }
+
+        private bool Test_LineBlob_TwoRingsExpand()
+        {
+            var matrixOneRing = CreateMatrix(10, 5);
+            var matrixTwoRings = CreateMatrix(10, 5);
+            SeedLineBlobScenario(matrixOneRing);
+            SeedLineBlobScenario(matrixTwoRings);
+
+            var rule = new LineBlobInkRule();
+            var oneRingParameters = new Dictionary<string, object>
+            {
+                { InkRuleParameters.TargetBinNo, 63 },
+                { InkRuleParameters.Rings, 1 },
+                { InkRuleParameters.MinLineLength, 6 }
+            };
+            var twoRingParameters = new Dictionary<string, object>
+            {
+                { InkRuleParameters.TargetBinNo, 63 },
+                { InkRuleParameters.Rings, 2 },
+                { InkRuleParameters.MinLineLength, 6 }
+            };
+
+            var oneRingResult = rule.Apply(matrixOneRing, oneRingParameters);
+            var twoRingResult = rule.Apply(matrixTwoRings, twoRingParameters);
+
+            return oneRingResult.Success &&
+                   twoRingResult.Success &&
+                   twoRingResult.TotalInkedCount > oneRingResult.TotalInkedCount &&
+                   twoRingResult.InkedCountByRing.ContainsKey(2) &&
+                   twoRingResult.InkedCountByRing[2] > 0;
+        }
+
+        private bool Test_ClusteredFail_DefaultRingCompatibility()
+        {
+            var matrixDefault = CreateMatrix(9, 7);
+            var matrixExplicit = CreateMatrix(9, 7);
+            SeedClusteredFailScenario(matrixDefault);
+            SeedClusteredFailScenario(matrixExplicit);
+
+            var rule = new ClusteredFailInkRule();
+            var defaultParameters = rule.GetDefaultParameters();
+            var explicitParameters = new Dictionary<string, object>
+            {
+                { InkRuleParameters.TargetBinNo, 63 },
+                { InkRuleParameters.Rings, 1 },
+                { InkRuleParameters.MinClusterSize, 10 }
+            };
+
+            var defaultResult = rule.Apply(matrixDefault, defaultParameters);
+            var explicitResult = rule.Apply(matrixExplicit, explicitParameters);
+
+            return defaultParameters.ContainsKey(InkRuleParameters.Rings) &&
+                   (int)defaultParameters[InkRuleParameters.Rings] == 1 &&
+                   defaultResult.Success &&
+                   explicitResult.Success &&
+                   defaultResult.TotalInkedCount == explicitResult.TotalInkedCount &&
+                   defaultResult.InkedCountByRing.ContainsKey(1) &&
+                   explicitResult.InkedCountByRing.ContainsKey(1) &&
+                   defaultResult.InkedCountByRing[1] == explicitResult.InkedCountByRing[1] &&
+                   matrixDefault[2, 2].Bin == 63 &&
+                   matrixExplicit[2, 2].Bin == 63;
+        }
+
+        private bool Test_ClusteredFail_TwoRingsExpand()
+        {
+            var matrixOneRing = CreateMatrix(9, 7);
+            var matrixTwoRings = CreateMatrix(9, 7);
+            SeedClusteredFailScenario(matrixOneRing);
+            SeedClusteredFailScenario(matrixTwoRings);
+
+            var rule = new ClusteredFailInkRule();
+            var oneRingParameters = new Dictionary<string, object>
+            {
+                { InkRuleParameters.TargetBinNo, 63 },
+                { InkRuleParameters.Rings, 1 },
+                { InkRuleParameters.MinClusterSize, 10 }
+            };
+            var twoRingParameters = new Dictionary<string, object>
+            {
+                { InkRuleParameters.TargetBinNo, 63 },
+                { InkRuleParameters.Rings, 2 },
+                { InkRuleParameters.MinClusterSize, 10 }
+            };
+
+            var oneRingResult = rule.Apply(matrixOneRing, oneRingParameters);
+            var twoRingResult = rule.Apply(matrixTwoRings, twoRingParameters);
+
+            return oneRingResult.Success &&
+                   twoRingResult.Success &&
+                   twoRingResult.TotalInkedCount > oneRingResult.TotalInkedCount &&
+                   twoRingResult.InkedCountByRing.ContainsKey(2) &&
+                   twoRingResult.InkedCountByRing[2] > 0;
+        }
+
+        #endregion
+
         #region 九宫格规则测试
 
         private bool Test_NineGrid_OneRing()
@@ -736,6 +870,25 @@ namespace DataToExcel.Tests
         {
             var die = matrix[x, y];
             die.Attribute = attribute;
+        }
+
+        private void SeedLineBlobScenario(DieMatrix matrix)
+        {
+            for (int x = 2; x <= 7; x++)
+            {
+                SetDieBin(matrix, x, 2, 2);
+            }
+        }
+
+        private void SeedClusteredFailScenario(DieMatrix matrix)
+        {
+            for (int x = 3; x <= 6; x++)
+            {
+                for (int y = 2; y <= 4; y++)
+                {
+                    SetDieBin(matrix, x, y, 2);
+                }
+            }
         }
 
         #endregion

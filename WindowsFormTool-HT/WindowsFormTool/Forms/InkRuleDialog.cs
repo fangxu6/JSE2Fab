@@ -100,7 +100,7 @@ namespace WindowsFormTool.Forms
             mode2RadioButton.Size = new Size(350, 20);
             modeGroupBox.Controls.Add(mode2RadioButton);
 
-            // 圈数（九宫格用）
+            // 圈数
             ringsLabel = new Label();
             ringsLabel.Text = "INK圈数：";
             ringsLabel.Location = new Point(210, 55);
@@ -333,6 +333,14 @@ namespace WindowsFormTool.Forms
                     thresholdNumeric.Visible = false;
                 }
 
+                bool showRings = _selectedRule.SupportsMultiRing;
+                ringsLabel.Visible = showRings;
+                ringsNumeric.Visible = showRings;
+                if (showRings && _currentParameters.ContainsKey(InkRuleParameters.Rings))
+                    ringsNumeric.Value = (int)_currentParameters[InkRuleParameters.Rings];
+                else
+                    ringsNumeric.Value = ringsNumeric.Minimum;
+
                 if (_currentParameters.ContainsKey("targetBinNo"))
                     targetBinNumeric.Value = (int)_currentParameters["targetBinNo"];
             }
@@ -362,15 +370,16 @@ namespace WindowsFormTool.Forms
         {
             var parameters = new Dictionary<string, object>();
 
-            parameters["targetBinNo"] = (int)targetBinNumeric.Value;
+            parameters[InkRuleParameters.TargetBinNo] = (int)targetBinNumeric.Value;
+
+            if (_selectedRule.SupportsMultiRing)
+            {
+                parameters[InkRuleParameters.Rings] = (int)ringsNumeric.Value;
+            }
 
             if (_selectedRule.RuleId == CrossPatternInkRule.RULE_ID)
             {
                 parameters["mode"] = mode1RadioButton.Checked ? 1 : 2;
-            }
-            else if (_selectedRule.RuleId == NineGridInkRule.RULE_ID)
-            {
-                parameters["rings"] = (int)ringsNumeric.Value;
             }
             else if (_selectedRule.RuleId == LineBlobInkRule.RULE_ID)
             {
