@@ -10,8 +10,6 @@ namespace WindowsFormTool.Forms
     public class DpatInkDialog : Form
     {
         private ComboBox testNameComboBox;
-        private NumericUpDown lowerLimitNumeric;
-        private NumericUpDown upperLimitNumeric;
         private NumericUpDown sigmaNumeric;
         private NumericUpDown inkBinNumeric;
         private RadioButton formula1Radio;
@@ -44,7 +42,7 @@ namespace WindowsFormTool.Forms
 
             var testNameLabel = new Label
             {
-                Text = "测试项（testName）：",
+                Text = "测试项(testName)：",
                 Location = new Point(20, 20),
                 Size = new Size(120, 20)
             };
@@ -76,41 +74,17 @@ namespace WindowsFormTool.Forms
             removeButton.Click += RemoveButton_Click;
             Controls.Add(removeButton);
 
-            var lowerLabel = new Label
-            {
-                Text = "下限：",
-                Location = new Point(20, 85),
-                Size = new Size(120, 20)
-            };
-            Controls.Add(lowerLabel);
-
-            lowerLimitNumeric = CreateLimitNumeric();
-            lowerLimitNumeric.Location = new Point(150, 83);
-            Controls.Add(lowerLimitNumeric);
-
-            var upperLabel = new Label
-            {
-                Text = "上限：",
-                Location = new Point(20, 115),
-                Size = new Size(120, 20)
-            };
-            Controls.Add(upperLabel);
-
-            upperLimitNumeric = CreateLimitNumeric();
-            upperLimitNumeric.Location = new Point(150, 113);
-            Controls.Add(upperLimitNumeric);
-
             var sigmaLabel = new Label
             {
                 Text = "Sigma：",
-                Location = new Point(20, 145),
+                Location = new Point(20, 85),
                 Size = new Size(120, 20)
             };
             Controls.Add(sigmaLabel);
 
             sigmaNumeric = new NumericUpDown
             {
-                Location = new Point(150, 143),
+                Location = new Point(150, 83),
                 Size = new Size(120, 23),
                 DecimalPlaces = 3,
                 Minimum = 0,
@@ -122,14 +96,14 @@ namespace WindowsFormTool.Forms
             var inkBinLabel = new Label
             {
                 Text = "Ink Bin：",
-                Location = new Point(20, 175),
+                Location = new Point(20, 115),
                 Size = new Size(120, 20)
             };
             Controls.Add(inkBinLabel);
 
             inkBinNumeric = new NumericUpDown
             {
-                Location = new Point(150, 173),
+                Location = new Point(150, 113),
                 Size = new Size(120, 23),
                 Minimum = 1,
                 Maximum = 255,
@@ -140,16 +114,16 @@ namespace WindowsFormTool.Forms
             var formulaGroup = new GroupBox
             {
                 Text = "公式选择",
-                Location = new Point(20, 205),
-                Size = new Size(300, 60)
+                Location = new Point(20, 145),
+                Size = new Size(330, 60)
             };
             Controls.Add(formulaGroup);
 
             formula1Radio = new RadioButton
             {
-                Text = "公式1：均值/标准差",
+                Text = "公式1：均值±标准差",
                 Location = new Point(12, 22),
-                Size = new Size(150, 20),
+                Size = new Size(170, 20),
                 Checked = true
             };
             formulaGroup.Controls.Add(formula1Radio);
@@ -157,15 +131,15 @@ namespace WindowsFormTool.Forms
             formula2Radio = new RadioButton
             {
                 Text = "公式2：中位数/IQR",
-                Location = new Point(180, 22),
-                Size = new Size(150, 20)
+                Location = new Point(178, 22),
+                Size = new Size(145, 20)
             };
             formulaGroup.Controls.Add(formula2Radio);
 
             allowMissingTestCheckBox = new CheckBox
             {
                 Text = "允许CSV缺失测试项时跳过执行",
-                Location = new Point(20, 270),
+                Location = new Point(20, 210),
                 Size = new Size(260, 20)
             };
             Controls.Add(allowMissingTestCheckBox);
@@ -195,18 +169,6 @@ namespace WindowsFormTool.Forms
             {
                 HeaderText = "测试项",
                 DataPropertyName = nameof(DpatInkTestConfig.TestName)
-            });
-            testConfigGrid.Columns.Add(new DataGridViewTextBoxColumn
-            {
-                HeaderText = "下限",
-                DataPropertyName = nameof(DpatInkTestConfig.LowerLimit),
-                DefaultCellStyle = { Format = "F6" }
-            });
-            testConfigGrid.Columns.Add(new DataGridViewTextBoxColumn
-            {
-                HeaderText = "上限",
-                DataPropertyName = nameof(DpatInkTestConfig.UpperLimit),
-                DefaultCellStyle = { Format = "F6" }
             });
             testConfigGrid.Columns.Add(new DataGridViewTextBoxColumn
             {
@@ -250,26 +212,12 @@ namespace WindowsFormTool.Forms
             CancelButton = cancelButton;
         }
 
-        // 允许负数与小数的上下限输入
-        private NumericUpDown CreateLimitNumeric()
-        {
-            return new NumericUpDown
-            {
-                Size = new Size(120, 23),
-                DecimalPlaces = 6,
-                Minimum = -1000000,
-                Maximum = 1000000,
-                Increment = 0.01M
-            };
-        }
-
-        // 载入可选测试项列表，去重并过滤空值
         private void LoadTestNames(IEnumerable<string> testNames)
         {
             if (testNames == null)
                 return;
 
-            var items = testNames.Where(n => !string.IsNullOrWhiteSpace(n)).Distinct().ToList();
+            var items = testNames.Where(name => !string.IsNullOrWhiteSpace(name)).Distinct().ToList();
             foreach (var name in items)
             {
                 testNameComboBox.Items.Add(name);
@@ -320,6 +268,7 @@ namespace WindowsFormTool.Forms
                 if (string.Equals(selectedTests[i].TestName, testName, StringComparison.OrdinalIgnoreCase))
                     return i;
             }
+
             return -1;
         }
 
@@ -340,8 +289,6 @@ namespace WindowsFormTool.Forms
         private void ApplyConfigToInputs(DpatInkTestConfig config)
         {
             SelectTestName(config.TestName);
-            lowerLimitNumeric.Value = ClampToRange(config.LowerLimit, lowerLimitNumeric);
-            upperLimitNumeric.Value = ClampToRange(config.UpperLimit, upperLimitNumeric);
             sigmaNumeric.Value = ClampToRange(config.Sigma, sigmaNumeric);
             inkBinNumeric.Value = ClampToRange(config.InkBin, inkBinNumeric);
             formula2Radio.Checked = config.UseFormula2;
@@ -365,8 +312,10 @@ namespace WindowsFormTool.Forms
             var decimalValue = (decimal)value;
             if (decimalValue < numeric.Minimum)
                 return numeric.Minimum;
+
             if (decimalValue > numeric.Maximum)
                 return numeric.Maximum;
+
             return decimalValue;
         }
 
@@ -380,14 +329,6 @@ namespace WindowsFormTool.Forms
                 return false;
             }
 
-            var lower = (double)lowerLimitNumeric.Value;
-            var upper = (double)upperLimitNumeric.Value;
-            if (upper < lower)
-            {
-                MessageBox.Show(@"上限不能小于下限", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return false;
-            }
-
             var sigma = (double)sigmaNumeric.Value;
             if (sigma <= 0)
             {
@@ -398,8 +339,6 @@ namespace WindowsFormTool.Forms
             config = new DpatInkTestConfig
             {
                 TestName = testName,
-                LowerLimit = lower,
-                UpperLimit = upper,
                 Sigma = sigma,
                 InkBin = (int)inkBinNumeric.Value,
                 UseFormula2 = formula2Radio.Checked
@@ -408,7 +347,6 @@ namespace WindowsFormTool.Forms
             return true;
         }
 
-        // 基本输入校验：已选测试项列表
         private void OkButton_Click(object sender, EventArgs e)
         {
             if (selectedTests.Count == 0)
@@ -425,8 +363,6 @@ namespace WindowsFormTool.Forms
     public sealed class DpatInkTestConfig
     {
         public string TestName { get; set; }
-        public double LowerLimit { get; set; }
-        public double UpperLimit { get; set; }
         public double Sigma { get; set; }
         public int InkBin { get; set; }
         public bool UseFormula2 { get; set; }
