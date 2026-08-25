@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
-using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -71,8 +70,8 @@ namespace WindowsFormTool.TskUtil
                 return false;
             }
 
-            string originalLotNo = Regex.Replace(originalTsk.LotNo, "CP[1-3]", "").Trim();
-            string mergeLotNo = Regex.Replace(mergeTsk.LotNo, "CP[1-3]", "").Trim();
+            string originalLotNo = GetLotNoBeforeLastCp(originalTsk.LotNo);
+            string mergeLotNo = GetLotNoBeforeLastCp(mergeTsk.LotNo);
 
             if (originalLotNo != mergeLotNo || originalTsk.SlotNo != mergeTsk.SlotNo)
             {
@@ -80,6 +79,13 @@ namespace WindowsFormTool.TskUtil
                 return false;
             }
             return true;
+        }
+
+        private static string GetLotNoBeforeLastCp(string lotNo)
+        {
+            string trimmedLotNo = lotNo.Trim();
+            int cpIndex = trimmedLotNo.LastIndexOf("CP", StringComparison.OrdinalIgnoreCase);
+            return cpIndex >= 0 ? trimmedLotNo.Substring(0, cpIndex).Trim() : trimmedLotNo;
         }
     }
 }
